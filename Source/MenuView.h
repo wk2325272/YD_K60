@@ -85,7 +85,8 @@ MenuV_EXT int *NFBAddr;//(char*)0x1880
 MenuV_EXT char *SysSetAddr;//系统设置芯片内部flash入口地址定义
 
 
-MenuV_EXT U8 SysFlashData[99];   //系统设置的数据
+MenuV_EXT U8 SysFlashData[84];   //系统设置的数据的临时参数
+MenuV_EXT U8 SysFlashSave[84];   //wk @130326 -->写入Flash的系统设置参数
 MenuV_EXT U8 NPage[115]; //写入芯片flash有关的数组。NPage[0~99]为事件nandflash的页值，NPage[100]为事件总次数，NPage[101~114]为各类事件次数
 MenuV_EXT U16 NBlock[100]; //写入芯片flash有关的数组。nandflash的block数
 
@@ -98,3 +99,18 @@ MenuV_EXT void Write_WFlash(U16 DataIn[],U8 Num,int* Flash_ptr);
 #define EVESET_INDEX 25
 
 #define EVESEND_FLAG 85
+
+/*WK @130326 --> 事件限值宏定义 */
+/* wk @130326 --> 扩大100倍 */
+#define NumWave 10000
+MenuV_EXT U16 DotWave ;
+#define UDeviation 220*7  
+#define FDeviation 2
+#define USurge 220*2
+#define NUnblance 220*2
+#define LngFlick 100
+#define TotalHarmonic 220*5
+//#define JHarmonic
+#define UHarmonic 220*4 
+#define IHarmonic 220*2
+

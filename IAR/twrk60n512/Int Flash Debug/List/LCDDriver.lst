@@ -1,0 +1,2618 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM     26/Mar/2013  13:18:31 #
+# Copyright 1999-2011 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  thumb                                                    #
+#    Endian       =  little                                                   #
+#    Source file  =  L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\LCDDriv #
+#                    er.c                                                     #
+#    Command line =  L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\LCDDriv #
+#                    er.c -D _DEBUG=1 -lC "L:\git_workspace\YD_PRJ_NEW_201303 #
+#                    23_git_\IAR\twrk60n512\Int Flash Debug\List\" -lA        #
+#                    "L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\twrk60n51 #
+#                    2\Int Flash Debug\List\" --diag_suppress                 #
+#                    Pa039,Pa082,Pe186 -o "L:\git_workspace\YD_PRJ_NEW_201303 #
+#                    23_git_\IAR\twrk60n512\Int Flash Debug\Obj\" --no_cse    #
+#                    --no_unroll --no_inline --no_code_motion --no_tbaa       #
+#                    --no_clustering --no_scheduling --debug --endian=little  #
+#                    --cpu=Cortex-M4 -e --fpu=None --dlib_config "D:\Program  #
+#                    Files\IAR Systems\Embedded Workbench                     #
+#                    6.0\arm\INC\c\DLib_Config_Normal.h" -I                   #
+#                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\twr #
+#                    k60n512.iar\ -I L:\git_workspace\YD_PRJ_NEW_20130323_git #
+#                    _\IAR\..\lib\twrk60n512.iar\bsp\ -I                      #
+#                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\twr #
+#                    k60n512.iar\psp\ -I L:\git_workspace\YD_PRJ_NEW_20130323 #
+#                    _git_\IAR\..\lib\twrk60n512.iar\bsp\Generated_Code\ -I   #
+#                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\twr #
+#                    k60n512.iar\rtcs\ -I L:\git_workspace\YD_PRJ_NEW_2013032 #
+#                    3_git_\IAR\..\lib\twrk60n512.iar\mfs\ -I                 #
+#                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\twr #
+#                    k60n512.iar\usb\host\ -I L:\git_workspace\YD_PRJ_NEW_201 #
+#                    30323_git_\IAR\..\lib\twrk60n512.iar\shell\ -I           #
+#                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\twr #
+#                    k60n512.iar\usb\ -I L:\git_workspace\YD_PRJ_NEW_20130323 #
+#                    _git_\IAR\..\ -I L:\git_workspace\YD_PRJ_NEW_20130323_gi #
+#                    t_\IAR\..\Source\Source_MQX\ -I "E:\Freescale\Freescale  #
+#                    MQX 3.8\shell\source\include\" -Ol --use_c++_inline      #
+#    List file    =  L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\twrk60n512 #
+#                    \Int Flash Debug\List\LCDDriver.lst                      #
+#    Object file  =  L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\twrk60n512 #
+#                    \Int Flash Debug\Obj\LCDDriver.o                         #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\LCDDriver.c
+      1          /*******************************************************************************
+      2          * File Name        : LCDDriver.c
+      3          * Author             : LB&TX
+      4          * Version            : V1.0.0
+      5          * Date                :
+      6          * Description        :触摸屏的驱动程序
+      7                                本文件与工程的关联处仅在send_byte函数中
+      8                                涉及到液晶屏与430的串口操作，没有用到的子程序可以注释掉。
+      9          *******************************************************************************/
+     10          /***************************************************
+     11          **
+     12          ** Reverse by wk
+     13          ** Date: 
+     14          ** Description:  430  --> k60 
+     15          ** 
+     16          **************************************************/
+     17          #include "LCDDriver.h"
+     18          
+
+   \                                 In section .bss, align 4
+     19          MQX_FILE_PTR uart_lcd = NULL;
+   \                     uart_lcd:
+   \   00000000                      DS8 4
+     20          
+     21          /* Uart initialization for send data*/
+
+   \                                 In section .text, align 2, keep-with-next
+     22          void UartLCD_init()
+     23          {
+   \                     UartLCD_init:
+   \   00000000   0xB580             PUSH     {R7,LR}
+     24            uart_lcd  = fopen( "ttyb:", NULL );
+   \   00000002   0x2100             MOVS     R1,#+0
+   \   00000004   0x.... 0x....      LDR.W    R0,??DataTable2
+   \   00000008   0x.... 0x....      BL       _io_fopen
+   \   0000000C   0x.... 0x....      LDR.W    R1,??DataTable2_1
+   \   00000010   0x6008             STR      R0,[R1, #+0]
+     25               if( uart_lcd == NULL )
+   \   00000012   0x.... 0x....      LDR.W    R0,??DataTable2_1
+   \   00000016   0x6800             LDR      R0,[R0, #+0]
+   \   00000018   0x2800             CMP      R0,#+0
+   \   0000001A   0xD101             BNE.N    ??UartLCD_init_0
+     26             {
+     27                /* device could not be opened */
+     28                _task_block();
+   \   0000001C   0x.... 0x....      BL       _task_block
+     29             }
+     30          //   else 
+     31          //     printf("open ttya OK!\n");
+     32          }
+   \                     ??UartLCD_init_0:
+   \   00000020   0xBD01             POP      {R0,PC}          ;; return
+     33          
+
+   \                                 In section .text, align 2, keep-with-next
+     34          void send_byte(U8 i)
+     35          {
+   \                     send_byte:
+   \   00000000   0xB501             PUSH     {R0,LR}
+     36              write(uart_lcd, &i, 1);
+   \   00000002   0x2201             MOVS     R2,#+1
+   \   00000004   0xA900             ADD      R1,SP,#+0
+   \   00000006   0x.... 0x....      LDR.W    R0,??DataTable2_1
+   \   0000000A   0x6800             LDR      R0,[R0, #+0]
+   \   0000000C   0x.... 0x....      BL       _io_write
+     37          }
+   \   00000010   0xBD01             POP      {R0,PC}          ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+     38          void send_word(U16 i)
+     39          {
+   \                     send_word:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+     40              send_byte(i/256);
+   \   00000004   0xB2A4             UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
+   \   00000006   0xF44F 0x7080      MOV      R0,#+256
+   \   0000000A   0xFB94 0xF0F0      SDIV     R0,R4,R0
+   \   0000000E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000010   0x.... 0x....      BL       send_byte
+     41              send_byte(i%256);
+   \   00000014   0xB2A4             UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
+   \   00000016   0xF44F 0x7180      MOV      R1,#+256
+   \   0000001A   0xFB94 0xF0F1      SDIV     R0,R4,R1
+   \   0000001E   0xFB00 0x4011      MLS      R0,R0,R1,R4
+   \   00000022   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000024   0x.... 0x....      BL       send_byte
+     42          }
+   \   00000028   0xBD10             POP      {R4,PC}          ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+     43          void send_xy(U16 x,U16 y)//发送两个16位的数据
+     44          {
+   \                     send_xy:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x000C             MOVS     R4,R1
+     45              send_word(x);
+   \   00000004   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000006   0x.... 0x....      BL       send_word
+     46              send_word(y);
+   \   0000000A   0x0020             MOVS     R0,R4
+   \   0000000C   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   0000000E   0x.... 0x....      BL       send_word
+     47          }
+   \   00000012   0xBD10             POP      {R4,PC}          ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+     48          void send_area(U16 xs,U16 ys,U16 xe,U16 ye)
+     49          {
+   \                     send_area:
+   \   00000000   0xB570             PUSH     {R4-R6,LR}
+   \   00000002   0x000C             MOVS     R4,R1
+   \   00000004   0x0015             MOVS     R5,R2
+   \   00000006   0x001E             MOVS     R6,R3
+     50              send_word(xs);
+   \   00000008   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   0000000A   0x.... 0x....      BL       send_word
+     51              send_word(ys);
+   \   0000000E   0x0020             MOVS     R0,R4
+   \   00000010   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000012   0x.... 0x....      BL       send_word
+     52              send_word(xe);
+   \   00000016   0x0028             MOVS     R0,R5
+   \   00000018   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   0000001A   0x.... 0x....      BL       send_word
+     53              send_word(ye);
+   \   0000001E   0x0030             MOVS     R0,R6
+   \   00000020   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000022   0x.... 0x....      BL       send_word
+     54          }
+   \   00000026   0xBD70             POP      {R4-R6,PC}       ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+     55          void send_U8str(U8 *p,U8 size)  //串口发送一串数据 (U8)
+     56          {
+   \                     send_U8str:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+     57              U8 i=size;
+     58              if(i==0)
+   \   00000006   0xB2ED             UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+   \   00000008   0x2D00             CMP      R5,#+0
+   \   0000000A   0xD10C             BNE.N    ??send_U8str_0
+     59              {
+     60                  while(*p!='\0')
+   \                     ??send_U8str_1:
+   \   0000000C   0x7820             LDRB     R0,[R4, #+0]
+   \   0000000E   0x2800             CMP      R0,#+0
+   \   00000010   0xD00C             BEQ.N    ??send_U8str_2
+     61                  {
+     62                      send_byte(*p);
+   \   00000012   0x7820             LDRB     R0,[R4, #+0]
+   \   00000014   0x.... 0x....      BL       send_byte
+     63                      p++;
+   \   00000018   0x1C64             ADDS     R4,R4,#+1
+   \   0000001A   0xE7F7             B.N      ??send_U8str_1
+     64                  }
+     65              }
+     66              else
+     67              {
+     68                  while(i)
+     69                  {
+     70                      send_byte(*p);           //此发送字节而非字
+   \                     ??send_U8str_3:
+   \   0000001C   0x7820             LDRB     R0,[R4, #+0]
+   \   0000001E   0x.... 0x....      BL       send_byte
+     71                      p++;
+   \   00000022   0x1C64             ADDS     R4,R4,#+1
+     72                      i--;
+   \   00000024   0x1E6D             SUBS     R5,R5,#+1
+     73                  }
+   \                     ??send_U8str_0:
+   \   00000026   0xB2ED             UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+   \   00000028   0x2D00             CMP      R5,#+0
+   \   0000002A   0xD1F7             BNE.N    ??send_U8str_3
+     74              }
+     75          }
+   \                     ??send_U8str_2:
+   \   0000002C   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+     76          void send_U16str(U16 *q,U8 size)  //串口发送一串数据 (U16)size为0则发送整个字符串
+     77          {
+   \                     send_U16str:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+     78              U8 i=size;
+     79              if(i==0)
+   \   00000006   0xB2ED             UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+   \   00000008   0x2D00             CMP      R5,#+0
+   \   0000000A   0xD10C             BNE.N    ??send_U16str_0
+     80              {
+     81                  while(*q!='\0')
+   \                     ??send_U16str_1:
+   \   0000000C   0x8820             LDRH     R0,[R4, #+0]
+   \   0000000E   0x2800             CMP      R0,#+0
+   \   00000010   0xD00C             BEQ.N    ??send_U16str_2
+     82                  {
+     83                      send_word(*q);
+   \   00000012   0x8820             LDRH     R0,[R4, #+0]
+   \   00000014   0x.... 0x....      BL       send_word
+     84                      q++;
+   \   00000018   0x1CA4             ADDS     R4,R4,#+2
+   \   0000001A   0xE7F7             B.N      ??send_U16str_1
+     85                  }
+     86              }
+     87              else
+     88              {
+     89                  while(i)
+     90                  {
+     91                      send_word(*q);
+   \                     ??send_U16str_3:
+   \   0000001C   0x8820             LDRH     R0,[R4, #+0]
+   \   0000001E   0x.... 0x....      BL       send_word
+     92                      q++;
+   \   00000022   0x1CA4             ADDS     R4,R4,#+2
+     93                      i--;
+   \   00000024   0x1E6D             SUBS     R5,R5,#+1
+     94                  }
+   \                     ??send_U16str_0:
+   \   00000026   0xB2ED             UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+   \   00000028   0x2D00             CMP      R5,#+0
+   \   0000002A   0xD1F7             BNE.N    ??send_U16str_3
+     95              }
+     96          }
+   \                     ??send_U16str_2:
+   \   0000002C   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+     97          void send_end()
+     98          {
+   \                     send_end:
+   \   00000000   0xB580             PUSH     {R7,LR}
+     99          //    send_xy(0xcc33,0xc33c);
+    100               send_word(0xcc33);
+   \   00000002   0xF64C 0x4033      MOVW     R0,#+52275
+   \   00000006   0x.... 0x....      BL       send_word
+    101               send_word(0xc33c); 
+   \   0000000A   0xF24C 0x303C      MOVW     R0,#+49980
+   \   0000000E   0x.... 0x....      BL       send_word
+    102          }
+   \   00000012   0xBD01             POP      {R0,PC}          ;; return
+    103          
+
+   \                                 In section .text, align 2, keep-with-next
+    104          void YADA_00 (void)
+    105          {
+   \                     YADA_00:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    106              send_word(0xaa00);
+   \   00000002   0xF44F 0x402A      MOV      R0,#+43520
+   \   00000006   0x.... 0x....      BL       send_word
+    107              send_end();
+   \   0000000A   0x.... 0x....      BL       send_end
+    108          }
+   \   0000000E   0xBD01             POP      {R0,PC}          ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    109          void YADA_40 (U16 FrontC,U16 BackC)
+    110          {
+   \                     YADA_40:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    111              send_word(0xaa40);
+   \   00000006   0xF64A 0x2040      MOVW     R0,#+43584
+   \   0000000A   0x.... 0x....      BL       send_word
+    112              send_xy(FrontC,BackC);
+   \   0000000E   0x0029             MOVS     R1,R5
+   \   00000010   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000012   0x0020             MOVS     R0,R4
+   \   00000014   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000016   0x.... 0x....      BL       send_xy
+    113              send_end();
+   \   0000001A   0x.... 0x....      BL       send_end
+    114          }
+   \   0000001E   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    115          void YADA_41 (U8 D_X,U8 D_Y)
+    116          {
+   \                     YADA_41:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    117              send_word(0xaa41);
+   \   00000006   0xF64A 0x2041      MOVW     R0,#+43585
+   \   0000000A   0x.... 0x....      BL       send_word
+    118              send_byte(D_X);
+   \   0000000E   0x0020             MOVS     R0,R4
+   \   00000010   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000012   0x.... 0x....      BL       send_byte
+    119              send_byte(D_Y);
+   \   00000016   0x0028             MOVS     R0,R5
+   \   00000018   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000001A   0x.... 0x....      BL       send_byte
+    120              send_end();
+   \   0000001E   0x.... 0x....      BL       send_end
+    121          }
+   \   00000022   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    122          void YADA_42 (U16 X,U16 Y)
+    123          {
+   \                     YADA_42:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    124              send_word(0xaa42);
+   \   00000006   0xF64A 0x2042      MOVW     R0,#+43586
+   \   0000000A   0x.... 0x....      BL       send_word
+    125              send_xy(X,Y);
+   \   0000000E   0x0029             MOVS     R1,R5
+   \   00000010   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000012   0x0020             MOVS     R0,R4
+   \   00000014   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000016   0x.... 0x....      BL       send_xy
+    126              send_end();
+   \   0000001A   0x.... 0x....      BL       send_end
+    127          }
+   \   0000001E   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    128          void YADA_43 (U16 X,U16 Y)
+    129          {
+   \                     YADA_43:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    130              send_word(0xaa43);
+   \   00000006   0xF64A 0x2043      MOVW     R0,#+43587
+   \   0000000A   0x.... 0x....      BL       send_word
+    131              send_xy(X,Y);
+   \   0000000E   0x0029             MOVS     R1,R5
+   \   00000010   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000012   0x0020             MOVS     R0,R4
+   \   00000014   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000016   0x.... 0x....      BL       send_xy
+    132              send_end();
+   \   0000001A   0x.... 0x....      BL       send_end
+    133          }
+   \   0000001E   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    134          void YADA_44 (U8 EN,U16 X,U16 Y,U8 Width,U8 Height)
+    135          {
+   \                     YADA_44:
+   \   00000000   0xE92D 0x41F0      PUSH     {R4-R8,LR}
+   \   00000004   0x0005             MOVS     R5,R0
+   \   00000006   0x000E             MOVS     R6,R1
+   \   00000008   0x0017             MOVS     R7,R2
+   \   0000000A   0x4698             MOV      R8,R3
+   \   0000000C   0x9C06             LDR      R4,[SP, #+24]
+    136              send_word(0xaa44);
+   \   0000000E   0xF64A 0x2044      MOVW     R0,#+43588
+   \   00000012   0x.... 0x....      BL       send_word
+    137              send_byte(EN);
+   \   00000016   0x0028             MOVS     R0,R5
+   \   00000018   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000001A   0x.... 0x....      BL       send_byte
+    138              send_xy(X,Y);
+   \   0000001E   0x0039             MOVS     R1,R7
+   \   00000020   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000022   0x0030             MOVS     R0,R6
+   \   00000024   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000026   0x.... 0x....      BL       send_xy
+    139              send_byte(Width);
+   \   0000002A   0x4640             MOV      R0,R8
+   \   0000002C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000002E   0x.... 0x....      BL       send_byte
+    140              send_byte(Height);
+   \   00000032   0x0020             MOVS     R0,R4
+   \   00000034   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000036   0x.... 0x....      BL       send_byte
+    141              send_end();
+   \   0000003A   0x.... 0x....      BL       send_end
+    142          }
+   \   0000003E   0xE8BD 0x81F0      POP      {R4-R8,PC}       ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    143          void prints(U8 cmd,U16 x,U16 y,U8 *s,U8 size)//显示文本，字符串以0x00结束，cmd可为53/54/55/6E/6F
+    144          {
+   \                     prints:
+   \   00000000   0xE92D 0x41F0      PUSH     {R4-R8,LR}
+   \   00000004   0x0005             MOVS     R5,R0
+   \   00000006   0x000E             MOVS     R6,R1
+   \   00000008   0x0017             MOVS     R7,R2
+   \   0000000A   0x4698             MOV      R8,R3
+   \   0000000C   0x9C06             LDR      R4,[SP, #+24]
+    145              send_byte(0xAA);
+   \   0000000E   0x20AA             MOVS     R0,#+170
+   \   00000010   0x.... 0x....      BL       send_byte
+    146              send_byte(cmd);
+   \   00000014   0x0028             MOVS     R0,R5
+   \   00000016   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000018   0x.... 0x....      BL       send_byte
+    147              send_xy(x,y);
+   \   0000001C   0x0039             MOVS     R1,R7
+   \   0000001E   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000020   0x0030             MOVS     R0,R6
+   \   00000022   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000024   0x.... 0x....      BL       send_xy
+    148              send_U8str(s,size);
+   \   00000028   0x0021             MOVS     R1,R4
+   \   0000002A   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   0000002C   0x4640             MOV      R0,R8
+   \   0000002E   0x.... 0x....      BL       send_U8str
+    149              send_end();
+   \   00000032   0x.... 0x....      BL       send_end
+    150          }
+   \   00000036   0xE8BD 0x81F0      POP      {R4-R8,PC}       ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    151          void YADA_53 (U16 X,U16 Y,U8 *P,U8 Size)
+    152          {
+   \                     YADA_53:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    153              prints(0x53,X,Y,P,Size);
+   \   00000002   0xB2DB             UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
+   \   00000004   0x9300             STR      R3,[SP, #+0]
+   \   00000006   0x0013             MOVS     R3,R2
+   \   00000008   0x000A             MOVS     R2,R1
+   \   0000000A   0xB292             UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
+   \   0000000C   0x0001             MOVS     R1,R0
+   \   0000000E   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000010   0x2053             MOVS     R0,#+83
+   \   00000012   0x.... 0x....      BL       prints
+    154          }
+   \   00000016   0xBD01             POP      {R0,PC}          ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    155          void YADA_54 (U16 X,U16 Y,U8 *P,U8 Size)
+    156          {
+   \                     YADA_54:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    157              prints(0x54,X,Y,P,Size);
+   \   00000002   0xB2DB             UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
+   \   00000004   0x9300             STR      R3,[SP, #+0]
+   \   00000006   0x0013             MOVS     R3,R2
+   \   00000008   0x000A             MOVS     R2,R1
+   \   0000000A   0xB292             UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
+   \   0000000C   0x0001             MOVS     R1,R0
+   \   0000000E   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000010   0x2054             MOVS     R0,#+84
+   \   00000012   0x.... 0x....      BL       prints
+    158          }
+   \   00000016   0xBD01             POP      {R0,PC}          ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    159          void YADA_55 (U16 X,U16 Y,U8 *P,U8 Size)
+    160          {
+   \                     YADA_55:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    161              prints(0x55,X,Y,P,Size);
+   \   00000002   0xB2DB             UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
+   \   00000004   0x9300             STR      R3,[SP, #+0]
+   \   00000006   0x0013             MOVS     R3,R2
+   \   00000008   0x000A             MOVS     R2,R1
+   \   0000000A   0xB292             UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
+   \   0000000C   0x0001             MOVS     R1,R0
+   \   0000000E   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000010   0x2055             MOVS     R0,#+85
+   \   00000012   0x.... 0x....      BL       prints
+    162          }
+   \   00000016   0xBD01             POP      {R0,PC}          ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    163          void YADA_6E (U16 X,U16 Y,U8 *P,U8 Size)
+    164          {
+   \                     YADA_6E:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    165              prints(0x6E,X,Y,P,Size);
+   \   00000002   0xB2DB             UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
+   \   00000004   0x9300             STR      R3,[SP, #+0]
+   \   00000006   0x0013             MOVS     R3,R2
+   \   00000008   0x000A             MOVS     R2,R1
+   \   0000000A   0xB292             UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
+   \   0000000C   0x0001             MOVS     R1,R0
+   \   0000000E   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000010   0x206E             MOVS     R0,#+110
+   \   00000012   0x.... 0x....      BL       prints
+    166          }
+   \   00000016   0xBD01             POP      {R0,PC}          ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    167          void YADA_6F (U16 X,U16 Y,U8 *P,U8 Size)
+    168          {
+   \                     YADA_6F:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    169              prints(0x6F,X,Y,P,Size);
+   \   00000002   0xB2DB             UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
+   \   00000004   0x9300             STR      R3,[SP, #+0]
+   \   00000006   0x0013             MOVS     R3,R2
+   \   00000008   0x000A             MOVS     R2,R1
+   \   0000000A   0xB292             UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
+   \   0000000C   0x0001             MOVS     R1,R0
+   \   0000000E   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000010   0x206F             MOVS     R0,#+111
+   \   00000012   0x.... 0x....      BL       prints
+    170          }
+   \   00000016   0xBD01             POP      {R0,PC}          ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    171          void YADA_98 (U16 X,U16 Y,U8 Lib_ID,U8 C_Mode,U8 C_Dots,U16 FrontC,U16 BackC,U8 *P,U8 Size)
+    172          {
+   \                     YADA_98:
+   \   00000000   0xE92D 0x4FF1      PUSH     {R0,R4-R11,LR}
+   \   00000004   0x4688             MOV      R8,R1
+   \   00000006   0x4691             MOV      R9,R2
+   \   00000008   0x469A             MOV      R10,R3
+   \   0000000A   0x9F0A             LDR      R7,[SP, #+40]
+   \   0000000C   0x9E0B             LDR      R6,[SP, #+44]
+   \   0000000E   0x9D0C             LDR      R5,[SP, #+48]
+   \   00000010   0xF8DD 0xB034      LDR      R11,[SP, #+52]
+   \   00000014   0x9C0E             LDR      R4,[SP, #+56]
+    173              send_word(0xAA98);
+   \   00000016   0xF64A 0x2098      MOVW     R0,#+43672
+   \   0000001A   0x.... 0x....      BL       send_word
+    174              send_xy(X,Y);
+   \   0000001E   0x4641             MOV      R1,R8
+   \   00000020   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000022   0xF8BD 0x0000      LDRH     R0,[SP, #+0]
+   \   00000026   0x.... 0x....      BL       send_xy
+    175              send_byte(Lib_ID);
+   \   0000002A   0x4648             MOV      R0,R9
+   \   0000002C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000002E   0x.... 0x....      BL       send_byte
+    176              send_byte(C_Mode);
+   \   00000032   0x4650             MOV      R0,R10
+   \   00000034   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000036   0x.... 0x....      BL       send_byte
+    177              send_byte(C_Dots);
+   \   0000003A   0x0038             MOVS     R0,R7
+   \   0000003C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000003E   0x.... 0x....      BL       send_byte
+    178              send_xy(FrontC,BackC);
+   \   00000042   0x0029             MOVS     R1,R5
+   \   00000044   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000046   0x0030             MOVS     R0,R6
+   \   00000048   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   0000004A   0x.... 0x....      BL       send_xy
+    179              send_U8str(P,Size);
+   \   0000004E   0x0021             MOVS     R1,R4
+   \   00000050   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000052   0x4658             MOV      R0,R11
+   \   00000054   0x.... 0x....      BL       send_U8str
+    180              send_end();
+   \   00000058   0x.... 0x....      BL       send_end
+    181          }
+   \   0000005C   0xE8BD 0x8FF1      POP      {R0,R4-R11,PC}   ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    182          void YADA_45(U16 *P,U8 Flag)
+    183          {
+   \                     YADA_45:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    184              send_word(0xAA45);
+   \   00000006   0xF64A 0x2045      MOVW     R0,#+43589
+   \   0000000A   0x.... 0x....      BL       send_word
+    185              if(Flag==0)//关闭文本框限制
+   \   0000000E   0xB2ED             UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+   \   00000010   0x2D00             CMP      R5,#+0
+   \   00000012   0xD103             BNE.N    ??YADA_45_0
+    186              {
+    187                  send_byte(0x00);
+   \   00000014   0x2000             MOVS     R0,#+0
+   \   00000016   0x.... 0x....      BL       send_byte
+   \   0000001A   0xE003             B.N      ??YADA_45_1
+    188              }
+    189              else
+    190              {
+    191                  send_U16str(P,0);
+   \                     ??YADA_45_0:
+   \   0000001C   0x2100             MOVS     R1,#+0
+   \   0000001E   0x0020             MOVS     R0,R4
+   \   00000020   0x.... 0x....      BL       send_U16str
+    192              }
+    193              send_end();
+   \                     ??YADA_45_1:
+   \   00000024   0x.... 0x....      BL       send_end
+    194          }
+   \   00000028   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    195          void YADA_50 (U16 *P,U8 Size)//背景色显示点，相当于将点擦除
+    196          {
+   \                     YADA_50:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    197              send_word(0xAA50);
+   \   00000006   0xF64A 0x2050      MOVW     R0,#+43600
+   \   0000000A   0x.... 0x....      BL       send_word
+    198              send_U16str(P,Size);
+   \   0000000E   0x0029             MOVS     R1,R5
+   \   00000010   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000012   0x0020             MOVS     R0,R4
+   \   00000014   0x.... 0x....      BL       send_U16str
+    199              send_end();
+   \   00000018   0x.... 0x....      BL       send_end
+    200          }
+   \   0000001C   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    201          void YADA_51 (U16 *P,U8 Size)//前景色显示点
+    202          {
+   \                     YADA_51:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    203              send_word(0xAA51);
+   \   00000006   0xF64A 0x2051      MOVW     R0,#+43601
+   \   0000000A   0x.... 0x....      BL       send_word
+    204              send_U16str(P,Size);
+   \   0000000E   0x0029             MOVS     R1,R5
+   \   00000010   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000012   0x0020             MOVS     R0,R4
+   \   00000014   0x.... 0x....      BL       send_U16str
+    205              send_end();
+   \   00000018   0x.... 0x....      BL       send_end
+    206          }
+   \   0000001C   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    207          void YADA_74 (U16 X,U16 YS,U16 YE,U16 BC,U16 *P,U8 Size)
+    208          {
+   \                     YADA_74:
+   \   00000000   0xE92D 0x43F8      PUSH     {R3-R9,LR}
+   \   00000004   0x0005             MOVS     R5,R0
+   \   00000006   0x000E             MOVS     R6,R1
+   \   00000008   0x0017             MOVS     R7,R2
+   \   0000000A   0x4698             MOV      R8,R3
+   \   0000000C   0xF8DD 0x9020      LDR      R9,[SP, #+32]
+   \   00000010   0x9C09             LDR      R4,[SP, #+36]
+    209              send_word(0xAA74);
+   \   00000012   0xF64A 0x2074      MOVW     R0,#+43636
+   \   00000016   0x.... 0x....      BL       send_word
+    210              send_area(X,YS,YE,BC);
+   \   0000001A   0x4643             MOV      R3,R8
+   \   0000001C   0xB29B             UXTH     R3,R3            ;; ZeroExt  R3,R3,#+16,#+16
+   \   0000001E   0x003A             MOVS     R2,R7
+   \   00000020   0xB292             UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
+   \   00000022   0x0031             MOVS     R1,R6
+   \   00000024   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000026   0x0028             MOVS     R0,R5
+   \   00000028   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   0000002A   0x.... 0x....      BL       send_area
+    211              send_U16str(P,Size);
+   \   0000002E   0x0021             MOVS     R1,R4
+   \   00000030   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000032   0x4648             MOV      R0,R9
+   \   00000034   0x.... 0x....      BL       send_U16str
+    212              send_end();
+   \   00000038   0x.... 0x....      BL       send_end
+    213          }
+   \   0000003C   0xE8BD 0x83F1      POP      {R0,R4-R9,PC}    ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    214          void YADA_56 (U16 *P,U8 Size)
+    215          {
+   \                     YADA_56:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    216              send_word(0xaa56);
+   \   00000006   0xF64A 0x2056      MOVW     R0,#+43606
+   \   0000000A   0x.... 0x....      BL       send_word
+    217              send_U16str(P,Size);
+   \   0000000E   0x0029             MOVS     R1,R5
+   \   00000010   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000012   0x0020             MOVS     R0,R4
+   \   00000014   0x.... 0x....      BL       send_U16str
+    218              send_end();
+   \   00000018   0x.... 0x....      BL       send_end
+    219          }
+   \   0000001C   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    220          void YADA_5D (U16 *P,U8 Size)
+    221          {
+   \                     YADA_5D:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    222              send_word(0xaa5D);
+   \   00000006   0xF64A 0x205D      MOVW     R0,#+43613
+   \   0000000A   0x.... 0x....      BL       send_word
+    223              send_U16str(P,Size);
+   \   0000000E   0x0029             MOVS     R1,R5
+   \   00000010   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000012   0x0020             MOVS     R0,R4
+   \   00000014   0x.... 0x....      BL       send_U16str
+    224              send_end();
+   \   00000018   0x.... 0x....      BL       send_end
+    225          }
+   \   0000001C   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    226          void YADA_75 (U16 X,U16 Y,U8 H_Max,U8 *P,U8 Size)
+    227          {
+   \                     YADA_75:
+   \   00000000   0xE92D 0x41F0      PUSH     {R4-R8,LR}
+   \   00000004   0x0005             MOVS     R5,R0
+   \   00000006   0x000E             MOVS     R6,R1
+   \   00000008   0x0017             MOVS     R7,R2
+   \   0000000A   0x4698             MOV      R8,R3
+   \   0000000C   0x9C06             LDR      R4,[SP, #+24]
+    228              send_word(0xaa75);
+   \   0000000E   0xF64A 0x2075      MOVW     R0,#+43637
+   \   00000012   0x.... 0x....      BL       send_word
+    229              send_xy(X,Y);
+   \   00000016   0x0031             MOVS     R1,R6
+   \   00000018   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   0000001A   0x0028             MOVS     R0,R5
+   \   0000001C   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   0000001E   0x.... 0x....      BL       send_xy
+    230              send_byte(H_Max);
+   \   00000022   0x0038             MOVS     R0,R7
+   \   00000024   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000026   0x.... 0x....      BL       send_byte
+    231              send_U8str(P,Size);
+   \   0000002A   0x0021             MOVS     R1,R4
+   \   0000002C   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   0000002E   0x4640             MOV      R0,R8
+   \   00000030   0x.... 0x....      BL       send_U8str
+    232              send_end();
+   \   00000034   0x.... 0x....      BL       send_end
+    233          }
+   \   00000038   0xE8BD 0x81F0      POP      {R4-R8,PC}       ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    234          void YADA_76 (U16 X,U8 X_Dis,U16 *P,U8 Size)
+    235          {
+   \                     YADA_76:
+   \   00000000   0xB5F8             PUSH     {R3-R7,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+   \   00000006   0x0016             MOVS     R6,R2
+   \   00000008   0x001F             MOVS     R7,R3
+    236              send_word(0xaa76);
+   \   0000000A   0xF64A 0x2076      MOVW     R0,#+43638
+   \   0000000E   0x.... 0x....      BL       send_word
+    237              send_word(X);
+   \   00000012   0x0020             MOVS     R0,R4
+   \   00000014   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000016   0x.... 0x....      BL       send_word
+    238              send_byte(X_Dis);
+   \   0000001A   0x0028             MOVS     R0,R5
+   \   0000001C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000001E   0x.... 0x....      BL       send_byte
+    239              send_U16str(P,Size);
+   \   00000022   0x0039             MOVS     R1,R7
+   \   00000024   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000026   0x0030             MOVS     R0,R6
+   \   00000028   0x.... 0x....      BL       send_U16str
+    240              send_end();
+   \   0000002C   0x.... 0x....      BL       send_end
+    241          }
+   \   00000030   0xBDF1             POP      {R0,R4-R7,PC}    ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    242          void YADA_78 (U16 X,U16 Y,U8 *P,U8 Size)
+    243          {
+   \                     YADA_78:
+   \   00000000   0xB5F8             PUSH     {R3-R7,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+   \   00000006   0x0016             MOVS     R6,R2
+   \   00000008   0x001F             MOVS     R7,R3
+    244              send_word(0xaa78);
+   \   0000000A   0xF64A 0x2078      MOVW     R0,#+43640
+   \   0000000E   0x.... 0x....      BL       send_word
+    245              send_xy(X,Y);
+   \   00000012   0x0029             MOVS     R1,R5
+   \   00000014   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000016   0x0020             MOVS     R0,R4
+   \   00000018   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   0000001A   0x.... 0x....      BL       send_xy
+    246              send_U8str(P,Size);
+   \   0000001E   0x0039             MOVS     R1,R7
+   \   00000020   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000022   0x0030             MOVS     R0,R6
+   \   00000024   0x.... 0x....      BL       send_U8str
+    247              send_end();
+   \   00000028   0x.... 0x....      BL       send_end
+    248          }
+   \   0000002C   0xBDF1             POP      {R0,R4-R7,PC}    ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    249          void YADA_57 (ARC *P,U8 Size)
+    250          {
+   \                     YADA_57:
+   \   00000000   0xB570             PUSH     {R4-R6,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    251              send_word(0xaa57);
+   \   00000006   0xF64A 0x2057      MOVW     R0,#+43607
+   \   0000000A   0x.... 0x....      BL       send_word
+    252              if(Size==0)
+   \   0000000E   0xB2ED             UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+   \   00000010   0x2D00             CMP      R5,#+0
+   \   00000012   0xD112             BNE.N    ??YADA_57_0
+    253              {
+    254                  U16 i=sizeof(P);
+   \   00000014   0x2504             MOVS     R5,#+4
+    255                  U16 j;
+    256                  for(j=0; j<i; j++)
+   \   00000016   0x2600             MOVS     R6,#+0
+   \                     ??YADA_57_1:
+   \   00000018   0xB2B6             UXTH     R6,R6            ;; ZeroExt  R6,R6,#+16,#+16
+   \   0000001A   0xB2AD             UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
+   \   0000001C   0x42AE             CMP      R6,R5
+   \   0000001E   0xD220             BCS.N    ??YADA_57_2
+    257                  {
+    258                      send_byte(P->style);
+   \   00000020   0x7820             LDRB     R0,[R4, #+0]
+   \   00000022   0x.... 0x....      BL       send_byte
+    259                      send_xy(P->X_0,P->Y_0);
+   \   00000026   0x88A1             LDRH     R1,[R4, #+4]
+   \   00000028   0x8860             LDRH     R0,[R4, #+2]
+   \   0000002A   0x.... 0x....      BL       send_xy
+    260                      send_byte(P->R_0);
+   \   0000002E   0x79A0             LDRB     R0,[R4, #+6]
+   \   00000030   0x.... 0x....      BL       send_byte
+    261                      P++;
+   \   00000034   0x3408             ADDS     R4,R4,#+8
+    262                  }
+   \   00000036   0x1C76             ADDS     R6,R6,#+1
+   \   00000038   0xE7EE             B.N      ??YADA_57_1
+    263              }
+    264              else
+    265              {
+    266                  U16 k;
+    267                  for(k=0; k<Size; k++)
+   \                     ??YADA_57_0:
+   \   0000003A   0x2600             MOVS     R6,#+0
+   \   0000003C   0xE00B             B.N      ??YADA_57_3
+    268                  {
+    269                      send_byte(P->style);
+   \                     ??YADA_57_4:
+   \   0000003E   0x7820             LDRB     R0,[R4, #+0]
+   \   00000040   0x.... 0x....      BL       send_byte
+    270                      send_xy(P->X_0,P->Y_0);
+   \   00000044   0x88A1             LDRH     R1,[R4, #+4]
+   \   00000046   0x8860             LDRH     R0,[R4, #+2]
+   \   00000048   0x.... 0x....      BL       send_xy
+    271                      send_byte(P->R_0);
+   \   0000004C   0x79A0             LDRB     R0,[R4, #+6]
+   \   0000004E   0x.... 0x....      BL       send_byte
+    272                      P++;
+   \   00000052   0x3408             ADDS     R4,R4,#+8
+    273                  }
+   \   00000054   0x1C76             ADDS     R6,R6,#+1
+   \                     ??YADA_57_3:
+   \   00000056   0x0028             MOVS     R0,R5
+   \   00000058   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000005A   0xB2B6             UXTH     R6,R6            ;; ZeroExt  R6,R6,#+16,#+16
+   \   0000005C   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   0000005E   0x4286             CMP      R6,R0
+   \   00000060   0xD3ED             BCC.N    ??YADA_57_4
+    274              }
+    275              send_end();
+   \                     ??YADA_57_2:
+   \   00000062   0x.... 0x....      BL       send_end
+    276          }
+   \   00000066   0xBD70             POP      {R4-R6,PC}       ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    277          void YADA_5704 (U16 X,U16 Y,U16 R,U16 AS,U16 AE)
+    278          {
+   \                     YADA_5704:
+   \   00000000   0xE92D 0x41F0      PUSH     {R4-R8,LR}
+   \   00000004   0x0005             MOVS     R5,R0
+   \   00000006   0x000E             MOVS     R6,R1
+   \   00000008   0x0017             MOVS     R7,R2
+   \   0000000A   0x4698             MOV      R8,R3
+   \   0000000C   0x9C06             LDR      R4,[SP, #+24]
+    279              send_byte(0xaa);
+   \   0000000E   0x20AA             MOVS     R0,#+170
+   \   00000010   0x.... 0x....      BL       send_byte
+    280              send_xy(0x5704,X);
+   \   00000014   0x0029             MOVS     R1,R5
+   \   00000016   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000018   0xF245 0x7004      MOVW     R0,#+22276
+   \   0000001C   0x.... 0x....      BL       send_xy
+    281              send_area(Y,R,AS,AE);
+   \   00000020   0x0023             MOVS     R3,R4
+   \   00000022   0xB29B             UXTH     R3,R3            ;; ZeroExt  R3,R3,#+16,#+16
+   \   00000024   0x4642             MOV      R2,R8
+   \   00000026   0xB292             UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
+   \   00000028   0x0039             MOVS     R1,R7
+   \   0000002A   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   0000002C   0x0030             MOVS     R0,R6
+   \   0000002E   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000030   0x.... 0x....      BL       send_area
+    282              send_end();
+   \   00000034   0x.... 0x....      BL       send_end
+    283          }
+   \   00000038   0xE8BD 0x81F0      POP      {R4-R8,PC}       ;; return
+    284          /*59 -前景色显示1像素线宽的1个或多个矩形外框*/
+
+   \                                 In section .text, align 2, keep-with-next
+    285          void YADA_59 (U16 *P,U8 Size)
+    286          {
+   \                     YADA_59:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    287              send_word(0xaa59);
+   \   00000006   0xF64A 0x2059      MOVW     R0,#+43609
+   \   0000000A   0x.... 0x....      BL       send_word
+    288              send_U16str(P,Size);
+   \   0000000E   0x0029             MOVS     R1,R5
+   \   00000010   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000012   0x0020             MOVS     R0,R4
+   \   00000014   0x.... 0x....      BL       send_U16str
+    289              send_end();
+   \   00000018   0x.... 0x....      BL       send_end
+    290          }
+   \   0000001C   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+    291          /*69 -背景色显示1像素线宽的1个或多个矩形外框*/
+
+   \                                 In section .text, align 2, keep-with-next
+    292          void YADA_69 (U16 *P,U8 Size)
+    293          {
+   \                     YADA_69:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    294              send_word(0xaa69);
+   \   00000006   0xF64A 0x2069      MOVW     R0,#+43625
+   \   0000000A   0x.... 0x....      BL       send_word
+    295              send_U16str(P,Size);
+   \   0000000E   0x0029             MOVS     R1,R5
+   \   00000010   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000012   0x0020             MOVS     R0,R4
+   \   00000014   0x.... 0x....      BL       send_U16str
+    296              send_end();
+   \   00000018   0x.... 0x....      BL       send_end
+    297          }
+   \   0000001C   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    298          void YADA_64 (U16 X,U16 Y,U16 Color)
+    299          {
+   \                     YADA_64:
+   \   00000000   0xB570             PUSH     {R4-R6,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+   \   00000006   0x0016             MOVS     R6,R2
+    300              send_word(0xaa64);
+   \   00000008   0xF64A 0x2064      MOVW     R0,#+43620
+   \   0000000C   0x.... 0x....      BL       send_word
+    301              send_xy(X,Y);
+   \   00000010   0x0029             MOVS     R1,R5
+   \   00000012   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000014   0x0020             MOVS     R0,R4
+   \   00000016   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000018   0x.... 0x....      BL       send_xy
+    302              send_word(Color);
+   \   0000001C   0x0030             MOVS     R0,R6
+   \   0000001E   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000020   0x.... 0x....      BL       send_word
+    303              send_end();
+   \   00000024   0x.... 0x....      BL       send_end
+    304          }
+   \   00000028   0xBD70             POP      {R4-R6,PC}       ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    305          void YADA_52 (void)
+    306          {
+   \                     YADA_52:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    307              send_word(0xaa52);
+   \   00000002   0xF64A 0x2052      MOVW     R0,#+43602
+   \   00000006   0x.... 0x....      BL       send_word
+    308              send_end();
+   \   0000000A   0x.... 0x....      BL       send_end
+    309          }
+   \   0000000E   0xBD01             POP      {R0,PC}          ;; return
+    310          /*5A -背景色填充1个或多个矩形区域*/
+
+   \                                 In section .text, align 2, keep-with-next
+    311          void YADA_5A (U16 *P,U8 Size)
+    312          {
+   \                     YADA_5A:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    313              send_word(0xaa5A);
+   \   00000006   0xF64A 0x205A      MOVW     R0,#+43610
+   \   0000000A   0x.... 0x....      BL       send_word
+    314              send_U16str(P,Size);
+   \   0000000E   0x0029             MOVS     R1,R5
+   \   00000010   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000012   0x0020             MOVS     R0,R4
+   \   00000014   0x.... 0x....      BL       send_U16str
+    315              send_end();
+   \   00000018   0x.... 0x....      BL       send_end
+    316          }
+   \   0000001C   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+    317          /*5B -前景色填充1个或多个矩形区域*/
+
+   \                                 In section .text, align 2, keep-with-next
+    318          void YADA_5B (U16 *P,U8 Size)
+    319          {
+   \                     YADA_5B:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    320              send_word(0xaa5B);
+   \   00000006   0xF64A 0x205B      MOVW     R0,#+43611
+   \   0000000A   0x.... 0x....      BL       send_word
+    321              send_U16str(P,Size);
+   \   0000000E   0x0029             MOVS     R1,R5
+   \   00000010   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000012   0x0020             MOVS     R0,R4
+   \   00000014   0x.... 0x....      BL       send_U16str
+    322              send_end();
+   \   00000018   0x.... 0x....      BL       send_end
+    323          }
+   \   0000001C   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+    324          /*5C -反色填充1个或多个矩形区域*/
+
+   \                                 In section .text, align 2, keep-with-next
+    325          void YADA_5C (U16 *P,U8 Size)
+    326          {
+   \                     YADA_5C:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    327              send_word(0xaa5C);
+   \   00000006   0xF64A 0x205C      MOVW     R0,#+43612
+   \   0000000A   0x.... 0x....      BL       send_word
+    328              send_U16str(P,Size);
+   \   0000000E   0x0029             MOVS     R1,R5
+   \   00000010   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000012   0x0020             MOVS     R0,R4
+   \   00000014   0x.... 0x....      BL       send_U16str
+    329              send_end();
+   \   00000018   0x.... 0x....      BL       send_end
+    330          }
+   \   0000001C   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    331          void shift (U8 cmd,U16 *p,U8 c_Dots,U8 size)
+    332          {
+   \                     shift:
+   \   00000000   0xB5F8             PUSH     {R3-R7,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+   \   00000006   0x0016             MOVS     R6,R2
+   \   00000008   0x001F             MOVS     R7,R3
+    333              send_byte(0xAA);
+   \   0000000A   0x20AA             MOVS     R0,#+170
+   \   0000000C   0x.... 0x....      BL       send_byte
+    334              send_byte(cmd);
+   \   00000010   0x0020             MOVS     R0,R4
+   \   00000012   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000014   0x.... 0x....      BL       send_byte
+    335              send_U16str(p,size);
+   \   00000018   0x0039             MOVS     R1,R7
+   \   0000001A   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   0000001C   0x0028             MOVS     R0,R5
+   \   0000001E   0x.... 0x....      BL       send_U16str
+    336              send_byte(c_Dots);
+   \   00000022   0x0030             MOVS     R0,R6
+   \   00000024   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000026   0x.... 0x....      BL       send_byte
+    337              send_end();
+   \   0000002A   0x.... 0x....      BL       send_end
+    338          }
+   \   0000002E   0xBDF1             POP      {R0,R4-R7,PC}    ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    339          void YADA_60 (U16 *P,U8 C_Dots,U8 Size)
+    340          {
+   \                     YADA_60:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    341              shift(0x60,P,C_Dots,Size);
+   \   00000002   0x0013             MOVS     R3,R2
+   \   00000004   0xB2DB             UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
+   \   00000006   0x000A             MOVS     R2,R1
+   \   00000008   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+   \   0000000A   0x0001             MOVS     R1,R0
+   \   0000000C   0x2060             MOVS     R0,#+96
+   \   0000000E   0x.... 0x....      BL       shift
+    342          }
+   \   00000012   0xBD01             POP      {R0,PC}          ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    343          void YADA_61 (U16 *P,U8 C_Dots,U8 Size)
+    344          {
+   \                     YADA_61:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    345              shift(0x61,P,C_Dots,Size);
+   \   00000002   0x0013             MOVS     R3,R2
+   \   00000004   0xB2DB             UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
+   \   00000006   0x000A             MOVS     R2,R1
+   \   00000008   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+   \   0000000A   0x0001             MOVS     R1,R0
+   \   0000000C   0x2061             MOVS     R0,#+97
+   \   0000000E   0x.... 0x....      BL       shift
+    346          }
+   \   00000012   0xBD01             POP      {R0,PC}          ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    347          void YADA_62 (U16 *P,U8 C_Dots,U8 Size)
+    348          {
+   \                     YADA_62:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    349              shift(0x62,P,C_Dots,Size);
+   \   00000002   0x0013             MOVS     R3,R2
+   \   00000004   0xB2DB             UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
+   \   00000006   0x000A             MOVS     R2,R1
+   \   00000008   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+   \   0000000A   0x0001             MOVS     R1,R0
+   \   0000000C   0x2062             MOVS     R0,#+98
+   \   0000000E   0x.... 0x....      BL       shift
+    350          }
+   \   00000012   0xBD01             POP      {R0,PC}          ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    351          void YADA_63 (U16 *P,U8 C_Dots,U8 Size)
+    352          {
+   \                     YADA_63:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    353              shift(0x63,P,C_Dots,Size);
+   \   00000002   0x0013             MOVS     R3,R2
+   \   00000004   0xB2DB             UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
+   \   00000006   0x000A             MOVS     R2,R1
+   \   00000008   0xB2D2             UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+   \   0000000A   0x0001             MOVS     R1,R0
+   \   0000000C   0x2063             MOVS     R0,#+99
+   \   0000000E   0x.... 0x....      BL       shift
+    354          }
+   \   00000012   0xBD01             POP      {R0,PC}          ;; return
+    355          
+    356          /*显示一副全图像 */
+
+   \                                 In section .text, align 2, keep-with-next
+    357          void YADA_70(U16 ID) 
+    358          {
+   \                     YADA_70:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+    359              send_word(0xaa70);
+   \   00000004   0xF64A 0x2070      MOVW     R0,#+43632
+   \   00000008   0x.... 0x....      BL       send_word
+    360              send_word(ID);
+   \   0000000C   0x0020             MOVS     R0,R4
+   \   0000000E   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000010   0x.... 0x....      BL       send_word
+    361              send_end();
+   \   00000014   0x.... 0x....      BL       send_end
+    362          }
+   \   00000018   0xBD10             POP      {R4,PC}          ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    363          void YADA_7B (U16 ID)
+    364          {
+   \                     YADA_7B:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+    365              send_word(0xaa7B);
+   \   00000004   0xF64A 0x207B      MOVW     R0,#+43643
+   \   00000008   0x.... 0x....      BL       send_word
+    366              send_word(ID);
+   \   0000000C   0x0020             MOVS     R0,R4
+   \   0000000E   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000010   0x.... 0x....      BL       send_word
+    367              send_end();
+   \   00000014   0x.... 0x....      BL       send_end
+    368          }
+   \   00000018   0xBD10             POP      {R4,PC}          ;; return
+    369          
+    370          /* 从指定图片剪切图标粘贴到当前显示页 */
+
+   \                                 In section .text, align 2, keep-with-next
+    371          void YADA_71 (U16 ID,U16 XS,U16 YS,U16 XE,U16 YE,U16 X,U16 Y)
+    372          {
+   \                     YADA_71:
+   \   00000000   0xE92D 0x47F0      PUSH     {R4-R10,LR}
+   \   00000004   0x0007             MOVS     R7,R0
+   \   00000006   0x4688             MOV      R8,R1
+   \   00000008   0x4691             MOV      R9,R2
+   \   0000000A   0x469A             MOV      R10,R3
+   \   0000000C   0x9E08             LDR      R6,[SP, #+32]
+   \   0000000E   0x9D09             LDR      R5,[SP, #+36]
+   \   00000010   0x9C0A             LDR      R4,[SP, #+40]
+    373              send_word(0xaa71);
+   \   00000012   0xF64A 0x2071      MOVW     R0,#+43633
+   \   00000016   0x.... 0x....      BL       send_word
+    374              send_word(ID);
+   \   0000001A   0x0038             MOVS     R0,R7
+   \   0000001C   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   0000001E   0x.... 0x....      BL       send_word
+    375              send_area(XS,YS,XE,YE);
+   \   00000022   0x0033             MOVS     R3,R6
+   \   00000024   0xB29B             UXTH     R3,R3            ;; ZeroExt  R3,R3,#+16,#+16
+   \   00000026   0x4652             MOV      R2,R10
+   \   00000028   0xB292             UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
+   \   0000002A   0x4649             MOV      R1,R9
+   \   0000002C   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   0000002E   0x4640             MOV      R0,R8
+   \   00000030   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000032   0x.... 0x....      BL       send_area
+    376              send_xy(X,Y);
+   \   00000036   0x0021             MOVS     R1,R4
+   \   00000038   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   0000003A   0x0028             MOVS     R0,R5
+   \   0000003C   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   0000003E   0x.... 0x....      BL       send_xy
+    377              send_end();
+   \   00000042   0x.... 0x....      BL       send_end
+    378          }
+   \   00000046   0xE8BD 0x87F0      POP      {R4-R10,PC}      ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    379          void YADA_9C (U16 ID,U16 XS,U16 YS,U16 XE,U16 YE,U16 X,U16 Y)
+    380          {
+   \                     YADA_9C:
+   \   00000000   0xE92D 0x47F0      PUSH     {R4-R10,LR}
+   \   00000004   0x0007             MOVS     R7,R0
+   \   00000006   0x4688             MOV      R8,R1
+   \   00000008   0x4691             MOV      R9,R2
+   \   0000000A   0x469A             MOV      R10,R3
+   \   0000000C   0x9E08             LDR      R6,[SP, #+32]
+   \   0000000E   0x9D09             LDR      R5,[SP, #+36]
+   \   00000010   0x9C0A             LDR      R4,[SP, #+40]
+    381              send_word(0xaa9C);
+   \   00000012   0xF64A 0x209C      MOVW     R0,#+43676
+   \   00000016   0x.... 0x....      BL       send_word
+    382              send_word(ID);
+   \   0000001A   0x0038             MOVS     R0,R7
+   \   0000001C   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   0000001E   0x.... 0x....      BL       send_word
+    383              send_area(XS,YS,XE,YE);
+   \   00000022   0x0033             MOVS     R3,R6
+   \   00000024   0xB29B             UXTH     R3,R3            ;; ZeroExt  R3,R3,#+16,#+16
+   \   00000026   0x4652             MOV      R2,R10
+   \   00000028   0xB292             UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
+   \   0000002A   0x4649             MOV      R1,R9
+   \   0000002C   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   0000002E   0x4640             MOV      R0,R8
+   \   00000030   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000032   0x.... 0x....      BL       send_area
+    384              send_xy(X,Y);
+   \   00000036   0x0021             MOVS     R1,R4
+   \   00000038   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   0000003A   0x0028             MOVS     R0,R5
+   \   0000003C   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   0000003E   0x.... 0x....      BL       send_xy
+    385              send_end();
+   \   00000042   0x.... 0x....      BL       send_end
+    386          }
+   \   00000046   0xE8BD 0x87F0      POP      {R4-R10,PC}      ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    387          void YADA_9D (U16 ID,U16 XS,U16 YS,U16 XE,U16 YE,U16 X,U16 Y)
+    388          {
+   \                     YADA_9D:
+   \   00000000   0xE92D 0x47F0      PUSH     {R4-R10,LR}
+   \   00000004   0x0007             MOVS     R7,R0
+   \   00000006   0x4688             MOV      R8,R1
+   \   00000008   0x4691             MOV      R9,R2
+   \   0000000A   0x469A             MOV      R10,R3
+   \   0000000C   0x9E08             LDR      R6,[SP, #+32]
+   \   0000000E   0x9D09             LDR      R5,[SP, #+36]
+   \   00000010   0x9C0A             LDR      R4,[SP, #+40]
+    389              send_word(0xaa9D);
+   \   00000012   0xF64A 0x209D      MOVW     R0,#+43677
+   \   00000016   0x.... 0x....      BL       send_word
+    390              send_word(ID);
+   \   0000001A   0x0038             MOVS     R0,R7
+   \   0000001C   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   0000001E   0x.... 0x....      BL       send_word
+    391              send_area(XS,YS,XE,YE);
+   \   00000022   0x0033             MOVS     R3,R6
+   \   00000024   0xB29B             UXTH     R3,R3            ;; ZeroExt  R3,R3,#+16,#+16
+   \   00000026   0x4652             MOV      R2,R10
+   \   00000028   0xB292             UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
+   \   0000002A   0x4649             MOV      R1,R9
+   \   0000002C   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   0000002E   0x4640             MOV      R0,R8
+   \   00000030   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000032   0x.... 0x....      BL       send_area
+    392              send_xy(X,Y);
+   \   00000036   0x0021             MOVS     R1,R4
+   \   00000038   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   0000003A   0x0028             MOVS     R0,R5
+   \   0000003C   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   0000003E   0x.... 0x....      BL       send_xy
+    393              send_end();
+   \   00000042   0x.... 0x....      BL       send_end
+    394          }
+   \   00000046   0xE8BD 0x87F0      POP      {R4-R10,PC}      ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    395          void YADA_E2 (U16 ID)
+    396          {
+   \                     YADA_E2:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+    397              send_word(0xaaE2);
+   \   00000004   0xF64A 0x20E2      MOVW     R0,#+43746
+   \   00000008   0x.... 0x....      BL       send_word
+    398              send_word(ID);
+   \   0000000C   0x0020             MOVS     R0,R4
+   \   0000000E   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000010   0x.... 0x....      BL       send_word
+    399              send_end();
+   \   00000014   0x.... 0x....      BL       send_end
+    400          }
+   \   00000018   0xBD10             POP      {R4,PC}          ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    401          void YADA_99 (U16 *P,U8 Size)
+    402          {
+   \                     YADA_99:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    403              send_word(0xaa99);
+   \   00000006   0xF64A 0x2099      MOVW     R0,#+43673
+   \   0000000A   0x.... 0x....      BL       send_word
+    404              send_U16str(P,Size);
+   \   0000000E   0x0029             MOVS     R1,R5
+   \   00000010   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000012   0x0020             MOVS     R0,R4
+   \   00000014   0x.... 0x....      BL       send_U16str
+    405              send_end();
+   \   00000018   0x.... 0x....      BL       send_end
+    406          }
+   \   0000001C   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    407          void YADA_D0 (void)
+    408          {
+   \                     YADA_D0:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    409              send_word(0xaad0);
+   \   00000002   0xF64A 0x20D0      MOVW     R0,#+43728
+   \   00000006   0x.... 0x....      BL       send_word
+    410              send_end();
+   \   0000000A   0x.... 0x....      BL       send_end
+    411          }
+   \   0000000E   0xBD01             POP      {R0,PC}          ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    412          void YADA_C0 (U16 Addr,U16 *P,U8 Size)
+    413          {
+   \                     YADA_C0:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x000C             MOVS     R4,R1
+   \   00000004   0x0015             MOVS     R5,R2
+    414              send_xy(0xAAC0,Addr);
+   \   00000006   0x0001             MOVS     R1,R0
+   \   00000008   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   0000000A   0xF64A 0x20C0      MOVW     R0,#+43712
+   \   0000000E   0x.... 0x....      BL       send_xy
+    415              send_U16str(P,Size);
+   \   00000012   0x0029             MOVS     R1,R5
+   \   00000014   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000016   0x0020             MOVS     R0,R4
+   \   00000018   0x.... 0x....      BL       send_U16str
+    416              send_end();
+   \   0000001C   0x.... 0x....      BL       send_end
+    417          }
+   \   00000020   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    418          void YADA_C2 (U16 Addr,U16 Data_Length)
+    419          {
+   \                     YADA_C2:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    420              send_word(0xAAC2);
+   \   00000006   0xF64A 0x20C2      MOVW     R0,#+43714
+   \   0000000A   0x.... 0x....      BL       send_word
+    421              send_xy(Addr,Data_Length);
+   \   0000000E   0x0029             MOVS     R1,R5
+   \   00000010   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000012   0x0020             MOVS     R0,R4
+   \   00000014   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000016   0x.... 0x....      BL       send_xy
+    422              send_end();
+   \   0000001A   0x.... 0x....      BL       send_end
+    423          }
+   \   0000001E   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    424          void YADA_C101 (U16 Addr,U16 Pixel_Number)
+    425          {
+   \                     YADA_C101:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    426              send_byte(0xAA);
+   \   00000006   0x20AA             MOVS     R0,#+170
+   \   00000008   0x.... 0x....      BL       send_byte
+    427              send_word(0xC101);
+   \   0000000C   0xF24C 0x1001      MOVW     R0,#+49409
+   \   00000010   0x.... 0x....      BL       send_word
+    428              send_xy(Addr,Pixel_Number);
+   \   00000014   0x0029             MOVS     R1,R5
+   \   00000016   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000018   0x0020             MOVS     R0,R4
+   \   0000001A   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   0000001C   0x.... 0x....      BL       send_xy
+    429              send_end();
+   \   00000020   0x.... 0x....      BL       send_end
+    430          }
+   \   00000024   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    431          void YADA_C102 (U16 Addr,U16 Line_Number)
+    432          {
+   \                     YADA_C102:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    433              send_byte(0xAA);
+   \   00000006   0x20AA             MOVS     R0,#+170
+   \   00000008   0x.... 0x....      BL       send_byte
+    434              send_word(0xC102);
+   \   0000000C   0xF24C 0x1002      MOVW     R0,#+49410
+   \   00000010   0x.... 0x....      BL       send_word
+    435              send_xy(Addr,Line_Number);
+   \   00000014   0x0029             MOVS     R1,R5
+   \   00000016   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000018   0x0020             MOVS     R0,R4
+   \   0000001A   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   0000001C   0x.... 0x....      BL       send_xy
+    436              send_end();
+   \   00000020   0x.... 0x....      BL       send_end
+    437          }
+   \   00000024   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    438          void YADA_C103 (U16 Addr,U16 X,U16 Y,U16 Line_Number,U8 D_X,U8 Dis_X,U8 K_y,U16 Color)
+    439          {
+   \                     YADA_C103:
+   \   00000000   0xE92D 0x4FF8      PUSH     {R3-R11,LR}
+   \   00000004   0x4680             MOV      R8,R0
+   \   00000006   0x4689             MOV      R9,R1
+   \   00000008   0x4692             MOV      R10,R2
+   \   0000000A   0x469B             MOV      R11,R3
+   \   0000000C   0x9F0A             LDR      R7,[SP, #+40]
+   \   0000000E   0x9E0B             LDR      R6,[SP, #+44]
+   \   00000010   0x9D0C             LDR      R5,[SP, #+48]
+   \   00000012   0x9C0D             LDR      R4,[SP, #+52]
+    440              send_byte(0xAA);
+   \   00000014   0x20AA             MOVS     R0,#+170
+   \   00000016   0x.... 0x....      BL       send_byte
+    441              send_word(0xC103);
+   \   0000001A   0xF24C 0x1003      MOVW     R0,#+49411
+   \   0000001E   0x.... 0x....      BL       send_word
+    442              send_xy(Addr,X);
+   \   00000022   0x4649             MOV      R1,R9
+   \   00000024   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000026   0x4640             MOV      R0,R8
+   \   00000028   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   0000002A   0x.... 0x....      BL       send_xy
+    443              send_xy(Y,Line_Number);
+   \   0000002E   0x4659             MOV      R1,R11
+   \   00000030   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000032   0x4650             MOV      R0,R10
+   \   00000034   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000036   0x.... 0x....      BL       send_xy
+    444              send_byte(D_X);
+   \   0000003A   0x0038             MOVS     R0,R7
+   \   0000003C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000003E   0x.... 0x....      BL       send_byte
+    445              send_byte(Dis_X);
+   \   00000042   0x0030             MOVS     R0,R6
+   \   00000044   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000046   0x.... 0x....      BL       send_byte
+    446              send_byte(K_y);
+   \   0000004A   0x0028             MOVS     R0,R5
+   \   0000004C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000004E   0x.... 0x....      BL       send_byte
+    447              send_word(Color);
+   \   00000052   0x0020             MOVS     R0,R4
+   \   00000054   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000056   0x.... 0x....      BL       send_word
+    448              send_end();
+   \   0000005A   0x.... 0x....      BL       send_end
+    449          }
+   \   0000005E   0xE8BD 0x8FF1      POP      {R0,R4-R11,PC}   ;; return
+    450          
+    451           /* 使用暂存缓冲区的数据点高速无闪烁连线（示波器） */
+
+   \                                 In section .text, align 2, keep-with-next
+    452          void YADA_C104 (U16 Addr1,U16 X,U16 Y,U16 Line_Number,U8 Dis_X,U16 Color1,U16 Addr0,U16 Color0)
+    453          {
+   \                     YADA_C104:
+   \   00000000   0xE92D 0x4FF8      PUSH     {R3-R11,LR}
+   \   00000004   0x4680             MOV      R8,R0
+   \   00000006   0x4689             MOV      R9,R1
+   \   00000008   0x4692             MOV      R10,R2
+   \   0000000A   0x469B             MOV      R11,R3
+   \   0000000C   0x9F0A             LDR      R7,[SP, #+40]
+   \   0000000E   0x9E0B             LDR      R6,[SP, #+44]
+   \   00000010   0x9D0C             LDR      R5,[SP, #+48]
+   \   00000012   0x9C0D             LDR      R4,[SP, #+52]
+    454              send_byte(0xAA);
+   \   00000014   0x20AA             MOVS     R0,#+170
+   \   00000016   0x.... 0x....      BL       send_byte
+    455              send_word(0xC104);
+   \   0000001A   0xF24C 0x1004      MOVW     R0,#+49412
+   \   0000001E   0x.... 0x....      BL       send_word
+    456              send_xy(Addr1,X);
+   \   00000022   0x4649             MOV      R1,R9
+   \   00000024   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000026   0x4640             MOV      R0,R8
+   \   00000028   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   0000002A   0x.... 0x....      BL       send_xy
+    457              send_xy(Y,Line_Number);
+   \   0000002E   0x4659             MOV      R1,R11
+   \   00000030   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000032   0x4650             MOV      R0,R10
+   \   00000034   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000036   0x.... 0x....      BL       send_xy
+    458              send_byte(0x01);//自动固定写01
+   \   0000003A   0x2001             MOVS     R0,#+1
+   \   0000003C   0x.... 0x....      BL       send_byte
+    459              send_byte(Dis_X);
+   \   00000040   0x0038             MOVS     R0,R7
+   \   00000042   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000044   0x.... 0x....      BL       send_byte
+    460              send_word(Color1);
+   \   00000048   0x0030             MOVS     R0,R6
+   \   0000004A   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   0000004C   0x.... 0x....      BL       send_word
+    461              send_xy(Addr0,Color0);
+   \   00000050   0x0021             MOVS     R1,R4
+   \   00000052   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000054   0x0028             MOVS     R0,R5
+   \   00000056   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000058   0x.... 0x....      BL       send_xy
+    462              send_end();
+   \   0000005C   0x.... 0x....      BL       send_end
+    463          }
+   \   00000060   0xE8BD 0x8FF1      POP      {R0,R4-R11,PC}   ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    464          void YADA_C105 (U16 Addr,U16 X,U16 Y,U16 Line_Number,U8 D_X,U8 Dis_X,U8 M_y,U8 D_y,U16 Color)
+    465          {
+   \                     YADA_C105:
+   \   00000000   0xE92D 0x4FF1      PUSH     {R0,R4-R11,LR}
+   \   00000004   0x4689             MOV      R9,R1
+   \   00000006   0x4692             MOV      R10,R2
+   \   00000008   0x469B             MOV      R11,R3
+   \   0000000A   0xF8DD 0x8028      LDR      R8,[SP, #+40]
+   \   0000000E   0x9F0B             LDR      R7,[SP, #+44]
+   \   00000010   0x9E0C             LDR      R6,[SP, #+48]
+   \   00000012   0x9D0D             LDR      R5,[SP, #+52]
+   \   00000014   0x9C0E             LDR      R4,[SP, #+56]
+    466              send_byte(0xAA);
+   \   00000016   0x20AA             MOVS     R0,#+170
+   \   00000018   0x.... 0x....      BL       send_byte
+    467              send_word(0xC105);
+   \   0000001C   0xF24C 0x1005      MOVW     R0,#+49413
+   \   00000020   0x.... 0x....      BL       send_word
+    468              send_xy(Addr,X);
+   \   00000024   0x4649             MOV      R1,R9
+   \   00000026   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000028   0xF8BD 0x0000      LDRH     R0,[SP, #+0]
+   \   0000002C   0x.... 0x....      BL       send_xy
+    469              send_xy(Y,Line_Number);
+   \   00000030   0x4659             MOV      R1,R11
+   \   00000032   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000034   0x4650             MOV      R0,R10
+   \   00000036   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000038   0x.... 0x....      BL       send_xy
+    470              send_byte(D_X);
+   \   0000003C   0x4640             MOV      R0,R8
+   \   0000003E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000040   0x.... 0x....      BL       send_byte
+    471              send_byte(Dis_X);
+   \   00000044   0x0038             MOVS     R0,R7
+   \   00000046   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000048   0x.... 0x....      BL       send_byte
+    472              send_byte(M_y);
+   \   0000004C   0x0030             MOVS     R0,R6
+   \   0000004E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000050   0x.... 0x....      BL       send_byte
+    473              send_byte(D_y);
+   \   00000054   0x0028             MOVS     R0,R5
+   \   00000056   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000058   0x.... 0x....      BL       send_byte
+    474              send_word(Color);
+   \   0000005C   0x0020             MOVS     R0,R4
+   \   0000005E   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000060   0x.... 0x....      BL       send_word
+    475              send_end();
+   \   00000064   0x.... 0x....      BL       send_end
+    476          }
+   \   00000068   0xE8BD 0x8FF1      POP      {R0,R4-R11,PC}   ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    477          void YADA_C106 (U16 Addr,U16 X,U16 Y,U16 Line_Number,U8 D_X,U8 Dis_X,U8 M_y,U8 D_y,U16 Color,U16 Ymin,U16 Ymax)
+    478          {
+   \                     YADA_C106:
+   \   00000000   0xE92D 0x4FF7      PUSH     {R0-R2,R4-R11,LR}
+   \   00000004   0x469B             MOV      R11,R3
+   \   00000006   0xF8DD 0xA030      LDR      R10,[SP, #+48]
+   \   0000000A   0xF8DD 0x9034      LDR      R9,[SP, #+52]
+   \   0000000E   0xF8DD 0x8038      LDR      R8,[SP, #+56]
+   \   00000012   0x9F0F             LDR      R7,[SP, #+60]
+   \   00000014   0x9E10             LDR      R6,[SP, #+64]
+   \   00000016   0x9D11             LDR      R5,[SP, #+68]
+   \   00000018   0x9C12             LDR      R4,[SP, #+72]
+    479              send_byte(0xAA);
+   \   0000001A   0x20AA             MOVS     R0,#+170
+   \   0000001C   0x.... 0x....      BL       send_byte
+    480              send_word(0xC106);
+   \   00000020   0xF24C 0x1006      MOVW     R0,#+49414
+   \   00000024   0x.... 0x....      BL       send_word
+    481              send_xy(Addr,X);
+   \   00000028   0xF8BD 0x1004      LDRH     R1,[SP, #+4]
+   \   0000002C   0xF8BD 0x0000      LDRH     R0,[SP, #+0]
+   \   00000030   0x.... 0x....      BL       send_xy
+    482              send_xy(Y,Line_Number);
+   \   00000034   0x4659             MOV      R1,R11
+   \   00000036   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000038   0xF8BD 0x0008      LDRH     R0,[SP, #+8]
+   \   0000003C   0x.... 0x....      BL       send_xy
+    483              send_byte(D_X);
+   \   00000040   0x4650             MOV      R0,R10
+   \   00000042   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000044   0x.... 0x....      BL       send_byte
+    484              send_byte(Dis_X);
+   \   00000048   0x4648             MOV      R0,R9
+   \   0000004A   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000004C   0x.... 0x....      BL       send_byte
+    485              send_byte(M_y);
+   \   00000050   0x4640             MOV      R0,R8
+   \   00000052   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000054   0x.... 0x....      BL       send_byte
+    486              send_byte(D_y);
+   \   00000058   0x0038             MOVS     R0,R7
+   \   0000005A   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000005C   0x.... 0x....      BL       send_byte
+    487              send_word(Color);
+   \   00000060   0x0030             MOVS     R0,R6
+   \   00000062   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000064   0x.... 0x....      BL       send_word
+    488              send_xy(Ymin,Ymax);
+   \   00000068   0x0021             MOVS     R1,R4
+   \   0000006A   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   0000006C   0x0028             MOVS     R0,R5
+   \   0000006E   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000070   0x.... 0x....      BL       send_xy
+    489              send_end();
+   \   00000074   0x.... 0x....      BL       send_end
+    490          }
+   \   00000078   0xE8BD 0x8FF7      POP      {R0-R2,R4-R11,PC}  ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    491          void YADA_C10700 (U16 Addr,U16 X_Len,U16 Y_Len)
+    492          {
+   \                     YADA_C10700:
+   \   00000000   0xB570             PUSH     {R4-R6,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+   \   00000006   0x0016             MOVS     R6,R2
+    493              send_xy(0xAAC1,0X0700);
+   \   00000008   0xF44F 0x61E0      MOV      R1,#+1792
+   \   0000000C   0xF64A 0x20C1      MOVW     R0,#+43713
+   \   00000010   0x.... 0x....      BL       send_xy
+    494              send_xy(Addr,X_Len);
+   \   00000014   0x0029             MOVS     R1,R5
+   \   00000016   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000018   0x0020             MOVS     R0,R4
+   \   0000001A   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   0000001C   0x.... 0x....      BL       send_xy
+    495              send_word(Y_Len);
+   \   00000020   0x0030             MOVS     R0,R6
+   \   00000022   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000024   0x.... 0x....      BL       send_word
+    496              send_end();
+   \   00000028   0x.... 0x....      BL       send_end
+    497          }
+   \   0000002C   0xBD70             POP      {R4-R6,PC}       ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    498          void YADA_C10701 (U16 Addr,U16 X_Len,U16 Y_Len,U16 X,U16 Y,U16 Color,U8 MODE,U16 *P,U8 Size)
+    499          {
+   \                     YADA_C10701:
+   \   00000000   0xE92D 0x4FF1      PUSH     {R0,R4-R11,LR}
+   \   00000004   0x4688             MOV      R8,R1
+   \   00000006   0x4691             MOV      R9,R2
+   \   00000008   0x469A             MOV      R10,R3
+   \   0000000A   0x9F0A             LDR      R7,[SP, #+40]
+   \   0000000C   0x9E0B             LDR      R6,[SP, #+44]
+   \   0000000E   0x9D0C             LDR      R5,[SP, #+48]
+   \   00000010   0xF8DD 0xB034      LDR      R11,[SP, #+52]
+   \   00000014   0x9C0E             LDR      R4,[SP, #+56]
+    500              send_xy(0xAAC1,0X0701);
+   \   00000016   0xF240 0x7101      MOVW     R1,#+1793
+   \   0000001A   0xF64A 0x20C1      MOVW     R0,#+43713
+   \   0000001E   0x.... 0x....      BL       send_xy
+    501              send_area(Addr,X_Len,Y_Len,X);
+   \   00000022   0x4653             MOV      R3,R10
+   \   00000024   0xB29B             UXTH     R3,R3            ;; ZeroExt  R3,R3,#+16,#+16
+   \   00000026   0x464A             MOV      R2,R9
+   \   00000028   0xB292             UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
+   \   0000002A   0x4641             MOV      R1,R8
+   \   0000002C   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   0000002E   0xF8BD 0x0000      LDRH     R0,[SP, #+0]
+   \   00000032   0x.... 0x....      BL       send_area
+    502              send_xy(Y,Color);
+   \   00000036   0x0031             MOVS     R1,R6
+   \   00000038   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   0000003A   0x0038             MOVS     R0,R7
+   \   0000003C   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   0000003E   0x.... 0x....      BL       send_xy
+    503              send_byte(MODE);
+   \   00000042   0x0028             MOVS     R0,R5
+   \   00000044   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000046   0x.... 0x....      BL       send_byte
+    504              send_U16str(P,Size);
+   \   0000004A   0x0021             MOVS     R1,R4
+   \   0000004C   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   0000004E   0x4658             MOV      R0,R11
+   \   00000050   0x.... 0x....      BL       send_U16str
+    505              send_end();
+   \   00000054   0x.... 0x....      BL       send_end
+    506          }
+   \   00000058   0xE8BD 0x8FF1      POP      {R0,R4-R11,PC}   ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    507          void YADA_C10702 (U16 Addr,U16 X_Len,U16 Y_Len,U16 X,U16 Y,U16 Color)
+    508          {
+   \                     YADA_C10702:
+   \   00000000   0xE92D 0x43F8      PUSH     {R3-R9,LR}
+   \   00000004   0x0006             MOVS     R6,R0
+   \   00000006   0x000F             MOVS     R7,R1
+   \   00000008   0x4690             MOV      R8,R2
+   \   0000000A   0x4699             MOV      R9,R3
+   \   0000000C   0x9D08             LDR      R5,[SP, #+32]
+   \   0000000E   0x9C09             LDR      R4,[SP, #+36]
+    509              send_xy(0xAAC1,0X0702);
+   \   00000010   0xF240 0x7102      MOVW     R1,#+1794
+   \   00000014   0xF64A 0x20C1      MOVW     R0,#+43713
+   \   00000018   0x.... 0x....      BL       send_xy
+    510              send_area(Addr,X_Len,Y_Len,X);
+   \   0000001C   0x464B             MOV      R3,R9
+   \   0000001E   0xB29B             UXTH     R3,R3            ;; ZeroExt  R3,R3,#+16,#+16
+   \   00000020   0x4642             MOV      R2,R8
+   \   00000022   0xB292             UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
+   \   00000024   0x0039             MOVS     R1,R7
+   \   00000026   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000028   0x0030             MOVS     R0,R6
+   \   0000002A   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   0000002C   0x.... 0x....      BL       send_area
+    511              send_xy(Y,Color);
+   \   00000030   0x0021             MOVS     R1,R4
+   \   00000032   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000034   0x0028             MOVS     R0,R5
+   \   00000036   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000038   0x.... 0x....      BL       send_xy
+    512              send_end();
+   \   0000003C   0x.... 0x....      BL       send_end
+    513          }
+   \   00000040   0xE8BD 0x83F1      POP      {R0,R4-R9,PC}    ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    514          void YADA_C108 (U16 Addr,U8 Parameter_N)
+    515          {
+   \                     YADA_C108:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    516              send_byte(0xAA);
+   \   00000006   0x20AA             MOVS     R0,#+170
+   \   00000008   0x.... 0x....      BL       send_byte
+    517              send_word(0xC108);
+   \   0000000C   0xF24C 0x1008      MOVW     R0,#+49416
+   \   00000010   0x.... 0x....      BL       send_word
+    518              send_word(Addr);
+   \   00000014   0x0020             MOVS     R0,R4
+   \   00000016   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000018   0x.... 0x....      BL       send_word
+    519              send_byte(Parameter_N);
+   \   0000001C   0x0028             MOVS     R0,R5
+   \   0000001E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000020   0x.... 0x....      BL       send_byte
+    520              send_end();
+   \   00000024   0x.... 0x....      BL       send_end
+    521          }
+   \   00000028   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    522          void YADA_C110 (U16 Addr,U8 Frame_Number)
+    523          {
+   \                     YADA_C110:
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+    524              send_byte(0xAA);
+   \   00000006   0x20AA             MOVS     R0,#+170
+   \   00000008   0x.... 0x....      BL       send_byte
+    525              send_word(0xC110);
+   \   0000000C   0xF24C 0x1010      MOVW     R0,#+49424
+   \   00000010   0x.... 0x....      BL       send_word
+    526              send_word(Addr);
+   \   00000014   0x0020             MOVS     R0,R4
+   \   00000016   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000018   0x.... 0x....      BL       send_word
+    527              send_byte(Frame_Number);
+   \   0000001C   0x0028             MOVS     R0,R5
+   \   0000001E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000020   0x.... 0x....      BL       send_byte
+    528              send_end();
+   \   00000024   0x.... 0x....      BL       send_end
+    529          }
+   \   00000028   0xBD31             POP      {R0,R4,R5,PC}    ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    530          void YADA_90_RANDOM (U16 Addr,U8 *P,U8 Size)
+    531          {
+   \                     YADA_90_RANDOM:
+   \   00000000   0xB570             PUSH     {R4-R6,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+   \   00000006   0x0016             MOVS     R6,R2
+    532              send_area(0xAA90,0x55aa,0x5aa5,0x01de);
+   \   00000008   0xF44F 0x73EF      MOV      R3,#+478
+   \   0000000C   0xF645 0x22A5      MOVW     R2,#+23205
+   \   00000010   0xF245 0x51AA      MOVW     R1,#+21930
+   \   00000014   0xF64A 0x2090      MOVW     R0,#+43664
+   \   00000018   0x.... 0x....      BL       send_area
+    533              send_word(Addr);
+   \   0000001C   0x0020             MOVS     R0,R4
+   \   0000001E   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000020   0x.... 0x....      BL       send_word
+    534              send_U8str(P,Size);
+   \   00000024   0x0031             MOVS     R1,R6
+   \   00000026   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000028   0x0028             MOVS     R0,R5
+   \   0000002A   0x.... 0x....      BL       send_U8str
+    535              send_end();
+   \   0000002E   0x.... 0x....      BL       send_end
+    536          }
+   \   00000032   0xBD70             POP      {R4-R6,PC}       ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    537          void YADA_90_ORDER (U32 Addr,U8 *P,U8 Size)
+    538          {
+   \                     YADA_90_ORDER:
+   \   00000000   0xB570             PUSH     {R4-R6,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+   \   00000006   0x0016             MOVS     R6,R2
+    539              send_xy(0xaa90,0x55aa);
+   \   00000008   0xF245 0x51AA      MOVW     R1,#+21930
+   \   0000000C   0xF64A 0x2090      MOVW     R0,#+43664
+   \   00000010   0x.... 0x....      BL       send_xy
+    540              send_word(0x5aa5);
+   \   00000014   0xF645 0x20A5      MOVW     R0,#+23205
+   \   00000018   0x.... 0x....      BL       send_word
+    541              send_word(Addr/65536);
+   \   0000001C   0x0C20             LSRS     R0,R4,#+16
+   \   0000001E   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000020   0x.... 0x....      BL       send_word
+    542              send_word(Addr%65536);
+   \   00000024   0xF45F 0x3180      MOVS     R1,#+65536
+   \   00000028   0xFBB4 0xF0F1      UDIV     R0,R4,R1
+   \   0000002C   0xFB00 0x4011      MLS      R0,R0,R1,R4
+   \   00000030   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000032   0x.... 0x....      BL       send_word
+    543              send_U8str(P,Size);
+   \   00000036   0x0031             MOVS     R1,R6
+   \   00000038   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   0000003A   0x0028             MOVS     R0,R5
+   \   0000003C   0x.... 0x....      BL       send_U8str
+    544              send_end();
+   \   00000040   0x.... 0x....      BL       send_end
+    545          }
+   \   00000044   0xBD70             POP      {R4-R6,PC}       ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    546          void YADA_91 (U32 Addr,U16 Length)
+    547          {
+   \                     YADA_91:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    548              send_area(0xaa91,Addr/65536,Addr%65536,Length);
+   \   00000002   0x000B             MOVS     R3,R1
+   \   00000004   0xB29B             UXTH     R3,R3            ;; ZeroExt  R3,R3,#+16,#+16
+   \   00000006   0xF45F 0x3180      MOVS     R1,#+65536
+   \   0000000A   0xFBB0 0xF2F1      UDIV     R2,R0,R1
+   \   0000000E   0xFB02 0x0211      MLS      R2,R2,R1,R0
+   \   00000012   0xB292             UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
+   \   00000014   0x0C01             LSRS     R1,R0,#+16
+   \   00000016   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000018   0xF64A 0x2091      MOVW     R0,#+43665
+   \   0000001C   0x.... 0x....      BL       send_area
+    549              send_end();
+   \   00000020   0x.... 0x....      BL       send_end
+    550          }
+   \   00000024   0xBD01             POP      {R0,PC}          ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    551          void YADA_9B00 (void)
+    552          {
+   \                     YADA_9B00:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    553              send_word(0xaa9B);
+   \   00000002   0xF64A 0x209B      MOVW     R0,#+43675
+   \   00000006   0x.... 0x....      BL       send_word
+    554              send_byte(0x00);
+   \   0000000A   0x2000             MOVS     R0,#+0
+   \   0000000C   0x.... 0x....      BL       send_byte
+    555              send_end();
+   \   00000010   0x.... 0x....      BL       send_end
+    556          }
+   \   00000014   0xBD01             POP      {R0,PC}          ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    557          void YADA_9BFF (U8 RTC_Mode,U8 Text_Mode,U16 Color,U16 X,U16 Y)
+    558          {
+   \                     YADA_9BFF:
+   \   00000000   0xE92D 0x41F0      PUSH     {R4-R8,LR}
+   \   00000004   0x0005             MOVS     R5,R0
+   \   00000006   0x000E             MOVS     R6,R1
+   \   00000008   0x0017             MOVS     R7,R2
+   \   0000000A   0x4698             MOV      R8,R3
+   \   0000000C   0x9C06             LDR      R4,[SP, #+24]
+    559              send_word(0xaa9B);
+   \   0000000E   0xF64A 0x209B      MOVW     R0,#+43675
+   \   00000012   0x.... 0x....      BL       send_word
+    560              send_byte(0xFF);
+   \   00000016   0x20FF             MOVS     R0,#+255
+   \   00000018   0x.... 0x....      BL       send_byte
+    561              send_byte(RTC_Mode);
+   \   0000001C   0x0028             MOVS     R0,R5
+   \   0000001E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000020   0x.... 0x....      BL       send_byte
+    562              send_byte(Text_Mode);
+   \   00000024   0x0030             MOVS     R0,R6
+   \   00000026   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000028   0x.... 0x....      BL       send_byte
+    563              send_word(Color);
+   \   0000002C   0x0038             MOVS     R0,R7
+   \   0000002E   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000030   0x.... 0x....      BL       send_word
+    564              send_xy(X,Y);
+   \   00000034   0x0021             MOVS     R1,R4
+   \   00000036   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
+   \   00000038   0x4640             MOV      R0,R8
+   \   0000003A   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   0000003C   0x.... 0x....      BL       send_xy
+    565              send_end();
+   \   00000040   0x.... 0x....      BL       send_end
+    566          }
+   \   00000044   0xE8BD 0x81F0      POP      {R4-R8,PC}       ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    567          void YADA_9B5A (void)
+    568          {
+   \                     YADA_9B5A:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    569              send_word(0xaa9B);
+   \   00000002   0xF64A 0x209B      MOVW     R0,#+43675
+   \   00000006   0x.... 0x....      BL       send_word
+    570              send_byte(0x5a);
+   \   0000000A   0x205A             MOVS     R0,#+90
+   \   0000000C   0x.... 0x....      BL       send_byte
+    571              send_end();
+   \   00000010   0x.... 0x....      BL       send_end
+    572          }
+   \   00000014   0xBD01             POP      {R0,PC}          ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    573          void YADA_E7(U8 YY,U8 MM,U8 DD,U8 HH,U8 M,U8 SS)
+    574          {
+   \                     YADA_E7:
+   \   00000000   0xE92D 0x43F8      PUSH     {R3-R9,LR}
+   \   00000004   0x0006             MOVS     R6,R0
+   \   00000006   0x000F             MOVS     R7,R1
+   \   00000008   0x4690             MOV      R8,R2
+   \   0000000A   0x4699             MOV      R9,R3
+   \   0000000C   0x9D08             LDR      R5,[SP, #+32]
+   \   0000000E   0x9C09             LDR      R4,[SP, #+36]
+    575              send_xy(0xaae7,0x55aa);
+   \   00000010   0xF245 0x51AA      MOVW     R1,#+21930
+   \   00000014   0xF64A 0x20E7      MOVW     R0,#+43751
+   \   00000018   0x.... 0x....      BL       send_xy
+    576              send_word(0x5aa5);
+   \   0000001C   0xF645 0x20A5      MOVW     R0,#+23205
+   \   00000020   0x.... 0x....      BL       send_word
+    577              send_byte(YY);
+   \   00000024   0x0030             MOVS     R0,R6
+   \   00000026   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000028   0x.... 0x....      BL       send_byte
+    578              send_byte(MM);
+   \   0000002C   0x0038             MOVS     R0,R7
+   \   0000002E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000030   0x.... 0x....      BL       send_byte
+    579              send_byte(DD);
+   \   00000034   0x4640             MOV      R0,R8
+   \   00000036   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000038   0x.... 0x....      BL       send_byte
+    580              send_byte(HH);
+   \   0000003C   0x4648             MOV      R0,R9
+   \   0000003E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000040   0x.... 0x....      BL       send_byte
+    581              send_byte(M);
+   \   00000044   0x0028             MOVS     R0,R5
+   \   00000046   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000048   0x.... 0x....      BL       send_byte
+    582              send_byte(SS);
+   \   0000004C   0x0020             MOVS     R0,R4
+   \   0000004E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000050   0x.... 0x....      BL       send_byte
+    583              send_end();
+   \   00000054   0x.... 0x....      BL       send_end
+    584          }
+   \   00000058   0xE8BD 0x83F1      POP      {R0,R4-R9,PC}    ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    585          void YADA_5E(U8 V_ON,U8 V_OFF,U8 ON_TIME)
+    586          {
+   \                     YADA_5E:
+   \   00000000   0xB570             PUSH     {R4-R6,LR}
+   \   00000002   0xB082             SUB      SP,SP,#+8
+   \   00000004   0x0004             MOVS     R4,R0
+   \   00000006   0x000D             MOVS     R5,R1
+   \   00000008   0x0016             MOVS     R6,R2
+    587              U8 dat[4]= {0x55,0xaa,0x5a,0xa5};
+   \   0000000A   0xA800             ADD      R0,SP,#+0
+   \   0000000C   0x....             LDR.N    R1,??DataTable2_2
+   \   0000000E   0x680A             LDR      R2,[R1, #0]
+   \   00000010   0x6002             STR      R2,[R0, #+0]
+    588              send_word(0xaa5E);
+   \   00000012   0xF64A 0x205E      MOVW     R0,#+43614
+   \   00000016   0x.... 0x....      BL       send_word
+    589              if(V_ON!=0xFF)
+   \   0000001A   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+   \   0000001C   0x2CFF             CMP      R4,#+255
+   \   0000001E   0xD00F             BEQ.N    ??YADA_5E_0
+    590              {
+    591                  send_U8str(dat,4);
+   \   00000020   0x2104             MOVS     R1,#+4
+   \   00000022   0xA800             ADD      R0,SP,#+0
+   \   00000024   0x.... 0x....      BL       send_U8str
+    592                  send_byte(V_ON);
+   \   00000028   0x0020             MOVS     R0,R4
+   \   0000002A   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000002C   0x.... 0x....      BL       send_byte
+    593                  send_byte(V_OFF);
+   \   00000030   0x0028             MOVS     R0,R5
+   \   00000032   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000034   0x.... 0x....      BL       send_byte
+    594                  send_byte(ON_TIME);
+   \   00000038   0x0030             MOVS     R0,R6
+   \   0000003A   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000003C   0x.... 0x....      BL       send_byte
+    595              }
+    596              send_end();
+   \                     ??YADA_5E_0:
+   \   00000040   0x.... 0x....      BL       send_end
+    597          }
+   \   00000044   0xBD73             POP      {R0,R1,R4-R6,PC}  ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    598          void YADA_5F(U8 PWM_T)
+    599          {
+   \                     YADA_5F:
+   \   00000000   0xB510             PUSH     {R4,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+    600              send_word(0xaa5F);
+   \   00000004   0xF64A 0x205F      MOVW     R0,#+43615
+   \   00000008   0x.... 0x....      BL       send_word
+    601              if(PWM_T!=0xFF)
+   \   0000000C   0xB2E4             UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+   \   0000000E   0x2CFF             CMP      R4,#+255
+   \   00000010   0xD003             BEQ.N    ??YADA_5F_0
+    602              {
+    603                  send_byte(PWM_T);
+   \   00000012   0x0020             MOVS     R0,R4
+   \   00000014   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000016   0x.... 0x....      BL       send_byte
+    604              }
+    605              send_end();
+   \                     ??YADA_5F_0:
+   \   0000001A   0x.... 0x....      BL       send_end
+    606          }
+   \   0000001E   0xBD10             POP      {R4,PC}          ;; return
+
+   \                                 In section .text, align 2, keep-with-next
+    607          void YADA_E0 (U8 TFT_ID,U8 Bode_Set,U8 Para1)
+    608          {
+   \                     YADA_E0:
+   \   00000000   0xB570             PUSH     {R4-R6,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+   \   00000004   0x000D             MOVS     R5,R1
+   \   00000006   0x0016             MOVS     R6,R2
+    609              send_xy(0xaae0,0x55aa);
+   \   00000008   0xF245 0x51AA      MOVW     R1,#+21930
+   \   0000000C   0xF64A 0x20E0      MOVW     R0,#+43744
+   \   00000010   0x.... 0x....      BL       send_xy
+    610              send_word(0x5aa5);
+   \   00000014   0xF645 0x20A5      MOVW     R0,#+23205
+   \   00000018   0x.... 0x....      BL       send_word
+    611              send_byte(TFT_ID);
+   \   0000001C   0x0020             MOVS     R0,R4
+   \   0000001E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000020   0x.... 0x....      BL       send_byte
+    612              send_byte(Bode_Set);
+   \   00000024   0x0028             MOVS     R0,R5
+   \   00000026   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000028   0x.... 0x....      BL       send_byte
+    613              send_byte(Para1);
+   \   0000002C   0x0030             MOVS     R0,R6
+   \   0000002E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000030   0x.... 0x....      BL       send_byte
+    614              send_end();
+   \   00000034   0x.... 0x....      BL       send_end
+    615          }
+   \   00000038   0xBD70             POP      {R4-R6,PC}       ;; return
+    616          
+    617          /* add --> wk */
+
+   \                                 In section .text, align 2, keep-with-next
+    618           void YADA_E4()  // 触摸屏校准
+    619           {
+   \                     YADA_E4:
+   \   00000000   0xB580             PUSH     {R7,LR}
+    620             send_word(0xaaE4);
+   \   00000002   0xF64A 0x20E4      MOVW     R0,#+43748
+   \   00000006   0x.... 0x....      BL       send_word
+    621             send_word(0x55aa);
+   \   0000000A   0xF245 0x50AA      MOVW     R0,#+21930
+   \   0000000E   0x.... 0x....      BL       send_word
+    622             send_word(0x5aa5);
+   \   00000012   0xF645 0x20A5      MOVW     R0,#+23205
+   \   00000016   0x.... 0x....      BL       send_word
+    623             send_end();
+   \   0000001A   0x.... 0x....      BL       send_end
+    624           }
+   \   0000001E   0xBD01             POP      {R0,PC}          ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2:
+   \   00000000   0x........         DC32     `?<Constant "ttyb:">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_1:
+   \   00000000   0x........         DC32     uart_lcd
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_2:
+   \   00000000   0x........         DC32     `?<Constant {85, 170, 90, 165}>`
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "ttyb:">`:
+   \   00000000   0x74 0x74          DC8 "ttyb:"
+   \              0x79 0x62    
+   \              0x3A 0x00    
+   \   00000006   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant {85, 170, 90, 165}>`:
+   \   00000000   0x55 0xAA          DC8 85, 170, 90, 165
+   \              0x5A 0xA5    
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+        8  UartLCD_init
+              8 -> _io_fopen
+              8 -> _task_block
+        8  YADA_00
+              8 -> send_end
+              8 -> send_word
+       16  YADA_40
+             16 -> send_end
+             16 -> send_word
+             16 -> send_xy
+       16  YADA_41
+             16 -> send_byte
+             16 -> send_end
+             16 -> send_word
+       16  YADA_42
+             16 -> send_end
+             16 -> send_word
+             16 -> send_xy
+       16  YADA_43
+             16 -> send_end
+             16 -> send_word
+             16 -> send_xy
+       24  YADA_44
+             24 -> send_byte
+             24 -> send_end
+             24 -> send_word
+             24 -> send_xy
+       16  YADA_45
+             16 -> send_U16str
+             16 -> send_byte
+             16 -> send_end
+             16 -> send_word
+       16  YADA_50
+             16 -> send_U16str
+             16 -> send_end
+             16 -> send_word
+       16  YADA_51
+             16 -> send_U16str
+             16 -> send_end
+             16 -> send_word
+        8  YADA_52
+              8 -> send_end
+              8 -> send_word
+        8  YADA_53
+              8 -> prints
+        8  YADA_54
+              8 -> prints
+        8  YADA_55
+              8 -> prints
+       16  YADA_56
+             16 -> send_U16str
+             16 -> send_end
+             16 -> send_word
+       16  YADA_57
+             16 -> send_byte
+             16 -> send_end
+             16 -> send_word
+             16 -> send_xy
+       24  YADA_5704
+             24 -> send_area
+             24 -> send_byte
+             24 -> send_end
+             24 -> send_xy
+       16  YADA_59
+             16 -> send_U16str
+             16 -> send_end
+             16 -> send_word
+       16  YADA_5A
+             16 -> send_U16str
+             16 -> send_end
+             16 -> send_word
+       16  YADA_5B
+             16 -> send_U16str
+             16 -> send_end
+             16 -> send_word
+       16  YADA_5C
+             16 -> send_U16str
+             16 -> send_end
+             16 -> send_word
+       16  YADA_5D
+             16 -> send_U16str
+             16 -> send_end
+             16 -> send_word
+       24  YADA_5E
+             24 -> send_U8str
+             24 -> send_byte
+             24 -> send_end
+             24 -> send_word
+        8  YADA_5F
+              8 -> send_byte
+              8 -> send_end
+              8 -> send_word
+        8  YADA_60
+              8 -> shift
+        8  YADA_61
+              8 -> shift
+        8  YADA_62
+              8 -> shift
+        8  YADA_63
+              8 -> shift
+       16  YADA_64
+             16 -> send_end
+             16 -> send_word
+             16 -> send_xy
+       16  YADA_69
+             16 -> send_U16str
+             16 -> send_end
+             16 -> send_word
+        8  YADA_6E
+              8 -> prints
+        8  YADA_6F
+              8 -> prints
+        8  YADA_70
+              8 -> send_end
+              8 -> send_word
+       32  YADA_71
+             32 -> send_area
+             32 -> send_end
+             32 -> send_word
+             32 -> send_xy
+       32  YADA_74
+             32 -> send_U16str
+             32 -> send_area
+             32 -> send_end
+             32 -> send_word
+       24  YADA_75
+             24 -> send_U8str
+             24 -> send_byte
+             24 -> send_end
+             24 -> send_word
+             24 -> send_xy
+       24  YADA_76
+             24 -> send_U16str
+             24 -> send_byte
+             24 -> send_end
+             24 -> send_word
+       24  YADA_78
+             24 -> send_U8str
+             24 -> send_end
+             24 -> send_word
+             24 -> send_xy
+        8  YADA_7B
+              8 -> send_end
+              8 -> send_word
+       16  YADA_90_ORDER
+             16 -> send_U8str
+             16 -> send_end
+             16 -> send_word
+             16 -> send_xy
+       16  YADA_90_RANDOM
+             16 -> send_U8str
+             16 -> send_area
+             16 -> send_end
+             16 -> send_word
+        8  YADA_91
+              8 -> send_area
+              8 -> send_end
+       40  YADA_98
+             40 -> send_U8str
+             40 -> send_byte
+             40 -> send_end
+             40 -> send_word
+             40 -> send_xy
+       16  YADA_99
+             16 -> send_U16str
+             16 -> send_end
+             16 -> send_word
+        8  YADA_9B00
+              8 -> send_byte
+              8 -> send_end
+              8 -> send_word
+        8  YADA_9B5A
+              8 -> send_byte
+              8 -> send_end
+              8 -> send_word
+       24  YADA_9BFF
+             24 -> send_byte
+             24 -> send_end
+             24 -> send_word
+             24 -> send_xy
+       32  YADA_9C
+             32 -> send_area
+             32 -> send_end
+             32 -> send_word
+             32 -> send_xy
+       32  YADA_9D
+             32 -> send_area
+             32 -> send_end
+             32 -> send_word
+             32 -> send_xy
+       16  YADA_C0
+             16 -> send_U16str
+             16 -> send_end
+             16 -> send_xy
+       16  YADA_C101
+             16 -> send_byte
+             16 -> send_end
+             16 -> send_word
+             16 -> send_xy
+       16  YADA_C102
+             16 -> send_byte
+             16 -> send_end
+             16 -> send_word
+             16 -> send_xy
+       40  YADA_C103
+             40 -> send_byte
+             40 -> send_end
+             40 -> send_word
+             40 -> send_xy
+       40  YADA_C104
+             40 -> send_byte
+             40 -> send_end
+             40 -> send_word
+             40 -> send_xy
+       40  YADA_C105
+             40 -> send_byte
+             40 -> send_end
+             40 -> send_word
+             40 -> send_xy
+       48  YADA_C106
+             48 -> send_byte
+             48 -> send_end
+             48 -> send_word
+             48 -> send_xy
+       16  YADA_C10700
+             16 -> send_end
+             16 -> send_word
+             16 -> send_xy
+       40  YADA_C10701
+             40 -> send_U16str
+             40 -> send_area
+             40 -> send_byte
+             40 -> send_end
+             40 -> send_xy
+       32  YADA_C10702
+             32 -> send_area
+             32 -> send_end
+             32 -> send_xy
+       16  YADA_C108
+             16 -> send_byte
+             16 -> send_end
+             16 -> send_word
+       16  YADA_C110
+             16 -> send_byte
+             16 -> send_end
+             16 -> send_word
+       16  YADA_C2
+             16 -> send_end
+             16 -> send_word
+             16 -> send_xy
+        8  YADA_D0
+              8 -> send_end
+              8 -> send_word
+       16  YADA_E0
+             16 -> send_byte
+             16 -> send_end
+             16 -> send_word
+             16 -> send_xy
+        8  YADA_E2
+              8 -> send_end
+              8 -> send_word
+        8  YADA_E4
+              8 -> send_end
+              8 -> send_word
+       32  YADA_E7
+             32 -> send_byte
+             32 -> send_end
+             32 -> send_word
+             32 -> send_xy
+       24  prints
+             24 -> send_U8str
+             24 -> send_byte
+             24 -> send_end
+             24 -> send_xy
+       16  send_U16str
+             16 -> send_word
+       16  send_U8str
+             16 -> send_byte
+       16  send_area
+             16 -> send_word
+        8  send_byte
+              8 -> _io_write
+        8  send_end
+              8 -> send_word
+        8  send_word
+              8 -> send_byte
+        8  send_xy
+              8 -> send_word
+       24  shift
+             24 -> send_U16str
+             24 -> send_byte
+             24 -> send_end
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       8  ?<Constant "ttyb:">
+       4  ?<Constant {85, 170, 90, 165}>
+       4  ??DataTable2
+       4  ??DataTable2_1
+       4  ??DataTable2_2
+      34  UartLCD_init
+      16  YADA_00
+      32  YADA_40
+      36  YADA_41
+      32  YADA_42
+      32  YADA_43
+      66  YADA_44
+      42  YADA_45
+      30  YADA_50
+      30  YADA_51
+      16  YADA_52
+      24  YADA_53
+      24  YADA_54
+      24  YADA_55
+      30  YADA_56
+     104  YADA_57
+      60  YADA_5704
+      30  YADA_59
+      30  YADA_5A
+      30  YADA_5B
+      30  YADA_5C
+      30  YADA_5D
+      70  YADA_5E
+      32  YADA_5F
+      20  YADA_60
+      20  YADA_61
+      20  YADA_62
+      20  YADA_63
+      42  YADA_64
+      30  YADA_69
+      24  YADA_6E
+      24  YADA_6F
+      26  YADA_70
+      74  YADA_71
+      64  YADA_74
+      60  YADA_75
+      50  YADA_76
+      46  YADA_78
+      26  YADA_7B
+      70  YADA_90_ORDER
+      52  YADA_90_RANDOM
+      38  YADA_91
+      96  YADA_98
+      30  YADA_99
+      22  YADA_9B00
+      22  YADA_9B5A
+      72  YADA_9BFF
+      74  YADA_9C
+      74  YADA_9D
+      34  YADA_C0
+      38  YADA_C101
+      38  YADA_C102
+      98  YADA_C103
+     100  YADA_C104
+     108  YADA_C105
+     124  YADA_C106
+      46  YADA_C10700
+      92  YADA_C10701
+      68  YADA_C10702
+      42  YADA_C108
+      42  YADA_C110
+      32  YADA_C2
+      16  YADA_D0
+      58  YADA_E0
+      26  YADA_E2
+      32  YADA_E4
+      92  YADA_E7
+      58  prints
+      46  send_U16str
+      46  send_U8str
+      40  send_area
+      18  send_byte
+      20  send_end
+      42  send_word
+      20  send_xy
+      48  shift
+       4  uart_lcd
+
+ 
+     4 bytes in section .bss
+    12 bytes in section .rodata
+ 3 416 bytes in section .text
+ 
+ 3 416 bytes of CODE  memory
+    12 bytes of CONST memory
+     4 bytes of DATA  memory
+
+Errors: none
+Warnings: none

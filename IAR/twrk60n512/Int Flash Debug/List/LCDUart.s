@@ -1,48 +1,44 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    22/Mar/2013  20:55:49 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    26/Mar/2013  13:18:32 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  E:\Freescale\mqx_test\YD_PRJ_NEW_20130322_newgui_\Sourc /
-//                    e\LCDUart.c                                             /
-//    Command line =  E:\Freescale\mqx_test\YD_PRJ_NEW_20130322_newgui_\Sourc /
-//                    e\LCDUart.c -D _DEBUG=1 -lC                             /
-//                    "E:\Freescale\mqx_test\YD_PRJ_NEW_20130322_newgui_\IAR\ /
-//                    twrk60n512\Int Flash Debug\List\" -lA                   /
-//                    "E:\Freescale\mqx_test\YD_PRJ_NEW_20130322_newgui_\IAR\ /
-//                    twrk60n512\Int Flash Debug\List\" --diag_suppress       /
-//                    Pa039,Pa082,Pe186 -o "E:\Freescale\mqx_test\YD_PRJ_NEW_ /
-//                    20130322_newgui_\IAR\twrk60n512\Int Flash Debug\Obj\"   /
-//                    --no_cse --no_unroll --no_inline --no_code_motion       /
-//                    --no_tbaa --no_clustering --no_scheduling --debug       /
+//    Source file  =  L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\LCDUar /
+//                    t.c                                                     /
+//    Command line =  L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\LCDUar /
+//                    t.c -D _DEBUG=1 -lC "L:\git_workspace\YD_PRJ_NEW_201303 /
+//                    23_git_\IAR\twrk60n512\Int Flash Debug\List\" -lA       /
+//                    "L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\twrk60n5 /
+//                    12\Int Flash Debug\List\" --diag_suppress               /
+//                    Pa039,Pa082,Pe186 -o "L:\git_workspace\YD_PRJ_NEW_20130 /
+//                    323_git_\IAR\twrk60n512\Int Flash Debug\Obj\" --no_cse  /
+//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
+//                    --no_clustering --no_scheduling --debug                 /
 //                    --endian=little --cpu=Cortex-M4 -e --fpu=None           /
 //                    --dlib_config "D:\Program Files\IAR Systems\Embedded    /
 //                    Workbench 6.0\arm\INC\c\DLib_Config_Normal.h" -I        /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130322_newgui_\IAR\. /
-//                    .\lib\twrk60n512.iar\ -I E:\Freescale\mqx_test\YD_PRJ_N /
-//                    EW_20130322_newgui_\IAR\..\lib\twrk60n512.iar\bsp\ -I   /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130322_newgui_\IAR\. /
-//                    .\lib\twrk60n512.iar\psp\ -I                            /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130322_newgui_\IAR\. /
-//                    .\lib\twrk60n512.iar\bsp\Generated_Code\ -I             /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130322_newgui_\IAR\. /
-//                    .\lib\twrk60n512.iar\rtcs\ -I                           /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130322_newgui_\IAR\. /
-//                    .\lib\twrk60n512.iar\mfs\ -I                            /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130322_newgui_\IAR\. /
-//                    .\lib\twrk60n512.iar\usb\host\ -I                       /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130322_newgui_\IAR\. /
-//                    .\lib\twrk60n512.iar\shell\ -I                          /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130322_newgui_\IAR\. /
-//                    .\lib\twrk60n512.iar\usb\ -I                            /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130322_newgui_\IAR\. /
-//                    .\ -I E:\Freescale\mqx_test\YD_PRJ_NEW_20130322_newgui_ /
-//                    \IAR\..\Source\Source_MQX\ -I "E:\Freescale\Freescale   /
-//                    MQX 3.8\shell\source\include\" -Ol --use_c++_inline     /
-//    List file    =  E:\Freescale\mqx_test\YD_PRJ_NEW_20130322_newgui_\IAR\t /
-//                    wrk60n512\Int Flash Debug\List\LCDUart.s                /
+//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\tw /
+//                    rk60n512.iar\ -I L:\git_workspace\YD_PRJ_NEW_20130323_g /
+//                    it_\IAR\..\lib\twrk60n512.iar\bsp\ -I                   /
+//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\tw /
+//                    rk60n512.iar\psp\ -I L:\git_workspace\YD_PRJ_NEW_201303 /
+//                    23_git_\IAR\..\lib\twrk60n512.iar\bsp\Generated_Code\   /
+//                    -I L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib /
+//                    \twrk60n512.iar\rtcs\ -I L:\git_workspace\YD_PRJ_NEW_20 /
+//                    130323_git_\IAR\..\lib\twrk60n512.iar\mfs\ -I           /
+//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\tw /
+//                    rk60n512.iar\usb\host\ -I L:\git_workspace\YD_PRJ_NEW_2 /
+//                    0130323_git_\IAR\..\lib\twrk60n512.iar\shell\ -I        /
+//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\tw /
+//                    rk60n512.iar\usb\ -I L:\git_workspace\YD_PRJ_NEW_201303 /
+//                    23_git_\IAR\..\ -I L:\git_workspace\YD_PRJ_NEW_20130323 /
+//                    _git_\IAR\..\Source\Source_MQX\ -I                      /
+//                    "E:\Freescale\Freescale MQX 3.8\shell\source\include\"  /
+//                    -Ol --use_c++_inline                                    /
+//    List file    =  L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\twrk60n51 /
+//                    2\Int Flash Debug\List\LCDUart.s                        /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -127,7 +123,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// E:\Freescale\mqx_test\YD_PRJ_NEW_20130322_newgui_\Source\LCDUart.c
+// L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\LCDUart.c
 //    1 /*******************************************************************************
 //    2 * File Name        : LCDUart.c
 //    3 * Author             : LB&TX
@@ -1549,7 +1545,7 @@ LCDUartSET:
 //  474        break;
         B.N      ??LCDUartSET_24
 //  475      
-//  476     case 0x60:  // WK --> TCP/IP开关
+//  476     case 0x60:  // WK --> TCP/IP开关      0开启 1 关闭
 //  477       SysSet.SwitchSet[0]==0?(SysSet.SwitchSet[0]=1):(SysSet.SwitchSet[0]=0);
 ??LCDUartSET_15:
         LDR.W    R0,??DataTable5_30

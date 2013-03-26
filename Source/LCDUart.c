@@ -473,7 +473,7 @@ void LCDUartSET(U8 Touch_key)   // wk --> 系统设置 键号跳转函数
        SysSet.SaveFlg=1;      // WK --> 具体实现带研究
        break;
      
-    case 0x60:  // WK --> TCP/IP开关
+    case 0x60:  // WK --> TCP/IP开关      0开启 1 关闭
       SysSet.SwitchSet[0]==0?(SysSet.SwitchSet[0]=1):(SysSet.SwitchSet[0]=0);
       SysSet.SwitchSet[7]=1;
       break;
