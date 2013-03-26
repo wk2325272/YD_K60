@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    26/Mar/2013  15:41:53 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    26/Mar/2013  17:01:34 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -489,11 +489,7 @@ text:
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
         DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
         DATA
@@ -769,13 +765,14 @@ text:
         DC16 194, 476, 204, 479, 230
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "sysevent.txt">`:
         DATA
-        DC8 "44"
-        DC8 0
+        DC8 "sysevent.txt"
+        DC8 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
         DATA
-        DC8 "26"
+        DC8 "44"
         DC8 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
@@ -864,7 +861,7 @@ GUI_VIEW_UI:
           CFI CFA R13+1240
 //   58     U16 Coord_UI[]= {14,68,614,225,273,429};   //剪切及原点坐标
         ADD      R0,SP,#+16
-        LDR.W    R1,??DataTable4
+        LDR.W    R1,??DataTable5
         LDM      R1!,{R2-R4}
         STM      R0!,{R2-R4}
         SUBS     R1,R1,#+12
@@ -878,7 +875,7 @@ GUI_VIEW_UI:
         MOVS     R3,#+75
         MOVS     R2,#+6
         ADD      R1,SP,#+28
-        LDR.W    R0,??DataTable4_1
+        LDR.W    R0,??DataTable5_1
           CFI FunCall CharToInt
         BL       CharToInt
 //   61     linemark(48,0); //电压电流图标注上面的电压有效值及单位
@@ -907,12 +904,12 @@ GUI_VIEW_UI:
         BL       WR_WAVE_UI
 //   66     // wk -->                                  85          7              
 //   67     YADA_C104 (UA_addr,Coord_UI[0],Coord_UI[3],UI_LINE_NUM,UI_DX,COLOR[0],UA_addr + size_UI,COLOR[3]); 
-        LDR.W    R0,??DataTable4_2
+        LDR.W    R0,??DataTable5_2
         LDRH     R0,[R0, #+6]
         STR      R0,[SP, #+12]
         MOVS     R0,#+100
         STR      R0,[SP, #+8]
-        LDR.W    R0,??DataTable4_2
+        LDR.W    R0,??DataTable5_2
         LDRH     R0,[R0, #+0]
         STR      R0,[SP, #+4]
         MOVS     R0,#+7
@@ -924,12 +921,12 @@ GUI_VIEW_UI:
           CFI FunCall YADA_C104
         BL       YADA_C104
 //   68     YADA_C104 (UB_addr,Coord_UI[0],Coord_UI[3],UI_LINE_NUM,UI_DX,COLOR[1],UB_addr + size_UI,COLOR[3]);
-        LDR.W    R0,??DataTable4_2
+        LDR.W    R0,??DataTable5_2
         LDRH     R0,[R0, #+6]
         STR      R0,[SP, #+12]
         MOV      R0,#+300
         STR      R0,[SP, #+8]
-        LDR.W    R0,??DataTable4_2
+        LDR.W    R0,??DataTable5_2
         LDRH     R0,[R0, #+2]
         STR      R0,[SP, #+4]
         MOVS     R0,#+7
@@ -941,12 +938,12 @@ GUI_VIEW_UI:
           CFI FunCall YADA_C104
         BL       YADA_C104
 //   69     YADA_C104 (UC_addr,Coord_UI[0],Coord_UI[3],UI_LINE_NUM,UI_DX,COLOR[2],UC_addr + size_UI,COLOR[3]);
-        LDR.W    R0,??DataTable4_2
+        LDR.W    R0,??DataTable5_2
         LDRH     R0,[R0, #+6]
         STR      R0,[SP, #+12]
         MOV      R0,#+500
         STR      R0,[SP, #+8]
-        LDR.W    R0,??DataTable4_2
+        LDR.W    R0,??DataTable5_2
         LDRH     R0,[R0, #+4]
         STR      R0,[SP, #+4]
         MOVS     R0,#+7
@@ -958,12 +955,12 @@ GUI_VIEW_UI:
           CFI FunCall YADA_C104
         BL       YADA_C104
 //   70     YADA_C104 (IA_addr,Coord_UI[0],Coord_UI[5],UI_LINE_NUM,UI_DX,COLOR[0],IA_addr + size_UI,COLOR[3]);
-        LDR.W    R0,??DataTable4_2
+        LDR.W    R0,??DataTable5_2
         LDRH     R0,[R0, #+6]
         STR      R0,[SP, #+12]
         MOV      R0,#+700
         STR      R0,[SP, #+8]
-        LDR.W    R0,??DataTable4_2
+        LDR.W    R0,??DataTable5_2
         LDRH     R0,[R0, #+0]
         STR      R0,[SP, #+4]
         MOVS     R0,#+7
@@ -975,12 +972,12 @@ GUI_VIEW_UI:
           CFI FunCall YADA_C104
         BL       YADA_C104
 //   71     YADA_C104 (IB_addr,Coord_UI[0],Coord_UI[5],UI_LINE_NUM,UI_DX,COLOR[1],IB_addr + size_UI,COLOR[3]);
-        LDR.W    R0,??DataTable4_2
+        LDR.W    R0,??DataTable5_2
         LDRH     R0,[R0, #+6]
         STR      R0,[SP, #+12]
         MOV      R0,#+900
         STR      R0,[SP, #+8]
-        LDR.W    R0,??DataTable4_2
+        LDR.W    R0,??DataTable5_2
         LDRH     R0,[R0, #+2]
         STR      R0,[SP, #+4]
         MOVS     R0,#+7
@@ -992,12 +989,12 @@ GUI_VIEW_UI:
           CFI FunCall YADA_C104
         BL       YADA_C104
 //   72     YADA_C104 (IC_addr,Coord_UI[0],Coord_UI[5],UI_LINE_NUM,UI_DX,COLOR[2],IC_addr + size_UI,COLOR[3]);
-        LDR.W    R0,??DataTable4_2
+        LDR.W    R0,??DataTable5_2
         LDRH     R0,[R0, #+6]
         STR      R0,[SP, #+12]
         MOVW     R0,#+1100
         STR      R0,[SP, #+8]
-        LDR.W    R0,??DataTable4_2
+        LDR.W    R0,??DataTable5_2
         LDRH     R0,[R0, #+4]
         STR      R0,[SP, #+4]
         MOVS     R0,#+7
@@ -1050,7 +1047,7 @@ GUI_VIEW_U:
         BL       __aeabi_memclr4
 //   86     U16 Coord_U[]= {14,86,614,174,212,295,330,415};    //剪切及原点坐标a
         ADD      R0,SP,#+16
-        LDR.W    R1,??DataTable4_3
+        LDR.W    R1,??DataTable5_3
         MOVS     R2,#+16
           CFI FunCall __aeabi_memcpy4
         BL       __aeabi_memcpy4
@@ -1067,7 +1064,7 @@ GUI_VIEW_U:
         MOVS     R3,#+55
         MOVS     R2,#+3
         ADD      R1,SP,#+32
-        LDR.W    R0,??DataTable4_1
+        LDR.W    R0,??DataTable5_1
           CFI FunCall CharToInt
         BL       CharToInt
 //   90     WR_WAVE_UI(WAVE_U,2,0);                     //将所有采样数据写入触摸屏
@@ -1077,12 +1074,12 @@ GUI_VIEW_U:
           CFI FunCall WR_WAVE_UI
         BL       WR_WAVE_UI
 //   91     YADA_C104 (UA_addr,Coord_U[0],185,U_I_LINE_NUM,U_I_DX,COLOR[0],UA_addr + size_UI,COLOR[3]);
-        LDR.W    R0,??DataTable5
+        LDR.W    R0,??DataTable6
         LDRH     R0,[R0, #+6]
         STR      R0,[SP, #+12]
         MOVS     R0,#+100
         STR      R0,[SP, #+8]
-        LDR.W    R0,??DataTable5
+        LDR.W    R0,??DataTable6
         LDRH     R0,[R0, #+0]
         STR      R0,[SP, #+4]
         MOVS     R0,#+6
@@ -1094,12 +1091,12 @@ GUI_VIEW_U:
           CFI FunCall YADA_C104
         BL       YADA_C104
 //   92     YADA_C104 (UB_addr,Coord_U[0],306,U_I_LINE_NUM,U_I_DX,COLOR[1],UB_addr + size_UI,COLOR[3]);
-        LDR.W    R0,??DataTable5
+        LDR.W    R0,??DataTable6
         LDRH     R0,[R0, #+6]
         STR      R0,[SP, #+12]
         MOV      R0,#+300
         STR      R0,[SP, #+8]
-        LDR.W    R0,??DataTable5
+        LDR.W    R0,??DataTable6
         LDRH     R0,[R0, #+2]
         STR      R0,[SP, #+4]
         MOVS     R0,#+6
@@ -1111,12 +1108,12 @@ GUI_VIEW_U:
           CFI FunCall YADA_C104
         BL       YADA_C104
 //   93     YADA_C104 (UC_addr,Coord_U[0],428,U_I_LINE_NUM,U_I_DX,COLOR[2],UC_addr + size_UI,COLOR[3]);
-        LDR.W    R0,??DataTable5
+        LDR.W    R0,??DataTable6
         LDRH     R0,[R0, #+6]
         STR      R0,[SP, #+12]
         MOV      R0,#+500
         STR      R0,[SP, #+8]
-        LDR.W    R0,??DataTable5
+        LDR.W    R0,??DataTable6
         LDRH     R0,[R0, #+4]
         STR      R0,[SP, #+4]
         MOVS     R0,#+6
@@ -1170,7 +1167,7 @@ GUI_VIEW_I:
         BL       __aeabi_memclr4
 //  108     U16 Coord_I[]= {14,86,614,174,212,295,330,415};      //剪切及原点坐标
         ADD      R0,SP,#+16
-        LDR.W    R1,??DataTable5_1
+        LDR.W    R1,??DataTable6_1
         MOVS     R2,#+16
           CFI FunCall __aeabi_memcpy4
         BL       __aeabi_memcpy4
@@ -1187,7 +1184,7 @@ GUI_VIEW_I:
         MOVS     R3,#+55
         MOVS     R2,#+3
         ADD      R1,SP,#+32
-        LDR.W    R0,??DataTable5_2
+        LDR.W    R0,??DataTable6_2
           CFI FunCall CharToInt
         BL       CharToInt
 //  112     WR_WAVE_UI(WAVE_I,3,0);                   //将所有采样数据写入触摸屏
@@ -1197,12 +1194,12 @@ GUI_VIEW_I:
           CFI FunCall WR_WAVE_UI
         BL       WR_WAVE_UI
 //  113     YADA_C104 (IA_addr,Coord_I[0],185,U_I_LINE_NUM,U_I_DX,COLOR[0],IA_addr + size_UI,COLOR[3]);
-        LDR.W    R0,??DataTable5
+        LDR.W    R0,??DataTable6
         LDRH     R0,[R0, #+6]
         STR      R0,[SP, #+12]
         MOV      R0,#+700
         STR      R0,[SP, #+8]
-        LDR.W    R0,??DataTable5
+        LDR.W    R0,??DataTable6
         LDRH     R0,[R0, #+0]
         STR      R0,[SP, #+4]
         MOVS     R0,#+6
@@ -1214,12 +1211,12 @@ GUI_VIEW_I:
           CFI FunCall YADA_C104
         BL       YADA_C104
 //  114     YADA_C104 (IB_addr,Coord_I[0],306,U_I_LINE_NUM,U_I_DX,COLOR[1],IB_addr + size_UI,COLOR[3]);
-        LDR.W    R0,??DataTable5
+        LDR.W    R0,??DataTable6
         LDRH     R0,[R0, #+6]
         STR      R0,[SP, #+12]
         MOV      R0,#+900
         STR      R0,[SP, #+8]
-        LDR.W    R0,??DataTable5
+        LDR.W    R0,??DataTable6
         LDRH     R0,[R0, #+2]
         STR      R0,[SP, #+4]
         MOVS     R0,#+6
@@ -1231,12 +1228,12 @@ GUI_VIEW_I:
           CFI FunCall YADA_C104
         BL       YADA_C104
 //  115     YADA_C104 (IC_addr,Coord_I[0],428,U_I_LINE_NUM,U_I_DX,COLOR[2],IC_addr + size_UI,COLOR[3]);
-        LDR.W    R0,??DataTable5
+        LDR.W    R0,??DataTable6
         LDRH     R0,[R0, #+6]
         STR      R0,[SP, #+12]
         MOVW     R0,#+1100
         STR      R0,[SP, #+8]
-        LDR.W    R0,??DataTable5
+        LDR.W    R0,??DataTable6
         LDRH     R0,[R0, #+4]
         STR      R0,[SP, #+4]
         MOVS     R0,#+6
@@ -1291,30 +1288,29 @@ GUI_VIEW_VECT:
           CFI CFA R13+36
         SUB      SP,SP,#+180
           CFI CFA R13+216
-//  132 #if 1
-//  133     U16 VI_line[4];                                 //一条向量的数组
-//  134     U16 C108Dat[42] = {0};                          //剪切及原点坐标
+//  132     U16 VI_line[4];                                 //一条向量的数组
+//  133     U16 C108Dat[42] = {0};                          //剪切及原点坐标
         ADD      R0,SP,#+92
         MOVS     R1,#+84
           CFI FunCall __aeabi_memclr4
         BL       __aeabi_memclr4
-//  135     U16 VEC_ORIG_YCOORD=134;       //wk @20130325 --> old:96        //相位的初始Y 坐标
-        MOVS     R0,#+134
+//  134     U16 VEC_ORIG_YCOORD=95;       //wk @20130325 --> old:96        //相位的初始Y 坐标
+        MOVS     R0,#+95
         STRH     R0,[SP, #+20]
-//  136     U16 Vec_Angle1[6]= {0};
+//  135     U16 Vec_Angle1[6]= {0};
         ADD      R0,SP,#+32
         MOVS     R1,#+0
         MOVS     R2,#+0
         MOVS     R3,#+0
         STM      R0!,{R1-R3}
         SUBS     R0,R0,#+12
-//  137     U32 Vec_Angle[6];
-//  138     float Vec_Anglefloat[6]= {0};                   //向量的浮点型，调用方便
+//  136     U32 Vec_Angle[6];
+//  137     float Vec_Anglefloat[6]= {0};                   //向量的浮点型，调用方便
         ADD      R0,SP,#+44
         MOVS     R1,#+24
           CFI FunCall __aeabi_memclr4
         BL       __aeabi_memclr4
-//  139     YADA_71 (MenuViewVector,0,40,366,417,0,40);
+//  138     YADA_71 (MenuViewVector,0,40,366,417,0,40);
         MOVS     R0,#+40
         STR      R0,[SP, #+8]
         MOVS     R0,#+0
@@ -1327,42 +1323,42 @@ GUI_VIEW_VECT:
         MOVS     R0,#+23
           CFI FunCall YADA_71
         BL       YADA_71
-//  140     /**电压电流各向量及标识**/
-//  141     ChartoFloat(&PowRxchar[VEC_INDEX],Vec_Anglefloat,6,10000);
+//  139     /**电压电流各向量及标识**/
+//  140     ChartoFloat(&PowRxchar[VEC_INDEX],Vec_Anglefloat,6,10000);
         MOVW     R3,#+10000
         MOVS     R2,#+6
         ADD      R1,SP,#+44
-        LDR.W    R0,??DataTable5_3
+        LDR.W    R0,??DataTable6_3
           CFI FunCall ChartoFloat
         BL       ChartoFloat
-//  142     PhaseShift(Vec_Anglefloat,Vec_Angle1,6,Vec_Angle);
+//  141     PhaseShift(Vec_Anglefloat,Vec_Angle1,6,Vec_Angle);
         ADD      R3,SP,#+68
         MOVS     R2,#+6
         ADD      R1,SP,#+32
         ADD      R0,SP,#+44
           CFI FunCall PhaseShift
         BL       PhaseShift
-//  143     for(U8 j=0; j<3; j++)
+//  142     for(U8 j=0; j<3; j++)
         MOVS     R6,#+0
         B.N      ??GUI_VIEW_VECT_0
-//  144     {
-//  145         for(U8 i=0; i<2; i++)
-//  146         {
-//  147             YADA_40(COLOR[j],0x0000);
+//  143     {
+//  144         for(U8 i=0; i<2; i++)
+//  145         {
+//  146             YADA_40(COLOR[j],0x0000);
 ??GUI_VIEW_VECT_1:
         MOVS     R1,#+0
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
-        LDR.W    R0,??DataTable4_2
+        LDR.W    R0,??DataTable5_2
         LDRH     R0,[R0, R6, LSL #+1]
           CFI FunCall YADA_40
         BL       YADA_40
-//  148             VI_line[0]=Vec_X0;
+//  147             VI_line[0]=Vec_X0;
         MOVS     R0,#+187
         STRH     R0,[SP, #+24]
-//  149             VI_line[1]=Vec_Y0;
+//  148             VI_line[1]=Vec_Y0;
         MOVS     R0,#+240
         STRH     R0,[SP, #+26]
-//  150             VI_line[2]=(U16)(Vec_X0+Vec_R0*cos(Vec_Angle1[i+j*2]*PI/180));
+//  149             VI_line[2]=(U16)(Vec_X0+Vec_R0*cos(Vec_Angle1[i+j*2]*PI/180));
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         LSLS     R0,R6,#+1
         UXTAB    R0,R0,R7
@@ -1370,28 +1366,28 @@ GUI_VIEW_VECT:
         LDRH     R0,[R1, R0, LSL #+1]
           CFI FunCall __aeabi_ui2d
         BL       __aeabi_ui2d
-        LDR.W    R2,??DataTable5_4  ;; 0x51eb851f
-        LDR.W    R3,??DataTable5_5  ;; 0x40091eb8
+        LDR.W    R2,??DataTable6_4  ;; 0x51eb851f
+        LDR.W    R3,??DataTable6_5  ;; 0x40091eb8
           CFI FunCall __aeabi_dmul
         BL       __aeabi_dmul
         MOVS     R2,#+0
-        LDR.W    R3,??DataTable5_6  ;; 0x40668000
+        LDR.W    R3,??DataTable6_6  ;; 0x40668000
           CFI FunCall __aeabi_ddiv
         BL       __aeabi_ddiv
           CFI FunCall cos
         BL       cos
         MOVS     R2,#+0
-        LDR.W    R3,??DataTable5_7  ;; 0x4064a000
+        LDR.W    R3,??DataTable6_7  ;; 0x4064a000
           CFI FunCall __aeabi_dmul
         BL       __aeabi_dmul
         MOVS     R2,#+0
-        LDR.W    R3,??DataTable5_8  ;; 0x40676000
+        LDR.W    R3,??DataTable6_8  ;; 0x40676000
           CFI FunCall __aeabi_dadd
         BL       __aeabi_dadd
           CFI FunCall __aeabi_d2iz
         BL       __aeabi_d2iz
         STRH     R0,[SP, #+28]
-//  151             VI_line[3]=(U16)(Vec_Y0-Vec_R0*sin(Vec_Angle1[i+j*2]*PI/180));
+//  150             VI_line[3]=(U16)(Vec_Y0-Vec_R0*sin(Vec_Angle1[i+j*2]*PI/180));
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         LSLS     R0,R6,#+1
         UXTAB    R0,R0,R7
@@ -1399,30 +1395,30 @@ GUI_VIEW_VECT:
         LDRH     R0,[R1, R0, LSL #+1]
           CFI FunCall __aeabi_ui2d
         BL       __aeabi_ui2d
-        LDR.W    R2,??DataTable5_4  ;; 0x51eb851f
-        LDR.W    R3,??DataTable5_5  ;; 0x40091eb8
+        LDR.W    R2,??DataTable6_4  ;; 0x51eb851f
+        LDR.W    R3,??DataTable6_5  ;; 0x40091eb8
           CFI FunCall __aeabi_dmul
         BL       __aeabi_dmul
         MOVS     R2,#+0
-        LDR.W    R3,??DataTable5_6  ;; 0x40668000
+        LDR.W    R3,??DataTable6_6  ;; 0x40668000
           CFI FunCall __aeabi_ddiv
         BL       __aeabi_ddiv
           CFI FunCall sin
         BL       sin
         MOVS     R2,#+0
-        LDR.W    R3,??DataTable5_7  ;; 0x4064a000
+        LDR.W    R3,??DataTable6_7  ;; 0x4064a000
           CFI FunCall __aeabi_dmul
         BL       __aeabi_dmul
         MOVS     R2,R0
         MOVS     R3,R1
         MOVS     R0,#+0
-        LDR.W    R1,??DataTable5_9  ;; 0x406e0000
+        LDR.W    R1,??DataTable6_9  ;; 0x406e0000
           CFI FunCall __aeabi_dsub
         BL       __aeabi_dsub
           CFI FunCall __aeabi_d2iz
         BL       __aeabi_d2iz
         STRH     R0,[SP, #+30]
-//  152             YADA_98((U16)(Vec_X0+(Vec_R0 - 30*i - 10)*cos(Vec_Angle1[i+j*2]*PI/180)),(U16)(Vec_Y0-(Vec_R0 - 30*i - 10)*sin(Vec_Angle1[i+j*2]*PI/180)),0x22,0x81,0x01,COLOR[j],0x0000,text[j+i*3],0);//16是根据显示文本的点阵大小确定的，使文本在背景范围内显示
+//  151             YADA_98((U16)(Vec_X0+(Vec_R0 - 30*i - 10)*cos(Vec_Angle1[i+j*2]*PI/180)),(U16)(Vec_Y0-(Vec_R0 - 30*i - 10)*sin(Vec_Angle1[i+j*2]*PI/180)),0x22,0x81,0x01,COLOR[j],0x0000,text[j+i*3],0);//16是根据显示文本的点阵大小确定的，使文本在背景范围内显示
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         LSLS     R0,R6,#+1
         UXTAB    R0,R0,R7
@@ -1430,12 +1426,12 @@ GUI_VIEW_VECT:
         LDRH     R0,[R1, R0, LSL #+1]
           CFI FunCall __aeabi_ui2d
         BL       __aeabi_ui2d
-        LDR.W    R2,??DataTable5_4  ;; 0x51eb851f
-        LDR.W    R3,??DataTable5_5  ;; 0x40091eb8
+        LDR.W    R2,??DataTable6_4  ;; 0x51eb851f
+        LDR.W    R3,??DataTable6_5  ;; 0x40091eb8
           CFI FunCall __aeabi_dmul
         BL       __aeabi_dmul
         MOVS     R2,#+0
-        LDR.W    R3,??DataTable5_6  ;; 0x40668000
+        LDR.W    R3,??DataTable6_6  ;; 0x40668000
           CFI FunCall __aeabi_ddiv
         BL       __aeabi_ddiv
           CFI FunCall sin
@@ -1451,12 +1447,12 @@ GUI_VIEW_VECT:
         BL       __aeabi_ui2d
         MOVS     R2,R0
         MOVS     R3,R1
-        LDR.W    R0,??DataTable5_4  ;; 0x51eb851f
-        LDR.W    R1,??DataTable5_5  ;; 0x40091eb8
+        LDR.W    R0,??DataTable6_4  ;; 0x51eb851f
+        LDR.W    R1,??DataTable6_5  ;; 0x40091eb8
           CFI FunCall __aeabi_dmul
         BL       __aeabi_dmul
         MOVS     R2,#+0
-        LDR.W    R3,??DataTable5_6  ;; 0x40668000
+        LDR.W    R3,??DataTable6_6  ;; 0x40668000
           CFI FunCall __aeabi_ddiv
         BL       __aeabi_ddiv
           CFI FunCall cos
@@ -1470,13 +1466,13 @@ GUI_VIEW_VECT:
         MUL      R0,R0,R7
         UXTAB    R0,R0,R6
         MOVS     R1,#+3
-        LDR.W    R2,??DataTable5_10
+        LDR.W    R2,??DataTable6_10
         MLA      R0,R1,R0,R2
         STR      R0,[SP, #+12]
         MOVS     R0,#+0
         STR      R0,[SP, #+8]
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
-        LDR.N    R0,??DataTable4_2
+        LDR.W    R0,??DataTable5_2
         LDRH     R0,[R0, R6, LSL #+1]
         STR      R0,[SP, #+4]
         MOVS     R0,#+1
@@ -1500,7 +1496,7 @@ GUI_VIEW_VECT:
         MOVS     R2,R0
         MOVS     R3,R1
         MOVS     R0,#+0
-        LDR.W    R1,??DataTable5_9  ;; 0x406e0000
+        LDR.W    R1,??DataTable6_9  ;; 0x406e0000
           CFI FunCall __aeabi_dsub
         BL       __aeabi_dsub
           CFI FunCall __aeabi_d2iz
@@ -1525,7 +1521,7 @@ GUI_VIEW_VECT:
         MOVS     R2,R0
         MOVS     R3,R1
         MOVS     R0,#+0
-        LDR.W    R1,??DataTable5_8  ;; 0x40676000
+        LDR.W    R1,??DataTable6_8  ;; 0x40676000
           CFI FunCall __aeabi_dadd
         BL       __aeabi_dadd
           CFI FunCall __aeabi_d2iz
@@ -1536,16 +1532,16 @@ GUI_VIEW_VECT:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall YADA_98
         BL       YADA_98
-//  153             YADA_56(VI_line,4);//前景色划直线
+//  152             YADA_56(VI_line,4);//前景色划直线
         MOVS     R1,#+4
         ADD      R0,SP,#+24
           CFI FunCall YADA_56
         BL       YADA_56
-//  154             delay_ms(2);
+//  153             delay_ms(2);
         MOVS     R0,#+2
           CFI FunCall delay_ms
         BL       delay_ms
-//  155         }
+//  154         }
         ADDS     R7,R7,#+1
 ??GUI_VIEW_VECT_2:
         UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
@@ -1558,20 +1554,20 @@ GUI_VIEW_VECT:
         BCS.N    ??GUI_VIEW_VECT_3
         MOVS     R7,#+0
         B.N      ??GUI_VIEW_VECT_2
-//  156     }
-//  157     delay_ms(5);
+//  155     }
+//  156     delay_ms(5);
 ??GUI_VIEW_VECT_3:
         MOVS     R0,#+5
           CFI FunCall delay_ms
         BL       delay_ms
-//  158     /**电压电流各相角的实时数值显示**/
-//  159     for (U8 k = 0; k < 2; k++)
+//  157     /**电压电流各相角的实时数值显示**/
+//  158     for (U8 k = 0; k < 2; k++)
         MOVS     R0,#+0
         B.N      ??GUI_VIEW_VECT_4
-//  160     {
-//  161         for(U8 i=0; i<3; i++)
-//  162         {
-//  163             C108Dat[21*k + 7*i + 0] = 0x3404;         //P  显示数据的模式
+//  159     {
+//  160         for(U8 i=0; i<3; i++)
+//  161         {
+//  162             C108Dat[21*k + 7*i + 0] = 0x3404;         //P  显示数据的模式
 ??GUI_VIEW_VECT_5:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         MOVS     R2,#+21
@@ -1582,7 +1578,7 @@ GUI_VIEW_VECT:
         ADD      R3,SP,#+92
         MOVW     R4,#+13316
         STRH     R4,[R3, R2, LSL #+1]
-//  164             C108Dat[21*k + 7*i + 1] = 460;            //显示相位的X坐标
+//  163             C108Dat[21*k + 7*i + 1] = 460;            //显示相位的X坐标
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         MOVS     R2,#+21
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
@@ -1593,7 +1589,7 @@ GUI_VIEW_VECT:
         ADDS     R2,R3,R2, LSL #+1
         MOV      R3,#+460
         STRH     R3,[R2, #+2]
-//  165             C108Dat[21*k + 7*i + 2] = VEC_ORIG_YCOORD + i*43 + k*157;     //Y坐标
+//  164             C108Dat[21*k + 7*i + 2] = VEC_ORIG_YCOORD + i*43 + k*157;     //Y坐标
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         MOVS     R2,#+21
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
@@ -1611,7 +1607,7 @@ GUI_VIEW_VECT:
         MOVS     R4,#+157
         MLA      R3,R4,R0,R3
         STRH     R3,[R2, #+4]
-//  166             C108Dat[21*k + 7*i + 3] = 0xffff;         //白色，下为黑色
+//  165             C108Dat[21*k + 7*i + 3] = 0xffff;         //白色，下为黑色
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         MOVS     R2,#+21
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
@@ -1622,7 +1618,7 @@ GUI_VIEW_VECT:
         ADDS     R2,R3,R2, LSL #+1
         MOVW     R3,#+65535
         STRH     R3,[R2, #+6]
-//  167             C108Dat[21*k + 7*i + 4] = 0x0000;
+//  166             C108Dat[21*k + 7*i + 4] = 0x0000;
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         MOVS     R2,#+21
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
@@ -1633,7 +1629,7 @@ GUI_VIEW_VECT:
         ADDS     R2,R3,R2, LSL #+1
         MOVS     R3,#+0
         STRH     R3,[R2, #+8]
-//  168             C108Dat[21*k + 7*i + 5] = (U16)(Vec_Angle[2*i+k]>>16);//两个字节转为一个字
+//  167             C108Dat[21*k + 7*i + 5] = (U16)(Vec_Angle[2*i+k]>>16);//两个字节转为一个字
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         MOVS     R2,#+21
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
@@ -1649,7 +1645,7 @@ GUI_VIEW_VECT:
         LDR      R3,[R4, R3, LSL #+2]
         LSRS     R3,R3,#+16
         STRH     R3,[R2, #+10]
-//  169             C108Dat[21*k + 7*i + 6] = (U16)(Vec_Angle[2*i+k]);
+//  168             C108Dat[21*k + 7*i + 6] = (U16)(Vec_Angle[2*i+k]);
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         MOVS     R2,#+21
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
@@ -1664,7 +1660,7 @@ GUI_VIEW_VECT:
         ADD      R4,SP,#+68
         LDR      R3,[R4, R3, LSL #+2]
         STRH     R3,[R2, #+12]
-//  170         }
+//  169         }
         ADDS     R1,R1,#+1
 ??GUI_VIEW_VECT_6:
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
@@ -1677,48 +1673,47 @@ GUI_VIEW_VECT:
         BCS.N    ??GUI_VIEW_VECT_7
         MOVS     R1,#+0
         B.N      ??GUI_VIEW_VECT_6
-//  171     }
-//  172     YADA_C0(Vectoraddr,C108Dat,42);
+//  170     }
+//  171     YADA_C0(Vectoraddr,C108Dat,42);
 ??GUI_VIEW_VECT_7:
         MOVS     R2,#+42
         ADD      R1,SP,#+92
         MOVW     R0,#+2360
           CFI FunCall YADA_C0
         BL       YADA_C0
-//  173     YADA_C108(Vectoraddr,6);
+//  172     YADA_C108(Vectoraddr,6);
         MOVS     R1,#+6
         MOVW     R0,#+2360
           CFI FunCall YADA_C108
         BL       YADA_C108
-//  174     delay_ms(5);
+//  173     delay_ms(5);
         MOVS     R0,#+5
           CFI FunCall delay_ms
         BL       delay_ms
-//  175     //delay_ms(50);
-//  176 #endif
-//  177 }
+//  174     //delay_ms(50);
+//  175 }
         ADD      SP,SP,#+180
           CFI CFA R13+36
         POP      {R4-R11,PC}      ;; return
           CFI EndBlock cfiBlock3
-//  178 /*******************************************************************************
-//  179 * 函  数  名      : GUI_VIEW_ListMeasure
-//  180 * 描      述      : C108数据显示页下的数值列表-电能计量数据显示，三相的U,I,P,S,Q,
-//  181                     PF,F。
-//  182 * 输      入      : 无
-//  183 * 返      回      : 无
-//  184 *
-//  185 * 修       改     : WK
-//  186 * 时       间     : 2013-03-14
-//  187 * 描       述     : 基于2013-03-08界面 : 修改了 C108Data 数组存放数据顺序以及 显示的算法
-//  188 *******************************************************************************/
+//  176 /*******************************************************************************
+//  177 * 函  数  名      : GUI_VIEW_ListMeasure
+//  178 * 描      述      : C108数据显示页下的数值列表-电能计量数据显示，三相的U,I,P,S,Q,
+//  179                     PF,F。
+//  180 * 输      入      : 无
+//  181 * 返      回      : 无
+//  182 *
+//  183 * 修       改     : WK
+//  184 * 时       间     : 2013-03-14
+//  185 * 描       述     : 基于2013-03-08界面 : 修改了 C108Data 数组存放数据顺序以及 显示的算法
+//  186 *******************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock4 Using cfiCommon0
           CFI Function GUI_VIEW_ListMeasure
         THUMB
-//  189 void GUI_VIEW_ListMeasure()   // wk --> 电能计量参数
-//  190 {
+//  187 void GUI_VIEW_ListMeasure()   // wk --> 电能计量参数
+//  188 {
 GUI_VIEW_ListMeasure:
         PUSH     {R4,R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -1727,16 +1722,16 @@ GUI_VIEW_ListMeasure:
           CFI CFA R13+12
         SUB      SP,SP,#+300
           CFI CFA R13+312
-//  191 #if 1
-//  192 //    U16 C108Data[147]= {0};//21个数据，存放顺序为U-P-Q-f-I-S-PF // wk -->
-//  193    /* WK --> */
-//  194       U16 C108Data[147]= {0};//21个数据，存放顺序为U-I-P-Q-S-PF-f
+//  189 #if 1
+//  190 //    U16 C108Data[147]= {0};//21个数据，存放顺序为U-P-Q-f-I-S-PF // wk -->
+//  191    /* WK --> */
+//  192       U16 C108Data[147]= {0};//21个数据，存放顺序为U-I-P-Q-S-PF-f
         ADD      R0,SP,#+0
         MOV      R1,#+296
           CFI FunCall __aeabi_memclr4
         BL       __aeabi_memclr4
-//  195       
-//  196       for(int i=0;i<7;i++)
+//  193       
+//  194       for(int i=0;i<7;i++)
         MOVS     R0,#+0
         B.N      ??GUI_VIEW_ListMeasure_0
 ??GUI_VIEW_ListMeasure_1:
@@ -1744,27 +1739,27 @@ GUI_VIEW_ListMeasure:
 ??GUI_VIEW_ListMeasure_0:
         CMP      R0,#+7
         BGE.W    ??GUI_VIEW_ListMeasure_2
-//  197       {
-//  198         for(int abc=0;abc<3;abc++)// wk --> 切换ABC
+//  195       {
+//  196         for(int abc=0;abc<3;abc++)// wk --> 切换ABC
         MOVS     R1,#+0
         B.N      ??GUI_VIEW_ListMeasure_3
-//  199         {
-//  200           C108Data[21*i+7*abc+0]=C108Mode_64;//显示数据的模式
-//  201           C108Data[21*i+7*abc+1]=164+abc*152;//左边列数据的X：79,右边X:434  148
-//  202           C108Data[21*i+7*abc+2]=135+i*45;//Y坐标43
-//  203           C108Data[21*i+7*abc+3]=C108FC_W;
-//  204           C108Data[21*i+7*abc+4]=C108BC_Bk;
-//  205           if(i<2)
-//  206           {
-//  207             C108Data[21*i+7*abc+5]=((U16)(PowRxchar[8*i+16*abc+UI_VIRTUAL_INDEX])<<8)+
-//  208                                    (U16)(PowRxchar[8*i+16*abc+UI_VIRTUAL_INDEX+1]);
-//  209             C108Data[21*i+7*abc+6]=((U16)(PowRxchar[8*i+16*abc+UI_VIRTUAL_INDEX+2])<<8)+
-//  210                                    (U16)(PowRxchar[8*i+16*abc+UI_VIRTUAL_INDEX+3]);
-//  211           }
-//  212           else
-//  213           {
-//  214              C108Data[21*i+7*abc+6]=((U16)(PowRxchar[20*abc+i*4+PQSf_INDEX])<<8)+
-//  215                                              (U16)(PowRxchar[20*abc+i*4+PQSf_INDEX+1]);
+//  197         {
+//  198           C108Data[21*i+7*abc+0]=C108Mode_64;//显示数据的模式
+//  199           C108Data[21*i+7*abc+1]=164+abc*152;//左边列数据的X：79,右边X:434  148
+//  200           C108Data[21*i+7*abc+2]=135+i*45;//Y坐标43
+//  201           C108Data[21*i+7*abc+3]=C108FC_W;
+//  202           C108Data[21*i+7*abc+4]=C108BC_Bk;
+//  203           if(i<2)
+//  204           {
+//  205             C108Data[21*i+7*abc+5]=((U16)(PowRxchar[8*i+16*abc+UI_VIRTUAL_INDEX])<<8)+
+//  206                                    (U16)(PowRxchar[8*i+16*abc+UI_VIRTUAL_INDEX+1]);
+//  207             C108Data[21*i+7*abc+6]=((U16)(PowRxchar[8*i+16*abc+UI_VIRTUAL_INDEX+2])<<8)+
+//  208                                    (U16)(PowRxchar[8*i+16*abc+UI_VIRTUAL_INDEX+3]);
+//  209           }
+//  210           else
+//  211           {
+//  212              C108Data[21*i+7*abc+6]=((U16)(PowRxchar[20*abc+i*4+PQSf_INDEX])<<8)+
+//  213                                              (U16)(PowRxchar[20*abc+i*4+PQSf_INDEX+1]);
 ??GUI_VIEW_ListMeasure_4:
         MOVS     R2,#+21
         MOVS     R3,#+7
@@ -1775,20 +1770,20 @@ GUI_VIEW_ListMeasure:
         MOVS     R3,#+20
         LSLS     R4,R0,#+2
         MLA      R3,R3,R1,R4
-        LDR.W    R4,??DataTable7
+        LDR.W    R4,??DataTable8
         ADDS     R3,R3,R4
         LDRB     R3,[R3, #+1880]
         LSLS     R3,R3,#+8
         MOVS     R4,#+20
         LSLS     R5,R0,#+2
         MLA      R4,R4,R1,R5
-        LDR.W    R5,??DataTable7
+        LDR.W    R5,??DataTable8
         ADDS     R4,R4,R5
         LDRB     R4,[R4, #+1881]
         UXTAB    R3,R3,R4
         STRH     R3,[R2, #+12]
-//  216              C108Data[21*i+7*abc+7]=((U16)(PowRxchar[20*abc+i*4+PQSf_INDEX+2])<<8)+
-//  217                                              (U16)(PowRxchar[20*abc+i*4+PQSf_INDEX+3]);
+//  214              C108Data[21*i+7*abc+7]=((U16)(PowRxchar[20*abc+i*4+PQSf_INDEX+2])<<8)+
+//  215                                              (U16)(PowRxchar[20*abc+i*4+PQSf_INDEX+3]);
         MOVS     R2,#+21
         MOVS     R3,#+7
         MUL      R3,R3,R1
@@ -1798,19 +1793,19 @@ GUI_VIEW_ListMeasure:
         MOVS     R3,#+20
         LSLS     R4,R0,#+2
         MLA      R3,R3,R1,R4
-        LDR.W    R4,??DataTable7
+        LDR.W    R4,??DataTable8
         ADDS     R3,R3,R4
         LDRB     R3,[R3, #+1882]
         LSLS     R3,R3,#+8
         MOVS     R4,#+20
         LSLS     R5,R0,#+2
         MLA      R4,R4,R1,R5
-        LDR.W    R5,??DataTable7
+        LDR.W    R5,??DataTable8
         ADDS     R4,R4,R5
         LDRB     R4,[R4, #+1883]
         UXTAB    R3,R3,R4
         STRH     R3,[R2, #+14]
-//  218           }
+//  216           }
 ??GUI_VIEW_ListMeasure_5:
         ADDS     R1,R1,#+1
 ??GUI_VIEW_ListMeasure_3:
@@ -1869,12 +1864,12 @@ GUI_VIEW_ListMeasure:
         ADDS     R2,R3,R2, LSL #+1
         LSLS     R3,R1,#+4
         ADDS     R3,R3,R0, LSL #+3
-        LDR.W    R4,??DataTable7
+        LDR.W    R4,??DataTable8
         LDRB     R3,[R3, R4]
         LSLS     R3,R3,#+8
         LSLS     R4,R1,#+4
         ADDS     R4,R4,R0, LSL #+3
-        LDR.W    R5,??DataTable7
+        LDR.W    R5,??DataTable8
         ADDS     R4,R4,R5
         LDRB     R4,[R4, #+1]
         UXTAB    R3,R3,R4
@@ -1887,217 +1882,217 @@ GUI_VIEW_ListMeasure:
         ADDS     R2,R3,R2, LSL #+1
         LSLS     R3,R1,#+4
         ADDS     R3,R3,R0, LSL #+3
-        LDR.W    R4,??DataTable7
+        LDR.W    R4,??DataTable8
         ADDS     R3,R3,R4
         LDRB     R3,[R3, #+2]
         LSLS     R3,R3,#+8
         LSLS     R4,R1,#+4
         ADDS     R4,R4,R0, LSL #+3
-        LDR.W    R5,??DataTable7
+        LDR.W    R5,??DataTable8
         ADDS     R4,R4,R5
         LDRB     R4,[R4, #+3]
         UXTAB    R3,R3,R4
         STRH     R3,[R2, #+12]
         B.N      ??GUI_VIEW_ListMeasure_5
-//  219         }
-//  220       }
-//  221       /* WK --> END */
-//  222 //    for(U8 ui=0; ui<2; ui++) //切换UI
-//  223 //    {
-//  224 //        for(U8 lcv_u=0; lcv_u<3; lcv_u++)//切换ABC
-//  225 //        {
-//  226 //            C108Data[84*ui+7*lcv_u+0]=C108Mode_64;//显示数据的模式
-//  227 //            C108Data[84*ui+7*lcv_u+1]=164+lcv_u*152;//左边列数据的X：79,右边X:434  148
-//  228 //            C108Data[84*ui+7*lcv_u+2]=135+ui*45;//Y坐标43
-//  229 //            C108Data[84*ui+7*lcv_u+3]=C108FC_W;
-//  230 //            C108Data[84*ui+7*lcv_u+4]=C108BC_Bk;
-//  231 //            C108Data[84*ui+7*lcv_u+5]=((U16)(PowRxchar[8*ui+16*lcv_u+UI_VIRTUAL_INDEX])<<8)+(U16)(PowRxchar[8*ui+16*lcv_u+UI_VIRTUAL_INDEX+1]);
-//  232 //            C108Data[84*ui+7*lcv_u+6]=((U16)(PowRxchar[8*ui+16*lcv_u+UI_VIRTUAL_INDEX+2])<<8)+(U16)(PowRxchar[8*ui+16*lcv_u+UI_VIRTUAL_INDEX+3]);
-//  233 //        }
-//  234 //    }
-//  235 //    for(U8 PQf=0; PQf<3; PQf++)
-//  236 //    {
-//  237 //        for(U8 lr=0; lr<2; lr++) //控制左右
-//  238 //        {
-//  239 //            if((PQf==2)&&(lr==1))//f项右边无显示
-//  240 //            {
-//  241 //                break;
-//  242 //            }
-//  243 //            for(U8 cnt=0; cnt<3; cnt++) //控制每一块的3个值
-//  244 //            {
-//  245 //                C108Data[21*PQf+84*lr+7*cnt+21]=C108Mode_64;//显示数据的模式
-//  246 //                C108Data[21*PQf+84*lr+7*cnt+22]=164+lr*355;//左边数据X:79,右X:434
-//  247 //                C108Data[21*PQf+84*lr+7*cnt+23]=225+cnt*30+PQf*102;//PY坐标145,QY坐标246
-//  248 //                C108Data[21*PQf+84*lr+7*cnt+24]=C108FC_W;
-//  249 //                C108Data[21*PQf+84*lr+7*cnt+25]=C108BC_Bk;
-//  250 //                C108Data[21*PQf+84*lr+7*cnt+26]=((U16)(PowRxchar[4*lr+20*cnt+PQf*8+PQSf_INDEX])<<8)+(U16)(PowRxchar[4*lr+20*cnt+PQf*8+PQSf_INDEX+1]);
-//  251 //                C108Data[21*PQf+84*lr+7*cnt+27]=((U16)(PowRxchar[4*lr+20*cnt+PQf*8+PQSf_INDEX+2])<<8)+(U16)(PowRxchar[4*lr+20*cnt+PQf*8+PQSf_INDEX+3]);
-//  252 //            }
-//  253 //        }
-//  254 //    }
-//  255     YADA_C0(DMMPowerInfoAdr,C108Data,84);
+//  217         }
+//  218       }
+//  219       /* WK --> END */
+//  220 //    for(U8 ui=0; ui<2; ui++) //切换UI
+//  221 //    {
+//  222 //        for(U8 lcv_u=0; lcv_u<3; lcv_u++)//切换ABC
+//  223 //        {
+//  224 //            C108Data[84*ui+7*lcv_u+0]=C108Mode_64;//显示数据的模式
+//  225 //            C108Data[84*ui+7*lcv_u+1]=164+lcv_u*152;//左边列数据的X：79,右边X:434  148
+//  226 //            C108Data[84*ui+7*lcv_u+2]=135+ui*45;//Y坐标43
+//  227 //            C108Data[84*ui+7*lcv_u+3]=C108FC_W;
+//  228 //            C108Data[84*ui+7*lcv_u+4]=C108BC_Bk;
+//  229 //            C108Data[84*ui+7*lcv_u+5]=((U16)(PowRxchar[8*ui+16*lcv_u+UI_VIRTUAL_INDEX])<<8)+(U16)(PowRxchar[8*ui+16*lcv_u+UI_VIRTUAL_INDEX+1]);
+//  230 //            C108Data[84*ui+7*lcv_u+6]=((U16)(PowRxchar[8*ui+16*lcv_u+UI_VIRTUAL_INDEX+2])<<8)+(U16)(PowRxchar[8*ui+16*lcv_u+UI_VIRTUAL_INDEX+3]);
+//  231 //        }
+//  232 //    }
+//  233 //    for(U8 PQf=0; PQf<3; PQf++)
+//  234 //    {
+//  235 //        for(U8 lr=0; lr<2; lr++) //控制左右
+//  236 //        {
+//  237 //            if((PQf==2)&&(lr==1))//f项右边无显示
+//  238 //            {
+//  239 //                break;
+//  240 //            }
+//  241 //            for(U8 cnt=0; cnt<3; cnt++) //控制每一块的3个值
+//  242 //            {
+//  243 //                C108Data[21*PQf+84*lr+7*cnt+21]=C108Mode_64;//显示数据的模式
+//  244 //                C108Data[21*PQf+84*lr+7*cnt+22]=164+lr*355;//左边数据X:79,右X:434
+//  245 //                C108Data[21*PQf+84*lr+7*cnt+23]=225+cnt*30+PQf*102;//PY坐标145,QY坐标246
+//  246 //                C108Data[21*PQf+84*lr+7*cnt+24]=C108FC_W;
+//  247 //                C108Data[21*PQf+84*lr+7*cnt+25]=C108BC_Bk;
+//  248 //                C108Data[21*PQf+84*lr+7*cnt+26]=((U16)(PowRxchar[4*lr+20*cnt+PQf*8+PQSf_INDEX])<<8)+(U16)(PowRxchar[4*lr+20*cnt+PQf*8+PQSf_INDEX+1]);
+//  249 //                C108Data[21*PQf+84*lr+7*cnt+27]=((U16)(PowRxchar[4*lr+20*cnt+PQf*8+PQSf_INDEX+2])<<8)+(U16)(PowRxchar[4*lr+20*cnt+PQf*8+PQSf_INDEX+3]);
+//  250 //            }
+//  251 //        }
+//  252 //    }
+//  253     YADA_C0(DMMPowerInfoAdr,C108Data,84);
 ??GUI_VIEW_ListMeasure_2:
         MOVS     R2,#+84
         ADD      R1,SP,#+0
         MOV      R0,#+1280
           CFI FunCall YADA_C0
         BL       YADA_C0
-//  256     YADA_C108(DMMPowerInfoAdr,12);
+//  254     YADA_C108(DMMPowerInfoAdr,12);
         MOVS     R1,#+12
         MOV      R0,#+1280
           CFI FunCall YADA_C108
         BL       YADA_C108
-//  257     delay_ms(5);
+//  255     delay_ms(5);
         MOVS     R0,#+5
           CFI FunCall delay_ms
         BL       delay_ms
-//  258     YADA_C0(DMMPowerInfoAdr+168,&C108Data[84],63);
+//  256     YADA_C0(DMMPowerInfoAdr+168,&C108Data[84],63);
         MOVS     R2,#+63
         ADD      R1,SP,#+168
         MOV      R0,#+1448
           CFI FunCall YADA_C0
         BL       YADA_C0
-//  259     YADA_C108(DMMPowerInfoAdr+168,9);
+//  257     YADA_C108(DMMPowerInfoAdr+168,9);
         MOVS     R1,#+9
         MOV      R0,#+1448
           CFI FunCall YADA_C108
         BL       YADA_C108
-//  260     delay_ms(5);
+//  258     delay_ms(5);
         MOVS     R0,#+5
           CFI FunCall delay_ms
         BL       delay_ms
-//  261 #endif 
-//  262 }
+//  259 #endif 
+//  260 }
         ADD      SP,SP,#+300
           CFI CFA R13+12
         POP      {R4,R5,PC}       ;; return
           CFI EndBlock cfiBlock4
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable4:
-        DC32     `?<Constant {14, 68, 614, 225, 273, 429}>`
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable4_1:
-        DC32     PowRxchar+0x85C
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable4_2:
-        DC32     COLOR
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable4_3:
-        DC32     `?<Constant {14, 86, 614, 174, 212, 295, 330, 4`
-//  263 /*******************************************************************************
-//  264 * 函  数  名      : GUI_VIEW_ListQuality
-//  265 * 描      述      : C108数据显示页下的数值列表-电能质量数据显示，三相的PST,PlT,
-//  266                     eu，ei,U_THD,I_THD。
-//  267 * 输      入      : 无
-//  268 * 返      回      : 无
-//  269 *
-//  270 * 修       改     : WK
-//  271 * 时       间     : 2013-03-14
-//  272 * 描       述     : 基于2013-03-08界面 : 修改了 ListQC108 数组存放数据顺序以及 显示的算法
-//  273                     &&&&&& 显示的电能质量数据还没有赋给数据 &&&&&&&&
-//  274 *******************************************************************************/
+//  261 /*******************************************************************************
+//  262 * 函  数  名      : GUI_VIEW_ListQuality
+//  263 * 描      述      : C108数据显示页下的数值列表-电能质量数据显示，三相的PST,PlT,
+//  264                     eu，ei,U_THD,I_THD。
+//  265 * 输      入      : 无
+//  266 * 返      回      : 无
+//  267 *
+//  268 * 修       改     : WK
+//  269 * 时       间     : 2013-03-14
+//  270 * 描       述     : 基于2013-03-08界面 : 修改了 ListQC108 数组存放数据顺序以及 显示的算法
+//  271                     &&&&&& 显示的电能质量数据还没有赋给数据 &&&&&&&&
+//  272 *******************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock5 Using cfiCommon0
           CFI Function GUI_VIEW_ListQuality
         THUMB
-//  275 void GUI_VIEW_ListQuality() // wk --> 电能质量参数
-//  276 {
+//  273 void GUI_VIEW_ListQuality() // wk --> 电能质量参数
+//  274 {
 GUI_VIEW_ListQuality:
-        PUSH     {R4,LR}
+        PUSH     {R4,R5,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R4 Frame(CFA, -8)
-          CFI CFA R13+8
-        SUB      SP,SP,#+256
+          CFI R5 Frame(CFA, -8)
+          CFI R4 Frame(CFA, -12)
+          CFI CFA R13+12
+        SUB      SP,SP,#+252
           CFI CFA R13+264
-//  277 #if 1 //wk -->
-//  278     U16 ListQC108[6*3*7];//24个数据 显示顺序：
-//  279     for(int num=0;num<6;num++) //数据类型切换 
+//  275 #if 1 //wk -->
+//  276     U8 temp1;
+//  277     U16 ListQC108[6*3*7];//24个数据 显示顺序：
+//  278     for(int num=0;num<6;num++) //数据类型切换 
         MOVS     R0,#+0
         B.N      ??GUI_VIEW_ListQuality_0
-//  280       for(int abc=0;abc<3;abc++)//ABC切换
-//  281       {
-//  282         ListQC108[num*21+abc*7]=C108Mode_64;//显示数据的模式
+//  279       for(int abc=0;abc<3;abc++)//ABC切换
+//  280       {
+//  281         temp1=8*num+16*abc;
 ??GUI_VIEW_ListQuality_1:
-        MOVS     R2,#+21
-        MOVS     R3,#+7
-        MUL      R3,R3,R1
-        MLA      R2,R2,R0,R3
-        ADD      R3,SP,#+0
-        MOVW     R4,#+25604
-        STRH     R4,[R3, R2, LSL #+1]
+        LSLS     R2,R1,#+4
+        ADDS     R2,R2,R0, LSL #+3
+//  282         ListQC108[num*21+abc*7]=C108Mode_64;//显示数据的模式
+        MOVS     R3,#+21
+        MOVS     R4,#+7
+        MUL      R4,R4,R1
+        MLA      R3,R3,R0,R4
+        ADD      R4,SP,#+0
+        MOVW     R5,#+25604
+        STRH     R5,[R4, R3, LSL #+1]
 //  283         ListQC108[num*21+abc*7+1]=164+abc*152;//显示左边列数据的X坐标75
-        MOVS     R2,#+21
-        MOVS     R3,#+7
-        MUL      R3,R3,R1
-        MLA      R2,R2,R0,R3
-        ADD      R3,SP,#+0
-        ADDS     R2,R3,R2, LSL #+1
-        MOVS     R3,#+152
-        MUL      R3,R3,R1
-        ADDS     R3,R3,#+164
-        STRH     R3,[R2, #+2]
+        MOVS     R3,#+21
+        MOVS     R4,#+7
+        MUL      R4,R4,R1
+        MLA      R3,R3,R0,R4
+        ADD      R4,SP,#+0
+        ADDS     R3,R4,R3, LSL #+1
+        MOVS     R4,#+152
+        MUL      R4,R4,R1
+        ADDS     R4,R4,#+164
+        STRH     R4,[R3, #+2]
 //  284         ListQC108[num*21+abc*7+2]=150+num*40;// Y轴坐标
-        MOVS     R2,#+21
-        MOVS     R3,#+7
-        MUL      R3,R3,R1
-        MLA      R2,R2,R0,R3
-        ADD      R3,SP,#+0
-        ADDS     R2,R3,R2, LSL #+1
-        MOVS     R3,#+40
-        MUL      R3,R3,R0
-        ADDS     R3,R3,#+150
-        STRH     R3,[R2, #+4]
+        MOVS     R3,#+21
+        MOVS     R4,#+7
+        MUL      R4,R4,R1
+        MLA      R3,R3,R0,R4
+        ADD      R4,SP,#+0
+        ADDS     R3,R4,R3, LSL #+1
+        MOVS     R4,#+40
+        MUL      R4,R4,R0
+        ADDS     R4,R4,#+150
+        STRH     R4,[R3, #+4]
 //  285         ListQC108[num*21+abc*7+3]=C108FC_W;
-        MOVS     R2,#+21
-        MOVS     R3,#+7
-        MUL      R3,R3,R1
-        MLA      R2,R2,R0,R3
-        ADD      R3,SP,#+0
-        ADDS     R2,R3,R2, LSL #+1
-        MOVW     R3,#+65535
-        STRH     R3,[R2, #+6]
+        MOVS     R3,#+21
+        MOVS     R4,#+7
+        MUL      R4,R4,R1
+        MLA      R3,R3,R0,R4
+        ADD      R4,SP,#+0
+        ADDS     R3,R4,R3, LSL #+1
+        MOVW     R4,#+65535
+        STRH     R4,[R3, #+6]
 //  286         ListQC108[num*21+abc*7+4]=C108BC_Bk;
-        MOVS     R2,#+21
-        MOVS     R3,#+7
-        MUL      R3,R3,R1
-        MLA      R2,R2,R0,R3
-        ADD      R3,SP,#+0
-        ADDS     R2,R3,R2, LSL #+1
-        MOVS     R3,#+0
-        STRH     R3,[R2, #+8]
+        MOVS     R3,#+21
+        MOVS     R4,#+7
+        MUL      R4,R4,R1
+        MLA      R3,R3,R0,R4
+        ADD      R4,SP,#+0
+        ADDS     R3,R4,R3, LSL #+1
+        MOVS     R4,#+0
+        STRH     R4,[R3, #+8]
 //  287         /* wk --> 显示的电能质量数据*/
-//  288         ListQC108[num*21+abc*7+5]=0;// -----------------待补充
-        MOVS     R2,#+21
-        MOVS     R3,#+7
-        MUL      R3,R3,R1
-        MLA      R2,R2,R0,R3
-        ADD      R3,SP,#+0
-        ADDS     R2,R3,R2, LSL #+1
-        MOVS     R3,#+0
-        STRH     R3,[R2, #+10]
-//  289         ListQC108[num*21+abc*7+6]=0;// -----------------待补充
-        MOVS     R2,#+21
-        MOVS     R3,#+7
-        MUL      R3,R3,R1
-        MLA      R2,R2,R0,R3
-        ADD      R3,SP,#+0
-        ADDS     R2,R3,R2, LSL #+1
-        MOVS     R3,#+0
-        STRH     R3,[R2, #+12]
-//  290       }
+//  288          
+//  289         ListQC108[num*21+abc*7+5]=((U16)(PowRxchar[temp1+Pst_INDEX])<<8)+(U16)(PowRxchar[temp1+Pst_INDEX+1]);// -----------------待补充
+        MOVS     R3,#+21
+        MOVS     R4,#+7
+        MUL      R4,R4,R1
+        MLA      R3,R3,R0,R4
+        ADD      R4,SP,#+0
+        ADDS     R3,R4,R3, LSL #+1
+        UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+        LDR.W    R4,??DataTable8
+        ADDS     R4,R2,R4
+        LDRB     R4,[R4, #+1964]
+        LSLS     R4,R4,#+8
+        UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+        LDR.W    R5,??DataTable8
+        ADDS     R5,R2,R5
+        LDRB     R5,[R5, #+1965]
+        UXTAB    R4,R4,R5
+        STRH     R4,[R3, #+10]
+//  290         ListQC108[num*21+abc*7+6]=((U16)(PowRxchar[temp1+Pst_INDEX+2])<<8)+(U16)(PowRxchar[temp1+Pst_INDEX+3]);// -----------------待补充
+        MOVS     R3,#+21
+        MOVS     R4,#+7
+        MUL      R4,R4,R1
+        MLA      R3,R3,R0,R4
+        ADD      R4,SP,#+0
+        ADDS     R3,R4,R3, LSL #+1
+        UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+        LDR.W    R4,??DataTable8
+        ADDS     R4,R2,R4
+        LDRB     R4,[R4, #+1966]
+        LSLS     R4,R4,#+8
+        UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
+        LDR.W    R5,??DataTable8
+        ADDS     R2,R2,R5
+        LDRB     R2,[R2, #+1967]
+        UXTAB    R2,R4,R2
+        STRH     R2,[R3, #+12]
+//  291       }
         ADDS     R1,R1,#+1
 ??GUI_VIEW_ListQuality_2:
         CMP      R1,#+3
@@ -2108,126 +2103,150 @@ GUI_VIEW_ListQuality:
         BGE.N    ??GUI_VIEW_ListQuality_3
         MOVS     R1,#+0
         B.N      ??GUI_VIEW_ListQuality_2
-//  291     
-//  292     YADA_C0(DMMPowerInfoAdr,ListQC108,9*7);
+//  292     
+//  293     YADA_C0(DMMPowerInfoAdr,ListQC108,9*7);
 ??GUI_VIEW_ListQuality_3:
         MOVS     R2,#+63
         ADD      R1,SP,#+0
         MOV      R0,#+1280
           CFI FunCall YADA_C0
         BL       YADA_C0
-//  293     YADA_C108(DMMPowerInfoAdr,9);
+//  294     YADA_C108(DMMPowerInfoAdr,9);
         MOVS     R1,#+9
         MOV      R0,#+1280
           CFI FunCall YADA_C108
         BL       YADA_C108
-//  294     delay_ms(5);
+//  295     delay_ms(5);
         MOVS     R0,#+5
           CFI FunCall delay_ms
         BL       delay_ms
-//  295     YADA_C0(DMMPowerInfoAdr+168,&ListQC108[9*7],9*7);
+//  296     YADA_C0(DMMPowerInfoAdr+168,&ListQC108[9*7],9*7);
         MOVS     R2,#+63
         ADD      R1,SP,#+126
         MOV      R0,#+1448
           CFI FunCall YADA_C0
         BL       YADA_C0
-//  296     YADA_C108(DMMPowerInfoAdr+168,9);
+//  297     YADA_C108(DMMPowerInfoAdr+168,9);
         MOVS     R1,#+9
         MOV      R0,#+1448
           CFI FunCall YADA_C108
         BL       YADA_C108
-//  297     delay_ms(5);
+//  298     delay_ms(5);
         MOVS     R0,#+5
           CFI FunCall delay_ms
         BL       delay_ms
-//  298 #endif //wk -->
-//  299     
-//  300 #if 0 // OLD
-//  301     U16 ListQC108[98];//14个数据,按Pst-Plt-e-THDU-THDI的顺序存放
-//  302     for(U8 lcv_sl=0; lcv_sl<2; lcv_sl++)//先Pst后Plt
-//  303     {
-//  304         for(U8 lcv_slABC=0; lcv_slABC<3; lcv_slABC++)
-//  305         {
-//  306             ListQC108[21*lcv_sl+7*lcv_slABC+0]=C108Mode_64;//显示数据的模式
-//  307             ListQC108[21*lcv_sl+7*lcv_slABC+1]=75;//左边数据X:75
-//  308             ListQC108[21*lcv_sl+7*lcv_slABC+2]=44+lcv_slABC*30+lcv_sl*101;//UY坐标43，IY坐标145
-//  309             ListQC108[21*lcv_sl+7*lcv_slABC+3]=C108FC_W;
-//  310             ListQC108[21*lcv_sl+7*lcv_slABC+4]=C108BC_Bk;
-//  311             ListQC108[21*lcv_sl+7*lcv_slABC+5]=((U16)(PowRxchar[12*lcv_sl+4*lcv_slABC+Pst_INDEX])<<8)+(U16)(PowRxchar[12*lcv_sl+4*lcv_slABC+Pst_INDEX+1]);
-//  312             ListQC108[21*lcv_sl+7*lcv_slABC+6]=((U16)(PowRxchar[12*lcv_sl+4*lcv_slABC+Pst_INDEX+2])<<8)+(U16)(PowRxchar[12*lcv_sl+4*lcv_slABC+Pst_INDEX+3]);
-//  313         }
-//  314     }
-//  315     for(U8 lcv_ubla=0; lcv_ubla<2; lcv_ubla++) //三相不平衡因子
-//  316     {
-//  317         ListQC108[7*lcv_ubla+42]=C108Mode_64;//显示数据的模式
-//  318         ListQC108[7*lcv_ubla+43]=75;//显示左边列数据的X坐标75
-//  319         ListQC108[7*lcv_ubla+44]=247+lcv_ubla*30;//247
-//  320         ListQC108[7*lcv_ubla+45]=C108FC_W;
-//  321         ListQC108[7*lcv_ubla+46]=C108BC_Bk;
-//  322         ListQC108[7*lcv_ubla+47]=((U16)(PowRxchar[76*lcv_ubla+UNBALANCED_INDEX])<<8)+(U16)(PowRxchar[76*lcv_ubla+UNBALANCED_INDEX+1]);
-//  323         ListQC108[7*lcv_ubla+48]=((U16)(PowRxchar[76*lcv_ubla+UNBALANCED_INDEX+2])<<8)+(U16)(PowRxchar[76*lcv_ubla+UNBALANCED_INDEX+3]);
-//  324     }
-//  325     for(U8 ui=0; ui<2; ui++)//先THD-U,后THD-I
-//  326     {
-//  327         for(U8 lcv_THD=0; lcv_THD<3; lcv_THD++)
-//  328         {
-//  329             ListQC108[21*ui+7*lcv_THD+56]=C108Mode_64;//显示数据的模式
-//  330             ListQC108[21*ui+7*lcv_THD+57]=430;//显示右边列数据的X坐标430
-//  331             ListQC108[21*ui+7*lcv_THD+58]=46+lcv_THD*30+ui*100;//UY坐标44，IY坐标146
-//  332             ListQC108[21*ui+7*lcv_THD+59]=C108FC_W;
-//  333             ListQC108[21*ui+7*lcv_THD+60]=C108BC_Bk;
-//  334             ListQC108[21*ui+7*lcv_THD+61]=((U16)(PowRxchar[16*lcv_THD+8*ui+UI_VIRTUAL_INDEX+4])<<8)+(U16)(PowRxchar[16*lcv_THD+8*ui+UI_VIRTUAL_INDEX+5]);
-//  335             ListQC108[21*ui+7*lcv_THD+62]=((U16)(PowRxchar[16*lcv_THD+8*ui+UI_VIRTUAL_INDEX+6])<<8)+(U16)(PowRxchar[16*lcv_THD+8*ui+UI_VIRTUAL_INDEX+7]);
-//  336         }
-//  337     }
-//  338     delay_ms(5);
-//  339     YADA_C0(ListQualityInfoAdr,ListQC108,98);
-//  340     YADA_C108(ListQualityInfoAdr,14);
-//  341     delay_ms(5);
-//  342 #endif  //OLD
-//  343 }
-        ADD      SP,SP,#+256
-          CFI CFA R13+8
-        POP      {R4,PC}          ;; return
+//  299 #endif //wk -->
+//  300     
+//  301 #if 0 // OLD
+//  302     U16 ListQC108[98];//14个数据,按Pst-Plt-e-THDU-THDI的顺序存放
+//  303     for(U8 lcv_sl=0; lcv_sl<2; lcv_sl++)//先Pst后Plt
+//  304     {
+//  305         for(U8 lcv_slABC=0; lcv_slABC<3; lcv_slABC++)
+//  306         {
+//  307             ListQC108[21*lcv_sl+7*lcv_slABC+0]=C108Mode_64;//显示数据的模式
+//  308             ListQC108[21*lcv_sl+7*lcv_slABC+1]=75;//左边数据X:75
+//  309             ListQC108[21*lcv_sl+7*lcv_slABC+2]=44+lcv_slABC*30+lcv_sl*101;//UY坐标43，IY坐标145
+//  310             ListQC108[21*lcv_sl+7*lcv_slABC+3]=C108FC_W;
+//  311             ListQC108[21*lcv_sl+7*lcv_slABC+4]=C108BC_Bk;
+//  312             ListQC108[21*lcv_sl+7*lcv_slABC+5]=((U16)(PowRxchar[12*lcv_sl+4*lcv_slABC+Pst_INDEX])<<8)+(U16)(PowRxchar[12*lcv_sl+4*lcv_slABC+Pst_INDEX+1]);
+//  313             ListQC108[21*lcv_sl+7*lcv_slABC+6]=((U16)(PowRxchar[12*lcv_sl+4*lcv_slABC+Pst_INDEX+2])<<8)+(U16)(PowRxchar[12*lcv_sl+4*lcv_slABC+Pst_INDEX+3]);
+//  314         }
+//  315     }
+//  316     for(U8 lcv_ubla=0; lcv_ubla<2; lcv_ubla++) //三相不平衡因子
+//  317     {
+//  318         ListQC108[7*lcv_ubla+42]=C108Mode_64;//显示数据的模式
+//  319         ListQC108[7*lcv_ubla+43]=75;//显示左边列数据的X坐标75
+//  320         ListQC108[7*lcv_ubla+44]=247+lcv_ubla*30;//247
+//  321         ListQC108[7*lcv_ubla+45]=C108FC_W;
+//  322         ListQC108[7*lcv_ubla+46]=C108BC_Bk;
+//  323         ListQC108[7*lcv_ubla+47]=((U16)(PowRxchar[76*lcv_ubla+UNBALANCED_INDEX])<<8)+(U16)(PowRxchar[76*lcv_ubla+UNBALANCED_INDEX+1]);
+//  324         ListQC108[7*lcv_ubla+48]=((U16)(PowRxchar[76*lcv_ubla+UNBALANCED_INDEX+2])<<8)+(U16)(PowRxchar[76*lcv_ubla+UNBALANCED_INDEX+3]);
+//  325     }
+//  326     for(U8 ui=0; ui<2; ui++)//先THD-U,后THD-I
+//  327     {
+//  328         for(U8 lcv_THD=0; lcv_THD<3; lcv_THD++)
+//  329         {
+//  330             ListQC108[21*ui+7*lcv_THD+56]=C108Mode_64;//显示数据的模式
+//  331             ListQC108[21*ui+7*lcv_THD+57]=430;//显示右边列数据的X坐标430
+//  332             ListQC108[21*ui+7*lcv_THD+58]=46+lcv_THD*30+ui*100;//UY坐标44，IY坐标146
+//  333             ListQC108[21*ui+7*lcv_THD+59]=C108FC_W;
+//  334             ListQC108[21*ui+7*lcv_THD+60]=C108BC_Bk;
+//  335             ListQC108[21*ui+7*lcv_THD+61]=((U16)(PowRxchar[16*lcv_THD+8*ui+UI_VIRTUAL_INDEX+4])<<8)+(U16)(PowRxchar[16*lcv_THD+8*ui+UI_VIRTUAL_INDEX+5]);
+//  336             ListQC108[21*ui+7*lcv_THD+62]=((U16)(PowRxchar[16*lcv_THD+8*ui+UI_VIRTUAL_INDEX+6])<<8)+(U16)(PowRxchar[16*lcv_THD+8*ui+UI_VIRTUAL_INDEX+7]);
+//  337         }
+//  338     }
+//  339     delay_ms(5);
+//  340     YADA_C0(ListQualityInfoAdr,ListQC108,98);
+//  341     YADA_C108(ListQualityInfoAdr,14);
+//  342     delay_ms(5);
+//  343 #endif  //OLD
+//  344 }
+        ADD      SP,SP,#+252
+          CFI CFA R13+12
+        POP      {R4,R5,PC}       ;; return
           CFI EndBlock cfiBlock5
-//  344 
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable5:
+        DC32     `?<Constant {14, 68, 614, 225, 273, 429}>`
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable5_1:
+        DC32     PowRxchar+0x804
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable5_2:
+        DC32     COLOR
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable5_3:
+        DC32     `?<Constant {14, 86, 614, 174, 212, 295, 330, 4`
 //  345 
-//  346 /*******************************************************************************
-//  347 * 函  数  名      : GUI_VIEW_ListQuality2
-//  348 * 描      述      : 三相不平衡所有显示函数
-//  349 * 输      入      : 无
-//  350 * 返      回      : 无
-//  351 *
-//  352 * 修       改     : WK
-//  353 * 时       间     : 2013-03-14
-//  354 * 描       述     : 基于2013-03-08界面 : 修改了 C108Data 数组存放数据顺序以及 显示的算法
-//  355 *******************************************************************************/
+//  346 
+//  347 /*******************************************************************************
+//  348 * 函  数  名      : GUI_VIEW_ListQuality2
+//  349 * 描      述      : 三相不平衡所有显示函数
+//  350 * 输      入      : 无
+//  351 * 返      回      : 无
+//  352 *
+//  353 * 修       改     : WK
+//  354 * 时       间     : 2013-03-14
+//  355 * 描       述     : 基于2013-03-08界面 : 修改了 C108Data 数组存放数据顺序以及 显示的算法
+//  356 *******************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock6 Using cfiCommon0
           CFI Function GUI_VIEW_ListQuality2
         THUMB
-//  356 void GUI_VIEW_ListQuality2(U8 U_DISK)
-//  357 {
+//  357 void GUI_VIEW_ListQuality2(U8 U_DISK)
+//  358 {
 GUI_VIEW_ListQuality2:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
-        SUB      SP,SP,#+216
-          CFI CFA R13+224
-//  358 #if 1 // wk --> 
-//  359   U16 BlockC108[5*3*7]={0};
+        SUB      SP,SP,#+144
+          CFI CFA R13+152
+//  359 #if 1 // wk --> 
+//  360   U16 BlockC108[5*2*7]={0};
         ADD      R0,SP,#+0
-        MOVS     R1,#+212
+        MOVS     R1,#+140
           CFI FunCall __aeabi_memclr4
         BL       __aeabi_memclr4
-//  360   for(int num=0;num<5;num++)
+//  361   for(int num=0;num<5;num++)
         MOVS     R0,#+0
         B.N      ??GUI_VIEW_ListQuality2_0
-//  361     for(int ui=0;ui<2;ui++)
-//  362     {
-//  363       BlockC108[num*14+ui*7]=0x3404;
+//  362     for(int ui=0;ui<2;ui++)
+//  363     {
+//  364       BlockC108[num*14+ui*7]=0x3404;
 ??GUI_VIEW_ListQuality2_1:
         MOVS     R2,#+14
         MOVS     R3,#+7
@@ -2236,7 +2255,7 @@ GUI_VIEW_ListQuality2:
         ADD      R3,SP,#+0
         MOVW     R4,#+13316
         STRH     R4,[R3, R2, LSL #+1]
-//  364       BlockC108[num*14+ui*7+1]= 270+ui*210;
+//  365       BlockC108[num*14+ui*7+1]= 270+ui*210;
         MOVS     R2,#+14
         MOVS     R3,#+7
         MUL      R3,R3,R1
@@ -2247,7 +2266,7 @@ GUI_VIEW_ListQuality2:
         MUL      R3,R3,R1
         ADDS     R3,R3,#+270
         STRH     R3,[R2, #+2]
-//  365       BlockC108[num*14+ui*7+2]= 160+num*45;
+//  366       BlockC108[num*14+ui*7+2]= 160+num*45;
         MOVS     R2,#+14
         MOVS     R3,#+7
         MUL      R3,R3,R1
@@ -2258,8 +2277,8 @@ GUI_VIEW_ListQuality2:
         MUL      R3,R3,R0
         ADDS     R3,R3,#+160
         STRH     R3,[R2, #+4]
-//  366       
-//  367       BlockC108[num*14+ui*7+3]=C108FC_W;
+//  367       
+//  368       BlockC108[num*14+ui*7+3]=C108FC_W;
         MOVS     R2,#+14
         MOVS     R3,#+7
         MUL      R3,R3,R1
@@ -2268,7 +2287,7 @@ GUI_VIEW_ListQuality2:
         ADDS     R2,R3,R2, LSL #+1
         MOVW     R3,#+65535
         STRH     R3,[R2, #+6]
-//  368       BlockC108[num*14+ui*7+4]=C108BC_Bk;
+//  369       BlockC108[num*14+ui*7+4]=C108BC_Bk;
         MOVS     R2,#+14
         MOVS     R3,#+7
         MUL      R3,R3,R1
@@ -2277,8 +2296,8 @@ GUI_VIEW_ListQuality2:
         ADDS     R2,R3,R2, LSL #+1
         MOVS     R3,#+0
         STRH     R3,[R2, #+8]
-//  369       /* wk --> 显示的电能质量数据 */
-//  370       BlockC108[num*14+ui*7+5]=0;  // ----------------待补充
+//  370       /* wk --> 显示的电能质量数据 */
+//  371       BlockC108[num*14+ui*7+5]=0;  // ----------------待补充
         MOVS     R2,#+14
         MOVS     R3,#+7
         MUL      R3,R3,R1
@@ -2287,7 +2306,7 @@ GUI_VIEW_ListQuality2:
         ADDS     R2,R3,R2, LSL #+1
         MOVS     R3,#+0
         STRH     R3,[R2, #+10]
-//  371       BlockC108[num*14+ui*7+6]=0;  // ----------------待补充
+//  372       BlockC108[num*14+ui*7+6]=0;  // ----------------待补充
         MOVS     R2,#+14
         MOVS     R3,#+7
         MUL      R3,R3,R1
@@ -2296,7 +2315,7 @@ GUI_VIEW_ListQuality2:
         ADDS     R2,R3,R2, LSL #+1
         MOVS     R3,#+0
         STRH     R3,[R2, #+12]
-//  372     }
+//  373     }
         ADDS     R1,R1,#+1
 ??GUI_VIEW_ListQuality2_2:
         CMP      R1,#+2
@@ -2307,87 +2326,87 @@ GUI_VIEW_ListQuality2:
         BGE.N    ??GUI_VIEW_ListQuality2_3
         MOVS     R1,#+0
         B.N      ??GUI_VIEW_ListQuality2_2
-//  373   YADA_C0(ListUnblanceAdr, BlockC108,15*7);
+//  374   YADA_C0(ListUnblanceAdr, BlockC108,15*7);
 ??GUI_VIEW_ListQuality2_3:
         MOVS     R2,#+105
         ADD      R1,SP,#+0
         MOV      R0,#+32768
           CFI FunCall YADA_C0
         BL       YADA_C0
-//  374   YADA_C108(ListUnblanceAdr,15);
+//  375   YADA_C108(ListUnblanceAdr,15);
         MOVS     R1,#+15
         MOV      R0,#+32768
           CFI FunCall YADA_C108
         BL       YADA_C108
-//  375 #endif // wk --> end
-//  376 #if 0 //old
-//  377   U8 pBuf1[64]={0},i,j,k,index=0;
-//  378   U16 BlockC108[126]={0},U_CAP=0,S_DAY=0,temp=0;
-//  379 #if 0  // wk --> U 盘操作相关 --> 待修改
-//  380   if(U_DISK==1)
-//  381   {
-//  382       CH376ReadBlock( pBuf1 );  /* 如果需要,可以读取数据块CH376_CMD_DATA.DiskMountInq,返回长度 */
-//  383      CH376DiskQuery((PU32)pBuf1);
-//  384      U_CAP=(U16)(*(PU32)pBuf1 / ( 1000000 / DEF_SECTOR_SIZE ) );
-//  385      S_DAY=(U16)(U_CAP/120);
-//  386   }
-//  387 #endif
-//  388   for(j=0;j<2;j++)
-//  389     for(i=0;i<3;i++)
-//  390       for(k=0;k<3;k++)
-//  391 	{
-//  392           temp=UNBALANCED_INDEX+k+3*i+2*j;
-//  393           index=7*k+21*i+63*j;
-//  394 	  BlockC108[index+1]=140+j*313;//X +80*j
-//  395 	  BlockC108[index+2]=46+30*k+i*125;//Y坐标
-//  396 	  BlockC108[index+3]=0xffff;
-//  397 	  BlockC108[index+4]=0x0000;
-//  398           if(k==2&&i==2)
-//  399           {
-//  400            BlockC108[index]=0x6004;//显示数据的模式
-//  401            BlockC108[index+5]=0;
-//  402            if(j==0)
-//  403              BlockC108[index+6]=U_CAP;
-//  404            else
-//  405              BlockC108[index+6]=S_DAY;
-//  406           }
-//  407           else
-//  408           {
-//  409             BlockC108[index]=0x3404;//显示数据的模式
-//  410             BlockC108[index+5]=((U16)(PowRxchar[temp])<<8)+((U16)PowRxchar[temp+1]);
-//  411 	    BlockC108[index+6]=((U16)(PowRxchar[temp+2])<<8)+((U16)PowRxchar[temp+3]);
-//  412           }
-//  413 	  
-//  414         }
-//  415   YADA_C0(ListUnblanceAdr, BlockC108,63);
-//  416   YADA_C108(ListUnblanceAdr,9);
-//  417   YADA_C0(ListUnblanceAdr+63, &BlockC108[63], 63);
-//  418   YADA_C108(ListUnblanceAdr+63,9); 
-//  419 #endif // old
-//  420 }
-        ADD      SP,SP,#+216
+//  376 #endif // wk --> end
+//  377 #if 0 //old
+//  378   U8 pBuf1[64]={0},i,j,k,index=0;
+//  379   U16 BlockC108[126]={0},U_CAP=0,S_DAY=0,temp=0;
+//  380 #if 0  // wk --> U 盘操作相关 --> 待修改
+//  381   if(U_DISK==1)
+//  382   {
+//  383       CH376ReadBlock( pBuf1 );  /* 如果需要,可以读取数据块CH376_CMD_DATA.DiskMountInq,返回长度 */
+//  384      CH376DiskQuery((PU32)pBuf1);
+//  385      U_CAP=(U16)(*(PU32)pBuf1 / ( 1000000 / DEF_SECTOR_SIZE ) );
+//  386      S_DAY=(U16)(U_CAP/120);
+//  387   }
+//  388 #endif
+//  389   for(j=0;j<2;j++)
+//  390     for(i=0;i<3;i++)
+//  391       for(k=0;k<3;k++)
+//  392 	{
+//  393           temp=UNBALANCED_INDEX+k+3*i+2*j;
+//  394           index=7*k+21*i+63*j;
+//  395 	  BlockC108[index+1]=140+j*313;//X +80*j
+//  396 	  BlockC108[index+2]=46+30*k+i*125;//Y坐标
+//  397 	  BlockC108[index+3]=0xffff;
+//  398 	  BlockC108[index+4]=0x0000;
+//  399           if(k==2&&i==2)
+//  400           {
+//  401            BlockC108[index]=0x6004;//显示数据的模式
+//  402            BlockC108[index+5]=0;
+//  403            if(j==0)
+//  404              BlockC108[index+6]=U_CAP;
+//  405            else
+//  406              BlockC108[index+6]=S_DAY;
+//  407           }
+//  408           else
+//  409           {
+//  410             BlockC108[index]=0x3404;//显示数据的模式
+//  411             BlockC108[index+5]=((U16)(PowRxchar[temp])<<8)+((U16)PowRxchar[temp+1]);
+//  412 	    BlockC108[index+6]=((U16)(PowRxchar[temp+2])<<8)+((U16)PowRxchar[temp+3]);
+//  413           }
+//  414 	  
+//  415         }
+//  416   YADA_C0(ListUnblanceAdr, BlockC108,63);
+//  417   YADA_C108(ListUnblanceAdr,9);
+//  418   YADA_C0(ListUnblanceAdr+63, &BlockC108[63], 63);
+//  419   YADA_C108(ListUnblanceAdr+63,9); 
+//  420 #endif // old
+//  421 }
+        ADD      SP,SP,#+144
           CFI CFA R13+8
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock6
-//  421 
-//  422 /*******************************************************************************
-//  423 * 函  数  名      : GUI_VIEW_ListQuality
-//  424 * 描      述      : 谐波柱状图显示函数。可通过移位键选择三相或者谐波总次数，
-//  425                     上下键来选择各单一次数，并显示其电流电压值
-//  426 * 输      入      : 无
-//  427 * 返      回      : 无
-//  428 *
-//  429 * 修       改     : WK
-//  430 * 时       间     : 2013-03-14
-//  431 * 描       述     : 基于2013-03-08界面 
-//  432 *******************************************************************************/
+//  422 
+//  423 /*******************************************************************************
+//  424 * 函  数  名      : GUI_VIEW_ListQuality
+//  425 * 描      述      : 谐波柱状图显示函数。可通过移位键选择三相或者谐波总次数，
+//  426                     上下键来选择各单一次数，并显示其电流电压值
+//  427 * 输      入      : 无
+//  428 * 返      回      : 无
+//  429 *
+//  430 * 修       改     : WK
+//  431 * 时       间     : 2013-03-14
+//  432 * 描       述     : 基于2013-03-08界面 
+//  433 *******************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock7 Using cfiCommon0
           CFI Function GUI_VIEW_HarmoGraph
         THUMB
-//  433 void GUI_VIEW_HarmoGraph() 
-//  434 {
+//  434 void GUI_VIEW_HarmoGraph() 
+//  435 {
 GUI_VIEW_HarmoGraph:
         PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
@@ -2397,220 +2416,220 @@ GUI_VIEW_HarmoGraph:
           CFI CFA R13+16
         SUB      SP,SP,#+720
           CFI CFA R13+736
-//  435 #if 1
-//  436     float Graphfloat[52]= {0};
+//  436 #if 1
+//  437     float Graphfloat[52]= {0};
         ADD      R0,SP,#+512
         MOVS     R1,#+208
           CFI FunCall __aeabi_memclr4
         BL       __aeabi_memclr4
-//  437     U16 UHarmoBarXY[104]= {0};//26次谐波，共26*4个点
+//  438     U16 UHarmoBarXY[104]= {0};//26次谐波，共26*4个点
         ADD      R0,SP,#+304
         MOVS     R1,#+208
           CFI FunCall __aeabi_memclr4
         BL       __aeabi_memclr4
-//  438     U16 IHarmoBarXY[104]= {0}; 
+//  439     U16 IHarmoBarXY[104]= {0}; 
         ADD      R0,SP,#+96
         MOVS     R1,#+208
           CFI FunCall __aeabi_memclr4
         BL       __aeabi_memclr4
-//  439     U8 HarmoInfoZone[][10]= {"第01-26次","第25-50次"};//WK -->
+//  440     U8 HarmoInfoZone[][10]= {"第01-26次","第25-50次"};//WK -->
         ADD      R0,SP,#+76
-        LDR.W    R1,??DataTable7_1
+        LDR.W    R1,??DataTable8_1
         MOVS     R2,#+20
           CFI FunCall __aeabi_memcpy4
         BL       __aeabi_memcpy4
-//  440 //    U16 square[16]= {14,42,16,65,91,42,93,65,414,79,416,102,414,264,416,287}; //光标位置
-//  441     
-//  442     U16 HarmoUI[28]= {0x2004,310,78,0xffff,0x0000,0x0000,HarmoGraphUorder,  //0x03ae 表主体背景色
-//  443                       0x2004,310,265,0xffff,0x0000,0x0000,HarmoGraphIorder,
-//  444                       0x3304,0x01FC,0x004E,0xffff,0x0000,0x0000,0x0000,
-//  445                       0x3304,0x0200,0x0108,0xffff,0x0000
-//  446                      };//根据放大倍数控制格式
+//  441 //    U16 square[16]= {14,42,16,65,91,42,93,65,414,79,416,102,414,264,416,287}; //光标位置
+//  442     
+//  443     U16 HarmoUI[28]= {0x2004,310,78,0xffff,0x0000,0x0000,HarmoGraphUorder,  //0x03ae 表主体背景色
+//  444                       0x2004,310,265,0xffff,0x0000,0x0000,HarmoGraphIorder,
+//  445                       0x3304,0x01FC,0x004E,0xffff,0x0000,0x0000,0x0000,
+//  446                       0x3304,0x0200,0x0108,0xffff,0x0000
+//  447                      };//根据放大倍数控制格式
         ADD      R0,SP,#+20
-        LDR.W    R1,??DataTable7_2
+        LDR.W    R1,??DataTable8_2
         MOVS     R2,#+56
           CFI FunCall __aeabi_memcpy4
         BL       __aeabi_memcpy4
-        LDR.W    R0,??DataTable7_3
+        LDR.W    R0,??DataTable8_3
         LDRB     R0,[R0, #+0]
         STRH     R0,[SP, #+32]
-        LDR.W    R0,??DataTable7_4
+        LDR.W    R0,??DataTable8_4
         LDRB     R0,[R0, #+0]
         STRH     R0,[SP, #+46]
-//  447     /* wk --> 影响返回主界面，原因待进一步分析中。。。--> 已解决 */
-//  448 #define wk_tst 1
-//  449 #if wk_tst
-//  450     HarmoUI[19]=((U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphUorder-604+Harmo_INDEX])<<8)
-//  451                 +(U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphUorder-603+Harmo_INDEX]);
-        LDR.W    R0,??DataTable7_5
+//  448     /* wk --> 影响返回主界面，原因待进一步分析中。。。--> 已解决 */
+//  449 #define wk_tst 1
+//  450 #if wk_tst
+//  451     HarmoUI[19]=((U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphUorder-604+Harmo_INDEX])<<8)
+//  452                 +(U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphUorder-603+Harmo_INDEX]);
+        LDR.W    R0,??DataTable8_5
         LDRB     R0,[R0, #+0]
         MOV      R1,#+600
-        LDR.W    R2,??DataTable7_3
+        LDR.W    R2,??DataTable8_3
         LDRB     R2,[R2, #+0]
         LSLS     R2,R2,#+2
         MLA      R0,R1,R0,R2
-        LDR.W    R1,??DataTable7
+        LDR.W    R1,??DataTable8
         ADDS     R0,R0,R1
         SUBS     R0,R0,#+524
         LDRB     R0,[R0, #+0]
         LSLS     R0,R0,#+8
-        LDR.W    R1,??DataTable7_5
+        LDR.W    R1,??DataTable8_5
         LDRB     R1,[R1, #+0]
         MOV      R2,#+600
-        LDR.W    R3,??DataTable7_3
+        LDR.W    R3,??DataTable8_3
         LDRB     R3,[R3, #+0]
         LSLS     R3,R3,#+2
         MLA      R1,R2,R1,R3
-        LDR.W    R2,??DataTable7
+        LDR.W    R2,??DataTable8
         ADDS     R1,R1,R2
         SUBW     R1,R1,#+523
         LDRB     R1,[R1, #+0]
         UXTAB    R0,R0,R1
         STRH     R0,[SP, #+58]
-//  452     HarmoUI[20]=((U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphUorder-602+Harmo_INDEX])<<8)
-//  453                 +(U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphUorder-601+Harmo_INDEX]);
-        LDR.W    R0,??DataTable7_5
+//  453     HarmoUI[20]=((U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphUorder-602+Harmo_INDEX])<<8)
+//  454                 +(U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphUorder-601+Harmo_INDEX]);
+        LDR.W    R0,??DataTable8_5
         LDRB     R0,[R0, #+0]
         MOV      R1,#+600
-        LDR.W    R2,??DataTable7_3
+        LDR.W    R2,??DataTable8_3
         LDRB     R2,[R2, #+0]
         LSLS     R2,R2,#+2
         MLA      R0,R1,R0,R2
-        LDR.W    R1,??DataTable7
+        LDR.W    R1,??DataTable8
         ADDS     R0,R0,R1
         SUBW     R0,R0,#+522
         LDRB     R0,[R0, #+0]
         LSLS     R0,R0,#+8
-        LDR.W    R1,??DataTable7_5
+        LDR.W    R1,??DataTable8_5
         LDRB     R1,[R1, #+0]
         MOV      R2,#+600
-        LDR.W    R3,??DataTable7_3
+        LDR.W    R3,??DataTable8_3
         LDRB     R3,[R3, #+0]
         LSLS     R3,R3,#+2
         MLA      R1,R2,R1,R3
-        LDR.W    R2,??DataTable7
+        LDR.W    R2,??DataTable8
         ADDS     R1,R1,R2
         SUBW     R1,R1,#+521
         LDRB     R1,[R1, #+0]
         UXTAB    R0,R0,R1
         STRH     R0,[SP, #+60]
-//  454     HarmoUI[26]=((U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphIorder-404+Harmo_INDEX])<<8)
-//  455                 +(U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphIorder-403+Harmo_INDEX]);
-        LDR.W    R0,??DataTable7_5
+//  455     HarmoUI[26]=((U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphIorder-404+Harmo_INDEX])<<8)
+//  456                 +(U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphIorder-403+Harmo_INDEX]);
+        LDR.W    R0,??DataTable8_5
         LDRB     R0,[R0, #+0]
         MOV      R1,#+600
-        LDR.W    R2,??DataTable7_4
+        LDR.W    R2,??DataTable8_4
         LDRB     R2,[R2, #+0]
         LSLS     R2,R2,#+2
         MLA      R0,R1,R0,R2
-        LDR.W    R1,??DataTable7
+        LDR.W    R1,??DataTable8
         ADDS     R0,R0,R1
         SUBS     R0,R0,#+324
         LDRB     R0,[R0, #+0]
         LSLS     R0,R0,#+8
-        LDR.W    R1,??DataTable7_5
+        LDR.W    R1,??DataTable8_5
         LDRB     R1,[R1, #+0]
         MOV      R2,#+600
-        LDR.W    R3,??DataTable7_4
+        LDR.W    R3,??DataTable8_4
         LDRB     R3,[R3, #+0]
         LSLS     R3,R3,#+2
         MLA      R1,R2,R1,R3
-        LDR.W    R2,??DataTable7
+        LDR.W    R2,??DataTable8
         ADDS     R1,R1,R2
         SUBW     R1,R1,#+323
         LDRB     R1,[R1, #+0]
         UXTAB    R0,R0,R1
         STRH     R0,[SP, #+72]
-//  456     HarmoUI[27]=((U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphIorder-402+Harmo_INDEX])<<8)
-//  457                 +(U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphIorder-401+Harmo_INDEX]);
-        LDR.W    R0,??DataTable7_5
+//  457     HarmoUI[27]=((U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphIorder-402+Harmo_INDEX])<<8)
+//  458                 +(U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphIorder-401+Harmo_INDEX]);
+        LDR.W    R0,??DataTable8_5
         LDRB     R0,[R0, #+0]
         MOV      R1,#+600
-        LDR.W    R2,??DataTable7_4
+        LDR.W    R2,??DataTable8_4
         LDRB     R2,[R2, #+0]
         LSLS     R2,R2,#+2
         MLA      R0,R1,R0,R2
-        LDR.W    R1,??DataTable7
+        LDR.W    R1,??DataTable8
         ADDS     R0,R0,R1
         SUBS     R0,R0,#+322
         LDRB     R0,[R0, #+0]
         LSLS     R0,R0,#+8
-        LDR.W    R1,??DataTable7_5
+        LDR.W    R1,??DataTable8_5
         LDRB     R1,[R1, #+0]
         MOV      R2,#+600
-        LDR.W    R3,??DataTable7_4
+        LDR.W    R3,??DataTable8_4
         LDRB     R3,[R3, #+0]
         LSLS     R3,R3,#+2
         MLA      R1,R2,R1,R3
-        LDR.W    R2,??DataTable7
+        LDR.W    R2,??DataTable8
         ADDS     R1,R1,R2
         SUBW     R1,R1,#+321
         LDRB     R1,[R1, #+0]
         UXTAB    R0,R0,R1
         STRH     R0,[SP, #+74]
-//  458     
-//  459     ChartoFloat(&PowRxchar[600*(HarmoGraphPhase-1)+(HarmoGraphRange-1)*96+Harmo_INDEX], Graphfloat,26,1000);//转换电压数据，！放大倍数
+//  459     
+//  460     ChartoFloat(&PowRxchar[600*(HarmoGraphPhase-1)+(HarmoGraphRange-1)*96+Harmo_INDEX], Graphfloat,26,1000);//转换电压数据，！放大倍数
         MOV      R3,#+1000
         MOVS     R2,#+26
         ADD      R1,SP,#+512
-        LDR.W    R0,??DataTable7_5
+        LDR.W    R0,??DataTable8_5
         LDRB     R0,[R0, #+0]
         MOV      R4,#+600
-        LDR.W    R5,??DataTable7_6
+        LDR.W    R5,??DataTable8_6
         LDRB     R5,[R5, #+0]
         MOVS     R6,#+96
         MULS     R5,R6,R5
         MLA      R0,R4,R0,R5
-        LDR.W    R4,??DataTable7
+        LDR.W    R4,??DataTable8
         ADDS     R0,R0,R4
         SUBS     R0,R0,#+616
           CFI FunCall ChartoFloat
         BL       ChartoFloat
-//  460     ChartoFloat(&PowRxchar[600*(HarmoGraphPhase-1)+(HarmoGraphRange-1)*96+Harmo_INDEX+200], &Graphfloat[26],26,1000);//转换电流数据
+//  461     ChartoFloat(&PowRxchar[600*(HarmoGraphPhase-1)+(HarmoGraphRange-1)*96+Harmo_INDEX+200], &Graphfloat[26],26,1000);//转换电流数据
         MOV      R3,#+1000
         MOVS     R2,#+26
         ADD      R1,SP,#+616
-        LDR.W    R0,??DataTable7_5
+        LDR.W    R0,??DataTable8_5
         LDRB     R0,[R0, #+0]
         MOV      R4,#+600
-        LDR.W    R5,??DataTable7_6
+        LDR.W    R5,??DataTable8_6
         LDRB     R5,[R5, #+0]
         MOVS     R6,#+96
         MULS     R5,R6,R5
         MLA      R0,R4,R0,R5
-        LDR.W    R4,??DataTable7
+        LDR.W    R4,??DataTable8
         ADDS     R0,R0,R4
         SUBS     R0,R0,#+416
           CFI FunCall ChartoFloat
         BL       ChartoFloat
-//  461 #endif  // wk_tst
-//  462     /* wk --> end */
-//  463     //电压范围0~300,分三级显示0~3.0,3.0~300
-//  464     //循环构建柱状图的数组，每一个数据转换成矩形的（Xe，Ye）（Xs，Ys）
-//  465     for (U16 lcv_uho=0; lcv_uho < 26; lcv_uho++)
+//  462 #endif  // wk_tst
+//  463     /* wk --> end */
+//  464     //电压范围0~300,分三级显示0~3.0,3.0~300
+//  465     //循环构建柱状图的数组，每一个数据转换成矩形的（Xe，Ye）（Xs，Ys）
+//  466     for (U16 lcv_uho=0; lcv_uho < 26; lcv_uho++)
         MOVS     R4,#+0
         B.N      ??GUI_VIEW_HarmoGraph_0
-//  466     {
-//  467         UHarmoBarXY[4*lcv_uho]=91+20*lcv_uho;//Xe
-//  468         if (Graphfloat[lcv_uho] <= 3 )//幅值小于2.4V
-//  469         {
-//  470             UHarmoBarXY[4*lcv_uho+1]=(U16)(248.0-Graphfloat[lcv_uho] *14.667);
-//  471         }
-//  472         else if(Graphfloat[lcv_uho]  > 3 && Graphfloat[lcv_uho] < 30)
-//  473         {
-//  474             UHarmoBarXY[4*lcv_uho+1]=(U16)(204.0-(Graphfloat[lcv_uho] -3.0)*1.63);
-//  475         }
-//  476         else if (Graphfloat[lcv_uho] >= 30)
+//  467     {
+//  468         UHarmoBarXY[4*lcv_uho]=91+20*lcv_uho;//Xe
+//  469         if (Graphfloat[lcv_uho] <= 3 )//幅值小于2.4V
+//  470         {
+//  471             UHarmoBarXY[4*lcv_uho+1]=(U16)(248.0-Graphfloat[lcv_uho] *14.667);
+//  472         }
+//  473         else if(Graphfloat[lcv_uho]  > 3 && Graphfloat[lcv_uho] < 30)
+//  474         {
+//  475             UHarmoBarXY[4*lcv_uho+1]=(U16)(204.0-(Graphfloat[lcv_uho] -3.0)*1.63);
+//  476         }
+//  477         else if (Graphfloat[lcv_uho] >= 30)
 ??GUI_VIEW_HarmoGraph_1:
         UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
         ADD      R0,SP,#+512
         LDR      R0,[R0, R4, LSL #+2]
-        LDR.W    R1,??DataTable7_7  ;; 0x41f00000
+        LDR.W    R1,??DataTable8_7  ;; 0x41f00000
           CFI FunCall __aeabi_cfrcmple
         BL       __aeabi_cfrcmple
         BHI.N    ??GUI_VIEW_HarmoGraph_2
-//  477         {
-//  478             UHarmoBarXY[4*lcv_uho+1]=(U16)(160.0-(Graphfloat[lcv_uho] -30)*0.163);
+//  478         {
+//  479             UHarmoBarXY[4*lcv_uho+1]=(U16)(160.0-(Graphfloat[lcv_uho] -30)*0.163);
         UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
         LSLS     R0,R4,#+2
         ADD      R1,SP,#+304
@@ -2618,26 +2637,26 @@ GUI_VIEW_HarmoGraph:
         UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
         ADD      R0,SP,#+512
         LDR      R0,[R0, R4, LSL #+2]
-        LDR.W    R1,??DataTable7_8  ;; 0xc1f00000
+        LDR.W    R1,??DataTable8_8  ;; 0xc1f00000
           CFI FunCall __aeabi_fadd
         BL       __aeabi_fadd
           CFI FunCall __aeabi_f2d
         BL       __aeabi_f2d
-        LDR.W    R2,??DataTable7_9  ;; 0x1a9fbe77
-        LDR.W    R3,??DataTable7_10  ;; 0x3fc4dd2f
+        LDR.W    R2,??DataTable8_9  ;; 0x1a9fbe77
+        LDR.W    R3,??DataTable8_10  ;; 0x3fc4dd2f
           CFI FunCall __aeabi_dmul
         BL       __aeabi_dmul
         MOVS     R2,R0
         MOVS     R3,R1
         MOVS     R0,#+0
-        LDR.W    R1,??DataTable7_11  ;; 0x40640000
+        LDR.W    R1,??DataTable8_11  ;; 0x40640000
           CFI FunCall __aeabi_dsub
         BL       __aeabi_dsub
           CFI FunCall __aeabi_d2iz
         BL       __aeabi_d2iz
         STRH     R0,[R5, #+2]
-//  479         }
-//  480         UHarmoBarXY[4*lcv_uho+2]=104+20*lcv_uho;//Xs
+//  480         }
+//  481         UHarmoBarXY[4*lcv_uho+2]=104+20*lcv_uho;//Xs
 ??GUI_VIEW_HarmoGraph_2:
         UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
         LSLS     R0,R4,#+2
@@ -2648,7 +2667,7 @@ GUI_VIEW_HarmoGraph:
         MUL      R1,R1,R4
         ADDS     R1,R1,#+104
         STRH     R1,[R0, #+4]
-//  481         UHarmoBarXY[4*lcv_uho+3]=248;//Ys
+//  482         UHarmoBarXY[4*lcv_uho+3]=248;//Ys
         UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
         LSLS     R0,R4,#+2
         ADD      R1,SP,#+304
@@ -2670,7 +2689,7 @@ GUI_VIEW_HarmoGraph:
         UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
         ADD      R0,SP,#+512
         LDR      R0,[R0, R4, LSL #+2]
-        LDR.W    R1,??DataTable7_12  ;; 0x40400001
+        LDR.W    R1,??DataTable8_12  ;; 0x40400001
           CFI FunCall __aeabi_cfcmple
         BL       __aeabi_cfcmple
         BCS.N    ??GUI_VIEW_HarmoGraph_4
@@ -2683,14 +2702,14 @@ GUI_VIEW_HarmoGraph:
         LDR      R0,[R0, R4, LSL #+2]
           CFI FunCall __aeabi_f2d
         BL       __aeabi_f2d
-        LDR.W    R2,??DataTable7_13  ;; 0x624dd2f
-        LDR.W    R3,??DataTable7_14  ;; 0x402d5581
+        LDR.W    R2,??DataTable8_13  ;; 0x624dd2f
+        LDR.W    R3,??DataTable8_14  ;; 0x402d5581
           CFI FunCall __aeabi_dmul
         BL       __aeabi_dmul
         MOVS     R2,R0
         MOVS     R3,R1
         MOVS     R0,#+0
-        LDR.W    R1,??DataTable7_15  ;; 0x406f0000
+        LDR.W    R1,??DataTable8_15  ;; 0x406f0000
           CFI FunCall __aeabi_dsub
         BL       __aeabi_dsub
           CFI FunCall __aeabi_d2iz
@@ -2701,14 +2720,14 @@ GUI_VIEW_HarmoGraph:
         UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
         ADD      R0,SP,#+512
         LDR      R0,[R0, R4, LSL #+2]
-        LDR.W    R1,??DataTable7_12  ;; 0x40400001
+        LDR.W    R1,??DataTable8_12  ;; 0x40400001
           CFI FunCall __aeabi_cfrcmple
         BL       __aeabi_cfrcmple
         BHI.N    ??GUI_VIEW_HarmoGraph_1
         UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
         ADD      R0,SP,#+512
         LDR      R0,[R0, R4, LSL #+2]
-        LDR.W    R1,??DataTable7_7  ;; 0x41f00000
+        LDR.W    R1,??DataTable8_7  ;; 0x41f00000
           CFI FunCall __aeabi_cfcmple
         BL       __aeabi_cfcmple
         BCS.W    ??GUI_VIEW_HarmoGraph_1
@@ -2722,40 +2741,40 @@ GUI_VIEW_HarmoGraph:
           CFI FunCall __aeabi_f2d
         BL       __aeabi_f2d
         MOVS     R2,#+0
-        LDR.W    R3,??DataTable7_16  ;; 0xc0080000
+        LDR.W    R3,??DataTable8_16  ;; 0xc0080000
           CFI FunCall __aeabi_dadd
         BL       __aeabi_dadd
-        LDR.W    R2,??DataTable7_17  ;; 0xe147ae14
-        LDR.W    R3,??DataTable7_18  ;; 0x3ffa147a
+        LDR.W    R2,??DataTable8_17  ;; 0xe147ae14
+        LDR.W    R3,??DataTable8_18  ;; 0x3ffa147a
           CFI FunCall __aeabi_dmul
         BL       __aeabi_dmul
         MOVS     R2,R0
         MOVS     R3,R1
         MOVS     R0,#+0
-        LDR.W    R1,??DataTable7_19  ;; 0x40698000
+        LDR.W    R1,??DataTable8_19  ;; 0x40698000
           CFI FunCall __aeabi_dsub
         BL       __aeabi_dsub
           CFI FunCall __aeabi_d2iz
         BL       __aeabi_d2iz
         STRH     R0,[R5, #+2]
         B.N      ??GUI_VIEW_HarmoGraph_2
-//  482     }
-//  483     //电流范围0~20A，分3级，0~0.2A，0.2~2A，2~20A
-//  484     for ( U16 lcv_iho=0; lcv_iho <26; lcv_iho++)
+//  483     }
+//  484     //电流范围0~20A，分3级，0~0.2A，0.2~2A，2~20A
+//  485     for ( U16 lcv_iho=0; lcv_iho <26; lcv_iho++)
 ??GUI_VIEW_HarmoGraph_3:
         MOVS     R4,#+0
         B.N      ??GUI_VIEW_HarmoGraph_5
-//  485     {
-//  486         IHarmoBarXY[4*lcv_iho]=91+20*lcv_iho;//Xe
-//  487         if (Graphfloat[lcv_iho+26]  <= 0.2 )//幅值小于0.2A
-//  488         {
-//  489             IHarmoBarXY[4*lcv_iho+1]=(U16)(434-Graphfloat[lcv_iho+26] *220);
-//  490         }
-//  491         else if (Graphfloat[lcv_iho+26] > 0.2 && Graphfloat[lcv_iho+26] < 2)
-//  492         {
-//  493             IHarmoBarXY[4*lcv_iho+1]=(U16)(390-(Graphfloat[lcv_iho+26] -0.2)*24.444);
-//  494         }
-//  495         else if (Graphfloat[lcv_iho+26] >= 2)
+//  486     {
+//  487         IHarmoBarXY[4*lcv_iho]=91+20*lcv_iho;//Xe
+//  488         if (Graphfloat[lcv_iho+26]  <= 0.2 )//幅值小于0.2A
+//  489         {
+//  490             IHarmoBarXY[4*lcv_iho+1]=(U16)(434-Graphfloat[lcv_iho+26] *220);
+//  491         }
+//  492         else if (Graphfloat[lcv_iho+26] > 0.2 && Graphfloat[lcv_iho+26] < 2)
+//  493         {
+//  494             IHarmoBarXY[4*lcv_iho+1]=(U16)(390-(Graphfloat[lcv_iho+26] -0.2)*24.444);
+//  495         }
+//  496         else if (Graphfloat[lcv_iho+26] >= 2)
 ??GUI_VIEW_HarmoGraph_6:
         UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
         ADD      R0,SP,#+512
@@ -2765,8 +2784,8 @@ GUI_VIEW_HarmoGraph:
           CFI FunCall __aeabi_cfrcmple
         BL       __aeabi_cfrcmple
         BHI.N    ??GUI_VIEW_HarmoGraph_7
-//  496         {
-//  497             IHarmoBarXY[4*lcv_iho+1]=(U16)(346-(Graphfloat[lcv_iho+26] -2)*2.444);
+//  497         {
+//  498             IHarmoBarXY[4*lcv_iho+1]=(U16)(346-(Graphfloat[lcv_iho+26] -2)*2.444);
         UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
         LSLS     R0,R4,#+2
         ADD      R1,SP,#+96
@@ -2780,21 +2799,21 @@ GUI_VIEW_HarmoGraph:
         BL       __aeabi_fadd
           CFI FunCall __aeabi_f2d
         BL       __aeabi_f2d
-        LDR.W    R2,??DataTable7_20  ;; 0xdf3b645a
-        LDR.W    R3,??DataTable7_21  ;; 0x40038d4f
+        LDR.W    R2,??DataTable8_20  ;; 0xdf3b645a
+        LDR.W    R3,??DataTable8_21  ;; 0x40038d4f
           CFI FunCall __aeabi_dmul
         BL       __aeabi_dmul
         MOVS     R2,R0
         MOVS     R3,R1
         MOVS     R0,#+0
-        LDR.W    R1,??DataTable7_22  ;; 0x4075a000
+        LDR.W    R1,??DataTable8_22  ;; 0x4075a000
           CFI FunCall __aeabi_dsub
         BL       __aeabi_dsub
           CFI FunCall __aeabi_d2iz
         BL       __aeabi_d2iz
         STRH     R0,[R5, #+2]
-//  498         }
-//  499         IHarmoBarXY[4*lcv_iho+2]=104+20*lcv_iho;
+//  499         }
+//  500         IHarmoBarXY[4*lcv_iho+2]=104+20*lcv_iho;
 ??GUI_VIEW_HarmoGraph_7:
         UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
         LSLS     R0,R4,#+2
@@ -2805,7 +2824,7 @@ GUI_VIEW_HarmoGraph:
         MUL      R1,R1,R4
         ADDS     R1,R1,#+104
         STRH     R1,[R0, #+4]
-//  500         IHarmoBarXY[4*lcv_iho+3]=434;
+//  501         IHarmoBarXY[4*lcv_iho+3]=434;
         UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
         LSLS     R0,R4,#+2
         ADD      R1,SP,#+96
@@ -2828,7 +2847,7 @@ GUI_VIEW_HarmoGraph:
         ADD      R0,SP,#+512
         ADDS     R0,R0,R4, LSL #+2
         LDR      R0,[R0, #+104]
-        LDR.W    R1,??DataTable7_23  ;; 0x3e4ccccd
+        LDR.W    R1,??DataTable8_23  ;; 0x3e4ccccd
           CFI FunCall __aeabi_cfcmple
         BL       __aeabi_cfcmple
         BCS.N    ??GUI_VIEW_HarmoGraph_9
@@ -2840,11 +2859,11 @@ GUI_VIEW_HarmoGraph:
         ADD      R0,SP,#+512
         ADDS     R0,R0,R4, LSL #+2
         LDR      R0,[R0, #+104]
-        LDR.W    R1,??DataTable7_24  ;; 0x435c0000
+        LDR.W    R1,??DataTable8_24  ;; 0x435c0000
           CFI FunCall __aeabi_fmul
         BL       __aeabi_fmul
         MOVS     R1,R0
-        LDR.W    R0,??DataTable7_25  ;; 0x43d90000
+        LDR.W    R0,??DataTable8_25  ;; 0x43d90000
           CFI FunCall __aeabi_fsub
         BL       __aeabi_fsub
           CFI FunCall __aeabi_f2iz
@@ -2856,7 +2875,7 @@ GUI_VIEW_HarmoGraph:
         ADD      R0,SP,#+512
         ADDS     R0,R0,R4, LSL #+2
         LDR      R0,[R0, #+104]
-        LDR.W    R1,??DataTable7_23  ;; 0x3e4ccccd
+        LDR.W    R1,??DataTable8_23  ;; 0x3e4ccccd
           CFI FunCall __aeabi_cfrcmple
         BL       __aeabi_cfrcmple
         BHI.N    ??GUI_VIEW_HarmoGraph_6
@@ -2878,27 +2897,27 @@ GUI_VIEW_HarmoGraph:
         LDR      R0,[R0, #+104]
           CFI FunCall __aeabi_f2d
         BL       __aeabi_f2d
-        LDR.W    R2,??DataTable7_26  ;; 0x9999999a
-        LDR.W    R3,??DataTable7_27  ;; 0xbfc99999
+        LDR.W    R2,??DataTable8_26  ;; 0x9999999a
+        LDR.W    R3,??DataTable8_27  ;; 0xbfc99999
           CFI FunCall __aeabi_dadd
         BL       __aeabi_dadd
-        LDR.W    R2,??DataTable7_28  ;; 0xfbe76c8b
-        LDR.W    R3,??DataTable7_29  ;; 0x403871a9
+        LDR.W    R2,??DataTable8_28  ;; 0xfbe76c8b
+        LDR.W    R3,??DataTable8_29  ;; 0x403871a9
           CFI FunCall __aeabi_dmul
         BL       __aeabi_dmul
         MOVS     R2,R0
         MOVS     R3,R1
         MOVS     R0,#+0
-        LDR.W    R1,??DataTable7_30  ;; 0x40786000
+        LDR.W    R1,??DataTable8_30  ;; 0x40786000
           CFI FunCall __aeabi_dsub
         BL       __aeabi_dsub
           CFI FunCall __aeabi_d2iz
         BL       __aeabi_d2iz
         STRH     R0,[R5, #+2]
         B.N      ??GUI_VIEW_HarmoGraph_7
-//  501     }
-//  502     
-//  503     YADA_71(MenuViewHarmoGraph1,18,39,63,67,18,39);  // wk --> ?
+//  502     }
+//  503     
+//  504     YADA_71(MenuViewHarmoGraph1,18,39,63,67,18,39);  // wk --> ?
 ??GUI_VIEW_HarmoGraph_8:
         MOVS     R0,#+39
         STR      R0,[SP, #+8]
@@ -2912,7 +2931,7 @@ GUI_VIEW_HarmoGraph:
         MOVS     R0,#+27
           CFI FunCall YADA_71
         BL       YADA_71
-//  504     YADA_71(MenuViewHarmoGraph1,95,39,191,69,95,39);  // wk --> 清楚上一次显示的相位值
+//  505     YADA_71(MenuViewHarmoGraph1,95,39,191,69,95,39);  // wk --> 清楚上一次显示的相位值
         MOVS     R0,#+39
         STR      R0,[SP, #+8]
         MOVS     R0,#+95
@@ -2925,11 +2944,11 @@ GUI_VIEW_HarmoGraph:
         MOVS     R0,#+27
           CFI FunCall YADA_71
         BL       YADA_71
-//  505 
-//  506     YADA_98(165,40,0x22,0x81,0x02,0xffff,0x0000,HarmoInfoZone[HarmoGraphRange-1],0); //显示谐波区间
+//  506 
+//  507     YADA_98(165,40,0x22,0x81,0x02,0xffff,0x0000,HarmoInfoZone[HarmoGraphRange-1],0); //显示谐波区间
         MOVS     R0,#+0
         STR      R0,[SP, #+16]
-        LDR.W    R0,??DataTable7_6
+        LDR.W    R0,??DataTable8_6
         LDRB     R0,[R0, #+0]
         MOVS     R1,#+10
         ADD      R2,SP,#+76
@@ -2948,12 +2967,12 @@ GUI_VIEW_HarmoGraph:
         MOVS     R0,#+165
           CFI FunCall YADA_98
         BL       YADA_98
-//  507     YADA_98(95,40,0x22,0x81,0x02,0xffff,0x0000,HarmoInfo[HarmoGraphPhase-1],0);//显示相信息A、B、C. // HarmoGraphPhase默认值是 1
+//  508     YADA_98(95,40,0x22,0x81,0x02,0xffff,0x0000,HarmoInfo[HarmoGraphPhase-1],0);//显示相信息A、B、C. // HarmoGraphPhase默认值是 1
         MOVS     R0,#+0
         STR      R0,[SP, #+16]
-        LDR.W    R0,??DataTable7_5
+        LDR.W    R0,??DataTable8_5
         LDRB     R0,[R0, #+0]
-        LDR.W    R1,??DataTable7_31
+        LDR.W    R1,??DataTable8_31
         ADDS     R0,R1,R0, LSL #+3
         SUBS     R0,R0,#+8
         STR      R0,[SP, #+12]
@@ -2969,28 +2988,28 @@ GUI_VIEW_HarmoGraph:
         MOVS     R0,#+95
           CFI FunCall YADA_98
         BL       YADA_98
-//  508     
-//  509     YADA_C0(HarmoGraphInfoAdr,HarmoUI,28);
+//  509     
+//  510     YADA_C0(HarmoGraphInfoAdr,HarmoUI,28);
         MOVS     R2,#+28
         ADD      R1,SP,#+20
         MOVW     R0,#+1938
           CFI FunCall YADA_C0
         BL       YADA_C0
-//  510     YADA_C108(HarmoGraphInfoAdr,4);
+//  511     YADA_C108(HarmoGraphInfoAdr,4);
         MOVS     R1,#+4
         MOVW     R0,#+1938
           CFI FunCall YADA_C108
         BL       YADA_C108
-//  511     delay_ms(5);
+//  512     delay_ms(5);
         MOVS     R0,#+5
           CFI FunCall delay_ms
         BL       delay_ms
-//  512     YADA_40(0xf800,0x0000);
+//  513     YADA_40(0xf800,0x0000);
         MOVS     R1,#+0
         MOV      R0,#+63488
           CFI FunCall YADA_40
         BL       YADA_40
-//  513     YADA_71(MenuViewHarmoGraph1,85,114,616,251,85,114);//刷新电压柱状图显示区域
+//  514     YADA_71(MenuViewHarmoGraph1,85,114,616,251,85,114);//刷新电压柱状图显示区域
         MOVS     R0,#+114
         STR      R0,[SP, #+8]
         MOVS     R0,#+85
@@ -3003,16 +3022,16 @@ GUI_VIEW_HarmoGraph:
         MOVS     R0,#+27
           CFI FunCall YADA_71
         BL       YADA_71
-//  514     YADA_5B(UHarmoBarXY,104);//画电压柱状图
+//  515     YADA_5B(UHarmoBarXY,104);//画电压柱状图
         MOVS     R1,#+104
         ADD      R0,SP,#+304
           CFI FunCall YADA_5B
         BL       YADA_5B
-//  515     delay_ms(5);
+//  516     delay_ms(5);
         MOVS     R0,#+5
           CFI FunCall delay_ms
         BL       delay_ms
-//  516     YADA_71(MenuViewHarmoGraph1,85,300,616,480,85,300);//刷新电流柱状图显示区域
+//  517     YADA_71(MenuViewHarmoGraph1,85,300,616,480,85,300);//刷新电流柱状图显示区域
         MOV      R0,#+300
         STR      R0,[SP, #+8]
         MOVS     R0,#+85
@@ -3025,17 +3044,17 @@ GUI_VIEW_HarmoGraph:
         MOVS     R0,#+27
           CFI FunCall YADA_71
         BL       YADA_71
-//  517     YADA_5B(IHarmoBarXY,104);//画电流柱状图
+//  518     YADA_5B(IHarmoBarXY,104);//画电流柱状图
         MOVS     R1,#+104
         ADD      R0,SP,#+96
           CFI FunCall YADA_5B
         BL       YADA_5B
-//  518     delay_ms(5);
+//  519     delay_ms(5);
         MOVS     R0,#+5
           CFI FunCall delay_ms
         BL       delay_ms
-//  519 #endif    // #if 1
-//  520 }
+//  520 #endif    // #if 1
+//  521 }
         ADD      SP,SP,#+720
           CFI CFA R13+16
         POP      {R4-R6,PC}       ;; return
@@ -3044,86 +3063,86 @@ GUI_VIEW_HarmoGraph:
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable5:
+??DataTable6:
         DC32     COLOR
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable5_1:
+??DataTable6_1:
         DC32     `?<Constant {14, 86, 614, 174, 212, 295, 330, 4_1`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable5_2:
-        DC32     PowRxchar+0x94C
+??DataTable6_2:
+        DC32     PowRxchar+0x8F4
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable5_3:
+??DataTable6_3:
         DC32     PowRxchar+0x794
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable5_4:
+??DataTable6_4:
         DC32     0x51eb851f
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable5_5:
+??DataTable6_5:
         DC32     0x40091eb8
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable5_6:
+??DataTable6_6:
         DC32     0x40668000
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable5_7:
+??DataTable6_7:
         DC32     0x4064a000
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable5_8:
+??DataTable6_8:
         DC32     0x40676000
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable5_9:
+??DataTable6_9:
         DC32     0x406e0000
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable5_10:
+??DataTable6_10:
         DC32     text
-//  521 
-//  522 /*******************************************************************************
-//  523 * 函  数  名      : GUI_VIEW_HarmoList
-//  524 * 描      述      : 谐波列表显示函数。可通过移位键选择三相或者谐波总次数
-//  525 * 输      入      : 无
-//  526 * 返      回      : 无
-//  527 *
-//  528 * 修       改     : WK
-//  529 * 时       间     : 2013-03-14
-//  530 * 描       述     : 基于2013-03-08界面 
-//  531 *******************************************************************************/
+//  522 
+//  523 /*******************************************************************************
+//  524 * 函  数  名      : GUI_VIEW_HarmoList
+//  525 * 描      述      : 谐波列表显示函数。可通过移位键选择三相或者谐波总次数
+//  526 * 输      入      : 无
+//  527 * 返      回      : 无
+//  528 *
+//  529 * 修       改     : WK
+//  530 * 时       间     : 2013-03-14
+//  531 * 描       述     : 基于2013-03-08界面 
+//  532 *******************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock8 Using cfiCommon0
           CFI Function GUI_VIEW_HarmoList
         THUMB
-//  532 void GUI_VIEW_HarmoList()
-//  533 {
+//  533 void GUI_VIEW_HarmoList()
+//  534 {
 GUI_VIEW_HarmoList:
         PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
@@ -3133,28 +3152,28 @@ GUI_VIEW_HarmoList:
           CFI CFA R13+16
         SUB      SP,SP,#+784
           CFI CFA R13+800
-//  534     U16 HRU16[100]= {0};
+//  535     U16 HRU16[100]= {0};
         ADD      R0,SP,#+584
         MOVS     R1,#+200
           CFI FunCall __aeabi_memclr4
         BL       __aeabi_memclr4
-//  535     U16 ListC108[182]= {0},IndexInit;
+//  536     U16 ListC108[182]= {0},IndexInit;
         ADD      R0,SP,#+220
         MOV      R1,#+364
           CFI FunCall __aeabi_memclr4
         BL       __aeabi_memclr4
-//  536     float Listfloat[50]= {0};
+//  537     float Listfloat[50]= {0};
         ADD      R0,SP,#+20
         MOVS     R1,#+200
           CFI FunCall __aeabi_memclr4
         BL       __aeabi_memclr4
-//  537         
-//  538     YADA_98(58,42,0x22,0x81,0x02,0xffff,0x0000,HarmoInfo[HarmoListPhase-1],0);//显示相信息A、B、C.
+//  538         
+//  539     YADA_98(58,42,0x22,0x81,0x02,0xffff,0x0000,HarmoInfo[HarmoListPhase-1],0);//显示相信息A、B、C.
         MOVS     R0,#+0
         STR      R0,[SP, #+16]
-        LDR.W    R0,??DataTable7_32
+        LDR.W    R0,??DataTable8_32
         LDRB     R0,[R0, #+0]
-        LDR.W    R1,??DataTable7_31
+        LDR.W    R1,??DataTable8_31
         ADDS     R0,R1,R0, LSL #+3
         SUBS     R0,R0,#+8
         STR      R0,[SP, #+12]
@@ -3170,20 +3189,20 @@ GUI_VIEW_HarmoList:
         MOVS     R0,#+58
           CFI FunCall YADA_98
         BL       YADA_98
-//  539     delay_ms(5);
+//  540     delay_ms(5);
         MOVS     R0,#+5
           CFI FunCall delay_ms
         BL       delay_ms
-//  540     if(HarmoListUorI==1)
-        LDR.W    R0,??DataTable8
+//  541     if(HarmoListUorI==1)
+        LDR.W    R0,??DataTable9
         LDRB     R0,[R0, #+0]
         CMP      R0,#+1
         BNE.N    ??GUI_VIEW_HarmoList_0
-//  541     {
-//  542         YADA_98(205,42,0x22,0x81,0x02,0xffff,0x0000,"U",0);
+//  542     {
+//  543         YADA_98(205,42,0x22,0x81,0x02,0xffff,0x0000,"U",0);
         MOVS     R0,#+0
         STR      R0,[SP, #+16]
-        ADR.N    R0,??DataTable6  ;; "U"
+        ADR.N    R0,??DataTable7  ;; "U"
         STR      R0,[SP, #+12]
         MOVS     R0,#+0
         STR      R0,[SP, #+8]
@@ -3198,14 +3217,14 @@ GUI_VIEW_HarmoList:
           CFI FunCall YADA_98
         BL       YADA_98
         B.N      ??GUI_VIEW_HarmoList_1
-//  543     }
-//  544     else
-//  545     {
-//  546         YADA_98(205,42,0x22,0x81,0x02,0xffff,0x0000,"I",0);
+//  544     }
+//  545     else
+//  546     {
+//  547         YADA_98(205,42,0x22,0x81,0x02,0xffff,0x0000,"I",0);
 ??GUI_VIEW_HarmoList_0:
         MOVS     R0,#+0
         STR      R0,[SP, #+16]
-        ADR.N    R0,??DataTable6_1  ;; "I"
+        ADR.N    R0,??DataTable7_1  ;; "I"
         STR      R0,[SP, #+12]
         MOVS     R0,#+0
         STR      R0,[SP, #+8]
@@ -3219,23 +3238,23 @@ GUI_VIEW_HarmoList:
         MOVS     R0,#+205
           CFI FunCall YADA_98
         BL       YADA_98
-//  547     }
-//  548         
-//  549     delay_ms(5);
+//  548     }
+//  549         
+//  550     delay_ms(5);
 ??GUI_VIEW_HarmoList_1:
         MOVS     R0,#+5
           CFI FunCall delay_ms
         BL       delay_ms
-//  550     if(HarmoListAmporRatio==1)//显示幅值时不需要转换
-        LDR.W    R0,??DataTable8_1
+//  551     if(HarmoListAmporRatio==1)//显示幅值时不需要转换
+        LDR.W    R0,??DataTable9_1
         LDRB     R0,[R0, #+0]
         CMP      R0,#+1
         BNE.W    ??GUI_VIEW_HarmoList_2
-//  551     {
-//  552         YADA_98(330,41,0x22,0x81,0x02,0xffff,0x0000,HarmoInfo[3],0);
+//  552     {
+//  553         YADA_98(330,41,0x22,0x81,0x02,0xffff,0x0000,HarmoInfo[3],0);
         MOVS     R0,#+0
         STR      R0,[SP, #+16]
-        LDR.W    R0,??DataTable8_2
+        LDR.W    R0,??DataTable9_2
         STR      R0,[SP, #+12]
         MOVS     R0,#+0
         STR      R0,[SP, #+8]
@@ -3249,27 +3268,27 @@ GUI_VIEW_HarmoList:
         MOV      R0,#+330
           CFI FunCall YADA_98
         BL       YADA_98
-//  553         IndexInit=(HarmoListPhase-1)*600+(HarmoListUorI-1)*200+(HarmoListRange-1)*96+Harmo_INDEX;
-        LDR.W    R0,??DataTable7_32
+//  554         IndexInit=(HarmoListPhase-1)*600+(HarmoListUorI-1)*200+(HarmoListRange-1)*96+Harmo_INDEX;
+        LDR.W    R0,??DataTable8_32
         LDRB     R0,[R0, #+0]
         MOV      R1,#+600
-        LDR.W    R2,??DataTable8
+        LDR.W    R2,??DataTable9
         LDRB     R2,[R2, #+0]
         MOVS     R3,#+200
         MULS     R2,R3,R2
         MLA      R0,R1,R0,R2
-        LDR.W    R1,??DataTable8_3
+        LDR.W    R1,??DataTable9_3
         LDRB     R1,[R1, #+0]
         MOVS     R2,#+96
         MLA      R0,R2,R1,R0
         SUBS     R0,R0,#+816
-//  554         for(U8 LorR=0; LorR<2; LorR++) //先左边列后右边列
+//  555         for(U8 LorR=0; LorR<2; LorR++) //先左边列后右边列
         MOVS     R1,#+0
         B.N      ??GUI_VIEW_HarmoList_3
-//  555         {
-//  556             for(U8 i=0; i<13; i++)
-//  557             {
-//  558                 ListC108[7*i+91*LorR]=0x3304;//显示数据的模式
+//  556         {
+//  557             for(U8 i=0; i<13; i++)
+//  558             {
+//  559                 ListC108[7*i+91*LorR]=0x3304;//显示数据的模式
 ??GUI_VIEW_HarmoList_4:
         UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
         MOVS     R3,#+7
@@ -3280,7 +3299,7 @@ GUI_VIEW_HarmoList:
         ADD      R4,SP,#+220
         MOVW     R5,#+13060
         STRH     R5,[R4, R3, LSL #+1]
-//  559                 ListC108[7*i+91*LorR+1]=100+338*LorR;//显示左边列谐波数据的X为82,右边列谐波数据X为438
+//  560                 ListC108[7*i+91*LorR+1]=100+338*LorR;//显示左边列谐波数据的X为82,右边列谐波数据X为438
         UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
         MOVS     R3,#+7
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
@@ -3294,7 +3313,7 @@ GUI_VIEW_HarmoList:
         MUL      R4,R4,R1
         ADDS     R4,R4,#+100
         STRH     R4,[R3, #+2]
-//  560                 ListC108[7*i+91*LorR+2]=77+28*i;//Y坐标
+//  561                 ListC108[7*i+91*LorR+2]=77+28*i;//Y坐标
         UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
         MOVS     R3,#+7
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
@@ -3308,7 +3327,7 @@ GUI_VIEW_HarmoList:
         MUL      R4,R4,R2
         ADDS     R4,R4,#+77
         STRH     R4,[R3, #+4]
-//  561                 ListC108[7*i+91*LorR+3]=0xffff;
+//  562                 ListC108[7*i+91*LorR+3]=0xffff;
         UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
         MOVS     R3,#+7
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
@@ -3319,7 +3338,7 @@ GUI_VIEW_HarmoList:
         ADDS     R3,R4,R3, LSL #+1
         MOVW     R4,#+65535
         STRH     R4,[R3, #+6]
-//  562                 ListC108[7*i+91*LorR+4]=0x0000;
+//  563                 ListC108[7*i+91*LorR+4]=0x0000;
         UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
         MOVS     R3,#+7
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
@@ -3330,7 +3349,7 @@ GUI_VIEW_HarmoList:
         ADDS     R3,R4,R3, LSL #+1
         MOVS     R4,#+0
         STRH     R4,[R3, #+8]
-//  563                 ListC108[7*i+91*LorR+5]=((U16)(PowRxchar[IndexInit+8*i+LorR*4])<<8)+((U16)PowRxchar[IndexInit+8*i+LorR*4+1]);
+//  564                 ListC108[7*i+91*LorR+5]=((U16)(PowRxchar[IndexInit+8*i+LorR*4])<<8)+((U16)PowRxchar[IndexInit+8*i+LorR*4+1]);
         UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
         MOVS     R3,#+7
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
@@ -3344,7 +3363,7 @@ GUI_VIEW_HarmoList:
         UXTAH    R4,R4,R0
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         ADDS     R4,R4,R1, LSL #+2
-        LDR.N    R5,??DataTable7
+        LDR.N    R5,??DataTable8
         LDRB     R4,[R4, R5]
         LSLS     R4,R4,#+8
         UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
@@ -3352,12 +3371,12 @@ GUI_VIEW_HarmoList:
         UXTAH    R5,R5,R0
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         ADDS     R5,R5,R1, LSL #+2
-        LDR.N    R6,??DataTable7
+        LDR.N    R6,??DataTable8
         ADDS     R5,R5,R6
         LDRB     R5,[R5, #+1]
         UXTAB    R4,R4,R5
         STRH     R4,[R3, #+10]
-//  564                 ListC108[7*i+91*LorR+6]=((U16)(PowRxchar[IndexInit+8*i+LorR*4+2])<<8)+((U16)PowRxchar[IndexInit+8*i+LorR*4+3]);;
+//  565                 ListC108[7*i+91*LorR+6]=((U16)(PowRxchar[IndexInit+8*i+LorR*4+2])<<8)+((U16)PowRxchar[IndexInit+8*i+LorR*4+3]);;
         UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
         MOVS     R3,#+7
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
@@ -3371,7 +3390,7 @@ GUI_VIEW_HarmoList:
         UXTAH    R4,R4,R0
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         ADDS     R4,R4,R1, LSL #+2
-        LDR.N    R5,??DataTable7
+        LDR.N    R5,??DataTable8
         ADDS     R4,R4,R5
         LDRB     R4,[R4, #+2]
         LSLS     R4,R4,#+8
@@ -3380,13 +3399,13 @@ GUI_VIEW_HarmoList:
         UXTAH    R5,R5,R0
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         ADDS     R5,R5,R1, LSL #+2
-        LDR.N    R6,??DataTable7
+        LDR.N    R6,??DataTable8
         ADDS     R5,R5,R6
         LDRB     R5,[R5, #+3]
         UXTAB    R4,R4,R5
         STRH     R4,[R3, #+12]
-//  565                 //delay_ms(1);
-//  566             }
+//  566                 //delay_ms(1);
+//  567             }
         ADDS     R2,R2,#+1
 ??GUI_VIEW_HarmoList_5:
         UXTB     R2,R2            ;; ZeroExt  R2,R2,#+24,#+24
@@ -3399,15 +3418,15 @@ GUI_VIEW_HarmoList:
         BCS.W    ??GUI_VIEW_HarmoList_6
         MOVS     R2,#+0
         B.N      ??GUI_VIEW_HarmoList_5
-//  567         }
-//  568     }
-//  569     else//显示含有率
-//  570     {
-//  571         YADA_98(330,41,0x22,0x81,0x02,0xffff,0x0000,HarmoInfo[4],0);
+//  568         }
+//  569     }
+//  570     else//显示含有率
+//  571     {
+//  572         YADA_98(330,41,0x22,0x81,0x02,0xffff,0x0000,HarmoInfo[4],0);
 ??GUI_VIEW_HarmoList_2:
         MOVS     R0,#+0
         STR      R0,[SP, #+16]
-        LDR.W    R0,??DataTable8_8
+        LDR.W    R0,??DataTable9_8
         STR      R0,[SP, #+12]
         MOVS     R0,#+0
         STR      R0,[SP, #+8]
@@ -3421,40 +3440,40 @@ GUI_VIEW_HarmoList:
         MOV      R0,#+330
           CFI FunCall YADA_98
         BL       YADA_98
-//  572         ChartoFloat(&PowRxchar[(HarmoListPhase-1)*600+(HarmoListUorI-1)*200+Harmo_INDEX], Listfloat,50,1000);
+//  573         ChartoFloat(&PowRxchar[(HarmoListPhase-1)*600+(HarmoListUorI-1)*200+Harmo_INDEX], Listfloat,50,1000);
         MOV      R3,#+1000
         MOVS     R2,#+50
         ADD      R1,SP,#+20
-        LDR.N    R0,??DataTable7_32
+        LDR.N    R0,??DataTable8_32
         LDRB     R0,[R0, #+0]
         MOV      R4,#+600
-        LDR.W    R5,??DataTable8
+        LDR.W    R5,??DataTable9
         LDRB     R5,[R5, #+0]
         MOVS     R6,#+200
         MULS     R5,R6,R5
         MLA      R0,R4,R0,R5
-        LDR.N    R4,??DataTable7
+        LDR.N    R4,??DataTable8
         ADDS     R0,R0,R4
         SUBS     R0,R0,#+720
           CFI FunCall ChartoFloat
         BL       ChartoFloat
-//  573         UIValues2HR(Listfloat,HRU16);//转换50次的值，若每次转换26次，则需记录第一次的值用于算25-50次的含有率
+//  574         UIValues2HR(Listfloat,HRU16);//转换50次的值，若每次转换26次，则需记录第一次的值用于算25-50次的含有率
         ADD      R1,SP,#+584
         ADD      R0,SP,#+20
           CFI FunCall UIValues2HR
         BL       UIValues2HR
-//  574         YADA_40(0xffe0,0x0000);/*黄色前景，黑色背景*/
+//  575         YADA_40(0xffe0,0x0000);/*黄色前景，黑色背景*/
         MOVS     R1,#+0
         MOVW     R0,#+65504
           CFI FunCall YADA_40
         BL       YADA_40
-//  575         for(U8 LorR=0; LorR<2; LorR++)//先左边列后右边列
+//  576         for(U8 LorR=0; LorR<2; LorR++)//先左边列后右边列
         MOVS     R0,#+0
         B.N      ??GUI_VIEW_HarmoList_7
-//  576         {
-//  577             for(U8 i=0; i<13; i++)
-//  578             {
-//  579                 ListC108[7*i+91*LorR]=0x3304;//显示数据的模式，注意从显示4位小数切换到2位小数时，必须刷新页面
+//  577         {
+//  578             for(U8 i=0; i<13; i++)
+//  579             {
+//  580                 ListC108[7*i+91*LorR]=0x3304;//显示数据的模式，注意从显示4位小数切换到2位小数时，必须刷新页面
 ??GUI_VIEW_HarmoList_8:
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOVS     R2,#+7
@@ -3465,7 +3484,7 @@ GUI_VIEW_HarmoList:
         ADD      R3,SP,#+220
         MOVW     R4,#+13060
         STRH     R4,[R3, R2, LSL #+1]
-//  580                 ListC108[7*i+91*LorR+1]=100+338*LorR;//显示左边列谐波数据的X为82,右边列谐波数据X为438
+//  581                 ListC108[7*i+91*LorR+1]=100+338*LorR;//显示左边列谐波数据的X为82,右边列谐波数据X为438
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOVS     R2,#+7
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
@@ -3479,7 +3498,7 @@ GUI_VIEW_HarmoList:
         MUL      R3,R3,R0
         ADDS     R3,R3,#+100
         STRH     R3,[R2, #+2]
-//  581                 ListC108[7*i+91*LorR+2]=77+28*i;//Y坐标
+//  582                 ListC108[7*i+91*LorR+2]=77+28*i;//Y坐标
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOVS     R2,#+7
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
@@ -3493,7 +3512,7 @@ GUI_VIEW_HarmoList:
         MUL      R3,R3,R1
         ADDS     R3,R3,#+77
         STRH     R3,[R2, #+4]
-//  582                 ListC108[7*i+91*LorR+3]=0xffff;
+//  583                 ListC108[7*i+91*LorR+3]=0xffff;
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOVS     R2,#+7
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
@@ -3504,7 +3523,7 @@ GUI_VIEW_HarmoList:
         ADDS     R2,R3,R2, LSL #+1
         MOVW     R3,#+65535
         STRH     R3,[R2, #+6]
-//  583                 ListC108[7*i+91*LorR+4]=0x0000;
+//  584                 ListC108[7*i+91*LorR+4]=0x0000;
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOVS     R2,#+7
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
@@ -3515,7 +3534,7 @@ GUI_VIEW_HarmoList:
         ADDS     R2,R3,R2, LSL #+1
         MOVS     R3,#+0
         STRH     R3,[R2, #+8]
-//  584                 ListC108[7*i+91*LorR+5]=*(HRU16+i*4+LorR*2+(HarmoListRange-1)*48);
+//  585                 ListC108[7*i+91*LorR+5]=*(HRU16+i*4+LorR*2+(HarmoListRange-1)*48);
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOVS     R2,#+7
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
@@ -3524,7 +3543,7 @@ GUI_VIEW_HarmoList:
         MLA      R2,R2,R1,R3
         ADD      R3,SP,#+220
         ADDS     R2,R3,R2, LSL #+1
-        LDR.W    R3,??DataTable8_3
+        LDR.W    R3,??DataTable9_3
         LDRB     R3,[R3, #+0]
         MOVS     R4,#+96
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
@@ -3535,7 +3554,7 @@ GUI_VIEW_HarmoList:
         MLA      R3,R4,R3,R5
         LDRH     R3,[R3, #-96]
         STRH     R3,[R2, #+10]
-//  585                 ListC108[7*i+91*LorR+6]=*(HRU16+i*4+LorR*2+(HarmoListRange-1)*48+1);
+//  586                 ListC108[7*i+91*LorR+6]=*(HRU16+i*4+LorR*2+(HarmoListRange-1)*48+1);
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOVS     R2,#+7
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
@@ -3544,7 +3563,7 @@ GUI_VIEW_HarmoList:
         MLA      R2,R2,R1,R3
         ADD      R3,SP,#+220
         ADDS     R2,R3,R2, LSL #+1
-        LDR.W    R3,??DataTable8_3
+        LDR.W    R3,??DataTable9_3
         LDRB     R3,[R3, #+0]
         MOVS     R4,#+96
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
@@ -3555,8 +3574,8 @@ GUI_VIEW_HarmoList:
         MLA      R3,R4,R3,R5
         LDRH     R3,[R3, #-94]
         STRH     R3,[R2, #+12]
-//  586                 //delay_ms(1);
-//  587             }
+//  587                 //delay_ms(1);
+//  588             }
         ADDS     R1,R1,#+1
 ??GUI_VIEW_HarmoList_9:
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
@@ -3569,44 +3588,44 @@ GUI_VIEW_HarmoList:
         BCS.N    ??GUI_VIEW_HarmoList_6
         MOVS     R1,#+0
         B.N      ??GUI_VIEW_HarmoList_9
-//  588         }
-//  589     }
-//  590     delay_ms(5);
+//  589         }
+//  590     }
+//  591     delay_ms(5);
 ??GUI_VIEW_HarmoList_6:
         MOVS     R0,#+5
           CFI FunCall delay_ms
         BL       delay_ms
-//  591     YADA_C0(HarmoListInfoAdr,ListC108,91);
+//  592     YADA_C0(HarmoListInfoAdr,ListC108,91);
         MOVS     R2,#+91
         ADD      R1,SP,#+220
         MOVW     R0,#+1574
           CFI FunCall YADA_C0
         BL       YADA_C0
-//  592     YADA_C108(HarmoListInfoAdr,13);
+//  593     YADA_C108(HarmoListInfoAdr,13);
         MOVS     R1,#+13
         MOVW     R0,#+1574
           CFI FunCall YADA_C108
         BL       YADA_C108
-//  593     delay_ms(5);
+//  594     delay_ms(5);
         MOVS     R0,#+5
           CFI FunCall delay_ms
         BL       delay_ms
-//  594     YADA_C0(HarmoListInfoAdr+182,&ListC108[91],91);
+//  595     YADA_C0(HarmoListInfoAdr+182,&ListC108[91],91);
         MOVS     R2,#+91
         ADD      R1,SP,#+402
         MOVW     R0,#+1756
           CFI FunCall YADA_C0
         BL       YADA_C0
-//  595     YADA_C108(HarmoListInfoAdr+182,13);
+//  596     YADA_C108(HarmoListInfoAdr+182,13);
         MOVS     R1,#+13
         MOVW     R0,#+1756
           CFI FunCall YADA_C108
         BL       YADA_C108
-//  596     delay_ms(5);
+//  597     delay_ms(5);
         MOVS     R0,#+5
           CFI FunCall delay_ms
         BL       delay_ms
-//  597 }
+//  598 }
         ADD      SP,SP,#+784
           CFI CFA R13+16
         POP      {R4-R6,PC}       ;; return
@@ -3615,28 +3634,28 @@ GUI_VIEW_HarmoList:
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable6:
+??DataTable7:
         DC8      "U",0x0,0x0
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable6_1:
+??DataTable7_1:
         DC8      "I",0x0,0x0
-//  598 
-//  599 /*******************************************************************************
-//  600 * 函  数  名      : linemark
-//  601 * 描      述      : 压电流标注函数。显示通过U_I判断电压\电流有效值
-//  602 * 输      入      : Y_COORD为Y坐标；U_I=0，则表示标注电压，U_I=1，则表示标注电流，
-//  603 * 返      回      : 无
-//  604 *******************************************************************************/
+//  599 
+//  600 /*******************************************************************************
+//  601 * 函  数  名      : linemark
+//  602 * 描      述      : 压电流标注函数。显示通过U_I判断电压\电流有效值
+//  603 * 输      入      : Y_COORD为Y坐标；U_I=0，则表示标注电压，U_I=1，则表示标注电流，
+//  604 * 返      回      : 无
+//  605 *******************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock9 Using cfiCommon0
           CFI Function linemark
         THUMB
-//  605 void linemark(U16 Y_COORD, U16 UorI)
-//  606 {
+//  606 void linemark(U16 Y_COORD, U16 UorI)
+//  607 {
 linemark:
         PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
@@ -3648,21 +3667,21 @@ linemark:
           CFI CFA R13+88
         MOVS     R4,R0
         MOVS     R5,R1
-//  607     U16 C108Dat[21]= {0};
+//  608     U16 C108Dat[21]= {0};
         ADD      R0,SP,#+24
         MOVS     R1,#+44
           CFI FunCall __aeabi_memclr4
         BL       __aeabi_memclr4
-//  608     U8 UORI[][2]= {"V","A"};
+//  609     U8 UORI[][2]= {"V","A"};
         ADD      R0,SP,#+20
-        LDR.W    R1,??DataTable8_9
+        LDR.W    R1,??DataTable9_9
         LDR      R2,[R1, #0]
         STR      R2,[R0, #+0]
-//  609     for(U8 k=0; k<3; k++)
+//  610     for(U8 k=0; k<3; k++)
         MOVS     R6,#+0
         B.N      ??linemark_0
-//  610     {
-//  611         C108Dat[7*k + 0] = 0x3403;//P  显示数据的模式
+//  611     {
+//  612         C108Dat[7*k + 0] = 0x3403;//P  显示数据的模式
 ??linemark_1:
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         MOVS     R0,#+14
@@ -3670,7 +3689,7 @@ linemark:
         MLA      R0,R0,R6,R1
         MOVW     R1,#+13315
         STRH     R1,[R0, #+0]
-//  612         C108Dat[7*k + 1] = 118+200*k;//显示左边列谐波数据的X坐标118 318,518
+//  613         C108Dat[7*k + 1] = 118+200*k;//显示左边列谐波数据的X坐标118 318,518
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         MOVS     R0,#+7
         MUL      R0,R0,R6
@@ -3681,24 +3700,24 @@ linemark:
         MUL      R1,R1,R6
         ADDS     R1,R1,#+118
         STRH     R1,[R0, #+2]
-//  613         C108Dat[7*k + 2] = Y_COORD;//Y坐标
+//  614         C108Dat[7*k + 2] = Y_COORD;//Y坐标
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         MOVS     R0,#+7
         MUL      R0,R0,R6
         ADD      R1,SP,#+24
         ADDS     R0,R1,R0, LSL #+1
         STRH     R4,[R0, #+4]
-//  614         C108Dat[7*k + 3] = COLOR[k];
+//  615         C108Dat[7*k + 3] = COLOR[k];
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         MOVS     R0,#+7
         MUL      R0,R0,R6
         ADD      R1,SP,#+24
         ADDS     R0,R1,R0, LSL #+1
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
-        LDR.W    R1,??DataTable8_10
+        LDR.W    R1,??DataTable9_10
         LDRH     R1,[R1, R6, LSL #+1]
         STRH     R1,[R0, #+6]
-//  615         C108Dat[7*k + 4] = 0x0000;
+//  616         C108Dat[7*k + 4] = 0x0000;
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         MOVS     R0,#+7
         MUL      R0,R0,R6
@@ -3706,8 +3725,8 @@ linemark:
         ADDS     R0,R1,R0, LSL #+1
         MOVS     R1,#+0
         STRH     R1,[R0, #+8]
-//  616         /* wk --> 显示的出来的数据 = C108[5]* 65536 + C108[6] */
-//  617         C108Dat[7*k + 5] = ((U16)(PowRxchar[UI_VIRTUAL_INDEX + 16*k + UorI*8]) << 8) + (U16)(PowRxchar[UI_VIRTUAL_INDEX + 1 + 16*k + UorI*8]);//两个字节转为一个字
+//  617         /* wk --> 显示的出来的数据 = C108[5]* 65536 + C108[6] */
+//  618         C108Dat[7*k + 5] = ((U16)(PowRxchar[UI_VIRTUAL_INDEX + 16*k + UorI*8]) << 8) + (U16)(PowRxchar[UI_VIRTUAL_INDEX + 1 + 16*k + UorI*8]);//两个字节转为一个字
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         MOVS     R0,#+7
         MUL      R0,R0,R6
@@ -3717,19 +3736,19 @@ linemark:
         UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
         LSLS     R1,R5,#+3
         ADDS     R1,R1,R6, LSL #+4
-        LDR.N    R2,??DataTable7
+        LDR.N    R2,??DataTable8
         LDRB     R1,[R1, R2]
         LSLS     R1,R1,#+8
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
         LSLS     R2,R5,#+3
         ADDS     R2,R2,R6, LSL #+4
-        LDR.N    R3,??DataTable7
+        LDR.N    R3,??DataTable8
         ADDS     R2,R2,R3
         LDRB     R2,[R2, #+1]
         UXTAB    R1,R1,R2
         STRH     R1,[R0, #+10]
-//  618         C108Dat[7*k + 6] = ((U16)(PowRxchar[UI_VIRTUAL_INDEX + 2 + 16*k + UorI*8]) << 8) + (U16)(PowRxchar[UI_VIRTUAL_INDEX + 3 + 16*k + UorI*8]);
+//  619         C108Dat[7*k + 6] = ((U16)(PowRxchar[UI_VIRTUAL_INDEX + 2 + 16*k + UorI*8]) << 8) + (U16)(PowRxchar[UI_VIRTUAL_INDEX + 3 + 16*k + UorI*8]);
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         MOVS     R0,#+7
         MUL      R0,R0,R6
@@ -3739,7 +3758,7 @@ linemark:
         UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
         LSLS     R1,R5,#+3
         ADDS     R1,R1,R6, LSL #+4
-        LDR.N    R2,??DataTable7
+        LDR.N    R2,??DataTable8
         ADDS     R1,R1,R2
         LDRB     R1,[R1, #+2]
         LSLS     R1,R1,#+8
@@ -3747,12 +3766,12 @@ linemark:
         UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
         LSLS     R2,R5,#+3
         ADDS     R2,R2,R6, LSL #+4
-        LDR.N    R3,??DataTable7
+        LDR.N    R3,??DataTable8
         ADDS     R2,R2,R3
         LDRB     R2,[R2, #+3]
         UXTAB    R1,R1,R2
         STRH     R1,[R0, #+12]
-//  619         YADA_98(198+200*k, Y_COORD, 0x22, 0x81, 0x01, COLOR[k], 0x0000, UORI[UorI], 0);  //标注电压或电流的单位
+//  620         YADA_98(198+200*k, Y_COORD, 0x22, 0x81, 0x01, COLOR[k], 0x0000, UORI[UorI], 0);  //标注电压或电流的单位
         MOVS     R0,#+0
         STR      R0,[SP, #+16]
         UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
@@ -3762,7 +3781,7 @@ linemark:
         MOVS     R0,#+0
         STR      R0,[SP, #+8]
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
-        LDR.W    R0,??DataTable8_10
+        LDR.W    R0,??DataTable9_10
         LDRH     R0,[R0, R6, LSL #+1]
         STR      R0,[SP, #+4]
         MOVS     R0,#+1
@@ -3778,17 +3797,17 @@ linemark:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall YADA_98
         BL       YADA_98
-//  620     }
+//  621     }
         ADDS     R6,R6,#+1
 ??linemark_0:
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         CMP      R6,#+3
         BCC.W    ??linemark_1
-//  621     delay_ms(5);
+//  622     delay_ms(5);
         MOVS     R0,#+5
           CFI FunCall delay_ms
         BL       delay_ms
-//  622     YADA_C0(WAVEUIaddr + UorI*42, C108Dat, 21);  
+//  623     YADA_C0(WAVEUIaddr + UorI*42, C108Dat, 21);  
         MOVS     R2,#+21
         ADD      R1,SP,#+24
         UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
@@ -3798,7 +3817,7 @@ linemark:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall YADA_C0
         BL       YADA_C0
-//  623     YADA_C108(WAVEUIaddr + UorI*42, 3);   //写入有效值，每次3个
+//  624     YADA_C108(WAVEUIaddr + UorI*42, 3);   //写入有效值，每次3个
         MOVS     R1,#+3
         UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
         MOVS     R0,#+42
@@ -3807,7 +3826,7 @@ linemark:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall YADA_C108
         BL       YADA_C108
-//  624 }
+//  625 }
         ADD      SP,SP,#+72
           CFI CFA R13+16
         POP      {R4-R6,PC}       ;; return
@@ -3816,218 +3835,218 @@ linemark:
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7:
+??DataTable8:
         DC32     PowRxchar
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_1:
+??DataTable8_1:
         DC32     `?<Constant {"\\265\\33201-26\\264\\316", "\\265\\332`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_2:
+??DataTable8_2:
         DC32     `?<Constant {8196, 310, 78, 65535, 0, 0, 0, 819`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_3:
+??DataTable8_3:
         DC32     HarmoGraphUorder
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_4:
+??DataTable8_4:
         DC32     HarmoGraphIorder
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_5:
+??DataTable8_5:
         DC32     HarmoGraphPhase
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_6:
+??DataTable8_6:
         DC32     HarmoGraphRange
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_7:
+??DataTable8_7:
         DC32     0x41f00000
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_8:
+??DataTable8_8:
         DC32     0xc1f00000
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_9:
+??DataTable8_9:
         DC32     0x1a9fbe77
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_10:
+??DataTable8_10:
         DC32     0x3fc4dd2f
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_11:
+??DataTable8_11:
         DC32     0x40640000
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_12:
+??DataTable8_12:
         DC32     0x40400001
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_13:
+??DataTable8_13:
         DC32     0x624dd2f
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_14:
+??DataTable8_14:
         DC32     0x402d5581
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_15:
+??DataTable8_15:
         DC32     0x406f0000
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_16:
+??DataTable8_16:
         DC32     0xc0080000
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_17:
+??DataTable8_17:
         DC32     0xe147ae14
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_18:
+??DataTable8_18:
         DC32     0x3ffa147a
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_19:
+??DataTable8_19:
         DC32     0x40698000
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_20:
+??DataTable8_20:
         DC32     0xdf3b645a
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_21:
+??DataTable8_21:
         DC32     0x40038d4f
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_22:
+??DataTable8_22:
         DC32     0x4075a000
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_23:
+??DataTable8_23:
         DC32     0x3e4ccccd
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_24:
+??DataTable8_24:
         DC32     0x435c0000
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_25:
+??DataTable8_25:
         DC32     0x43d90000
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_26:
+??DataTable8_26:
         DC32     0x9999999a
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_27:
+??DataTable8_27:
         DC32     0xbfc99999
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_28:
+??DataTable8_28:
         DC32     0xfbe76c8b
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_29:
+??DataTable8_29:
         DC32     0x403871a9
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_30:
+??DataTable8_30:
         DC32     0x40786000
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_31:
+??DataTable8_31:
         DC32     HarmoInfo
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable7_32:
+??DataTable8_32:
         DC32     HarmoListPhase
-//  625 /*******************************************************************************
-//  626 * 函  数  名      : GUI_SYS_PARASET
-//  627 * 描      述      : 系统参数设定。可通过移位键选择各项设置。数值输入的范围为0~99999，大于5位时清零
-//  628 *                   此页的时间设置没有处理输入是否在正确范围
-//  629 * 输      入      : 无
-//  630 * 返      回      : 无
-//  631 * 
-//  632 * 修       改     : WK
-//  633 * 时       间     : 2013-03-13
-//  634 * 描       述     : 基于2013-03-08界面
-//  635 *******************************************************************************/
+//  626 /*******************************************************************************
+//  627 * 函  数  名      : GUI_SYS_PARASET
+//  628 * 描      述      : 系统参数设定。可通过移位键选择各项设置。数值输入的范围为0~99999，大于5位时清零
+//  629 *                   此页的时间设置没有处理输入是否在正确范围
+//  630 * 输      入      : 无
+//  631 * 返      回      : 无
+//  632 * 
+//  633 * 修       改     : WK
+//  634 * 时       间     : 2013-03-13
+//  635 * 描       述     : 基于2013-03-08界面
+//  636 *******************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(2)
           CFI Block cfiBlock10 Using cfiCommon0
           CFI Function GUI_SYS_PARASET
         THUMB
-//  636 void GUI_SYS_PARASET(void)
-//  637 {
+//  637 void GUI_SYS_PARASET(void)
+//  638 {
 GUI_SYS_PARASET:
         PUSH     {R4-R9,LR}
           CFI R14 Frame(CFA, -4)
@@ -4040,211 +4059,196 @@ GUI_SYS_PARASET:
           CFI CFA R13+28
         SUB      SP,SP,#+284
           CFI CFA R13+312
-//  638     U8 OFF_ON[][4]= {"开启","关闭"},i,temp=0,temp1=0;
+//  639     U8 OFF_ON[][4]= {"开启","关闭"},i,temp=0,temp1=0;
         ADD      R0,SP,#+36
-        LDR.W    R1,??DataTable8_11
+        LDR.W    R1,??DataTable9_11
         LDM      R1!,{R2,R3}
         STM      R0!,{R2,R3}
         SUBS     R1,R1,#+8
         SUBS     R0,R0,#+8
         MOVS     R5,#+0
         MOVS     R6,#+0
-//  639     U16 ParaSetC108[63]= {0},PARA_y=0,string2U16=0;
+//  640     U16 ParaSetC108[63]= {0},PARA_y=0,string2U16=0;
         ADD      R0,SP,#+80
         MOVS     R1,#+128
           CFI FunCall __aeabi_memclr4
         BL       __aeabi_memclr4
         MOVS     R9,#+0
         MOVS     R7,#+0
-//  640     static U8 flg_sys[9]={0} ;// wk --设置参数超出了限制标志
-//  641     
-//  642      SHELL_CONTEXT_PTR    shell_ptr;
-//  643      shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
+//  641     static U8 flg_sys[9]={0} ;// wk --设置参数超出了限制标志
+//  642     
+//  643      SHELL_CONTEXT_PTR    shell_ptr;
+//  644      shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
         MOV      R0,#+484
           CFI FunCall _lwmem_alloc_zero
         BL       _lwmem_alloc_zero
         MOVS     R4,R0
-//  644      _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
+//  645      _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
         MOVW     R1,#+20481
         MOVS     R0,R4
           CFI FunCall _lwmem_set_type
         BL       _lwmem_set_type
-//  645     //U32 String2U32=0;
-//  646     U16 SysParaXY[18]= { 450, 50, 450, 80 , 450 ,112,
-//  647                          377,146, 470,146 , 540,146,   // 年是4位显示的，因此X坐标小于时间（2位）的X坐标
-//  648                          400,178, 470,178,  540,178
-//  649                         //,148,296,490,48,490,79,490,110,432,145,489,
-//  650                         //145,546,145,432,175,489,175,546,175
-//  651                        };
+//  646     //U32 String2U32=0;
+//  647     U16 SysParaXY[18]= { 450, 50, 450, 80 , 450 ,112,
+//  648                          377,146, 470,146 , 540,146,   // 年是4位显示的，因此X坐标小于时间（2位）的X坐标
+//  649                          400,178, 470,178,  540,178
+//  650                        };
         ADD      R0,SP,#+44
-        LDR.W    R1,??DataTable8_12
+        LDR.W    R1,??DataTable9_12
         MOVS     R2,#+36
           CFI FunCall __aeabi_memcpy4
         BL       __aeabi_memcpy4
-//  652     U16 SysParaSetSq[36]= {445,48,448,73,  445,80,448,105, 445,110,448,135, 
-//  653                            370,145,373,170, 460,145,463,170,  530,145,533,170, 
-//  654                            370,176,373,201, 460,176,463,201,  530,176,533,201
-//  655                            //112,48,115,73,112,79,115,104,112,110,115,134,112,141,115,165,112,172,115,195,112,203,115,226,
-//  656                            //112,234,115,257,112,265,115,287,112,295,115,317,469,48,472,73,469,79,472,104,469,110,472,134,
-//  657                            //430,148,432,168,488,148,490,168,545,148,547,168,430,176,432,196,488,176,490,196,545,176,547,196
-//  658                            };
+//  651     U16 SysParaSetSq[36]= {445,48,448,73,  445,80,448,105, 445,110,448,135, 
+//  652                            370,145,373,170, 460,145,463,170,  530,145,533,170, 
+//  653                            370,176,373,201, 460,176,463,201,  530,176,533,201
+//  654                            };
         ADD      R0,SP,#+208
-        LDR.W    R1,??DataTable8_13
+        LDR.W    R1,??DataTable9_13
         MOVS     R2,#+72
           CFI FunCall __aeabi_memcpy4
         BL       __aeabi_memcpy4
-//  659     /* wk --> 光标 */
-//  660     if(SysSet.SwFlg) //初次进入时读取flash
-        LDR.W    R0,??DataTable8_14
+//  655     /* wk --> 光标 */
+//  656     if(SysSet.SwFlg) //初次进入时读取flash
+        LDR.W    R0,??DataTable9_14
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.W    ??GUI_SYS_PARASET_0
-//  661     {
-//  662         YADA_40(0x0000,0xfc00);//前景色为黑色，背景色为橙色
+//  657     {
+//  658         YADA_40(0x0000,0xfc00);//前景色为黑色，背景色为橙色
         MOV      R1,#+64512
         MOVS     R0,#+0
           CFI FunCall YADA_40
         BL       YADA_40
-//  663         YADA_5A(SysParaSetSq,4);  // WK --> 以背景色填充（148,265）、（148,296）的矩形
+//  659         YADA_5A(SysParaSetSq,4);  // WK --> 以背景色填充（148,265）、（148,296）的矩形
         MOVS     R1,#+4
         ADD      R0,SP,#+208
           CFI FunCall YADA_5A
         BL       YADA_5A
-//  664 #if 0 // wk --> 全部读取Flash中参数      
-//  665         shell_ptr->ARGC = 2;
-//  666         shell_ptr->ARGV[0]="cd";
-//  667         shell_ptr->ARGV[1]="f:\\"; 
-//  668         Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
-//  669         
-//  670         shell_ptr->ARGC = 2;
-//  671         shell_ptr->ARGV[0]="cd";
-//  672         shell_ptr->ARGV[1]="sysset";
-//  673         Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+//  660 #if 0 // wk --> 全部读取Flash中参数      
+//  661         shell_ptr->ARGC = 2;
+//  662         shell_ptr->ARGV[0]="cd";
+//  663         shell_ptr->ARGV[1]="f:\\"; 
+//  664         Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+//  665         
+//  666         shell_ptr->ARGC = 2;
+//  667         shell_ptr->ARGV[0]="cd";
+//  668         shell_ptr->ARGV[1]="sysset";
+//  669         Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+//  670         
+//  671         shell_ptr->ARGC=1;
+//  672         shell_ptr->ARGV[0]="pwd";
+//  673         Shell_pwd(shell_ptr->ARGC, shell_ptr->ARGV);
 //  674         
-//  675         shell_ptr->ARGC=1;
-//  676         shell_ptr->ARGV[0]="pwd";
-//  677         Shell_pwd(shell_ptr->ARGC, shell_ptr->ARGV);
-//  678         
-//  679         shell_ptr->ARGC=5;
-//  680         shell_ptr->ARGV[0]="read";
-//  681         shell_ptr->ARGV[1]="sysset.txt";
-//  682         shell_ptr->ARGV[2]="99";
-//  683         shell_ptr->ARGV[3]="begin";
-//  684         shell_ptr->ARGV[4]="0";
-//  685         Shell_read_wk(shell_ptr->ARGC, shell_ptr->ARGV,SysFlashData);   
-//  686 
-//  687 //        for(int i=0;i<20;i++)
-//  688 //          {
-//  689 //            printf("test_flash[%d]=%x\n",i,SysFlashData[i]);
-//  690 //          }
-//  691 #endif // wk --> 全部读取Flash中参数
-//  692         
-//  693 #if 1 // wk --> 只读取Flash中系统参数      
-//  694         shell_ptr->ARGC = 2;
+//  675         shell_ptr->ARGC=5;
+//  676         shell_ptr->ARGV[0]="read";
+//  677         shell_ptr->ARGV[1]="sysset.txt";
+//  678         shell_ptr->ARGV[2]="84";
+//  679         shell_ptr->ARGV[3]="begin";
+//  680         shell_ptr->ARGV[4]="0";
+//  681         Shell_read_wk(shell_ptr->ARGC, shell_ptr->ARGV,SysFlashData);   
+//  682 #endif // wk --> 全部读取Flash中参数
+//  683         
+//  684 #if 1 // wk --> 只读取Flash中系统参数      
+//  685         shell_ptr->ARGC = 2;
         MOVS     R0,#+2
         STR      R0,[R4, #+32]
-//  695         shell_ptr->ARGV[0]="cd";
+//  686         shell_ptr->ARGV[0]="cd";
         ADR.N    R0,??GUI_SYS_PARASET_1  ;; 0x63, 0x64, 0x00, 0x00
         STR      R0,[R4, #+0]
-//  696         shell_ptr->ARGV[1]="f:\\"; 
+//  687         shell_ptr->ARGV[1]="f:\\"; 
         ADR.N    R0,??GUI_SYS_PARASET_1+0x4  ;; "f:\\"
         STR      R0,[R4, #+4]
-//  697         Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+//  688         Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_cd
         BL       Shell_cd
-//  698         
-//  699         shell_ptr->ARGC = 2;
+//  689         
+//  690         shell_ptr->ARGC = 2;
         MOVS     R0,#+2
         STR      R0,[R4, #+32]
-//  700         shell_ptr->ARGV[0]="cd";
+//  691         shell_ptr->ARGV[0]="cd";
         ADR.N    R0,??GUI_SYS_PARASET_1  ;; 0x63, 0x64, 0x00, 0x00
         STR      R0,[R4, #+0]
-//  701         shell_ptr->ARGV[1]="sysset";
-        LDR.W    R0,??DataTable8_15
+//  692         shell_ptr->ARGV[1]="sysset";
+        LDR.W    R0,??DataTable9_15
         STR      R0,[R4, #+4]
-//  702         Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+//  693         Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_cd
         BL       Shell_cd
-//  703         
-//  704         shell_ptr->ARGC=1;
+//  694         
+//  695         shell_ptr->ARGC=1;
         MOVS     R0,#+1
         STR      R0,[R4, #+32]
-//  705         shell_ptr->ARGV[0]="pwd";
+//  696         shell_ptr->ARGV[0]="pwd";
         ADR.N    R0,??GUI_SYS_PARASET_1+0x8  ;; "pwd"
         STR      R0,[R4, #+0]
-//  706         Shell_pwd(shell_ptr->ARGC, shell_ptr->ARGV);
+//  697         Shell_pwd(shell_ptr->ARGC, shell_ptr->ARGV);
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_pwd
         BL       Shell_pwd
-//  707         
-//  708         shell_ptr->ARGC=5;
+//  698         
+//  699         shell_ptr->ARGC=5;
         MOVS     R0,#+5
         STR      R0,[R4, #+32]
-//  709         shell_ptr->ARGV[0]="read";
-        LDR.W    R0,??DataTable8_16
+//  700         shell_ptr->ARGV[0]="read";
+        LDR.W    R0,??DataTable9_16
         STR      R0,[R4, #+0]
-//  710         shell_ptr->ARGV[1]="sysset.txt";
-        LDR.W    R0,??DataTable8_17
+//  701         shell_ptr->ARGV[1]="sysset.txt";
+        LDR.W    R0,??DataTable9_17
         STR      R0,[R4, #+4]
-//  711         shell_ptr->ARGV[2]="25";
+//  702         shell_ptr->ARGV[2]="25";
         ADR.N    R0,??GUI_SYS_PARASET_1+0xC  ;; 0x32, 0x35, 0x00, 0x00
         STR      R0,[R4, #+8]
-//  712         shell_ptr->ARGV[3]="begin";
-        LDR.W    R0,??DataTable8_18
+//  703         shell_ptr->ARGV[3]="begin";
+        LDR.W    R0,??DataTable9_18
         STR      R0,[R4, #+12]
-//  713         shell_ptr->ARGV[4]="0";
+//  704         shell_ptr->ARGV[4]="0";
         ADR.N    R0,??GUI_SYS_PARASET_1+0x10  ;; "0"
         STR      R0,[R4, #+16]
-//  714         Shell_read_wk(shell_ptr->ARGC, shell_ptr->ARGV,SysFlashData);   
-        LDR.W    R2,??DataTable8_19
+//  705         Shell_read_wk(shell_ptr->ARGC, shell_ptr->ARGV,SysFlashData);   
+        LDR.W    R2,??DataTable9_19
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_read_wk
         BL       Shell_read_wk
-//  715 
-//  716 //        for(int i=0;i<20;i++)
-//  717 //          {
-//  718 //            printf("test_flash[%d]=%x\n",i,SysFlashData[i]);
-//  719 //          }
-//  720 #endif //  wk --> 只读取Flash中系统参数
-//  721         
-//  722         //DISTIME(0);//显示当前的时间
-//  723        // memcpy(SysFlashData,ParaSetC108,48);//从内部information memory中读取存储的参数
-//  724         SysSet.SwFlg=0;
-        LDR.W    R0,??DataTable8_14
+//  706 #endif //  wk --> 只读取Flash中系统参数
+//  707         
+//  708         //DISTIME(0);//显示当前的时间
+//  709        // memcpy(SysFlashData,ParaSetC108,48);//从内部information memory中读取存储的参数
+//  710         SysSet.SwFlg=0;
+        LDR.W    R0,??DataTable9_14
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
-//  725         
-//  726         // wk --> 写入有效值  第一次全部写入
-//  727         for(i=0;i<9;i++)
+//  711         
+//  712         // wk --> 写入有效值  第一次全部写入
+//  713         for(i=0;i<9;i++)
         MOVS     R8,#+0
         B.N      ??GUI_SYS_PARASET_2
-//  728         {
-//  729           temp=2*i;
-//  730           temp1=7*i;
-//  731           if(i<3)
-//  732           {
-//  733             ParaSetC108[temp1 + 0] = 0x5004;            //显示相位的X坐标
-//  734           }
-//  735           else if(i==3)
-//  736           {
-//  737             ParaSetC108[temp1 + 0] = 0x4004;        //显示相位的X坐标  
-//  738           }
-//  739           else
-//  740           {
-//  741             ParaSetC108[temp1 + 0] = 0x2004;        //显示相位的X坐标  
+//  714         {
+//  715           temp=2*i;
+//  716           temp1=7*i;
+//  717           if(i<3)
+//  718           {
+//  719             ParaSetC108[temp1 + 0] = 0x5004;            //显示相位的X坐标
+//  720           }
+//  721           else if(i==3)
+//  722           {
+//  723             ParaSetC108[temp1 + 0] = 0x4004;        //显示相位的X坐标  
+//  724           }
+//  725           else
+//  726           {
+//  727             ParaSetC108[temp1 + 0] = 0x2004;        //显示相位的X坐标  
 ??GUI_SYS_PARASET_3:
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         ADD      R0,SP,#+80
         MOVW     R1,#+8196
         STRH     R1,[R0, R6, LSL #+1]
-//  742           }
-//  743           ParaSetC108[temp1 + 1] = SysParaXY[temp];            //显示相位的X坐标
+//  728           }
+//  729           ParaSetC108[temp1 + 1] = SysParaXY[temp];            //显示相位的X坐标
 ??GUI_SYS_PARASET_4:
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         ADD      R0,SP,#+80
@@ -4253,7 +4257,7 @@ GUI_SYS_PARASET:
         ADD      R1,SP,#+44
         LDRH     R1,[R1, R5, LSL #+1]
         STRH     R1,[R0, #+2]
-//  744           ParaSetC108[temp1 + 2] = SysParaXY[temp + 1];     //Y坐标
+//  730           ParaSetC108[temp1 + 2] = SysParaXY[temp + 1];     //Y坐标
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         ADD      R0,SP,#+80
         ADDS     R0,R0,R6, LSL #+1
@@ -4262,32 +4266,32 @@ GUI_SYS_PARASET:
         ADDS     R1,R1,R5, LSL #+1
         LDRH     R1,[R1, #+2]
         STRH     R1,[R0, #+4]
-//  745           ParaSetC108[temp1 + 3] = 0xffff;         //白色，下为黑色
+//  731           ParaSetC108[temp1 + 3] = 0xffff;         //白色，下为黑色
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         ADD      R0,SP,#+80
         ADDS     R0,R0,R6, LSL #+1
         MOVW     R1,#+65535
         STRH     R1,[R0, #+6]
-//  746           ParaSetC108[temp1 + 4] = 0x0000;
+//  732           ParaSetC108[temp1 + 4] = 0x0000;
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         ADD      R0,SP,#+80
         ADDS     R0,R0,R6, LSL #+1
         MOVS     R1,#+0
         STRH     R1,[R0, #+8]
-//  747           ParaSetC108[temp1 + 5] = 0;         //白色，下为黑色
+//  733           ParaSetC108[temp1 + 5] = 0;         //白色，下为黑色
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         ADD      R0,SP,#+80
         ADDS     R0,R0,R6, LSL #+1
         MOVS     R1,#+0
         STRH     R1,[R0, #+10]
-//  748           ParaSetC108[temp1 + 6] = (U16) (SysFlashData[temp+8]<<8)+(U16)(SysFlashData[temp+7]);
+//  734           ParaSetC108[temp1 + 6] = (U16) (SysFlashData[temp+8]<<8)+(U16)(SysFlashData[temp+7]);
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.W    R0,??DataTable8_19
+        LDR.W    R0,??DataTable9_19
         ADDS     R0,R5,R0
         LDRB     R0,[R0, #+8]
         LSLS     R0,R0,#+8
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.W    R1,??DataTable8_19
+        LDR.W    R1,??DataTable9_19
         ADDS     R1,R5,R1
         LDRB     R1,[R1, #+7]
         UXTAB    R0,R0,R1
@@ -4321,74 +4325,41 @@ GUI_SYS_PARASET:
         MOVW     R1,#+16388
         STRH     R1,[R0, R6, LSL #+1]
         B.N      ??GUI_SYS_PARASET_4
-//  749         }
-//  750         
-//  751 //        for(int i=0;i <9;i++)
-//  752 //        {
-//  753 //          switch(i) // WK --> 阈值判断
-//  754 //            {
-//  755 //            case 0:
-//  756 //            case 1:
-//  757 //            case 2:
-//  758 //              if(ParaSetC108[7*i+6]>200)
-//  759 //                ParaSetC108[7*i+3]=0xf800;
-//  760 //               break;
-//  761 //            case 3:  // year
-//  762 //              if(ParaSetC108[7*i+6]>5000)  
-//  763 //                ParaSetC108[7*i+3]=0xf800;
-//  764 //               break;
-//  765 //            case 4:
-//  766 //              if(ParaSetC108[7*i+6]>12)  
-//  767 //                ParaSetC108[7*i+3]=0xf800;
-//  768 //               break;
-//  769 //            case 5:
-//  770 //              if(ParaSetC108[7*i+6]>30)  
-//  771 //                ParaSetC108[7*i+3]=0xf800;
-//  772 //               break;
-//  773 //            case 6:
-//  774 //            case 7:
-//  775 //            case 8:
-//  776 //              if(ParaSetC108[7*i+6]>60)
-//  777 //                ParaSetC108[7*i+3]=0xf800;
-//  778 //              break;
-//  779 //            default:
-//  780 //              break;
-//  781 //            }
-//  782 //        }
-//  783         
-//  784         YADA_C0(ParaSetAddr, ParaSetC108, 63);  // WK --> 写暂存缓冲区
+//  735         }
+//  736                
+//  737         YADA_C0(ParaSetAddr, ParaSetC108, 63);  // WK --> 写暂存缓冲区
 ??GUI_SYS_PARASET_5:
         MOVS     R2,#+63
         ADD      R1,SP,#+80
         MOV      R0,#+2736
           CFI FunCall YADA_C0
         BL       YADA_C0
-//  785         delay_us(10);
+//  738         delay_us(10);
         MOVS     R0,#+10
           CFI FunCall delay_us
         BL       delay_us
-//  786         YADA_C108(ParaSetAddr, 9);   //写入有效值，每次10个
+//  739         YADA_C108(ParaSetAddr, 9);   //写入有效值，每次10个
         MOVS     R1,#+9
         MOV      R0,#+2736
           CFI FunCall YADA_C108
         BL       YADA_C108
-//  787         delay_us(10);   
+//  740         delay_us(10);   
         MOVS     R0,#+10
           CFI FunCall delay_us
         BL       delay_us
-//  788         
-//  789        for(i=0;i<7;i++)  // WK --> 向屏幕 7 个控制按钮写 “开 ”、“关 ”状态
+//  741         
+//  742        for(i=0;i<7;i++)  // WK --> 向屏幕 7 个控制按钮写 “开 ”、“关 ”状态
         MOVS     R8,#+0
         B.N      ??GUI_SYS_PARASET_7
-//  790        {
-//  791           PARA_y=63+i*37;
+//  743        {
+//  744           PARA_y=63+i*37;
 ??GUI_SYS_PARASET_8:
         UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
         MOVS     R0,#+37
         MUL      R0,R0,R8
         ADDS     R9,R0,#+63
-//  792           /* WK --> 清除上一次的状态 */
-//  793           YADA_71(MenuParaSET,148, PARA_y,240,PARA_y+24, 148, PARA_y);  //WK --> 剪切图标显示
+//  745           /* WK --> 清除上一次的状态 */
+//  746           YADA_71(MenuParaSET,148, PARA_y,240,PARA_y+24, 148, PARA_y);  //WK --> 剪切图标显示
         UXTH     R9,R9            ;; ZeroExt  R9,R9,#+16,#+16
         STR      R9,[SP, #+8]
         MOVS     R0,#+148
@@ -4403,11 +4374,11 @@ GUI_SYS_PARASET:
         MOVS     R0,#+10
           CFI FunCall YADA_71
         BL       YADA_71
-//  794           YADA_98(152, PARA_y, 0x22, 0x81, 0x02, 0xffff, 0x0000, OFF_ON[SysFlashData[i]], 4);// WK -->字库选择
+//  747           YADA_98(152, PARA_y, 0x22, 0x81, 0x02, 0xffff, 0x0000, OFF_ON[SysFlashData[i]], 4);// WK -->字库选择
         MOVS     R0,#+4
         STR      R0,[SP, #+16]
         UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        LDR.W    R0,??DataTable8_19
+        LDR.W    R0,??DataTable9_19
         LDRB     R0,[R8, R0]
         ADD      R1,SP,#+36
         ADDS     R0,R1,R0, LSL #+2
@@ -4425,123 +4396,123 @@ GUI_SYS_PARASET:
         MOVS     R0,#+152
           CFI FunCall YADA_98
         BL       YADA_98
-//  795           delay_us(10);
+//  748           delay_us(10);
         MOVS     R0,#+10
           CFI FunCall delay_us
         BL       delay_us
-//  796        }
+//  749        }
         ADDS     R8,R8,#+1
 ??GUI_SYS_PARASET_7:
         UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
         CMP      R8,#+7
         BCC.N    ??GUI_SYS_PARASET_8
-//  797     }
-//  798     
-//  799     if(SysSet.FuncFlg) //wk --> 上移 ，下移
+//  750     }
+//  751     
+//  752     if(SysSet.FuncFlg) //wk --> 上移 ，下移
 ??GUI_SYS_PARASET_0:
-        LDR.W    R0,??DataTable8_14
+        LDR.W    R0,??DataTable9_14
         LDRB     R0,[R0, #+1]
         CMP      R0,#+0
         BEQ.N    ??GUI_SYS_PARASET_9
-//  800     {
-//  801         //YADA_5B(&SysParaSetSq[SysParaOldIndex*4],4);  //擦除前一处
-//  802         YADA_5B(&SysParaSetSq[SysParaOldIndex*4],4);   // 擦除前一处
+//  753     {
+//  754         //YADA_5B(&SysParaSetSq[SysParaOldIndex*4],4);  //擦除前一处
+//  755         YADA_5B(&SysParaSetSq[SysParaOldIndex*4],4);   // 擦除前一处
         MOVS     R1,#+4
-        LDR.W    R0,??DataTable8_20
+        LDR.W    R0,??DataTable9_20
         LDRB     R0,[R0, #+0]
         ADD      R2,SP,#+208
         ADDS     R0,R2,R0, LSL #+3
           CFI FunCall YADA_5B
         BL       YADA_5B
-//  803         SysParaOldIndex=SysSet.ParaIndex;
-        LDR.W    R0,??DataTable8_14
+//  756         SysParaOldIndex=SysSet.ParaIndex;
+        LDR.W    R0,??DataTable9_14
         LDRB     R0,[R0, #+4]
-        LDR.W    R1,??DataTable8_20
+        LDR.W    R1,??DataTable9_20
         STRB     R0,[R1, #+0]
-//  804         SysSet.FuncFlg=0;
-        LDR.W    R0,??DataTable8_14
+//  757         SysSet.FuncFlg=0;
+        LDR.W    R0,??DataTable9_14
         MOVS     R1,#+0
         STRB     R1,[R0, #+1]
-//  805         SysSet.DataCnt=0; //切换时键盘输入清零
-        LDR.W    R0,??DataTable8_14
+//  758         SysSet.DataCnt=0; //切换时键盘输入清零
+        LDR.W    R0,??DataTable9_14
         MOVS     R1,#+0
         STRB     R1,[R0, #+6]
-//  806         YADA_5A(&SysParaSetSq[SysSet.ParaIndex*4],4);      //背景色填充相所在的矩形区域/**/
+//  759         YADA_5A(&SysParaSetSq[SysSet.ParaIndex*4],4);      //背景色填充相所在的矩形区域/**/
         MOVS     R1,#+4
-        LDR.W    R0,??DataTable8_14
+        LDR.W    R0,??DataTable9_14
         LDRB     R0,[R0, #+4]
         ADD      R2,SP,#+208
         ADDS     R0,R2,R0, LSL #+3
           CFI FunCall YADA_5A
         BL       YADA_5A
-//  807         //YADA_5A(&SysParaSetSq[SysSet.ParaIndex*4],4);    //背景色填充相所在的矩形区域/**/
-//  808     }
-//  809     
-//  810     if(SysSet.DataFlg)//清除时SysSet.DataFlg为1，但DatNumFlg为0
+//  760         //YADA_5A(&SysParaSetSq[SysSet.ParaIndex*4],4);    //背景色填充相所在的矩形区域/**/
+//  761     }
+//  762     
+//  763     if(SysSet.DataFlg)//清除时SysSet.DataFlg为1，但DatNumFlg为0
 ??GUI_SYS_PARASET_9:
-        LDR.W    R0,??DataTable8_14
+        LDR.W    R0,??DataTable9_14
         LDRB     R0,[R0, #+2]
         CMP      R0,#+0
         BEQ.W    ??GUI_SYS_PARASET_10
-//  811     {
-//  812         if(SysSet.DataCnt==0)
-        LDR.W    R0,??DataTable8_14
+//  764     {
+//  765         if(SysSet.DataCnt==0)
+        LDR.W    R0,??DataTable9_14
         LDRB     R0,[R0, #+6]
         CMP      R0,#+0
         BNE.N    ??GUI_SYS_PARASET_11
-//  813         {
-//  814             string2U16=0;
+//  766         {
+//  767             string2U16=0;
         MOVS     R7,#+0
         B.N      ??GUI_SYS_PARASET_12
-//  815         }
-//  816         else
-//  817         for(i=0; i<SysSet.DataCnt; i++) //利用输入数据个数
+//  768         }
+//  769         else
+//  770         for(i=0; i<SysSet.DataCnt; i++) //利用输入数据个数
 ??GUI_SYS_PARASET_11:
         MOVS     R8,#+0
         B.N      ??GUI_SYS_PARASET_13
-//  818         {
-//  819                 string2U16=string2U16*10+SysSet.Data[i]-'0';    //求整数部分
+//  771         {
+//  772                 string2U16=string2U16*10+SysSet.Data[i]-'0';    //求整数部分
 ??GUI_SYS_PARASET_14:
         MOVS     R0,#+10
         MUL      R0,R0,R7
         UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        LDR.W    R1,??DataTable8_14
+        LDR.W    R1,??DataTable9_14
         ADDS     R1,R8,R1
         LDRB     R1,[R1, #+7]
         UXTAB    R0,R0,R1
         SUBS     R7,R0,#+48
-//  820         }
+//  773         }
         ADDS     R8,R8,#+1
 ??GUI_SYS_PARASET_13:
-        LDR.W    R0,??DataTable8_14
+        LDR.W    R0,??DataTable9_14
         LDRB     R0,[R0, #+6]
         UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
         CMP      R8,R0
         BCC.N    ??GUI_SYS_PARASET_14
-//  821         
-//  822              temp=(SysSet.ParaIndex)*2; //WK --> 
+//  774         
+//  775              temp=(SysSet.ParaIndex)*2; //WK --> 
 ??GUI_SYS_PARASET_12:
-        LDR.W    R0,??DataTable8_14
+        LDR.W    R0,??DataTable9_14
         LDRB     R0,[R0, #+4]
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         LSLS     R5,R0,#+1
-//  823              SysFlashData[temp+7]=(U8)(string2U16);
+//  776              SysFlashData[temp+7]=(U8)(string2U16);
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.W    R0,??DataTable8_19
+        LDR.W    R0,??DataTable9_19
         ADDS     R0,R5,R0
         STRB     R7,[R0, #+7]
-//  824              SysFlashData[temp+8]=(U8)(string2U16>>8);
+//  777              SysFlashData[temp+8]=(U8)(string2U16>>8);
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.W    R0,??DataTable8_19
+        LDR.W    R0,??DataTable9_19
         ADDS     R0,R5,R0
         UXTH     R7,R7            ;; ZeroExt  R7,R7,#+16,#+16
         LSRS     R1,R7,#+8
         STRB     R1,[R0, #+8]
-//  825              /*　WK --> 重新显示修改过的数据 */
-//  826             U16 OneC108[7]= {SysSet.ParaIndex<3?0x5004:(SysSet.ParaIndex==3?0x4004:0x2004),
-//  827                               SysParaXY[temp],SysParaXY[temp+1],0xffff,0x0000}; //0x0000 --> 黑
+//  778              /*　WK --> 重新显示修改过的数据 */
+//  779             U16 OneC108[7]= {SysSet.ParaIndex<3?0x5004:(SysSet.ParaIndex==3?0x4004:0x2004),
+//  780                               SysParaXY[temp],SysParaXY[temp+1],0xffff,0x0000}; //0x0000 --> 黑
         ADD      R0,SP,#+20
-        LDR.W    R1,??DataTable8_21
+        LDR.W    R1,??DataTable9_21
         B.N      ??GUI_SYS_PARASET_15
         DATA
 ??GUI_SYS_PARASET_1:
@@ -4555,14 +4526,14 @@ GUI_SYS_PARASET:
         MOVS     R2,#+16
           CFI FunCall __aeabi_memcpy4
         BL       __aeabi_memcpy4
-        LDR.W    R0,??DataTable8_14
+        LDR.W    R0,??DataTable9_14
         LDRB     R0,[R0, #+4]
         CMP      R0,#+3
         BCS.N    ??GUI_SYS_PARASET_16
         MOVW     R0,#+20484
         B.N      ??GUI_SYS_PARASET_17
 ??GUI_SYS_PARASET_16:
-        LDR.W    R0,??DataTable8_14
+        LDR.W    R0,??DataTable9_14
         LDRB     R0,[R0, #+4]
         CMP      R0,#+3
         BNE.N    ??GUI_SYS_PARASET_18
@@ -4582,24 +4553,24 @@ GUI_SYS_PARASET:
         ADDS     R0,R0,R5, LSL #+1
         LDRH     R0,[R0, #+2]
         STRH     R0,[SP, #+24]
-//  828             OneC108[5] =0;
+//  781             OneC108[5] =0;
         MOVS     R0,#+0
         STRH     R0,[SP, #+30]
-//  829             OneC108[6] =(U16) (SysFlashData[temp+8]<<8)+(U16)(SysFlashData[temp+7]);
+//  782             OneC108[6] =(U16) (SysFlashData[temp+8]<<8)+(U16)(SysFlashData[temp+7]);
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.W    R0,??DataTable8_19
+        LDR.W    R0,??DataTable9_19
         ADDS     R0,R5,R0
         LDRB     R0,[R0, #+8]
         LSLS     R0,R0,#+8
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.W    R1,??DataTable8_19
+        LDR.W    R1,??DataTable9_19
         ADDS     R1,R5,R1
         LDRB     R1,[R1, #+7]
         UXTAB    R0,R0,R1
         STRH     R0,[SP, #+32]
-//  830             
-//  831             switch(SysSet.ParaIndex) // WK --> 阈值判断
-        LDR.W    R0,??DataTable8_14
+//  783             
+//  784             switch(SysSet.ParaIndex) // WK --> 阈值判断
+        LDR.W    R0,??DataTable9_14
         LDRB     R0,[R0, #+4]
         CMP      R0,#+0
         BEQ.N    ??GUI_SYS_PARASET_20
@@ -4616,176 +4587,176 @@ GUI_SYS_PARASET:
         BEQ.N    ??GUI_SYS_PARASET_27
         BCC.N    ??GUI_SYS_PARASET_28
         B.N      ??GUI_SYS_PARASET_29
-//  832             {
-//  833             case 0:
-//  834                if(OneC108[6]>200)
+//  785             {
+//  786             case 0:
+//  787                if(OneC108[6]>200)
 ??GUI_SYS_PARASET_20:
         LDRH     R0,[SP, #+32]
         CMP      R0,#+201
         BCC.N    ??GUI_SYS_PARASET_30
-//  835               { 
-//  836                 OneC108[3]=0xf800;
+//  788               { 
+//  789                 OneC108[3]=0xf800;
         MOV      R0,#+63488
         STRH     R0,[SP, #+26]
-//  837                 flg_sys[0]=1; // 统计时间超限标志
-        LDR.W    R0,??DataTable8_22
+//  790                 flg_sys[0]=1; // 统计时间超限标志
+        LDR.W    R0,??DataTable9_22
         MOVS     R1,#+1
         STRB     R1,[R0, #+0]
-//  838               }
-//  839                break;
+//  791               }
+//  792                break;
 ??GUI_SYS_PARASET_30:
         B.N      ??GUI_SYS_PARASET_31
-//  840             case 1:
-//  841                if(OneC108[6]>200)
+//  793             case 1:
+//  794                if(OneC108[6]>200)
 ??GUI_SYS_PARASET_22:
         LDRH     R0,[SP, #+32]
         CMP      R0,#+201
         BCC.N    ??GUI_SYS_PARASET_32
-//  842               { 
-//  843                 OneC108[3]=0xf800;
+//  795               { 
+//  796                 OneC108[3]=0xf800;
         MOV      R0,#+63488
         STRH     R0,[SP, #+26]
-//  844                 flg_sys[1]=1; // 存数时间超限标志
-        LDR.W    R0,??DataTable8_22
+//  797                 flg_sys[1]=1; // 存数时间超限标志
+        LDR.W    R0,??DataTable9_22
         MOVS     R1,#+1
         STRB     R1,[R0, #+1]
-//  845               }
-//  846                break;
+//  798               }
+//  799                break;
 ??GUI_SYS_PARASET_32:
         B.N      ??GUI_SYS_PARASET_31
-//  847             case 2:
-//  848               if(OneC108[6]>200)
+//  800             case 2:
+//  801               if(OneC108[6]>200)
 ??GUI_SYS_PARASET_21:
         LDRH     R0,[SP, #+32]
         CMP      R0,#+201
         BCC.N    ??GUI_SYS_PARASET_33
-//  849               { 
-//  850                 OneC108[3]=0xf800;
+//  802               { 
+//  803                 OneC108[3]=0xf800;
         MOV      R0,#+63488
         STRH     R0,[SP, #+26]
-//  851                 flg_sys[2]=1; //上传时间超限标志
-        LDR.W    R0,??DataTable8_22
+//  804                 flg_sys[2]=1; //上传时间超限标志
+        LDR.W    R0,??DataTable9_22
         MOVS     R1,#+1
         STRB     R1,[R0, #+2]
-//  852               }
-//  853                break;
+//  805               }
+//  806                break;
 ??GUI_SYS_PARASET_33:
         B.N      ??GUI_SYS_PARASET_31
-//  854             case 3:  // year
-//  855               if(OneC108[6]>5000)  
+//  807             case 3:  // year
+//  808               if(OneC108[6]>5000)  
 ??GUI_SYS_PARASET_24:
         LDRH     R0,[SP, #+32]
         MOVW     R1,#+5001
         CMP      R0,R1
         BCC.N    ??GUI_SYS_PARASET_34
-//  856               {
-//  857                 OneC108[3]=0xf800;
+//  809               {
+//  810                 OneC108[3]=0xf800;
         MOV      R0,#+63488
         STRH     R0,[SP, #+26]
-//  858                 flg_sys[3]=1; // 年超限标志
-        LDR.W    R0,??DataTable8_22
+//  811                 flg_sys[3]=1; // 年超限标志
+        LDR.W    R0,??DataTable9_22
         MOVS     R1,#+1
         STRB     R1,[R0, #+3]
-//  859               }
-//  860                break;
+//  812               }
+//  813                break;
 ??GUI_SYS_PARASET_34:
         B.N      ??GUI_SYS_PARASET_31
-//  861             case 4:
-//  862               if(OneC108[6]>12)  
+//  814             case 4:
+//  815               if(OneC108[6]>12)  
 ??GUI_SYS_PARASET_23:
         LDRH     R0,[SP, #+32]
         CMP      R0,#+13
         BCC.N    ??GUI_SYS_PARASET_35
-//  863               {
-//  864                 OneC108[3]=0xf800;
+//  816               {
+//  817                 OneC108[3]=0xf800;
         MOV      R0,#+63488
         STRH     R0,[SP, #+26]
-//  865                 flg_sys[4]=1;// 月超限标志
-        LDR.W    R0,??DataTable8_22
+//  818                 flg_sys[4]=1;// 月超限标志
+        LDR.W    R0,??DataTable9_22
         MOVS     R1,#+1
         STRB     R1,[R0, #+4]
-//  866               }
-//  867                break;
+//  819               }
+//  820                break;
 ??GUI_SYS_PARASET_35:
         B.N      ??GUI_SYS_PARASET_31
-//  868             case 5:
-//  869               if(OneC108[6]>30) 
+//  821             case 5:
+//  822               if(OneC108[6]>30) 
 ??GUI_SYS_PARASET_26:
         LDRH     R0,[SP, #+32]
         CMP      R0,#+31
         BCC.N    ??GUI_SYS_PARASET_36
-//  870               {
-//  871                 OneC108[3]=0xf800;
+//  823               {
+//  824                 OneC108[3]=0xf800;
         MOV      R0,#+63488
         STRH     R0,[SP, #+26]
-//  872                 flg_sys[5] =1; // 日超限标志
-        LDR.W    R0,??DataTable8_22
+//  825                 flg_sys[5] =1; // 日超限标志
+        LDR.W    R0,??DataTable9_22
         MOVS     R1,#+1
         STRB     R1,[R0, #+5]
-//  873               }
-//  874                break;
+//  826               }
+//  827                break;
 ??GUI_SYS_PARASET_36:
         B.N      ??GUI_SYS_PARASET_31
-//  875             case 6:
-//  876                if(OneC108[6]>24)
+//  828             case 6:
+//  829                if(OneC108[6]>24)
 ??GUI_SYS_PARASET_25:
         LDRH     R0,[SP, #+32]
         CMP      R0,#+25
         BCC.N    ??GUI_SYS_PARASET_37
-//  877                { OneC108[3]=0xf800;
+//  830                { OneC108[3]=0xf800;
         MOV      R0,#+63488
         STRH     R0,[SP, #+26]
-//  878                  flg_sys[6]=1; //小时超限标志
-        LDR.W    R0,??DataTable8_22
+//  831                  flg_sys[6]=1; //小时超限标志
+        LDR.W    R0,??DataTable9_22
         MOVS     R1,#+1
         STRB     R1,[R0, #+6]
-//  879                }
-//  880                break;
+//  832                }
+//  833                break;
 ??GUI_SYS_PARASET_37:
         B.N      ??GUI_SYS_PARASET_31
-//  881             case 7:
-//  882               if(OneC108[6]>60)
+//  834             case 7:
+//  835               if(OneC108[6]>60)
 ??GUI_SYS_PARASET_28:
         LDRH     R0,[SP, #+32]
         CMP      R0,#+61
         BCC.N    ??GUI_SYS_PARASET_38
-//  883               { OneC108[3]=0xf800;
+//  836               { OneC108[3]=0xf800;
         MOV      R0,#+63488
         STRH     R0,[SP, #+26]
-//  884                 flg_sys[7]=1; // 分超限标志
-        LDR.W    R0,??DataTable8_22
+//  837                 flg_sys[7]=1; // 分超限标志
+        LDR.W    R0,??DataTable9_22
         MOVS     R1,#+1
         STRB     R1,[R0, #+7]
-//  885               }
-//  886               break;
+//  838               }
+//  839               break;
 ??GUI_SYS_PARASET_38:
         B.N      ??GUI_SYS_PARASET_31
-//  887             case 8:
-//  888               if(OneC108[6]>60)
+//  840             case 8:
+//  841               if(OneC108[6]>60)
 ??GUI_SYS_PARASET_27:
         LDRH     R0,[SP, #+32]
         CMP      R0,#+61
         BCC.N    ??GUI_SYS_PARASET_39
-//  889               { OneC108[3]=0xf800;
+//  842               { OneC108[3]=0xf800;
         MOV      R0,#+63488
         STRH     R0,[SP, #+26]
-//  890                 flg_sys[8]=1; // 秒超限标志
-        LDR.W    R0,??DataTable8_22
+//  843                 flg_sys[8]=1; // 秒超限标志
+        LDR.W    R0,??DataTable9_22
         MOVS     R1,#+1
         STRB     R1,[R0, #+8]
-//  891               }
-//  892               break;
+//  844               }
+//  845               break;
 ??GUI_SYS_PARASET_39:
         B.N      ??GUI_SYS_PARASET_31
-//  893             default:
-//  894               break;
-//  895             }
-//  896             YADA_C0(ParaSetAddr+SysSet.ParaIndex*7, OneC108, 7);//修改发生改变的数据项
+//  846             default:
+//  847               break;
+//  848             }
+//  849             YADA_C0(ParaSetAddr+SysSet.ParaIndex*7, OneC108, 7);//修改发生改变的数据项
 ??GUI_SYS_PARASET_29:
 ??GUI_SYS_PARASET_31:
         MOVS     R2,#+7
         ADD      R1,SP,#+20
-        LDR.W    R0,??DataTable8_14
+        LDR.W    R0,??DataTable9_14
         LDRB     R0,[R0, #+4]
         MOVS     R3,#+7
         MULS     R0,R3,R0
@@ -4793,9 +4764,9 @@ GUI_SYS_PARASET:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall YADA_C0
         BL       YADA_C0
-//  897             YADA_C108(ParaSetAddr+SysSet.ParaIndex*7, 1);
+//  850             YADA_C108(ParaSetAddr+SysSet.ParaIndex*7, 1);
         MOVS     R1,#+1
-        LDR.N    R0,??DataTable8_14
+        LDR.N    R0,??DataTable9_14
         LDRB     R0,[R0, #+4]
         MOVS     R2,#+7
         MULS     R0,R2,R0
@@ -4803,40 +4774,40 @@ GUI_SYS_PARASET:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall YADA_C108
         BL       YADA_C108
-//  898              
-//  899             SysSet.DataFlg=0;
-        LDR.N    R0,??DataTable8_14
+//  851              
+//  852             SysSet.DataFlg=0;
+        LDR.N    R0,??DataTable9_14
         MOVS     R1,#+0
         STRB     R1,[R0, #+2]
-//  900       
-//  901     }
-//  902     if(SysSet.SwitchSet[7]==1)
+//  853       
+//  854     }
+//  855     if(SysSet.SwitchSet[7]==1)
 ??GUI_SYS_PARASET_10:
-        LDR.N    R0,??DataTable8_14
+        LDR.N    R0,??DataTable9_14
         LDRB     R0,[R0, #+19]
         CMP      R0,#+1
         BNE.N    ??GUI_SYS_PARASET_40
-//  903     {
-//  904       for(i=0;i<7;i++)  // WK --> 向屏幕 7 个控制按钮写 “开 ”、“关 ”状态
+//  856     {
+//  857       for(i=0;i<7;i++)  // WK --> 向屏幕 7 个控制按钮写 “开 ”、“关 ”状态
         MOVS     R8,#+0
         B.N      ??GUI_SYS_PARASET_41
-//  905       {
-//  906             PARA_y=63+i*37;
+//  858       {
+//  859             PARA_y=63+i*37;
 ??GUI_SYS_PARASET_42:
         UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
         MOVS     R0,#+37
         MUL      R0,R0,R8
         ADDS     R9,R0,#+63
-//  907             SysFlashData[i]=SysSet.SwitchSet[i];
+//  860             SysFlashData[i]=SysSet.SwitchSet[i];
         UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        LDR.N    R0,??DataTable8_14
+        LDR.N    R0,??DataTable9_14
         ADDS     R0,R8,R0
         LDRB     R0,[R0, #+12]
         UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        LDR.N    R1,??DataTable8_19
+        LDR.N    R1,??DataTable9_19
         STRB     R0,[R8, R1]
-//  908             /* WK --> 清除上一次的状态 */
-//  909             YADA_71(MenuParaSET,148, PARA_y,240,PARA_y+24, 148, PARA_y);  //WK --> 剪切图标显示
+//  861             /* WK --> 清除上一次的状态 */
+//  862             YADA_71(MenuParaSET,148, PARA_y,240,PARA_y+24, 148, PARA_y);  //WK --> 剪切图标显示
         UXTH     R9,R9            ;; ZeroExt  R9,R9,#+16,#+16
         STR      R9,[SP, #+8]
         MOVS     R0,#+148
@@ -4851,11 +4822,11 @@ GUI_SYS_PARASET:
         MOVS     R0,#+10
           CFI FunCall YADA_71
         BL       YADA_71
-//  910             YADA_98(152, PARA_y, 0x22, 0x81, 0x02, 0xffff, 0x0000, OFF_ON[SysFlashData[i]], 4);// WK -->字库选择
+//  863             YADA_98(152, PARA_y, 0x22, 0x81, 0x02, 0xffff, 0x0000, OFF_ON[SysFlashData[i]], 4);// WK -->字库选择
         MOVS     R0,#+4
         STR      R0,[SP, #+16]
         UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        LDR.N    R0,??DataTable8_19
+        LDR.N    R0,??DataTable9_19
         LDRB     R0,[R8, R0]
         ADD      R1,SP,#+36
         ADDS     R0,R1,R0, LSL #+2
@@ -4873,91 +4844,91 @@ GUI_SYS_PARASET:
         MOVS     R0,#+152
           CFI FunCall YADA_98
         BL       YADA_98
-//  911             delay_us(10);
+//  864             delay_us(10);
         MOVS     R0,#+10
           CFI FunCall delay_us
         BL       delay_us
-//  912       }
+//  865       }
         ADDS     R8,R8,#+1
 ??GUI_SYS_PARASET_41:
         UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
         CMP      R8,#+7
         BCC.N    ??GUI_SYS_PARASET_42
-//  913     }
-//  914     /* WK --> 保存键 */
-//  915     if(SysSet.SaveFlg)
+//  866     }
+//  867     /* WK --> 保存键 */
+//  868     if(SysSet.SaveFlg)
 ??GUI_SYS_PARASET_40:
-        LDR.N    R0,??DataTable8_14
+        LDR.N    R0,??DataTable9_14
         LDRB     R0,[R0, #+3]
         CMP      R0,#+0
         BEQ.W    ??GUI_SYS_PARASET_43
-//  916     {    
-//  917       /* pwd*/
-//  918 //     shell_ptr->ARGC=1;
-//  919 //     shell_ptr->ARGV[0]="pwd";
-//  920 //     Shell_pwd(shell_ptr->ARGC, shell_ptr->ARGV);
-//  921        for(int i=0;i<9;i++) // wk @130326 --> 对超出阈值的进行处理
+//  869     {    
+//  870       /* pwd*/
+//  871 //     shell_ptr->ARGC=1;
+//  872 //     shell_ptr->ARGV[0]="pwd";
+//  873 //     Shell_pwd(shell_ptr->ARGC, shell_ptr->ARGV);
+//  874       for(int i=0;i<9;i++) // wk @130326 --> 对超出阈值的进行处理
         MOVS     R0,#+0
         B.N      ??GUI_SYS_PARASET_44
-//  922       {
-//  923         if(flg_sys[i]==1)
-//  924           switch(i)
-//  925           {
-//  926           case 0:
-//  927           case 1:
-//  928           case 2:
-//  929             SysFlashData[2*i+7]=200;
-//  930             SysFlashData[2*i+8]=0;
-//  931             flg_sys[i]=0;
-//  932            break;
-//  933           case 3:
-//  934             SysFlashData[2*i+7]=0x88;
-//  935             SysFlashData[2*i+8]=0x13;
-//  936             flg_sys[i]=0;
-//  937            break;
-//  938           case 4:
-//  939             SysFlashData[2*i+7]=12;
-//  940             SysFlashData[2*i+8]=0;
-//  941             flg_sys[i]=0;
-//  942             break;
-//  943           case 5:
-//  944             SysFlashData[2*i+7]=60;
-//  945             SysFlashData[2*i+8]=0;
-//  946             flg_sys[i]=0;
-//  947             break;
-//  948           case 6:
-//  949             SysFlashData[2*i+7]=24;
-//  950             SysFlashData[2*i+8]=0;
-//  951             flg_sys[i]=0;
-//  952             break;
-//  953           case 7:
-//  954             SysFlashData[2*i+7]=60;
-//  955             SysFlashData[2*i+8]=0;
-//  956             flg_sys[i]=0;
-//  957             break;
-//  958           case 8:
-//  959             SysFlashData[2*i+7]=60;
+//  875       {
+//  876         if(flg_sys[i]==1)
+//  877           switch(i)
+//  878           {
+//  879           case 0:
+//  880           case 1:
+//  881           case 2:
+//  882             SysFlashData[2*i+7]=200;
+//  883             SysFlashData[2*i+8]=0;
+//  884             flg_sys[i]=0;
+//  885            break;
+//  886           case 3:
+//  887             SysFlashData[2*i+7]=0x88;
+//  888             SysFlashData[2*i+8]=0x13;
+//  889             flg_sys[i]=0;
+//  890            break;
+//  891           case 4:
+//  892             SysFlashData[2*i+7]=12;
+//  893             SysFlashData[2*i+8]=0;
+//  894             flg_sys[i]=0;
+//  895             break;
+//  896           case 5:
+//  897             SysFlashData[2*i+7]=60;
+//  898             SysFlashData[2*i+8]=0;
+//  899             flg_sys[i]=0;
+//  900             break;
+//  901           case 6:
+//  902             SysFlashData[2*i+7]=24;
+//  903             SysFlashData[2*i+8]=0;
+//  904             flg_sys[i]=0;
+//  905             break;
+//  906           case 7:
+//  907             SysFlashData[2*i+7]=60;
+//  908             SysFlashData[2*i+8]=0;
+//  909             flg_sys[i]=0;
+//  910             break;
+//  911           case 8:
+//  912             SysFlashData[2*i+7]=60;
 ??GUI_SYS_PARASET_45:
-        LDR.N    R1,??DataTable8_19
+        LDR.N    R1,??DataTable9_19
         ADDS     R1,R1,R0, LSL #+1
         MOVS     R2,#+60
         STRB     R2,[R1, #+7]
-//  960             SysFlashData[2*i+8]=0;
-        LDR.N    R1,??DataTable8_19
+//  913             SysFlashData[2*i+8]=0;
+        LDR.N    R1,??DataTable9_19
         ADDS     R1,R1,R0, LSL #+1
         MOVS     R2,#+0
         STRB     R2,[R1, #+8]
-//  961             flg_sys[i]=0;
-        LDR.N    R1,??DataTable8_22
+//  914             flg_sys[i]=0;
+        LDR.N    R1,??DataTable9_22
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
-//  962             break;
+//  915             break;
 ??GUI_SYS_PARASET_46:
         ADDS     R0,R0,#+1
 ??GUI_SYS_PARASET_44:
         CMP      R0,#+9
         BGE.N    ??GUI_SYS_PARASET_47
-        LDR.N    R1,??DataTable8_22
+        LDR.N    R1,??DataTable9_22
         LDRB     R1,[R0, R1]
         CMP      R1,#+1
         BNE.N    ??GUI_SYS_PARASET_46
@@ -4977,235 +4948,227 @@ GUI_SYS_PARASET:
         BCC.N    ??GUI_SYS_PARASET_53
         B.N      ??GUI_SYS_PARASET_46
 ??GUI_SYS_PARASET_48:
-        LDR.N    R1,??DataTable8_19
+        LDR.N    R1,??DataTable9_19
         ADDS     R1,R1,R0, LSL #+1
         MOVS     R2,#+200
         STRB     R2,[R1, #+7]
-        LDR.N    R1,??DataTable8_19
+        LDR.N    R1,??DataTable9_19
         ADDS     R1,R1,R0, LSL #+1
         MOVS     R2,#+0
         STRB     R2,[R1, #+8]
-        LDR.N    R1,??DataTable8_22
+        LDR.N    R1,??DataTable9_22
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
         B.N      ??GUI_SYS_PARASET_46
 ??GUI_SYS_PARASET_50:
-        LDR.N    R1,??DataTable8_19
+        LDR.N    R1,??DataTable9_19
         ADDS     R1,R1,R0, LSL #+1
         MOVS     R2,#+136
         STRB     R2,[R1, #+7]
-        LDR.N    R1,??DataTable8_19
+        LDR.N    R1,??DataTable9_19
         ADDS     R1,R1,R0, LSL #+1
         MOVS     R2,#+19
         STRB     R2,[R1, #+8]
-        LDR.N    R1,??DataTable8_22
+        LDR.N    R1,??DataTable9_22
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
         B.N      ??GUI_SYS_PARASET_46
 ??GUI_SYS_PARASET_49:
-        LDR.N    R1,??DataTable8_19
+        LDR.N    R1,??DataTable9_19
         ADDS     R1,R1,R0, LSL #+1
         MOVS     R2,#+12
         STRB     R2,[R1, #+7]
-        LDR.N    R1,??DataTable8_19
+        LDR.N    R1,??DataTable9_19
         ADDS     R1,R1,R0, LSL #+1
         MOVS     R2,#+0
         STRB     R2,[R1, #+8]
-        LDR.N    R1,??DataTable8_22
+        LDR.N    R1,??DataTable9_22
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
         B.N      ??GUI_SYS_PARASET_46
 ??GUI_SYS_PARASET_52:
-        LDR.N    R1,??DataTable8_19
+        LDR.N    R1,??DataTable9_19
         ADDS     R1,R1,R0, LSL #+1
         MOVS     R2,#+60
         STRB     R2,[R1, #+7]
-        LDR.N    R1,??DataTable8_19
+        LDR.N    R1,??DataTable9_19
         ADDS     R1,R1,R0, LSL #+1
         MOVS     R2,#+0
         STRB     R2,[R1, #+8]
-        LDR.N    R1,??DataTable8_22
+        LDR.N    R1,??DataTable9_22
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
         B.N      ??GUI_SYS_PARASET_46
 ??GUI_SYS_PARASET_51:
-        LDR.N    R1,??DataTable8_19
+        LDR.N    R1,??DataTable9_19
         ADDS     R1,R1,R0, LSL #+1
         MOVS     R2,#+24
         STRB     R2,[R1, #+7]
-        LDR.N    R1,??DataTable8_19
+        LDR.N    R1,??DataTable9_19
         ADDS     R1,R1,R0, LSL #+1
         MOVS     R2,#+0
         STRB     R2,[R1, #+8]
-        LDR.N    R1,??DataTable8_22
+        LDR.N    R1,??DataTable9_22
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
         B.N      ??GUI_SYS_PARASET_46
 ??GUI_SYS_PARASET_53:
-        LDR.N    R1,??DataTable8_19
+        LDR.N    R1,??DataTable9_19
         ADDS     R1,R1,R0, LSL #+1
         MOVS     R2,#+60
         STRB     R2,[R1, #+7]
-        LDR.N    R1,??DataTable8_19
+        LDR.N    R1,??DataTable9_19
         ADDS     R1,R1,R0, LSL #+1
         MOVS     R2,#+0
         STRB     R2,[R1, #+8]
-        LDR.N    R1,??DataTable8_22
+        LDR.N    R1,??DataTable9_22
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
         B.N      ??GUI_SYS_PARASET_46
-//  963           }
-//  964       }
-//  965       
-//  966 #if 0 //WK -->保存时  SysFlashData 全部保存 
-//  967     for(int i=0;i<84;i++) 
-//  968     {
-//  969       SysFlashSave[i]=SysFlashData[i];
-//  970     }
-//  971     shell_ptr->ARGC=2;
-//  972     shell_ptr->ARGV[0]="cd";
-//  973     shell_ptr->ARGV[1]="f:\\"; 
-//  974     Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
-//  975     
-//  976     shell_ptr->ARGC = 2;
-//  977     shell_ptr->ARGV[0]="cd";
-//  978     shell_ptr->ARGV[1]="sysset";
-//  979     Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
-//  980     
-//  981     shell_ptr->ARGC=4;
-//  982     shell_ptr->ARGV[0]="w";
-//  983     shell_ptr->ARGV[1]="sysset.txt";
-//  984     shell_ptr->ARGV[2]="begin";
-//  985     shell_ptr->ARGV[3]="0";
-//  986     Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,84,SysFlashSave);
-//  987     
-//  988     // wk --> update
-//  989     shell_ptr->ARGC=2;
-//  990     shell_ptr->ARGV[0]="update";
-//  991     shell_ptr->ARGV[1]="flush";
-//  992     Shell_update(shell_ptr->ARGC, shell_ptr->ARGV,84,SysFlashSave);
-//  993 
-//  994 //    for(int i=0;i<20;i++)
-//  995 //    {
-//  996 //      printf("SysFlashSave[%d]=%x\n",i,SysFlashSave[i]);
-//  997 //    }   
-//  998 #endif  // WK -->保存时  SysFlashData 全部保存 END
-//  999    
-// 1000 #if 1 // wk --> 只保存系统设置参数界面的参数   1-25
-// 1001     for(int i=0;i<84;i++) 
+//  916           }
+//  917       }
+//  918       
+//  919 #if 0 //WK -->保存时  SysFlashData 全部保存 
+//  920     for(int i=0;i<84;i++) 
+//  921     {
+//  922       SysFlashSave[i]=SysFlashData[i];
+//  923     }
+//  924     shell_ptr->ARGC=2;
+//  925     shell_ptr->ARGV[0]="cd";
+//  926     shell_ptr->ARGV[1]="f:\\"; 
+//  927     Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+//  928     
+//  929     shell_ptr->ARGC = 2;
+//  930     shell_ptr->ARGV[0]="cd";
+//  931     shell_ptr->ARGV[1]="sysset";
+//  932     Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+//  933     
+//  934     shell_ptr->ARGC=4;
+//  935     shell_ptr->ARGV[0]="w";
+//  936     shell_ptr->ARGV[1]="sysset.txt";
+//  937     shell_ptr->ARGV[2]="begin";
+//  938     shell_ptr->ARGV[3]="0";
+//  939     Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,84,SysFlashSave);
+//  940     
+//  941     shell_ptr->ARGC=2;
+//  942     shell_ptr->ARGV[0]="update"; // wk --> update
+//  943     shell_ptr->ARGV[1]="flush";
+//  944     Shell_update(shell_ptr->ARGC, shell_ptr->ARGV,84,SysFlashSave);
+//  945 #endif  // WK -->保存时  SysFlashData 全部保存 END
+//  946    
+//  947 #if 1 // wk --> 只保存系统设置参数界面的参数   1-25
+//  948     for(int i=0;i<84;i++) 
 ??GUI_SYS_PARASET_47:
         MOVS     R0,#+0
         B.N      ??GUI_SYS_PARASET_54
-// 1002     {
-// 1003       SysFlashSave[i]=SysFlashData[i];
+//  949     {
+//  950       SysFlashSave[i]=SysFlashData[i];
 ??GUI_SYS_PARASET_55:
-        LDR.W    R1,??DataTable9
-        LDR.N    R2,??DataTable8_19
+        LDR.W    R1,??DataTable10
+        LDR.N    R2,??DataTable9_19
         LDRB     R2,[R0, R2]
         STRB     R2,[R0, R1]
-// 1004     }
+//  951     }
         ADDS     R0,R0,#+1
 ??GUI_SYS_PARASET_54:
         CMP      R0,#+84
         BLT.N    ??GUI_SYS_PARASET_55
-// 1005     
-// 1006     shell_ptr->ARGC=2;
+//  952     shell_ptr->ARGC=2;
         MOVS     R0,#+2
         STR      R0,[R4, #+32]
-// 1007     shell_ptr->ARGV[0]="cd";
-        ADR.N    R0,??DataTable8_4  ;; 0x63, 0x64, 0x00, 0x00
+//  953     shell_ptr->ARGV[0]="cd";
+        ADR.N    R0,??DataTable9_4  ;; 0x63, 0x64, 0x00, 0x00
         STR      R0,[R4, #+0]
-// 1008     shell_ptr->ARGV[1]="f:\\"; 
-        ADR.N    R0,??DataTable8_5  ;; "f:\\"
+//  954     shell_ptr->ARGV[1]="f:\\"; 
+        ADR.N    R0,??DataTable9_5  ;; "f:\\"
         STR      R0,[R4, #+4]
-// 1009     Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+//  955     Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_cd
         BL       Shell_cd
-// 1010     
-// 1011     shell_ptr->ARGC = 2;
+//  956     
+//  957     shell_ptr->ARGC = 2;
         MOVS     R0,#+2
         STR      R0,[R4, #+32]
-// 1012     shell_ptr->ARGV[0]="cd";
-        ADR.N    R0,??DataTable8_4  ;; 0x63, 0x64, 0x00, 0x00
+//  958     shell_ptr->ARGV[0]="cd";
+        ADR.N    R0,??DataTable9_4  ;; 0x63, 0x64, 0x00, 0x00
         STR      R0,[R4, #+0]
-// 1013     shell_ptr->ARGV[1]="sysset";
-        LDR.N    R0,??DataTable8_15
+//  959     shell_ptr->ARGV[1]="sysset";
+        LDR.N    R0,??DataTable9_15
         STR      R0,[R4, #+4]
-// 1014     Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+//  960     Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_cd
         BL       Shell_cd
-// 1015     
-// 1016     shell_ptr->ARGC=4;
+//  961     
+//  962     shell_ptr->ARGC=4;
         MOVS     R0,#+4
         STR      R0,[R4, #+32]
-// 1017     shell_ptr->ARGV[0]="w";
-        ADR.N    R0,??DataTable8_6  ;; "w"
+//  963     shell_ptr->ARGV[0]="w";
+        ADR.N    R0,??DataTable9_6  ;; "w"
         STR      R0,[R4, #+0]
-// 1018     shell_ptr->ARGV[1]="sysset.txt";
-        LDR.N    R0,??DataTable8_17
+//  964     shell_ptr->ARGV[1]="sysset.txt";
+        LDR.N    R0,??DataTable9_17
         STR      R0,[R4, #+4]
-// 1019     shell_ptr->ARGV[2]="begin";
-        LDR.N    R0,??DataTable8_18
+//  965     shell_ptr->ARGV[2]="begin";
+        LDR.N    R0,??DataTable9_18
         STR      R0,[R4, #+8]
-// 1020     shell_ptr->ARGV[3]="0";
-        ADR.N    R0,??DataTable8_7  ;; "0"
+//  966     shell_ptr->ARGV[3]="0";
+        ADR.N    R0,??DataTable9_7  ;; "0"
         STR      R0,[R4, #+12]
-// 1021     Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,25,SysFlashSave); 
-        LDR.W    R3,??DataTable9
+//  967     Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,25,SysFlashSave); 
+        LDR.W    R3,??DataTable10
         MOVS     R2,#+25
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_write_binary
         BL       Shell_write_binary
-// 1022     
-// 1023     // wk --> update
-// 1024     shell_ptr->ARGC=2;
+//  968     
+//  969     shell_ptr->ARGC=2;
         MOVS     R0,#+2
         STR      R0,[R4, #+32]
-// 1025     shell_ptr->ARGV[0]="update";
-        LDR.W    R0,??DataTable9_1
+//  970     shell_ptr->ARGV[0]="update";// wk --> update
+        LDR.W    R0,??DataTable10_1
         STR      R0,[R4, #+0]
-// 1026     shell_ptr->ARGV[1]="flush";
-        LDR.W    R0,??DataTable9_2
+//  971     shell_ptr->ARGV[1]="flush";
+        LDR.W    R0,??DataTable10_4
         STR      R0,[R4, #+4]
-// 1027     Shell_update(shell_ptr->ARGC, shell_ptr->ARGV,25,SysFlashSave);
-        LDR.W    R3,??DataTable9
+//  972     Shell_update(shell_ptr->ARGC, shell_ptr->ARGV,25,SysFlashSave);
+        LDR.W    R3,??DataTable10
         MOVS     R2,#+25
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_update
         BL       Shell_update
-// 1028 #endif // wk --> 只保存系统设置参数界面的参数   1-25
-// 1029     
-// 1030     /*WK --> 保存成功标志 */
-// 1031     for(i=0;i<9;i++)
+//  973 #endif // wk --> 只保存系统设置参数界面的参数   1-25
+//  974     
+//  975     /*WK --> 保存成功标志 */
+//  976     for(i=0;i<9;i++)
         MOVS     R8,#+0
         B.N      ??GUI_SYS_PARASET_56
-// 1032         {
-// 1033           temp=2*i;
-// 1034           temp1=7*i;
-// 1035           if(i<3)
-// 1036           {
-// 1037             ParaSetC108[temp1 + 0] = 0x5004;            //显示相位的X坐标
-// 1038           }
-// 1039           else if(i==3)
-// 1040           {
-// 1041             ParaSetC108[temp1 + 0] = 0x4004;        //显示相位的X坐标  
-// 1042           }
-// 1043           else
-// 1044           {
-// 1045             ParaSetC108[temp1 + 0] = 0x2004;        //显示相位的X坐标  
+//  977         {
+//  978           temp=2*i;
+//  979           temp1=7*i;
+//  980           if(i<3)
+//  981           {
+//  982             ParaSetC108[temp1 + 0] = 0x5004;            //显示相位的X坐标
+//  983           }
+//  984           else if(i==3)
+//  985           {
+//  986             ParaSetC108[temp1 + 0] = 0x4004;        //显示相位的X坐标  
+//  987           }
+//  988           else
+//  989           {
+//  990             ParaSetC108[temp1 + 0] = 0x2004;        //显示相位的X坐标  
 ??GUI_SYS_PARASET_57:
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         ADD      R0,SP,#+80
         MOVW     R1,#+8196
         STRH     R1,[R0, R6, LSL #+1]
-// 1046           }
-// 1047           ParaSetC108[temp1 + 1] = SysParaXY[temp];            //显示相位的X坐标
+//  991           }
+//  992           ParaSetC108[temp1 + 1] = SysParaXY[temp];            //显示相位的X坐标
 ??GUI_SYS_PARASET_58:
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         ADD      R0,SP,#+80
@@ -5214,7 +5177,7 @@ GUI_SYS_PARASET:
         ADD      R1,SP,#+44
         LDRH     R1,[R1, R5, LSL #+1]
         STRH     R1,[R0, #+2]
-// 1048           ParaSetC108[temp1 + 2] = SysParaXY[temp + 1];     //Y坐标
+//  993           ParaSetC108[temp1 + 2] = SysParaXY[temp + 1];     //Y坐标
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         ADD      R0,SP,#+80
         ADDS     R0,R0,R6, LSL #+1
@@ -5223,32 +5186,32 @@ GUI_SYS_PARASET:
         ADDS     R1,R1,R5, LSL #+1
         LDRH     R1,[R1, #+2]
         STRH     R1,[R0, #+4]
-// 1049           ParaSetC108[temp1 + 3] = 0xffc1;         //黄色，下为黑色
+//  994           ParaSetC108[temp1 + 3] = 0xffc1;         //黄色，下为黑色
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         ADD      R0,SP,#+80
         ADDS     R0,R0,R6, LSL #+1
         MOVW     R1,#+65473
         STRH     R1,[R0, #+6]
-// 1050           ParaSetC108[temp1 + 4] = 0x0000;
+//  995           ParaSetC108[temp1 + 4] = 0x0000;
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         ADD      R0,SP,#+80
         ADDS     R0,R0,R6, LSL #+1
         MOVS     R1,#+0
         STRH     R1,[R0, #+8]
-// 1051           ParaSetC108[temp1 + 5] = 0;         //白色，下为黑色
+//  996           ParaSetC108[temp1 + 5] = 0;         //白色，下为黑色
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
         ADD      R0,SP,#+80
         ADDS     R0,R0,R6, LSL #+1
         MOVS     R1,#+0
         STRH     R1,[R0, #+10]
-// 1052           ParaSetC108[temp1 + 6] = (U16) (SysFlashData[temp+8]<<8)+(U16)(SysFlashData[temp+7]);
+//  997           ParaSetC108[temp1 + 6] = (U16) (SysFlashData[temp+8]<<8)+(U16)(SysFlashData[temp+7]);
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.N    R0,??DataTable8_19
+        LDR.N    R0,??DataTable9_19
         ADDS     R0,R5,R0
         LDRB     R0,[R0, #+8]
         LSLS     R0,R0,#+8
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.N    R1,??DataTable8_19
+        LDR.N    R1,??DataTable9_19
         ADDS     R1,R5,R1
         LDRB     R1,[R1, #+7]
         UXTAB    R0,R0,R1
@@ -5282,35 +5245,34 @@ GUI_SYS_PARASET:
         MOVW     R1,#+16388
         STRH     R1,[R0, R6, LSL #+1]
         B.N      ??GUI_SYS_PARASET_58
-// 1053         }
-// 1054         YADA_C0(ParaSetAddr, ParaSetC108, 63);  // WK --> 写暂存缓冲区
+//  998         }
+//  999         YADA_C0(ParaSetAddr, ParaSetC108, 63);  // WK --> 写暂存缓冲区
 ??GUI_SYS_PARASET_59:
         MOVS     R2,#+63
         ADD      R1,SP,#+80
         MOV      R0,#+2736
           CFI FunCall YADA_C0
         BL       YADA_C0
-// 1055         delay_us(10);
+// 1000         delay_us(10);
         MOVS     R0,#+10
           CFI FunCall delay_us
         BL       delay_us
-// 1056         YADA_C108(ParaSetAddr, 9);   //写入有效值，每次10个
+// 1001         YADA_C108(ParaSetAddr, 9);   //写入有效值，每次10个
         MOVS     R1,#+9
         MOV      R0,#+2736
           CFI FunCall YADA_C108
         BL       YADA_C108
-// 1057         delay_us(10);  
+// 1002         delay_us(10);  
         MOVS     R0,#+10
           CFI FunCall delay_us
         BL       delay_us
-// 1058         
-// 1059     SysSet.SaveFlg=0;  // WK --> 清楚标志
-        LDR.N    R0,??DataTable8_14
+// 1003         
+// 1004     SysSet.SaveFlg=0;  // WK --> 清楚标志
+        LDR.N    R0,??DataTable9_14
         MOVS     R1,#+0
         STRB     R1,[R0, #+3]
-// 1060     }
-// 1061    
-// 1062 }
+// 1005     } 
+// 1006 }
 ??GUI_SYS_PARASET_43:
         ADD      SP,SP,#+284
           CFI CFA R13+28
@@ -5320,162 +5282,162 @@ GUI_SYS_PARASET:
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable8:
+??DataTable9:
         DC32     HarmoListUorI
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable8_1:
+??DataTable9_1:
         DC32     HarmoListAmporRatio
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable8_2:
+??DataTable9_2:
         DC32     HarmoInfo+0x18
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable8_3:
+??DataTable9_3:
         DC32     HarmoListRange
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable8_4:
+??DataTable9_4:
         DC8      0x63, 0x64, 0x00, 0x00
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable8_5:
+??DataTable9_5:
         DC8      "f:\\"
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable8_6:
+??DataTable9_6:
         DC8      "w",0x0,0x0
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable8_7:
+??DataTable9_7:
         DC8      "0",0x0,0x0
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable8_8:
+??DataTable9_8:
         DC32     HarmoInfo+0x20
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable8_9:
+??DataTable9_9:
         DC32     `?<Constant {"V", "A"}>`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable8_10:
+??DataTable9_10:
         DC32     COLOR
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable8_11:
+??DataTable9_11:
         DC32     `?<Constant {"\\277\\252\\306\\364", "\\271\\330\\261\\`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable8_12:
+??DataTable9_12:
         DC32     `?<Constant {450, 50, 450, 80, 450, 112, 377, 1`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable8_13:
+??DataTable9_13:
         DC32     `?<Constant {445, 48, 448, 73, 445, 80, 448, 10`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable8_14:
+??DataTable9_14:
         DC32     SysSet
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable8_15:
+??DataTable9_15:
         DC32     `?<Constant "sysset">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable8_16:
+??DataTable9_16:
         DC32     `?<Constant "read">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable8_17:
+??DataTable9_17:
         DC32     `?<Constant "sysset.txt">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable8_18:
+??DataTable9_18:
         DC32     `?<Constant "begin">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable8_19:
+??DataTable9_19:
         DC32     SysFlashData
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable8_20:
+??DataTable9_20:
         DC32     SysParaOldIndex
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable8_21:
+??DataTable9_21:
         DC32     `?<Constant {0, 0, 0, 65535, 0}>`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable8_22:
+??DataTable9_22:
         DC32     ??flg_sys
 
         SECTION `.bss`:DATA:REORDER:NOROOT(2)
 ??flg_sys:
         DS8 12
-// 1063 /*******************************************************************************
-// 1064 * 函  数  名      : GUI_SYS_EVENTSET
-// 1065 * 描      述      : 事件限值设定。可通过移位键选择各项设置
-// 1066 * 输      入      : 无
-// 1067 * 返      回      : 无
-// 1068 *
-// 1069 * 修       改     : WK
-// 1070 * 时       间     : 2013-03-13
-// 1071 * 描       述     : 基于2013-03-08界面
-// 1072 *******************************************************************************/
-// 1073 
+// 1007 /*******************************************************************************
+// 1008 * 函  数  名      : GUI_SYS_EVENTSET
+// 1009 * 描      述      : 事件限值设定。可通过移位键选择各项设置
+// 1010 * 输      入      : 无
+// 1011 * 返      回      : 无
+// 1012 *
+// 1013 * 修       改     : WK
+// 1014 * 时       间     : 2013-03-13
+// 1015 * 描       述     : 基于2013-03-08界面
+// 1016 *******************************************************************************/
+// 1017 
 
         SECTION `.text`:CODE:NOROOT(2)
           CFI Block cfiBlock11 Using cfiCommon0
           CFI Function GUI_SYS_EVENTSET
         THUMB
-// 1074 void GUI_SYS_EVENTSET(void)
-// 1075 {
+// 1018 void GUI_SYS_EVENTSET(void)
+// 1019 {
 GUI_SYS_EVENTSET:
         PUSH     {R4-R7,LR}
           CFI R14 Frame(CFA, -4)
@@ -5486,209 +5448,203 @@ GUI_SYS_EVENTSET:
           CFI CFA R13+20
         SUB      SP,SP,#+348
           CFI CFA R13+368
-// 1076     float String2F=0.0;
+// 1020     float String2F=0.0;
         MOVS     R6,#+0
-// 1077     U32 Float2L=0;
+// 1021     U32 Float2L=0;
         MOVS     R7,#+0
-// 1078     U8 k,temp=0;
+// 1022     U8 k,temp=0;
         MOVS     R5,#+0
-// 1079     U16 ParaSetC108[98]= {0};
+// 1023     U16 ParaSetC108[98]= {0};
         ADD      R0,SP,#+148
         MOVS     R1,#+196
           CFI FunCall __aeabi_memclr4
         BL       __aeabi_memclr4
-// 1080     static U8 flg_event[11]={0}; // wk @130326 --> 事件设置参数超限标志
-// 1081     
-// 1082     SHELL_CONTEXT_PTR    shell_ptr;
-// 1083     shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
+// 1024     static U8 flg_event[11]={0}; // wk @130326 --> 事件设置参数超限标志
+// 1025     
+// 1026     SHELL_CONTEXT_PTR    shell_ptr;
+// 1027     shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
         MOV      R0,#+484
           CFI FunCall _lwmem_alloc_zero
         BL       _lwmem_alloc_zero
         MOVS     R4,R0
-// 1084     _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
+// 1028     _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
         MOVW     R1,#+20481
         MOVS     R0,R4
           CFI FunCall _lwmem_set_type
         BL       _lwmem_set_type
-// 1085     
-// 1086     U16 SysEventXY[22]= {
-// 1087                           155,97, 155,133, 155,169, 155,205, 155,241, 155,278, 155,315,  /*WK --> 第1列数据坐标 */
-// 1088                           481,97, 481,133, 481,169, 481,205 /* WK -->第2列数据坐标 */
-// 1089                         }; 
+// 1029     
+// 1030     U16 SysEventXY[22]= {
+// 1031                           155,97, 155,133, 155,169, 155,205, 155,241, 155,278, 155,315,  /*WK --> 第1列数据坐标 */
+// 1032                           481,97, 481,133, 481,169, 481,205 /* WK -->第2列数据坐标 */
+// 1033                         }; 
         ADD      R0,SP,#+16
-        LDR.W    R1,??DataTable9_7
+        LDR.W    R1,??DataTable10_7
         MOVS     R2,#+44
           CFI FunCall __aeabi_memcpy4
         BL       __aeabi_memcpy4
-// 1090     U16 SysEventSetSq[44]= {
-// 1091                               /* WK -->第1列光标坐标 */
-// 1092                               150,96,153,122, 150,132,153,158, 150,168,153,194, 150,204,153,230, 150,240,153,266, 150,276,153,304, 150,314,153,340,
-// 1093                               /* WK -->第2列光标坐标 */
-// 1094                               476,96,479,122, 476,132,479,158, 476,168,479,194, 476,204,479,230
-// 1095                            }; //相、UI选择\区间所在的黑色矩形框
+// 1034     U16 SysEventSetSq[44]= {
+// 1035                               /* WK -->第1列光标坐标 */
+// 1036                               150,96,153,122, 150,132,153,158, 150,168,153,194, 150,204,153,230, 150,240,153,266, 150,276,153,304, 150,314,153,340,
+// 1037                               /* WK -->第2列光标坐标 */
+// 1038                               476,96,479,122, 476,132,479,158, 476,168,479,194, 476,204,479,230
+// 1039                            }; //相、UI选择\区间所在的黑色矩形框
         ADD      R0,SP,#+60
-        LDR.W    R1,??DataTable9_8
+        LDR.W    R1,??DataTable10_8
         MOVS     R2,#+88
           CFI FunCall __aeabi_memcpy4
         BL       __aeabi_memcpy4
-// 1096     if(SysSet.SwFlg)  // wk @130326 --> 第一次进入时，会读取Flash中保存数据
-        LDR.W    R0,??DataTable9_9
+// 1040     if(SysSet.SwFlg)  // wk @130326 --> 第一次进入时，会读取Flash中保存数据
+        LDR.W    R0,??DataTable10_9
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.W    ??GUI_SYS_EVENTSET_0
-// 1097     {
-// 1098         /* WK --> 光标 */
-// 1099         YADA_40(0x0000,0xfc00);//前景色为黑色，背景色为橙色 set only once
+// 1041     {
+// 1042         /* WK --> 光标 */
+// 1043         YADA_40(0x0000,0xfc00);//前景色为黑色，背景色为橙色 set only once
         MOV      R1,#+64512
         MOVS     R0,#+0
           CFI FunCall YADA_40
         BL       YADA_40
-// 1100         YADA_5A(SysEventSetSq,4);
+// 1044         YADA_5A(SysEventSetSq,4);
         MOVS     R1,#+4
         ADD      R0,SP,#+60
           CFI FunCall YADA_5A
         BL       YADA_5A
-// 1101         //memcpy(&SysFlashData[EVESET_INDEX],SysEventAddr,48);
-// 1102 #if 0 // wk --> 全部读取Flash中参数      
-// 1103         shell_ptr->ARGC = 2;
-// 1104         shell_ptr->ARGV[0]="cd";
-// 1105         shell_ptr->ARGV[1]="f:\\"; 
-// 1106         Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
-// 1107         
-// 1108         shell_ptr->ARGC = 2;
-// 1109         shell_ptr->ARGV[0]="cd";
-// 1110         shell_ptr->ARGV[1]="sysset";
-// 1111         Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
-// 1112         
-// 1113         shell_ptr->ARGC=1;
-// 1114         shell_ptr->ARGV[0]="pwd";
-// 1115         Shell_pwd(shell_ptr->ARGC, shell_ptr->ARGV);
-// 1116         
-// 1117         shell_ptr->ARGC=5;
-// 1118         shell_ptr->ARGV[0]="read";
-// 1119         shell_ptr->ARGV[1]="sysset.txt";
-// 1120         shell_ptr->ARGV[2]="84";
-// 1121         shell_ptr->ARGV[3]="begin";
-// 1122         shell_ptr->ARGV[4]="0";
-// 1123         Shell_read_wk(shell_ptr->ARGC, shell_ptr->ARGV,SysFlashData);   
-// 1124 
-// 1125 //        for(int i=0;i<20;i++)
-// 1126 //          {
-// 1127 //            printf("test_flash[%d]=%x\n",i,SysFlashData[i]);
-// 1128 //          }
-// 1129 #endif // wk --> 全部读取Flash中参数     
-// 1130 
-// 1131 #if 1 // wk @130326 --> 只保存事件设置参数
-// 1132         shell_ptr->ARGC = 2;
+// 1045         //memcpy(&SysFlashData[EVESET_INDEX],SysEventAddr,48);
+// 1046 #if 0 // wk --> 全部读取Flash中参数      
+// 1047         shell_ptr->ARGC = 2;
+// 1048         shell_ptr->ARGV[0]="cd";
+// 1049         shell_ptr->ARGV[1]="f:\\"; 
+// 1050         Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+// 1051         
+// 1052         shell_ptr->ARGC = 2;
+// 1053         shell_ptr->ARGV[0]="cd";
+// 1054         shell_ptr->ARGV[1]="sysset";
+// 1055         Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+// 1056         
+// 1057         shell_ptr->ARGC=1;
+// 1058         shell_ptr->ARGV[0]="pwd";
+// 1059         Shell_pwd(shell_ptr->ARGC, shell_ptr->ARGV);
+// 1060         
+// 1061         shell_ptr->ARGC=5;
+// 1062         shell_ptr->ARGV[0]="read";
+// 1063         shell_ptr->ARGV[1]="sysevent.txt";
+// 1064         shell_ptr->ARGV[2]="84";
+// 1065         shell_ptr->ARGV[3]="begin";
+// 1066         shell_ptr->ARGV[4]="0";
+// 1067         Shell_read_wk(shell_ptr->ARGC, shell_ptr->ARGV,SysFlashData);   
+// 1068 #endif // wk --> 全部读取Flash中参数     
+// 1069 
+// 1070 #if 1 // wk @130326 --> 只保存事件设置参数
+// 1071         shell_ptr->ARGC = 2;
         MOVS     R0,#+2
         STR      R0,[R4, #+32]
-// 1133         shell_ptr->ARGV[0]="cd";
+// 1072         shell_ptr->ARGV[0]="cd";
         ADR.N    R0,??GUI_SYS_EVENTSET_1  ;; 0x63, 0x64, 0x00, 0x00
         STR      R0,[R4, #+0]
-// 1134         shell_ptr->ARGV[1]="f:\\"; 
+// 1073         shell_ptr->ARGV[1]="f:\\"; 
         ADR.N    R0,??GUI_SYS_EVENTSET_1+0x4  ;; "f:\\"
         STR      R0,[R4, #+4]
-// 1135         Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+// 1074         Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_cd
         BL       Shell_cd
-// 1136         
-// 1137         shell_ptr->ARGC = 2;
+// 1075         
+// 1076         shell_ptr->ARGC = 2;
         MOVS     R0,#+2
         STR      R0,[R4, #+32]
-// 1138         shell_ptr->ARGV[0]="cd";
+// 1077         shell_ptr->ARGV[0]="cd";
         ADR.N    R0,??GUI_SYS_EVENTSET_1  ;; 0x63, 0x64, 0x00, 0x00
         STR      R0,[R4, #+0]
-// 1139         shell_ptr->ARGV[1]="sysset";
-        LDR.W    R0,??DataTable9_10
+// 1078         shell_ptr->ARGV[1]="sysset";
+        LDR.W    R0,??DataTable10_10
         STR      R0,[R4, #+4]
-// 1140         Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+// 1079         Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_cd
         BL       Shell_cd
-// 1141         
-// 1142         shell_ptr->ARGC=1;
+// 1080         
+// 1081         shell_ptr->ARGC=1;
         MOVS     R0,#+1
         STR      R0,[R4, #+32]
-// 1143         shell_ptr->ARGV[0]="pwd";
+// 1082         shell_ptr->ARGV[0]="pwd";
         ADR.N    R0,??GUI_SYS_EVENTSET_1+0x8  ;; "pwd"
         STR      R0,[R4, #+0]
-// 1144         Shell_pwd(shell_ptr->ARGC, shell_ptr->ARGV);
+// 1083         Shell_pwd(shell_ptr->ARGC, shell_ptr->ARGV);
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_pwd
         BL       Shell_pwd
-// 1145         
-// 1146         shell_ptr->ARGC=5;
+// 1084         
+// 1085         shell_ptr->ARGC=5;
         MOVS     R0,#+5
         STR      R0,[R4, #+32]
-// 1147         shell_ptr->ARGV[0]="read";
-        LDR.W    R0,??DataTable9_11
+// 1086         shell_ptr->ARGV[0]="read";
+        LDR.W    R0,??DataTable10_11
         STR      R0,[R4, #+0]
-// 1148         shell_ptr->ARGV[1]="sysset.txt";
-        LDR.W    R0,??DataTable9_12
+// 1087         shell_ptr->ARGV[1]="sysevent.txt";
+        LDR.W    R0,??DataTable10_12
         STR      R0,[R4, #+4]
-// 1149         shell_ptr->ARGV[2]="44";
+// 1088         shell_ptr->ARGV[2]="44";
         ADR.N    R0,??GUI_SYS_EVENTSET_1+0xC  ;; 0x34, 0x34, 0x00, 0x00
         STR      R0,[R4, #+8]
-// 1150         shell_ptr->ARGV[3]="begin";
-        LDR.W    R0,??DataTable9_13
+// 1089         shell_ptr->ARGV[3]="begin";
+        LDR.W    R0,??DataTable10_13
         STR      R0,[R4, #+12]
-// 1151         shell_ptr->ARGV[4]="26";
-        ADR.N    R0,??GUI_SYS_EVENTSET_1+0x10  ;; 0x32, 0x36, 0x00, 0x00
+// 1090         shell_ptr->ARGV[4]="0";   // WK @130326  --> 事件设置参数偏移26保存
+        ADR.N    R0,??GUI_SYS_EVENTSET_1+0x10  ;; "0"
         STR      R0,[R4, #+16]
-// 1152         Shell_read_wk(shell_ptr->ARGC, shell_ptr->ARGV,&(SysFlashData[25]));  
-        LDR.W    R2,??DataTable9_14
+// 1091         Shell_read_wk(shell_ptr->ARGC, shell_ptr->ARGV,&(SysFlashData[25]));  
+        LDR.W    R2,??DataTable10_14
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_read_wk
         BL       Shell_read_wk
-// 1153 #endif
-// 1154         
-// 1155         SysSet.SwFlg=0;
-        LDR.W    R0,??DataTable9_9
+// 1092 #endif      
+// 1093         SysSet.SwFlg=0;
+        LDR.W    R0,??DataTable10_9
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
-// 1156 //        U16 ParaSetC108[98]= {0};
-// 1157         for(k=0; k<11; k++)//在第一次时全部显示，以后每次数据更改时只修改相应的项
+// 1094         
+// 1095         for(k=0; k<11; k++)//在第一次时全部显示，以后每次数据更改时只修改相应的项
         MOVS     R0,#+0
         B.N      ??GUI_SYS_EVENTSET_2
-// 1158         {
-// 1159             temp=7*k;
-// 1160             ParaSetC108[temp + 0] = 0x5204;         //P  显示数据的模式
-// 1161             ParaSetC108[temp + 1] = SysEventXY[2*k];            //显示相位的X坐标
-// 1162             ParaSetC108[temp + 2] = SysEventXY[2*k + 1];     //Y坐标
-// 1163             if(SysFlashData[EVESEND_FLAG+k]==0)
-// 1164             {
-// 1165               ParaSetC108[temp + 3] = 0xffff;         //白色，下为黑色
-// 1166             }
-// 1167             else
-// 1168             {
-// 1169               ParaSetC108[temp + 3] = 0xffe0;         //白色，下为黑色
+// 1096         {
+// 1097             temp=7*k;
+// 1098             ParaSetC108[temp + 0] = 0x5204;         //P  显示数据的模式
+// 1099             ParaSetC108[temp + 1] = SysEventXY[2*k];            //显示相位的X坐标
+// 1100             ParaSetC108[temp + 2] = SysEventXY[2*k + 1];     //Y坐标
+// 1101             if(SysFlashData[EVESEND_FLAG+k]==0)
+// 1102             {
+// 1103               ParaSetC108[temp + 3] = 0xffff;         //白色，下为黑色
+// 1104             }
+// 1105             else
+// 1106             {
+// 1107               ParaSetC108[temp + 3] = 0xffe0;         //白色，下为黑色
 ??GUI_SYS_EVENTSET_3:
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         ADD      R1,SP,#+148
         ADDS     R1,R1,R5, LSL #+1
         MOVW     R2,#+65504
         STRH     R2,[R1, #+6]
-// 1170             }
-// 1171             ParaSetC108[temp + 4] = 0x0000;
+// 1108             }
+// 1109             ParaSetC108[temp + 4] = 0x0000;
 ??GUI_SYS_EVENTSET_4:
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         ADD      R1,SP,#+148
         ADDS     R1,R1,R5, LSL #+1
         MOVS     R2,#+0
         STRH     R2,[R1, #+8]
-// 1172             ParaSetC108[temp + 5] =(U16) (SysFlashData[3+4*k+EVESET_INDEX]<<8)+(U16)(SysFlashData[2+4*k+EVESET_INDEX]);
+// 1110             ParaSetC108[temp + 5] =(U16) (SysFlashData[3+4*k+EVESET_INDEX]<<8)+(U16)(SysFlashData[2+4*k+EVESET_INDEX]);
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.W    R1,??DataTable9_15
+        LDR.W    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         LDRB     R1,[R1, #+28]
         LSLS     R1,R1,#+8
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.W    R2,??DataTable9_15
+        LDR.W    R2,??DataTable10_15
         ADDS     R2,R2,R0, LSL #+2
         LDRB     R2,[R2, #+27]
         UXTAB    R1,R1,R2
@@ -5696,14 +5652,14 @@ GUI_SYS_EVENTSET:
         ADD      R2,SP,#+148
         ADDS     R2,R2,R5, LSL #+1
         STRH     R1,[R2, #+10]
-// 1173             ParaSetC108[temp + 6] =(U16) (SysFlashData[1+4*k+EVESET_INDEX]<<8)+(U16)(SysFlashData[4*k+EVESET_INDEX]);
+// 1111             ParaSetC108[temp + 6] =(U16) (SysFlashData[1+4*k+EVESET_INDEX]<<8)+(U16)(SysFlashData[4*k+EVESET_INDEX]);
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.W    R1,??DataTable9_15
+        LDR.W    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         LDRB     R1,[R1, #+26]
         LSLS     R1,R1,#+8
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.W    R2,??DataTable9_15
+        LDR.W    R2,??DataTable10_15
         ADDS     R2,R2,R0, LSL #+2
         LDRB     R2,[R2, #+25]
         UXTAB    R1,R1,R2
@@ -5739,7 +5695,7 @@ GUI_SYS_EVENTSET:
         ADDS     R2,R2,R5, LSL #+1
         STRH     R1,[R2, #+4]
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.W    R1,??DataTable9_15
+        LDR.W    R1,??DataTable10_15
         ADDS     R1,R0,R1
         LDRB     R1,[R1, #+85]
         CMP      R1,#+0
@@ -5750,134 +5706,119 @@ GUI_SYS_EVENTSET:
         MOVW     R2,#+65535
         STRH     R2,[R1, #+6]
         B.N      ??GUI_SYS_EVENTSET_4
-// 1174         }
-// 1175         YADA_C0(EventSetAddr, ParaSetC108, 49);
+// 1112         }
+// 1113         YADA_C0(EventSetAddr, ParaSetC108, 11*7);
 ??GUI_SYS_EVENTSET_5:
-        MOVS     R2,#+49
+        MOVS     R2,#+77
         ADD      R1,SP,#+148
         MOVW     R0,#+2807
           CFI FunCall YADA_C0
         BL       YADA_C0
-// 1176         YADA_C108(EventSetAddr, 7);   //写入有效值，每次10个
-        MOVS     R1,#+7
+// 1114         YADA_C108(EventSetAddr, 11);   //写入有效值，每次10个
+        MOVS     R1,#+11
         MOVW     R0,#+2807
           CFI FunCall YADA_C108
         BL       YADA_C108
-// 1177         delay_ms(5);
-        MOVS     R0,#+5
-          CFI FunCall delay_ms
-        BL       delay_ms
-// 1178         YADA_C0(EventSetAddr+49, &ParaSetC108[49], 49);
-        MOVS     R2,#+49
-        ADD      R1,SP,#+246
-        MOVW     R0,#+2856
-          CFI FunCall YADA_C0
-        BL       YADA_C0
-// 1179         YADA_C108(EventSetAddr+49, 7);   //写入有效值，每次10个
-        MOVS     R1,#+7
-        MOVW     R0,#+2856
-          CFI FunCall YADA_C108
-        BL       YADA_C108
-// 1180     }
-// 1181     
-// 1182     if(SysSet.FuncFlg)//右移、左移、T，修改光标
+// 1115     }
+// 1116     
+// 1117     if(SysSet.FuncFlg)//右移、左移、T，修改光标
 ??GUI_SYS_EVENTSET_0:
-        LDR.W    R0,??DataTable9_9
+        LDR.W    R0,??DataTable10_9
         LDRB     R0,[R0, #+1]
         CMP      R0,#+0
         BEQ.N    ??GUI_SYS_EVENTSET_6
-// 1183     {
-// 1184         YADA_5B(&SysEventSetSq[SysEventOldIndex*4],4);//擦除前一处
+// 1118     {
+// 1119         YADA_5B(&SysEventSetSq[SysEventOldIndex*4],4);//擦除前一处
         MOVS     R1,#+4
-        LDR.W    R0,??DataTable9_16
+        LDR.W    R0,??DataTable10_16
         LDRB     R0,[R0, #+0]
         ADD      R2,SP,#+60
         ADDS     R0,R2,R0, LSL #+3
           CFI FunCall YADA_5B
         BL       YADA_5B
-// 1185         YADA_5A(&SysEventSetSq[SysSet.EvntIndex*4],4);    //背景色填充相所在的矩形区域
+// 1120         YADA_5A(&SysEventSetSq[SysSet.EvntIndex*4],4);    //背景色填充相所在的矩形区域
         MOVS     R1,#+4
-        LDR.W    R0,??DataTable9_9
+        LDR.W    R0,??DataTable10_9
         LDRB     R0,[R0, #+5]
         ADD      R2,SP,#+60
         ADDS     R0,R2,R0, LSL #+3
           CFI FunCall YADA_5A
         BL       YADA_5A
-// 1186         SysEventOldIndex=SysSet.EvntIndex;
-        LDR.W    R0,??DataTable9_9
+// 1121         SysEventOldIndex=SysSet.EvntIndex;
+        LDR.W    R0,??DataTable10_9
         LDRB     R0,[R0, #+5]
-        LDR.W    R1,??DataTable9_16
+        LDR.W    R1,??DataTable10_16
         STRB     R0,[R1, #+0]
-// 1187         SysSet.FuncFlg=0;
-        LDR.W    R0,??DataTable9_9
+// 1122         SysSet.FuncFlg=0;
+        LDR.W    R0,??DataTable10_9
         MOVS     R1,#+0
         STRB     R1,[R0, #+1]
-// 1188         SysSet.DataCnt=0;//切换时键盘输入清零 so you don't need to clear the SysSet.Data Array
-        LDR.W    R0,??DataTable9_9
+// 1123         SysSet.DataCnt=0;//切换时键盘输入清零 so you don't need to clear the SysSet.Data Array
+        LDR.W    R0,??DataTable10_9
         MOVS     R1,#+0
         STRB     R1,[R0, #+6]
-// 1189     }
-// 1190     
-// 1191     if(SysSet.DataFlg||SysFlashData[EVESEND_FLAG+SysSet.ParaIndex])//修改一项数据
+// 1124     }
+// 1125     
+// 1126     if(SysSet.DataFlg||SysFlashData[EVESEND_FLAG+SysSet.ParaIndex])//修改一项数据
 ??GUI_SYS_EVENTSET_6:
-        LDR.W    R0,??DataTable9_9
+        LDR.W    R0,??DataTable10_9
         LDRB     R0,[R0, #+2]
         CMP      R0,#+0
         BNE.N    ??GUI_SYS_EVENTSET_7
-        LDR.W    R0,??DataTable9_9
+        LDR.W    R0,??DataTable10_9
         LDRB     R0,[R0, #+4]
-        LDR.W    R1,??DataTable9_15
+        LDR.W    R1,??DataTable10_15
         ADDS     R0,R0,R1
         LDRB     R0,[R0, #+85]
         CMP      R0,#+0
         BEQ.W    ??GUI_SYS_EVENTSET_8
-// 1192     {
-// 1193       if(SysSet.DataFlg)
+// 1127     {
+// 1128       if(SysSet.DataFlg)
 ??GUI_SYS_EVENTSET_7:
-        LDR.W    R0,??DataTable9_9
+        LDR.W    R0,??DataTable10_9
         LDRB     R0,[R0, #+2]
         CMP      R0,#+0
         BEQ.N    ??GUI_SYS_EVENTSET_9
-// 1194       {
-// 1195         SysFlashData[EVESEND_FLAG+SysSet.ParaIndex]=0;
-        LDR.W    R0,??DataTable9_9
+// 1129       {
+// 1130         SysFlashData[EVESEND_FLAG+SysSet.ParaIndex]=0;
+        LDR.W    R0,??DataTable10_9
         LDRB     R0,[R0, #+4]
-        LDR.W    R1,??DataTable9_15
+        LDR.W    R1,??DataTable10_15
         ADDS     R0,R0,R1
         MOVS     R1,#+0
         STRB     R1,[R0, #+85]
-// 1196       }
-// 1197       
-// 1198       if(SysSet.DataCnt==0)//clear key
+// 1131       }
+// 1132       
+// 1133       if(SysSet.DataCnt==0)//clear key
 ??GUI_SYS_EVENTSET_9:
-        LDR.W    R0,??DataTable9_9
+        LDR.W    R0,??DataTable10_9
         LDRB     R0,[R0, #+6]
         CMP      R0,#+0
         BNE.N    ??GUI_SYS_EVENTSET_10
-// 1199         {
-// 1200             String2F=0;
+// 1134         {
+// 1135             String2F=0;
         MOVS     R6,#+0
         B.N      ??GUI_SYS_EVENTSET_11
-// 1201         }
-// 1202         else
-// 1203         {
-// 1204             U8 i;
-// 1205             float k;
-// 1206             //把字符转化为浮点数
-// 1207             for( i=0; i<SysSet.DataCnt&&SysSet.Data[i]!='.'; i++) //利用输入数据个数
+// 1136         }
+// 1137         else
+// 1138         {
+// 1139             U8 i;
+// 1140             float k;
+// 1141             //把字符转化为浮点数
+// 1142             for( i=0; i<SysSet.DataCnt&&SysSet.Data[i]!='.'; i++) //利用输入数据个数
 ??GUI_SYS_EVENTSET_10:
         MOVS     R5,#+0
         B.N      ??GUI_SYS_EVENTSET_12
-// 1208             {
-// 1209                 String2F=String2F*10+SysSet.Data[i]-'0';    //求整数部分
+// 1143             {
+// 1144                 String2F=String2F*10+SysSet.Data[i]-'0';    //求整数部分
 ??GUI_SYS_EVENTSET_13:
-        LDR.W    R0,??DataTable9_17  ;; 0x41200000
+        LDR.W    R0,??DataTable10_17  ;; 0x41200000
         MOVS     R1,R6
           CFI FunCall __aeabi_fmul
         BL       __aeabi_fmul
         MOVS     R6,R0
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.W    R0,??DataTable9_9
+        LDR.W    R0,??DataTable10_9
         ADDS     R0,R5,R0
         LDRB     R0,[R0, #+7]
           CFI FunCall __aeabi_ui2f
@@ -5885,49 +5826,50 @@ GUI_SYS_EVENTSET:
         MOVS     R1,R6
           CFI FunCall __aeabi_fadd
         BL       __aeabi_fadd
-        LDR.W    R1,??DataTable9_18  ;; 0xc2400000
+        LDR.W    R1,??DataTable10_18  ;; 0xc2400000
           CFI FunCall __aeabi_fadd
         BL       __aeabi_fadd
         MOVS     R6,R0
-// 1210             }
+// 1145             }
         ADDS     R5,R5,#+1
 ??GUI_SYS_EVENTSET_12:
-        LDR.W    R0,??DataTable9_9
+        LDR.W    R0,??DataTable10_9
         LDRB     R0,[R0, #+6]
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         CMP      R5,R0
         BCS.N    ??GUI_SYS_EVENTSET_14
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.W    R0,??DataTable9_9
+        LDR.W    R0,??DataTable10_9
         ADDS     R0,R5,R0
         LDRB     R0,[R0, #+7]
         CMP      R0,#+46
         BNE.N    ??GUI_SYS_EVENTSET_13
-// 1211             if(SysSet.Data[i]=='.')
+// 1146             if(SysSet.Data[i]=='.')
 ??GUI_SYS_EVENTSET_14:
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.W    R0,??DataTable9_9
+        LDR.W    R0,??DataTable10_9
         ADDS     R0,R5,R0
         LDRB     R0,[R0, #+7]
         CMP      R0,#+46
         BNE.N    ??GUI_SYS_EVENTSET_11
-// 1212                 for(i++,k=0.1; i<SysSet.DataCnt&&SysSet.Data[i]!='.'; i++,k=k/10)
+// 1147                 for(i++,k=0.1; i<SysSet.DataCnt&&SysSet.Data[i]!='.'; i++,k=k/10)
         ADDS     R5,R5,#+1
-        LDR.W    R7,??DataTable9_19  ;; 0x3dcccccd
+        LDR.W    R7,??DataTable10_19  ;; 0x3dcccccd
         B.N      ??GUI_SYS_EVENTSET_15
+        Nop      
         DATA
 ??GUI_SYS_EVENTSET_1:
         DC8      0x63, 0x64, 0x00, 0x00
         DC8      "f:\\"
         DC8      "pwd"
         DC8      0x34, 0x34, 0x00, 0x00
-        DC8      0x32, 0x36, 0x00, 0x00
+        DC8      "0",0x0,0x0
         THUMB
-// 1213                 {
-// 1214                     String2F=String2F+(SysSet.Data[i]-'0')*k;
+// 1148                 {
+// 1149                     String2F=String2F+(SysSet.Data[i]-'0')*k;
 ??GUI_SYS_EVENTSET_16:
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.W    R0,??DataTable9_9
+        LDR.W    R0,??DataTable10_9
         ADDS     R0,R5,R0
         LDRB     R0,[R0, #+7]
         SUBS     R0,R0,#+48
@@ -5940,125 +5882,125 @@ GUI_SYS_EVENTSET:
           CFI FunCall __aeabi_fadd
         BL       __aeabi_fadd
         MOVS     R6,R0
-// 1215                 }
+// 1150                 }
         ADDS     R5,R5,#+1
         MOVS     R0,R7
-        LDR.W    R1,??DataTable9_17  ;; 0x41200000
+        LDR.W    R1,??DataTable10_17  ;; 0x41200000
           CFI FunCall __aeabi_fdiv
         BL       __aeabi_fdiv
         MOVS     R7,R0
 ??GUI_SYS_EVENTSET_15:
-        LDR.W    R0,??DataTable9_9
+        LDR.W    R0,??DataTable10_9
         LDRB     R0,[R0, #+6]
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         CMP      R5,R0
         BCS.N    ??GUI_SYS_EVENTSET_11
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.W    R0,??DataTable9_9
+        LDR.W    R0,??DataTable10_9
         ADDS     R0,R5,R0
         LDRB     R0,[R0, #+7]
         CMP      R0,#+46
         BNE.N    ??GUI_SYS_EVENTSET_16
-// 1216         }
-// 1217           
-// 1218         Float2L=(long)(String2F*100);//enlarge 100 times
+// 1151         }
+// 1152           
+// 1153         Float2L=(long)(String2F*100);//enlarge 100 times
 ??GUI_SYS_EVENTSET_11:
-        LDR.W    R0,??DataTable9_20  ;; 0x42c80000
+        LDR.W    R0,??DataTable10_20  ;; 0x42c80000
         MOVS     R1,R6
           CFI FunCall __aeabi_fmul
         BL       __aeabi_fmul
           CFI FunCall __aeabi_f2iz
         BL       __aeabi_f2iz
         MOVS     R7,R0
-// 1219         temp=SysSet.EvntIndex*4;
-        LDR.W    R0,??DataTable9_9
+// 1154         temp=SysSet.EvntIndex*4;
+        LDR.W    R0,??DataTable10_9
         LDRB     R0,[R0, #+5]
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         LSLS     R5,R0,#+2
-// 1220         SysFlashData[temp+EVESET_INDEX]=(U8)(Float2L);  //四字节数
+// 1155         SysFlashData[temp+EVESET_INDEX]=(U8)(Float2L);  //四字节数
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.W    R0,??DataTable9_15
+        LDR.W    R0,??DataTable10_15
         ADDS     R0,R5,R0
         STRB     R7,[R0, #+25]
-// 1221         SysFlashData[temp+1+EVESET_INDEX]=(U8)(Float2L>>8);
+// 1156         SysFlashData[temp+1+EVESET_INDEX]=(U8)(Float2L>>8);
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.W    R0,??DataTable9_15
+        LDR.W    R0,??DataTable10_15
         ADDS     R0,R5,R0
         LSRS     R1,R7,#+8
         STRB     R1,[R0, #+26]
-// 1222         SysFlashData[temp+2+EVESET_INDEX]=(U8)(Float2L>>16);
+// 1157         SysFlashData[temp+2+EVESET_INDEX]=(U8)(Float2L>>16);
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.W    R0,??DataTable9_15
+        LDR.W    R0,??DataTable10_15
         ADDS     R0,R5,R0
         LSRS     R1,R7,#+16
         STRB     R1,[R0, #+27]
-// 1223         SysFlashData[temp+3+EVESET_INDEX]=(U8)(Float2L>>24);
+// 1158         SysFlashData[temp+3+EVESET_INDEX]=(U8)(Float2L>>24);
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.W    R0,??DataTable9_15
+        LDR.W    R0,??DataTable10_15
         ADDS     R0,R5,R0
         LSRS     R1,R7,#+24
         STRB     R1,[R0, #+28]
-// 1224         
-// 1225         U16 OneC108[7]= {0x5204,SysEventXY[2*SysSet.EvntIndex],SysEventXY[2*SysSet.EvntIndex + 1],0xffff,0x0000};
+// 1159         
+// 1160         U16 OneC108[7]= {0x5204,SysEventXY[2*SysSet.EvntIndex],SysEventXY[2*SysSet.EvntIndex + 1],0xffff,0x0000};
         ADD      R0,SP,#+0
-        LDR.W    R1,??DataTable9_21
+        LDR.W    R1,??DataTable10_21
         MOVS     R2,#+16
           CFI FunCall __aeabi_memcpy4
         BL       __aeabi_memcpy4
-        LDR.W    R0,??DataTable9_9
+        LDR.W    R0,??DataTable10_9
         LDRB     R0,[R0, #+5]
         ADD      R1,SP,#+16
         LDRH     R0,[R1, R0, LSL #+2]
         STRH     R0,[SP, #+2]
-        LDR.W    R0,??DataTable9_9
+        LDR.W    R0,??DataTable10_9
         LDRB     R0,[R0, #+5]
         LSLS     R0,R0,#+1
         ADD      R1,SP,#+16
         ADDS     R0,R1,R0, LSL #+1
         LDRH     R0,[R0, #+2]
         STRH     R0,[SP, #+4]
-// 1226         if(SysFlashData[EVESEND_FLAG+SysSet.ParaIndex])
-        LDR.W    R0,??DataTable9_9
+// 1161         if(SysFlashData[EVESEND_FLAG+SysSet.ParaIndex])
+        LDR.W    R0,??DataTable10_9
         LDRB     R0,[R0, #+4]
-        LDR.W    R1,??DataTable9_15
+        LDR.W    R1,??DataTable10_15
         ADDS     R0,R0,R1
         LDRB     R0,[R0, #+85]
         CMP      R0,#+0
         BEQ.N    ??GUI_SYS_EVENTSET_17
-// 1227         {
-// 1228           OneC108[3]=0xffe0;
+// 1162         {
+// 1163           OneC108[3]=0xffe0;
         MOVW     R0,#+65504
         STRH     R0,[SP, #+6]
-// 1229         }
-// 1230         OneC108[5] =(U16) (SysFlashData[3+temp+EVESET_INDEX]<<8)+(U16)(SysFlashData[2+temp+EVESET_INDEX]);
+// 1164         }
+// 1165         OneC108[5] =(U16) (SysFlashData[3+temp+EVESET_INDEX]<<8)+(U16)(SysFlashData[2+temp+EVESET_INDEX]);
 ??GUI_SYS_EVENTSET_17:
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.W    R0,??DataTable9_15
+        LDR.W    R0,??DataTable10_15
         ADDS     R0,R5,R0
         LDRB     R0,[R0, #+28]
         LSLS     R0,R0,#+8
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.W    R1,??DataTable9_15
+        LDR.W    R1,??DataTable10_15
         ADDS     R1,R5,R1
         LDRB     R1,[R1, #+27]
         UXTAB    R0,R0,R1
         STRH     R0,[SP, #+10]
-// 1231         OneC108[6] =(U16) (SysFlashData[1+temp+EVESET_INDEX]<<8)+(U16)(SysFlashData[temp+EVESET_INDEX]);
+// 1166         OneC108[6] =(U16) (SysFlashData[1+temp+EVESET_INDEX]<<8)+(U16)(SysFlashData[temp+EVESET_INDEX]);
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.W    R0,??DataTable9_15
+        LDR.W    R0,??DataTable10_15
         ADDS     R0,R5,R0
         LDRB     R0,[R0, #+26]
         LSLS     R0,R0,#+8
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
-        LDR.W    R1,??DataTable9_15
+        LDR.W    R1,??DataTable10_15
         ADDS     R1,R5,R1
         LDRB     R1,[R1, #+25]
         UXTAB    R0,R0,R1
         STRH     R0,[SP, #+12]
-// 1232         
-// 1233         /* WK --> 阈值判断 */
-// 1234         switch(SysSet.EvntIndex)
-        LDR.W    R0,??DataTable9_9
+// 1167         
+// 1168         /* WK --> 阈值判断 */
+// 1169         switch(SysSet.EvntIndex)
+        LDR.W    R0,??DataTable10_9
         LDRB     R0,[R0, #+5]
         CMP      R0,#+0
         BEQ.N    ??GUI_SYS_EVENTSET_18
@@ -6078,9 +6020,9 @@ GUI_SYS_EVENTSET:
         BEQ.W    ??GUI_SYS_EVENTSET_27
         BCC.W    ??GUI_SYS_EVENTSET_28
         B.N      ??GUI_SYS_EVENTSET_29
-// 1235         {
-// 1236         case 0:
-// 1237           if((OneC108[6]+(OneC108[5]<<16))>(NumWave))
+// 1170         {
+// 1171         case 0:
+// 1172           if((OneC108[6]+(OneC108[5]<<16))>NumWave)
 ??GUI_SYS_EVENTSET_18:
         LDRH     R0,[SP, #+12]
         LDRH     R1,[SP, #+10]
@@ -6089,21 +6031,21 @@ GUI_SYS_EVENTSET:
         MOVW     R1,#+10001
         CMP      R0,R1
         BLT.N    ??GUI_SYS_EVENTSET_30
-// 1238            { 
-// 1239             OneC108[3]=0xf800;
+// 1173            { 
+// 1174             OneC108[3]=0xf800;
         MOV      R0,#+63488
         STRH     R0,[SP, #+6]
-// 1240             flg_event[0]=1;
-        LDR.W    R0,??DataTable9_22
+// 1175             flg_event[0]=1;
+        LDR.W    R0,??DataTable10_22
         MOVS     R1,#+1
         STRB     R1,[R0, #+0]
-// 1241            }
-// 1242             break;
+// 1176            }
+// 1177             break;
 ??GUI_SYS_EVENTSET_30:
         B.N      ??GUI_SYS_EVENTSET_31
-// 1243         case 1:
-// 1244           if(((OneC108[6]+(OneC108[5]<<16))!=6400)|| ((OneC108[6]+(OneC108[5]<<16))!=12800)|| 
-// 1245              ((OneC108[6]+(OneC108[5]<<16))!=25600))
+// 1178         case 1:
+// 1179           if(((OneC108[6]+(OneC108[5]<<16))!=6400)|| ((OneC108[6]+(OneC108[5]<<16))!=12800)|| 
+// 1180              ((OneC108[6]+(OneC108[5]<<16))!=25600))
 ??GUI_SYS_EVENTSET_20:
         LDRH     R0,[SP, #+12]
         LDRH     R1,[SP, #+10]
@@ -6123,21 +6065,21 @@ GUI_SYS_EVENTSET:
         UXTAH    R0,R1,R0
         CMP      R0,#+25600
         BEQ.N    ??GUI_SYS_EVENTSET_33
-// 1246           {
-// 1247             OneC108[3]=0xf800;
+// 1181           {
+// 1182             OneC108[3]=0xf800;
 ??GUI_SYS_EVENTSET_32:
         MOV      R0,#+63488
         STRH     R0,[SP, #+6]
-// 1248             flg_event[1]=1;
-        LDR.W    R0,??DataTable9_22
+// 1183             flg_event[1]=1;
+        LDR.W    R0,??DataTable10_22
         MOVS     R1,#+1
         STRB     R1,[R0, #+1]
-// 1249           }
-// 1250             break;
+// 1184           }
+// 1185             break;
 ??GUI_SYS_EVENTSET_33:
         B.N      ??GUI_SYS_EVENTSET_31
-// 1251         case 2:
-// 1252            if((OneC108[6]+(OneC108[5]<<16))>UDeviation)
+// 1186         case 2:
+// 1187            if((OneC108[6]+(OneC108[5]<<16))>UDeviation)
 ??GUI_SYS_EVENTSET_19:
         LDRH     R0,[SP, #+12]
         LDRH     R1,[SP, #+10]
@@ -6146,20 +6088,20 @@ GUI_SYS_EVENTSET:
         MOVW     R1,#+1541
         CMP      R0,R1
         BLT.N    ??GUI_SYS_EVENTSET_34
-// 1253            {
-// 1254             OneC108[3]=0xf800;
+// 1188            {
+// 1189             OneC108[3]=0xf800;
         MOV      R0,#+63488
         STRH     R0,[SP, #+6]
-// 1255             flg_event[2]=1;
-        LDR.W    R0,??DataTable9_22
+// 1190             flg_event[2]=1;
+        LDR.W    R0,??DataTable10_22
         MOVS     R1,#+1
         STRB     R1,[R0, #+2]
-// 1256            }
-// 1257             break;
+// 1191            }
+// 1192             break;
 ??GUI_SYS_EVENTSET_34:
         B.N      ??GUI_SYS_EVENTSET_31
-// 1258         case 3:
-// 1259            if((OneC108[6]+(OneC108[5]<<16))>FDeviation)
+// 1193         case 3:
+// 1194            if((OneC108[6]+(OneC108[5]<<16))>FDeviation)
 ??GUI_SYS_EVENTSET_22:
         LDRH     R0,[SP, #+12]
         LDRH     R1,[SP, #+10]
@@ -6167,20 +6109,20 @@ GUI_SYS_EVENTSET:
         UXTAH    R0,R1,R0
         CMP      R0,#+3
         BLT.N    ??GUI_SYS_EVENTSET_35
-// 1260            {
-// 1261             OneC108[3]=0xf800;
+// 1195            {
+// 1196             OneC108[3]=0xf800;
         MOV      R0,#+63488
         STRH     R0,[SP, #+6]
-// 1262             flg_event[3]=1;
-        LDR.W    R0,??DataTable9_22
+// 1197             flg_event[3]=1;
+        LDR.W    R0,??DataTable10_22
         MOVS     R1,#+1
         STRB     R1,[R0, #+3]
-// 1263            }
-// 1264             break;
+// 1198            }
+// 1199             break;
 ??GUI_SYS_EVENTSET_35:
         B.N      ??GUI_SYS_EVENTSET_31
-// 1265         case 4:
-// 1266           if((OneC108[6]+(OneC108[5]<<16))>USurge)
+// 1200         case 4:
+// 1201           if((OneC108[6]+(OneC108[5]<<16))>USurge)
 ??GUI_SYS_EVENTSET_21:
         LDRH     R0,[SP, #+12]
         LDRH     R1,[SP, #+10]
@@ -6188,20 +6130,20 @@ GUI_SYS_EVENTSET:
         UXTAH    R0,R1,R0
         CMP      R0,#+440
         BLE.N    ??GUI_SYS_EVENTSET_36
-// 1267           {
-// 1268             OneC108[3]=0xf800;
+// 1202           {
+// 1203             OneC108[3]=0xf800;
         MOV      R0,#+63488
         STRH     R0,[SP, #+6]
-// 1269             flg_event[4]=1;          
-        LDR.W    R0,??DataTable9_22
+// 1204             flg_event[4]=1;          
+        LDR.W    R0,??DataTable10_22
         MOVS     R1,#+1
         STRB     R1,[R0, #+4]
-// 1270           }
-// 1271           break;
+// 1205           }
+// 1206           break;
 ??GUI_SYS_EVENTSET_36:
         B.N      ??GUI_SYS_EVENTSET_31
-// 1272         case 5:
-// 1273           if((OneC108[6]+(OneC108[5]<<16))>NUnblance)
+// 1207         case 5:
+// 1208           if((OneC108[6]+(OneC108[5]<<16))>NUnblance)
 ??GUI_SYS_EVENTSET_24:
         LDRH     R0,[SP, #+12]
         LDRH     R1,[SP, #+10]
@@ -6209,20 +6151,20 @@ GUI_SYS_EVENTSET:
         UXTAH    R0,R1,R0
         CMP      R0,#+440
         BLE.N    ??GUI_SYS_EVENTSET_37
-// 1274           {
-// 1275             OneC108[3]=0xf800;
+// 1209           {
+// 1210             OneC108[3]=0xf800;
         MOV      R0,#+63488
         STRH     R0,[SP, #+6]
-// 1276             flg_event[5]=1;          
-        LDR.W    R0,??DataTable9_22
+// 1211             flg_event[5]=1;          
+        LDR.W    R0,??DataTable10_22
         MOVS     R1,#+1
         STRB     R1,[R0, #+5]
-// 1277           }
-// 1278           break;
+// 1212           }
+// 1213           break;
 ??GUI_SYS_EVENTSET_37:
         B.N      ??GUI_SYS_EVENTSET_31
-// 1279         case 6:
-// 1280           if((OneC108[6]+(OneC108[5]<<16))>LngFlick)
+// 1214         case 6:
+// 1215           if((OneC108[6]+(OneC108[5]<<16))>LngFlick)
 ??GUI_SYS_EVENTSET_23:
         LDRH     R0,[SP, #+12]
         LDRH     R1,[SP, #+10]
@@ -6230,20 +6172,20 @@ GUI_SYS_EVENTSET:
         UXTAH    R0,R1,R0
         CMP      R0,#+101
         BLT.N    ??GUI_SYS_EVENTSET_38
-// 1281           {
-// 1282             OneC108[3]=0xf800;
+// 1216           {
+// 1217             OneC108[3]=0xf800;
         MOV      R0,#+63488
         STRH     R0,[SP, #+6]
-// 1283             flg_event[6]=1;          
-        LDR.W    R0,??DataTable9_22
+// 1218             flg_event[6]=1;          
+        LDR.W    R0,??DataTable10_22
         MOVS     R1,#+1
         STRB     R1,[R0, #+6]
-// 1284           }
-// 1285           break;
+// 1219           }
+// 1220           break;
 ??GUI_SYS_EVENTSET_38:
         B.N      ??GUI_SYS_EVENTSET_31
-// 1286         case 7:
-// 1287           if((OneC108[6]+(OneC108[5]<<16))>TotalHarmonic)
+// 1221         case 7:
+// 1222           if((OneC108[6]+(OneC108[5]<<16))>TotalHarmonic)
 ??GUI_SYS_EVENTSET_26:
         LDRH     R0,[SP, #+12]
         LDRH     R1,[SP, #+10]
@@ -6252,24 +6194,24 @@ GUI_SYS_EVENTSET:
         MOVW     R1,#+1101
         CMP      R0,R1
         BLT.N    ??GUI_SYS_EVENTSET_39
-// 1288           {
-// 1289             OneC108[3]=0xf800;
+// 1223           {
+// 1224             OneC108[3]=0xf800;
         MOV      R0,#+63488
         STRH     R0,[SP, #+6]
-// 1290             flg_event[7]=1;          
-        LDR.W    R0,??DataTable9_22
+// 1225             flg_event[7]=1;          
+        LDR.W    R0,??DataTable10_22
         MOVS     R1,#+1
         STRB     R1,[R0, #+7]
-// 1291           }
-// 1292           break;
+// 1226           }
+// 1227           break;
 ??GUI_SYS_EVENTSET_39:
         B.N      ??GUI_SYS_EVENTSET_31
-// 1293         case 8:  //WK @130326 -->间谐波暂时没有做
-// 1294           break;
+// 1228         case 8:  //WK @130326 -->间谐波暂时没有做
+// 1229           break;
 ??GUI_SYS_EVENTSET_25:
         B.N      ??GUI_SYS_EVENTSET_31
-// 1295         case 9:
-// 1296           if((OneC108[6]+(OneC108[5]<<16))>UHarmonic)
+// 1230         case 9:
+// 1231           if((OneC108[6]+(OneC108[5]<<16))>UHarmonic)
 ??GUI_SYS_EVENTSET_28:
         LDRH     R0,[SP, #+12]
         LDRH     R1,[SP, #+10]
@@ -6277,20 +6219,20 @@ GUI_SYS_EVENTSET:
         UXTAH    R0,R1,R0
         CMP      R0,#+880
         BLE.N    ??GUI_SYS_EVENTSET_40
-// 1297           {
-// 1298             OneC108[3]=0xf800;
+// 1232           {
+// 1233             OneC108[3]=0xf800;
         MOV      R0,#+63488
         STRH     R0,[SP, #+6]
-// 1299             flg_event[9]=1;          
-        LDR.W    R0,??DataTable9_22
+// 1234             flg_event[9]=1;          
+        LDR.W    R0,??DataTable10_22
         MOVS     R1,#+1
         STRB     R1,[R0, #+9]
-// 1300           }
-// 1301           break;
+// 1235           }
+// 1236           break;
 ??GUI_SYS_EVENTSET_40:
         B.N      ??GUI_SYS_EVENTSET_31
-// 1302         case 10:
-// 1303           if((OneC108[6]+(OneC108[5]<<16))>IHarmonic)
+// 1237         case 10:
+// 1238           if((OneC108[6]+(OneC108[5]<<16))>IHarmonic)
 ??GUI_SYS_EVENTSET_27:
         LDRH     R0,[SP, #+12]
         LDRH     R1,[SP, #+10]
@@ -6298,27 +6240,27 @@ GUI_SYS_EVENTSET:
         UXTAH    R0,R1,R0
         CMP      R0,#+440
         BLE.N    ??GUI_SYS_EVENTSET_41
-// 1304           {
-// 1305             OneC108[3]=0xf800;
+// 1239           {
+// 1240             OneC108[3]=0xf800;
         MOV      R0,#+63488
         STRH     R0,[SP, #+6]
-// 1306             flg_event[10]=1;          
-        LDR.W    R0,??DataTable9_22
+// 1241             flg_event[10]=1;          
+        LDR.W    R0,??DataTable10_22
         MOVS     R1,#+1
         STRB     R1,[R0, #+10]
-// 1307           }
-// 1308           break;      
+// 1242           }
+// 1243           break;      
 ??GUI_SYS_EVENTSET_41:
         B.N      ??GUI_SYS_EVENTSET_31
-// 1309         default:
-// 1310           break;
-// 1311         }
-// 1312         YADA_C0(EventSetAddr+SysSet.EvntIndex*7, OneC108, 7);//修改发生改变的数据项
+// 1244         default:
+// 1245           break;
+// 1246         }
+// 1247         YADA_C0(EventSetAddr+SysSet.EvntIndex*7, OneC108, 7);//修改发生改变的数据项
 ??GUI_SYS_EVENTSET_29:
 ??GUI_SYS_EVENTSET_31:
         MOVS     R2,#+7
         ADD      R1,SP,#+0
-        LDR.W    R0,??DataTable9_9
+        LDR.W    R0,??DataTable10_9
         LDRB     R0,[R0, #+5]
         MOVS     R3,#+7
         MULS     R0,R3,R0
@@ -6326,9 +6268,9 @@ GUI_SYS_EVENTSET:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall YADA_C0
         BL       YADA_C0
-// 1313         YADA_C108(EventSetAddr+SysSet.EvntIndex*7, 1);
+// 1248         YADA_C108(EventSetAddr+SysSet.EvntIndex*7, 1);
         MOVS     R1,#+1
-        LDR.W    R0,??DataTable9_9
+        LDR.W    R0,??DataTable10_9
         LDRB     R0,[R0, #+5]
         MOVS     R2,#+7
         MULS     R0,R2,R0
@@ -6336,226 +6278,207 @@ GUI_SYS_EVENTSET:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall YADA_C108
         BL       YADA_C108
-// 1314         SysSet.DataFlg=0;
-        LDR.W    R0,??DataTable9_9
+// 1249         SysSet.DataFlg=0;
+        LDR.W    R0,??DataTable10_9
         MOVS     R1,#+0
         STRB     R1,[R0, #+2]
-// 1315     }
-// 1316     
-// 1317     if(SysSet.SaveFlg)//将参数值发给DSP
+// 1250     }
+// 1251     
+// 1252     if(SysSet.SaveFlg)//将参数值发给DSP
 ??GUI_SYS_EVENTSET_8:
-        LDR.W    R0,??DataTable9_9
+        LDR.W    R0,??DataTable10_9
         LDRB     R0,[R0, #+3]
         CMP      R0,#+0
         BEQ.W    ??GUI_SYS_EVENTSET_42
-// 1318     {
-// 1319      for(int i=0;i<11;i++)
+// 1253     {
+// 1254      for(int i=0;i<11;i++)
         MOVS     R0,#+0
         B.N      ??GUI_SYS_EVENTSET_43
-// 1320       if(flg_event[i]==1)
-// 1321         switch(i)
-// 1322         {
-// 1323           case 0:
-// 1324            SysFlashData[4*i+25]=(U8)(NumWave*100)%256;
-// 1325            SysFlashData[4*i+26]=(U8)((NumWave*100)>>8)%256;
-// 1326            SysFlashData[4*i+27]=(U8)((NumWave*100)>>16)%256;
-// 1327            SysFlashData[4*i+28]=(U8)((NumWave*100)>>24)%256;
-// 1328            flg_event[i]=0;
-// 1329            break;
-// 1330          case 1:
-// 1331            if( (SysFlashData[4*i+25]+(SysFlashData[4*i+26]<<8)+(SysFlashData[4*i+27]<<16))<=6400)
-// 1332              DotWave=6400;
-// 1333            else if((SysFlashData[4*i+25]+(SysFlashData[4*i+26]<<8)+(SysFlashData[4*i+27]<<16))<=12800)
-// 1334              DotWave=12800;
-// 1335            else
-// 1336              DotWave=25600;
-// 1337            SysFlashData[4*i+25]=(U8)(DotWave)%256;
-// 1338            SysFlashData[4*i+26]=(U8)(DotWave>>8)%256;
-// 1339            SysFlashData[4*i+27]=(U8)(DotWave>>16)%256;
-// 1340            SysFlashData[4*i+28]=(U8)(DotWave>>24)%256;
-// 1341            flg_event[i]=0;
-// 1342            break;
-// 1343         case 2:
-// 1344            SysFlashData[4*i+25]=(U8)(UDeviation)%256;
-// 1345            SysFlashData[4*i+26]=(U8)(UDeviation>>8)%256;
-// 1346            SysFlashData[4*i+27]=(U8)(UDeviation>>16)%256;
-// 1347            SysFlashData[4*i+28]=(U8)(UDeviation>>24)%256;
-// 1348            flg_event[i]=0;
-// 1349            break;
-// 1350         case 3:
-// 1351            SysFlashData[4*i+25]=(U8)(FDeviation)%256;
-// 1352            SysFlashData[4*i+26]=(U8)(FDeviation>>8)%256;
-// 1353            SysFlashData[4*i+27]=(U8)(FDeviation>>16)%256;
-// 1354            SysFlashData[4*i+28]=(U8)(FDeviation>>24)%256;
-// 1355            flg_event[i]=0;
-// 1356            break;
-// 1357         case 4:
-// 1358            SysFlashData[4*i+25]=(U8)(USurge)%256;
-// 1359            SysFlashData[4*i+26]=(U8)(USurge>>8)%256;
-// 1360            SysFlashData[4*i+27]=(U8)(USurge>>16)%256;
-// 1361            SysFlashData[4*i+28]=(U8)(USurge>>24)%256;
-// 1362            flg_event[i]=0;
-// 1363            break;
-// 1364         case 5:
-// 1365            SysFlashData[4*i+25]=(U8)(NUnblance)%256;
-// 1366            SysFlashData[4*i+26]=(U8)(NUnblance>>8)%256;
-// 1367            SysFlashData[4*i+27]=(U8)(NUnblance>>16)%256;
-// 1368            SysFlashData[4*i+28]=(U8)(NUnblance>>24)%256;
-// 1369            flg_event[i]=0;
-// 1370            break;
-// 1371         case 6:
-// 1372            SysFlashData[4*i+25]=(U8)(LngFlick)%256;
-// 1373            SysFlashData[4*i+26]=(U8)(LngFlick>>8)%256;
-// 1374            SysFlashData[4*i+27]=(U8)(LngFlick>>16)%256;
-// 1375            SysFlashData[4*i+28]=(U8)(LngFlick>>24)%256;
-// 1376            flg_event[i]=0;
-// 1377            break;
-// 1378         case 7:
-// 1379            SysFlashData[4*i+25]=(U8)(TotalHarmonic)%256;
-// 1380            SysFlashData[4*i+26]=(U8)(TotalHarmonic>>8)%256;
-// 1381            SysFlashData[4*i+27]=(U8)(TotalHarmonic>>16)%256;
-// 1382            SysFlashData[4*i+28]=(U8)(TotalHarmonic>>24)%256;
-// 1383            flg_event[i]=0;
-// 1384         case 8: //间谐波没有做
-// 1385           break;
-// 1386         case 9:
-// 1387            SysFlashData[4*i+25]=(U8)(UHarmonic)%256;
-// 1388            SysFlashData[4*i+26]=(U8)(UHarmonic>>8)%256;
-// 1389            SysFlashData[4*i+27]=(U8)(UHarmonic>>16)%256;
-// 1390            SysFlashData[4*i+28]=(U8)(UHarmonic>>24)%256;
-// 1391            flg_event[i]=0;
-// 1392            break;
-// 1393         case 10:
-// 1394            SysFlashData[4*i+25]=(U8)(IHarmonic)%256;
+// 1255       if(flg_event[i]==1)
+// 1256         switch(i)
+// 1257         {
+// 1258           case 0:
+// 1259            SysFlashData[4*i+25]=(U8)(NumWave)%256;
+// 1260            SysFlashData[4*i+26]=(U8)((NumWave)>>8)%256;
+// 1261            SysFlashData[4*i+27]=(U8)((NumWave)>>16)%256;
+// 1262            SysFlashData[4*i+28]=(U8)((NumWave)>>24)%256;
+// 1263            flg_event[i]=0;
+// 1264            break;
+// 1265          case 1:
+// 1266            if( (SysFlashData[4*i+25]+(SysFlashData[4*i+26]<<8)+(SysFlashData[4*i+27]<<16))<=6400)
+// 1267              DotWave=6400;
+// 1268            else if((SysFlashData[4*i+25]+(SysFlashData[4*i+26]<<8)+(SysFlashData[4*i+27]<<16))<=12800)
+// 1269              DotWave=12800;
+// 1270            else
+// 1271              DotWave=25600;
+// 1272            SysFlashData[4*i+25]=(U8)(DotWave)%256;
+// 1273            SysFlashData[4*i+26]=(U8)(DotWave>>8)%256;
+// 1274            SysFlashData[4*i+27]=(U8)(DotWave>>16)%256;
+// 1275            SysFlashData[4*i+28]=(U8)(DotWave>>24)%256;
+// 1276            flg_event[i]=0;
+// 1277            break;
+// 1278         case 2:
+// 1279            SysFlashData[4*i+25]=(U8)(UDeviation)%256;
+// 1280            SysFlashData[4*i+26]=(U8)(UDeviation>>8)%256;
+// 1281            SysFlashData[4*i+27]=(U8)(UDeviation>>16)%256;
+// 1282            SysFlashData[4*i+28]=(U8)(UDeviation>>24)%256;
+// 1283            flg_event[i]=0;
+// 1284            break;
+// 1285         case 3:
+// 1286            SysFlashData[4*i+25]=(U8)(FDeviation)%256;
+// 1287            SysFlashData[4*i+26]=(U8)(FDeviation>>8)%256;
+// 1288            SysFlashData[4*i+27]=(U8)(FDeviation>>16)%256;
+// 1289            SysFlashData[4*i+28]=(U8)(FDeviation>>24)%256;
+// 1290            flg_event[i]=0;
+// 1291            break;
+// 1292         case 4:
+// 1293            SysFlashData[4*i+25]=(U8)(USurge)%256;
+// 1294            SysFlashData[4*i+26]=(U8)(USurge>>8)%256;
+// 1295            SysFlashData[4*i+27]=(U8)(USurge>>16)%256;
+// 1296            SysFlashData[4*i+28]=(U8)(USurge>>24)%256;
+// 1297            flg_event[i]=0;
+// 1298            break;
+// 1299         case 5:
+// 1300            SysFlashData[4*i+25]=(U8)(NUnblance)%256;
+// 1301            SysFlashData[4*i+26]=(U8)(NUnblance>>8)%256;
+// 1302            SysFlashData[4*i+27]=(U8)(NUnblance>>16)%256;
+// 1303            SysFlashData[4*i+28]=(U8)(NUnblance>>24)%256;
+// 1304            flg_event[i]=0;
+// 1305            break;
+// 1306         case 6:
+// 1307            SysFlashData[4*i+25]=(U8)(LngFlick)%256;
+// 1308            SysFlashData[4*i+26]=(U8)(LngFlick>>8)%256;
+// 1309            SysFlashData[4*i+27]=(U8)(LngFlick>>16)%256;
+// 1310            SysFlashData[4*i+28]=(U8)(LngFlick>>24)%256;
+// 1311            flg_event[i]=0;
+// 1312            break;
+// 1313         case 7:
+// 1314            SysFlashData[4*i+25]=(U8)(TotalHarmonic)%256;
+// 1315            SysFlashData[4*i+26]=(U8)(TotalHarmonic>>8)%256;
+// 1316            SysFlashData[4*i+27]=(U8)(TotalHarmonic>>16)%256;
+// 1317            SysFlashData[4*i+28]=(U8)(TotalHarmonic>>24)%256;
+// 1318            flg_event[i]=0;
+// 1319         case 8: //间谐波没有做
+// 1320           break;
+// 1321         case 9:
+// 1322            SysFlashData[4*i+25]=(U8)(UHarmonic)%256;
+// 1323            SysFlashData[4*i+26]=(U8)(UHarmonic>>8)%256;
+// 1324            SysFlashData[4*i+27]=(U8)(UHarmonic>>16)%256;
+// 1325            SysFlashData[4*i+28]=(U8)(UHarmonic>>24)%256;
+// 1326            flg_event[i]=0;
+// 1327            break;
+// 1328         case 10:
+// 1329            SysFlashData[4*i+25]=(U8)(IHarmonic)%256;
+// 1330            SysFlashData[4*i+26]=(U8)(IHarmonic>>8)%256;
+// 1331            SysFlashData[4*i+27]=(U8)(IHarmonic>>16)%256;
+// 1332            SysFlashData[4*i+28]=(U8)(IHarmonic>>24)%256;
+// 1333            flg_event[i]=0;
+// 1334            break;
+// 1335           default:
+// 1336             break;
 ??GUI_SYS_EVENTSET_44:
-        LDR.W    R1,??DataTable9_15
-        ADDS     R1,R1,R0, LSL #+2
-        MOVS     R2,#+184
-        STRB     R2,[R1, #+25]
-// 1395            SysFlashData[4*i+26]=(U8)(IHarmonic>>8)%256;
-        LDR.W    R1,??DataTable9_15
-        ADDS     R1,R1,R0, LSL #+2
-        MOVS     R2,#+1
-        STRB     R2,[R1, #+26]
-// 1396            SysFlashData[4*i+27]=(U8)(IHarmonic>>16)%256;
-        LDR.W    R1,??DataTable9_15
-        ADDS     R1,R1,R0, LSL #+2
-        MOVS     R2,#+0
-        STRB     R2,[R1, #+27]
-// 1397            SysFlashData[4*i+28]=(U8)(IHarmonic>>24)%256;
-        LDR.W    R1,??DataTable9_15
-        ADDS     R1,R1,R0, LSL #+2
-        MOVS     R2,#+0
-        STRB     R2,[R1, #+28]
-// 1398            flg_event[i]=0;
-        LDR.W    R1,??DataTable9_22
-        MOVS     R2,#+0
-        STRB     R2,[R0, R1]
-// 1399           default:
-// 1400             break;
 ??GUI_SYS_EVENTSET_45:
-??GUI_SYS_EVENTSET_46:
         ADDS     R0,R0,#+1
 ??GUI_SYS_EVENTSET_43:
         CMP      R0,#+11
-        BGE.W    ??GUI_SYS_EVENTSET_47
-        LDR.W    R1,??DataTable9_22
+        BGE.W    ??GUI_SYS_EVENTSET_46
+        LDR.W    R1,??DataTable10_22
         LDRB     R1,[R0, R1]
         CMP      R1,#+1
-        BNE.N    ??GUI_SYS_EVENTSET_46
+        BNE.N    ??GUI_SYS_EVENTSET_45
         CMP      R0,#+0
-        BEQ.N    ??GUI_SYS_EVENTSET_48
+        BEQ.N    ??GUI_SYS_EVENTSET_47
         CMP      R0,#+2
-        BEQ.W    ??GUI_SYS_EVENTSET_49
-        BCC.N    ??GUI_SYS_EVENTSET_50
+        BEQ.W    ??GUI_SYS_EVENTSET_48
+        BCC.N    ??GUI_SYS_EVENTSET_49
         CMP      R0,#+4
-        BEQ.W    ??GUI_SYS_EVENTSET_51
-        BCC.W    ??GUI_SYS_EVENTSET_52
+        BEQ.W    ??GUI_SYS_EVENTSET_50
+        BCC.W    ??GUI_SYS_EVENTSET_51
         CMP      R0,#+6
-        BEQ.W    ??GUI_SYS_EVENTSET_53
-        BCC.W    ??GUI_SYS_EVENTSET_54
+        BEQ.W    ??GUI_SYS_EVENTSET_52
+        BCC.W    ??GUI_SYS_EVENTSET_53
         CMP      R0,#+8
-        BEQ.W    ??GUI_SYS_EVENTSET_55
-        BCC.W    ??GUI_SYS_EVENTSET_56
+        BEQ.W    ??GUI_SYS_EVENTSET_54
+        BCC.W    ??GUI_SYS_EVENTSET_55
         CMP      R0,#+10
-        BEQ.N    ??GUI_SYS_EVENTSET_44
+        BEQ.W    ??GUI_SYS_EVENTSET_56
         BCC.W    ??GUI_SYS_EVENTSET_57
-        B.N      ??GUI_SYS_EVENTSET_45
-??GUI_SYS_EVENTSET_48:
-        LDR.W    R1,??DataTable9_15
+        B.N      ??GUI_SYS_EVENTSET_44
+??GUI_SYS_EVENTSET_47:
+        LDR.W    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
-        MOVS     R2,#+64
+        MOVS     R2,#+16
         STRB     R2,[R1, #+25]
-        LDR.W    R1,??DataTable9_15
+        LDR.W    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
-        MOVS     R2,#+66
+        MOVS     R2,#+39
         STRB     R2,[R1, #+26]
-        LDR.W    R1,??DataTable9_15
+        LDR.W    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
-        MOVS     R2,#+15
+        MOVS     R2,#+0
         STRB     R2,[R1, #+27]
-        LDR.W    R1,??DataTable9_15
+        LDR.W    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+28]
-        LDR.W    R1,??DataTable9_22
+        LDR.W    R1,??DataTable10_22
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
-        B.N      ??GUI_SYS_EVENTSET_46
-??GUI_SYS_EVENTSET_50:
-        LDR.W    R1,??DataTable9_15
+        B.N      ??GUI_SYS_EVENTSET_45
+??GUI_SYS_EVENTSET_49:
+        LDR.W    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         LDRB     R1,[R1, #+25]
-        LDR.W    R2,??DataTable9_15
+        LDR.W    R2,??DataTable10_15
         ADDS     R2,R2,R0, LSL #+2
         LDRB     R2,[R2, #+26]
         LSLS     R2,R2,#+8
         UXTAB    R1,R2,R1
-        LDR.W    R2,??DataTable9_15
+        LDR.W    R2,??DataTable10_15
         ADDS     R2,R2,R0, LSL #+2
         LDRB     R2,[R2, #+27]
         ADDS     R1,R1,R2, LSL #+16
         CMP      R1,#+6400
         BGT.N    ??GUI_SYS_EVENTSET_58
-        LDR.W    R1,??DataTable9_23
+        LDR.W    R1,??DataTable10_23
         MOV      R2,#+6400
         STRH     R2,[R1, #+0]
         B.N      ??GUI_SYS_EVENTSET_59
 ??GUI_SYS_EVENTSET_58:
-        LDR.W    R1,??DataTable9_15
+        LDR.W    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         LDRB     R1,[R1, #+25]
-        LDR.W    R2,??DataTable9_15
+        LDR.W    R2,??DataTable10_15
         ADDS     R2,R2,R0, LSL #+2
         LDRB     R2,[R2, #+26]
         LSLS     R2,R2,#+8
         UXTAB    R1,R2,R1
-        LDR.W    R2,??DataTable9_15
+        LDR.W    R2,??DataTable10_15
         ADDS     R2,R2,R0, LSL #+2
         LDRB     R2,[R2, #+27]
         ADDS     R1,R1,R2, LSL #+16
         CMP      R1,#+12800
         BGT.N    ??GUI_SYS_EVENTSET_60
-        LDR.W    R1,??DataTable9_23
+        LDR.W    R1,??DataTable10_23
         MOV      R2,#+12800
         STRH     R2,[R1, #+0]
         B.N      ??GUI_SYS_EVENTSET_59
 ??GUI_SYS_EVENTSET_60:
-        LDR.W    R1,??DataTable9_23
+        LDR.W    R1,??DataTable10_23
         MOV      R2,#+25600
         STRH     R2,[R1, #+0]
 ??GUI_SYS_EVENTSET_59:
-        LDR.N    R1,??DataTable9_15
+        LDR.W    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
-        LDR.W    R2,??DataTable9_23
+        LDR.W    R2,??DataTable10_23
         LDRB     R2,[R2, #+0]
         MOV      R3,#+256
         SDIV     R5,R2,R3
         MLS      R5,R5,R3,R2
         STRB     R5,[R1, #+25]
-        LDR.N    R1,??DataTable9_15
+        LDR.W    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
-        LDR.N    R2,??DataTable9_23
+        LDR.W    R2,??DataTable10_23
         LDRH     R2,[R2, #+0]
         UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
         LSRS     R2,R2,#+8
@@ -6564,307 +6487,321 @@ GUI_SYS_EVENTSET:
         SDIV     R5,R2,R3
         MLS      R5,R5,R3,R2
         STRB     R5,[R1, #+26]
-        LDR.N    R1,??DataTable9_15
+        LDR.N    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+27]
-        LDR.N    R1,??DataTable9_15
+        LDR.N    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+28]
-        LDR.N    R1,??DataTable9_22
+        LDR.N    R1,??DataTable10_22
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
-        B.N      ??GUI_SYS_EVENTSET_46
-??GUI_SYS_EVENTSET_49:
-        LDR.N    R1,??DataTable9_15
+        B.N      ??GUI_SYS_EVENTSET_45
+??GUI_SYS_EVENTSET_48:
+        LDR.N    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+4
         STRB     R2,[R1, #+25]
-        LDR.N    R1,??DataTable9_15
+        LDR.N    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+6
         STRB     R2,[R1, #+26]
-        LDR.N    R1,??DataTable9_15
+        LDR.N    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+27]
-        LDR.N    R1,??DataTable9_15
+        LDR.N    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+28]
-        LDR.N    R1,??DataTable9_22
+        LDR.N    R1,??DataTable10_22
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
-        B.N      ??GUI_SYS_EVENTSET_46
-??GUI_SYS_EVENTSET_52:
-        LDR.N    R1,??DataTable9_15
+        B.N      ??GUI_SYS_EVENTSET_45
+??GUI_SYS_EVENTSET_51:
+        LDR.N    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+2
         STRB     R2,[R1, #+25]
-        LDR.N    R1,??DataTable9_15
+        LDR.N    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+26]
-        LDR.N    R1,??DataTable9_15
+        LDR.N    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+27]
-        LDR.N    R1,??DataTable9_15
+        LDR.N    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+28]
-        LDR.N    R1,??DataTable9_22
+        LDR.N    R1,??DataTable10_22
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
-        B.N      ??GUI_SYS_EVENTSET_46
-??GUI_SYS_EVENTSET_51:
-        LDR.N    R1,??DataTable9_15
+        B.N      ??GUI_SYS_EVENTSET_45
+??GUI_SYS_EVENTSET_50:
+        LDR.N    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+184
         STRB     R2,[R1, #+25]
-        LDR.N    R1,??DataTable9_15
+        LDR.N    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+1
         STRB     R2,[R1, #+26]
-        LDR.N    R1,??DataTable9_15
+        LDR.N    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+27]
-        LDR.N    R1,??DataTable9_15
+        LDR.N    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+28]
-        LDR.N    R1,??DataTable9_22
+        LDR.N    R1,??DataTable10_22
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
-        B.N      ??GUI_SYS_EVENTSET_46
-??GUI_SYS_EVENTSET_54:
-        LDR.N    R1,??DataTable9_15
-        ADDS     R1,R1,R0, LSL #+2
-        MOVS     R2,#+184
-        STRB     R2,[R1, #+25]
-        LDR.N    R1,??DataTable9_15
-        ADDS     R1,R1,R0, LSL #+2
-        MOVS     R2,#+1
-        STRB     R2,[R1, #+26]
-        LDR.N    R1,??DataTable9_15
-        ADDS     R1,R1,R0, LSL #+2
-        MOVS     R2,#+0
-        STRB     R2,[R1, #+27]
-        LDR.N    R1,??DataTable9_15
-        ADDS     R1,R1,R0, LSL #+2
-        MOVS     R2,#+0
-        STRB     R2,[R1, #+28]
-        LDR.N    R1,??DataTable9_22
-        MOVS     R2,#+0
-        STRB     R2,[R0, R1]
-        B.N      ??GUI_SYS_EVENTSET_46
+        B.N      ??GUI_SYS_EVENTSET_45
 ??GUI_SYS_EVENTSET_53:
-        LDR.N    R1,??DataTable9_15
+        LDR.N    R1,??DataTable10_15
+        ADDS     R1,R1,R0, LSL #+2
+        MOVS     R2,#+184
+        STRB     R2,[R1, #+25]
+        LDR.N    R1,??DataTable10_15
+        ADDS     R1,R1,R0, LSL #+2
+        MOVS     R2,#+1
+        STRB     R2,[R1, #+26]
+        LDR.N    R1,??DataTable10_15
+        ADDS     R1,R1,R0, LSL #+2
+        MOVS     R2,#+0
+        STRB     R2,[R1, #+27]
+        LDR.N    R1,??DataTable10_15
+        ADDS     R1,R1,R0, LSL #+2
+        MOVS     R2,#+0
+        STRB     R2,[R1, #+28]
+        LDR.N    R1,??DataTable10_22
+        MOVS     R2,#+0
+        STRB     R2,[R0, R1]
+        B.N      ??GUI_SYS_EVENTSET_45
+??GUI_SYS_EVENTSET_52:
+        LDR.N    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+100
         STRB     R2,[R1, #+25]
-        LDR.N    R1,??DataTable9_15
+        LDR.N    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+26]
-        LDR.N    R1,??DataTable9_15
+        LDR.N    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+27]
-        LDR.N    R1,??DataTable9_15
+        LDR.N    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+28]
-        LDR.N    R1,??DataTable9_22
+        LDR.N    R1,??DataTable10_22
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
-        B.N      ??GUI_SYS_EVENTSET_46
-??GUI_SYS_EVENTSET_56:
-        LDR.N    R1,??DataTable9_15
+        B.N      ??GUI_SYS_EVENTSET_45
+??GUI_SYS_EVENTSET_55:
+        LDR.N    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+76
         STRB     R2,[R1, #+25]
-        LDR.N    R1,??DataTable9_15
+        LDR.N    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+4
         STRB     R2,[R1, #+26]
-        LDR.N    R1,??DataTable9_15
+        LDR.N    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+27]
-        LDR.N    R1,??DataTable9_15
+        LDR.N    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+28]
-        LDR.N    R1,??DataTable9_22
+        LDR.N    R1,??DataTable10_22
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
-??GUI_SYS_EVENTSET_55:
-        B.N      ??GUI_SYS_EVENTSET_46
+??GUI_SYS_EVENTSET_54:
+        B.N      ??GUI_SYS_EVENTSET_45
 ??GUI_SYS_EVENTSET_57:
-        LDR.N    R1,??DataTable9_15
+        LDR.N    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+112
         STRB     R2,[R1, #+25]
-        LDR.N    R1,??DataTable9_15
+        LDR.N    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+3
         STRB     R2,[R1, #+26]
-        LDR.N    R1,??DataTable9_15
+        LDR.N    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+27]
-        LDR.N    R1,??DataTable9_15
+        LDR.N    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+28]
-        LDR.N    R1,??DataTable9_22
+        LDR.N    R1,??DataTable10_22
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
-        B.N      ??GUI_SYS_EVENTSET_46
-// 1401         }
-// 1402 #if 0 //WK -->保存时  SysFlashData 全部保存 
-// 1403       
-// 1404     for(int i=0;i<84;i++) 
-// 1405     {
-// 1406       SysFlashSave[i]=SysFlashData[i];
-// 1407     }
-// 1408     shell_ptr->ARGC=2;
-// 1409     shell_ptr->ARGV[0]="cd";
-// 1410     shell_ptr->ARGV[1]="f:\\"; 
-// 1411     Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
-// 1412     
-// 1413     shell_ptr->ARGC = 2;
-// 1414     shell_ptr->ARGV[0]="cd";
-// 1415     shell_ptr->ARGV[1]="sysset";
-// 1416     Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
-// 1417     
-// 1418     shell_ptr->ARGC=4;
-// 1419     shell_ptr->ARGV[0]="w";
-// 1420     shell_ptr->ARGV[1]="sysset.txt";
-// 1421     shell_ptr->ARGV[2]="begin";
-// 1422     shell_ptr->ARGV[3]="0";
-// 1423     Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,84,SysFlashSave);
-// 1424     
-// 1425     // wk --> update
-// 1426     shell_ptr->ARGC=2;
-// 1427     shell_ptr->ARGV[0]="update";
-// 1428     shell_ptr->ARGV[1]="flush";
-// 1429     Shell_update(shell_ptr->ARGC, shell_ptr->ARGV,84,SysFlashSave);
-// 1430     
-// 1431 //    for(int i=0;i<20;i++) // WK --> TEST
-// 1432 //    {
-// 1433 //      printf("SysFlashData[%d]=%x\n",i,SysFlashData[i]);
-// 1434 //    }   
-// 1435 #endif  // WK -->保存时  SysFlashData 全部保存 END
-// 1436  
-// 1437 #if 1  // wk @130326 --> 只保存事件界面数据
-// 1438     for(int i=0;i<44;i++) 
-??GUI_SYS_EVENTSET_47:
+        B.N      ??GUI_SYS_EVENTSET_45
+??GUI_SYS_EVENTSET_56:
+        LDR.N    R1,??DataTable10_15
+        ADDS     R1,R1,R0, LSL #+2
+        MOVS     R2,#+184
+        STRB     R2,[R1, #+25]
+        LDR.N    R1,??DataTable10_15
+        ADDS     R1,R1,R0, LSL #+2
+        MOVS     R2,#+1
+        STRB     R2,[R1, #+26]
+        LDR.N    R1,??DataTable10_15
+        ADDS     R1,R1,R0, LSL #+2
+        MOVS     R2,#+0
+        STRB     R2,[R1, #+27]
+        LDR.N    R1,??DataTable10_15
+        ADDS     R1,R1,R0, LSL #+2
+        MOVS     R2,#+0
+        STRB     R2,[R1, #+28]
+        LDR.N    R1,??DataTable10_22
+        MOVS     R2,#+0
+        STRB     R2,[R0, R1]
+        B.N      ??GUI_SYS_EVENTSET_45
+// 1337         }
+// 1338 #if 0 //WK -->保存时  SysFlashData 全部保存     
+// 1339     for(int i=0;i<84;i++) 
+// 1340     {
+// 1341       SysFlashSave[i]=SysFlashData[i];
+// 1342     }
+// 1343     shell_ptr->ARGC=2;
+// 1344     shell_ptr->ARGV[0]="cd";
+// 1345     shell_ptr->ARGV[1]="f:\\"; 
+// 1346     Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+// 1347     
+// 1348     shell_ptr->ARGC = 2;
+// 1349     shell_ptr->ARGV[0]="cd";
+// 1350     shell_ptr->ARGV[1]="sysset";
+// 1351     Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+// 1352     
+// 1353     shell_ptr->ARGC=4;
+// 1354     shell_ptr->ARGV[0]="w";
+// 1355     shell_ptr->ARGV[1]="sysevent.txt";
+// 1356     shell_ptr->ARGV[2]="begin";
+// 1357     shell_ptr->ARGV[3]="0";
+// 1358     Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,84,SysFlashSave);
+// 1359     
+// 1360     // wk --> update
+// 1361     shell_ptr->ARGC=2;
+// 1362     shell_ptr->ARGV[0]="update";
+// 1363     shell_ptr->ARGV[1]="flush";
+// 1364     Shell_update(shell_ptr->ARGC, shell_ptr->ARGV,84,SysFlashSave);  
+// 1365 #endif  // WK -->保存时  SysFlashData 全部保存 END
+// 1366  
+// 1367 #if 1  // wk @130326 --> 只保存事件界面数据
+// 1368     for(int i=0;i<44;i++) 
+??GUI_SYS_EVENTSET_46:
         MOVS     R0,#+0
         B.N      ??GUI_SYS_EVENTSET_61
-// 1439     {
-// 1440       SysFlashSave[i+25]=SysFlashData[i+25];
+// 1369     {
+// 1370       SysFlashSave[i+25]=SysFlashData[i+25];  
 ??GUI_SYS_EVENTSET_62:
-        LDR.N    R1,??DataTable9
+        LDR.N    R1,??DataTable10
         ADDS     R1,R0,R1
-        LDR.N    R2,??DataTable9_15
+        LDR.N    R2,??DataTable10_15
         ADDS     R2,R0,R2
         LDRB     R2,[R2, #+25]
         STRB     R2,[R1, #+25]
-// 1441     }
+// 1371     }
         ADDS     R0,R0,#+1
 ??GUI_SYS_EVENTSET_61:
         CMP      R0,#+44
         BLT.N    ??GUI_SYS_EVENTSET_62
-// 1442     shell_ptr->ARGC=2;
+// 1372     shell_ptr->ARGC=2;
         MOVS     R0,#+2
         STR      R0,[R4, #+32]
-// 1443     shell_ptr->ARGV[0]="cd";
-        ADR.N    R0,??DataTable9_3  ;; 0x63, 0x64, 0x00, 0x00
+// 1373     shell_ptr->ARGV[0]="cd";
+        ADR.N    R0,??DataTable10_2  ;; 0x63, 0x64, 0x00, 0x00
         STR      R0,[R4, #+0]
-// 1444     shell_ptr->ARGV[1]="f:\\"; 
-        ADR.N    R0,??DataTable9_4  ;; "f:\\"
+// 1374     shell_ptr->ARGV[1]="f:\\"; 
+        ADR.N    R0,??DataTable10_3  ;; "f:\\"
         STR      R0,[R4, #+4]
-// 1445     Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+// 1375     Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_cd
         BL       Shell_cd
-// 1446     
-// 1447     shell_ptr->ARGC = 2;
+// 1376     
+// 1377     shell_ptr->ARGC = 2;
         MOVS     R0,#+2
         STR      R0,[R4, #+32]
-// 1448     shell_ptr->ARGV[0]="cd";
-        ADR.N    R0,??DataTable9_3  ;; 0x63, 0x64, 0x00, 0x00
+// 1378     shell_ptr->ARGV[0]="cd";
+        ADR.N    R0,??DataTable10_2  ;; 0x63, 0x64, 0x00, 0x00
         STR      R0,[R4, #+0]
-// 1449     shell_ptr->ARGV[1]="sysset";
-        LDR.N    R0,??DataTable9_10
+// 1379     shell_ptr->ARGV[1]="sysset";
+        LDR.N    R0,??DataTable10_10
         STR      R0,[R4, #+4]
-// 1450     Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+// 1380     Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_cd
         BL       Shell_cd
-// 1451     
-// 1452     shell_ptr->ARGC=4;
+// 1381     
+// 1382     shell_ptr->ARGC=4;
         MOVS     R0,#+4
         STR      R0,[R4, #+32]
-// 1453     shell_ptr->ARGV[0]="w";
-        ADR.N    R0,??DataTable9_5  ;; "w"
+// 1383     shell_ptr->ARGV[0]="w";
+        ADR.N    R0,??DataTable10_5  ;; "w"
         STR      R0,[R4, #+0]
-// 1454     shell_ptr->ARGV[1]="sysset.txt";
-        LDR.N    R0,??DataTable9_12
+// 1384     shell_ptr->ARGV[1]="sysevent.txt";
+        LDR.N    R0,??DataTable10_12
         STR      R0,[R4, #+4]
-// 1455     shell_ptr->ARGV[2]="begin";
-        LDR.N    R0,??DataTable9_13
+// 1385     shell_ptr->ARGV[2]="begin";
+        LDR.N    R0,??DataTable10_13
         STR      R0,[R4, #+8]
-// 1456     shell_ptr->ARGV[3]="26";  // WK @130326 --> 偏移 25
-        ADR.N    R0,??DataTable9_6  ;; 0x32, 0x36, 0x00, 0x00
+// 1386     shell_ptr->ARGV[3]="0";  // WK @130326 --> 偏移 26  注意：偏移25时，初始上电时，波形个数为2.55，因此该到了偏移26
+        ADR.N    R0,??DataTable10_6  ;; "0"
         STR      R0,[R4, #+12]
-// 1457     Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,44,&(SysFlashSave[25]));
-        LDR.N    R3,??DataTable9_24
+// 1387     Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,44,&(SysFlashSave[25]));
+        LDR.N    R3,??DataTable10_24
         MOVS     R2,#+44
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_write_binary
         BL       Shell_write_binary
-// 1458     
-// 1459     // wk --> update
-// 1460     shell_ptr->ARGC=2;
+// 1388     
+// 1389     shell_ptr->ARGC=2;
         MOVS     R0,#+2
         STR      R0,[R4, #+32]
-// 1461     shell_ptr->ARGV[0]="update";
-        LDR.N    R0,??DataTable9_1
+// 1390     shell_ptr->ARGV[0]="update";// wk --> update
+        LDR.N    R0,??DataTable10_1
         STR      R0,[R4, #+0]
-// 1462     shell_ptr->ARGV[1]="flush";
-        LDR.N    R0,??DataTable9_2
+// 1391     shell_ptr->ARGV[1]="flush";
+        LDR.N    R0,??DataTable10_4
         STR      R0,[R4, #+4]
-// 1463     Shell_update(shell_ptr->ARGC, shell_ptr->ARGV,44,&(SysFlashSave[25]));
-        LDR.N    R3,??DataTable9_24
+// 1392     Shell_update(shell_ptr->ARGC, shell_ptr->ARGV,44,&(SysFlashSave[25]));
+        LDR.N    R3,??DataTable10_24
         MOVS     R2,#+44
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_update
         BL       Shell_update
-// 1464 #endif
-// 1465         /*WK --> 保存成功标志 */
-// 1466     for(k=0; k<11; k++)
+// 1393 #endif
+// 1394         /*WK --> 保存成功标志，使字体变黄显示 */
+// 1395     for(k=0; k<11; k++)
         MOVS     R0,#+0
         B.N      ??GUI_SYS_EVENTSET_63
-// 1467         {
-// 1468             temp=7*k;
+// 1396         {
+// 1397             temp=7*k;
 ??GUI_SYS_EVENTSET_64:
         MOVS     R1,#+7
         MUL      R5,R1,R0
-// 1469             ParaSetC108[temp + 0] = 0x5204;         //P  显示数据的模式
+// 1398             ParaSetC108[temp + 0] = 0x5204;         //P  显示数据的模式
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         ADD      R1,SP,#+148
         MOVW     R2,#+20996
         STRH     R2,[R1, R5, LSL #+1]
-// 1470             ParaSetC108[temp + 1] = SysEventXY[2*k];            //显示相位的X坐标
+// 1399             ParaSetC108[temp + 1] = SysEventXY[2*k];            //显示相位的X坐标
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         ADD      R1,SP,#+148
         ADDS     R1,R1,R5, LSL #+1
@@ -6872,7 +6809,7 @@ GUI_SYS_EVENTSET:
         ADD      R2,SP,#+16
         LDRH     R2,[R2, R0, LSL #+2]
         STRH     R2,[R1, #+2]
-// 1471             ParaSetC108[temp + 2] = SysEventXY[2*k + 1];     //Y坐标
+// 1400             ParaSetC108[temp + 2] = SysEventXY[2*k + 1];     //Y坐标
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         LSLS     R1,R0,#+1
         ADD      R2,SP,#+16
@@ -6882,26 +6819,26 @@ GUI_SYS_EVENTSET:
         ADD      R2,SP,#+148
         ADDS     R2,R2,R5, LSL #+1
         STRH     R1,[R2, #+4]
-// 1472             ParaSetC108[temp + 3] = 0xffc1;         //白色，下为黑色
+// 1401             ParaSetC108[temp + 3] = 0xffc1;         //白色，下为黑色
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         ADD      R1,SP,#+148
         ADDS     R1,R1,R5, LSL #+1
         MOVW     R2,#+65473
         STRH     R2,[R1, #+6]
-// 1473             ParaSetC108[temp + 4] = 0x0000;
+// 1402             ParaSetC108[temp + 4] = 0x0000;
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         ADD      R1,SP,#+148
         ADDS     R1,R1,R5, LSL #+1
         MOVS     R2,#+0
         STRH     R2,[R1, #+8]
-// 1474             ParaSetC108[temp + 5] =(U16) (SysFlashData[3+4*k+EVESET_INDEX]<<8)+(U16)(SysFlashData[2+4*k+EVESET_INDEX]);
+// 1403             ParaSetC108[temp + 5] =(U16) (SysFlashData[3+4*k+EVESET_INDEX]<<8)+(U16)(SysFlashData[2+4*k+EVESET_INDEX]);
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.N    R1,??DataTable9_15
+        LDR.N    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         LDRB     R1,[R1, #+28]
         LSLS     R1,R1,#+8
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.N    R2,??DataTable9_15
+        LDR.N    R2,??DataTable10_15
         ADDS     R2,R2,R0, LSL #+2
         LDRB     R2,[R2, #+27]
         UXTAB    R1,R1,R2
@@ -6909,14 +6846,14 @@ GUI_SYS_EVENTSET:
         ADD      R2,SP,#+148
         ADDS     R2,R2,R5, LSL #+1
         STRH     R1,[R2, #+10]
-// 1475             ParaSetC108[temp + 6] =(U16) (SysFlashData[1+4*k+EVESET_INDEX]<<8)+(U16)(SysFlashData[4*k+EVESET_INDEX]);
+// 1404             ParaSetC108[temp + 6] =(U16) (SysFlashData[1+4*k+EVESET_INDEX]<<8)+(U16)(SysFlashData[4*k+EVESET_INDEX]);
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.N    R1,??DataTable9_15
+        LDR.N    R1,??DataTable10_15
         ADDS     R1,R1,R0, LSL #+2
         LDRB     R1,[R1, #+26]
         LSLS     R1,R1,#+8
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.N    R2,??DataTable9_15
+        LDR.N    R2,??DataTable10_15
         ADDS     R2,R2,R0, LSL #+2
         LDRB     R2,[R2, #+25]
         UXTAB    R1,R1,R2
@@ -6924,68 +6861,64 @@ GUI_SYS_EVENTSET:
         ADD      R2,SP,#+148
         ADDS     R2,R2,R5, LSL #+1
         STRH     R1,[R2, #+12]
-// 1476         }
+// 1405         }
         ADDS     R0,R0,#+1
 ??GUI_SYS_EVENTSET_63:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+11
         BCC.N    ??GUI_SYS_EVENTSET_64
-// 1477          YADA_C0(EventSetAddr, ParaSetC108, 11*7);
+// 1406          YADA_C0(EventSetAddr, ParaSetC108, 11*7);
         MOVS     R2,#+77
         ADD      R1,SP,#+148
         MOVW     R0,#+2807
           CFI FunCall YADA_C0
         BL       YADA_C0
-// 1478          YADA_C108(EventSetAddr,11);   //写入有效值，每次10个
+// 1407          YADA_C108(EventSetAddr,11);   //写入有效值，每次10个
         MOVS     R1,#+11
         MOVW     R0,#+2807
           CFI FunCall YADA_C108
         BL       YADA_C108
-// 1479 //        YADA_C0(EventSetAddr, ParaSetC108, 49);
-// 1480 //        YADA_C108(EventSetAddr, 7);   //写入有效值，每次10个
-// 1481 //        delay_ms(5);
-// 1482 //        YADA_C0(EventSetAddr+49, &ParaSetC108[49], 49);
-// 1483 //        YADA_C108(EventSetAddr+49, 7);   //写入有效值，每次10个
-// 1484        
-// 1485        SysSet.SaveFlg=0; //清楚保存标志
-        LDR.N    R0,??DataTable9_9
+// 1408        /* wk --> 保存成功标志 END */
+// 1409          
+// 1410        SysSet.SaveFlg=0; //清楚保存标志
+        LDR.N    R0,??DataTable10_9
         MOVS     R1,#+0
         STRB     R1,[R0, #+3]
-// 1486        
-// 1487        TEST[7]=SysSet.ParaIndex;
-        LDR.N    R0,??DataTable9_25
-        LDR.N    R1,??DataTable9_9
+// 1411        
+// 1412        TEST[7]=SysSet.ParaIndex;
+        LDR.N    R0,??DataTable10_25
+        LDR.N    R1,??DataTable10_9
         LDRB     R1,[R1, #+4]
         STRB     R1,[R0, #+7]
-// 1488        temp=SysSet.EvntIndex*4;
-        LDR.N    R0,??DataTable9_9
+// 1413        temp=SysSet.EvntIndex*4;
+        LDR.N    R0,??DataTable10_9
         LDRB     R0,[R0, #+5]
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         LSLS     R5,R0,#+2
-// 1489        for(U8 i=0;i<4;i++)
+// 1414        for(U8 i=0;i<4;i++)
         MOVS     R0,#+0
         B.N      ??GUI_SYS_EVENTSET_65
-// 1490        {
-// 1491          TEST[7+i]=SysFlashData[temp+i+EVESET_INDEX];
+// 1415        {
+// 1416          TEST[7+i]=SysFlashData[temp+i+EVESET_INDEX];
 ??GUI_SYS_EVENTSET_66:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         UXTAB    R1,R0,R5
-        LDR.N    R2,??DataTable9_15
+        LDR.N    R2,??DataTable10_15
         ADDS     R1,R1,R2
         LDRB     R1,[R1, #+25]
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.N    R2,??DataTable9_25
+        LDR.N    R2,??DataTable10_25
         ADDS     R2,R0,R2
         STRB     R1,[R2, #+7]
-// 1492        }
+// 1417        }
         ADDS     R0,R0,#+1
 ??GUI_SYS_EVENTSET_65:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+4
         BCC.N    ??GUI_SYS_EVENTSET_66
-// 1493     }
-// 1494     
-// 1495 }
+// 1418     }
+// 1419     
+// 1420 }
 ??GUI_SYS_EVENTSET_42:
         ADD      SP,SP,#+348
           CFI CFA R13+20
@@ -6995,157 +6928,157 @@ GUI_SYS_EVENTSET:
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9:
+??DataTable10:
         DC32     SysFlashSave
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_1:
+??DataTable10_1:
         DC32     `?<Constant "update">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_2:
-        DC32     `?<Constant "flush">`
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable9_3:
+??DataTable10_2:
         DC8      0x63, 0x64, 0x00, 0x00
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_4:
+??DataTable10_3:
         DC8      "f:\\"
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_5:
+??DataTable10_4:
+        DC32     `?<Constant "flush">`
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable10_5:
         DC8      "w",0x0,0x0
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_6:
-        DC8      0x32, 0x36, 0x00, 0x00
+??DataTable10_6:
+        DC8      "0",0x0,0x0
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_7:
+??DataTable10_7:
         DC32     `?<Constant {155, 97, 155, 133, 155, 169, 155, `
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_8:
+??DataTable10_8:
         DC32     `?<Constant {150, 96, 153, 122, 150, 132, 153, `
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_9:
+??DataTable10_9:
         DC32     SysSet
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_10:
+??DataTable10_10:
         DC32     `?<Constant "sysset">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_11:
+??DataTable10_11:
         DC32     `?<Constant "read">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_12:
-        DC32     `?<Constant "sysset.txt">`
+??DataTable10_12:
+        DC32     `?<Constant "sysevent.txt">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_13:
+??DataTable10_13:
         DC32     `?<Constant "begin">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_14:
+??DataTable10_14:
         DC32     SysFlashData+0x19
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_15:
+??DataTable10_15:
         DC32     SysFlashData
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_16:
+??DataTable10_16:
         DC32     SysEventOldIndex
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_17:
+??DataTable10_17:
         DC32     0x41200000
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_18:
+??DataTable10_18:
         DC32     0xc2400000
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_19:
+??DataTable10_19:
         DC32     0x3dcccccd
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_20:
+??DataTable10_20:
         DC32     0x42c80000
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_21:
+??DataTable10_21:
         DC32     `?<Constant {20996, 0, 0, 65535, 0}>`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_22:
+??DataTable10_22:
         DC32     ??flg_event
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_23:
+??DataTable10_23:
         DC32     DotWave
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_24:
+??DataTable10_24:
         DC32     SysFlashSave+0x19
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable9_25:
+??DataTable10_25:
         DC32     TEST
 
         SECTION `.bss`:DATA:REORDER:NOROOT(2)
@@ -7164,371 +7097,371 @@ GUI_SYS_EVENTSET:
         SECTION_TYPE SHT_PROGBITS, 0
 
         END
+// 1421 /*******************************************************************************
+// 1422 * 函  数  名      : Write_Flash
+// 1423 * 描      述      : 字节写数据到flash
+// 1424 * 输      入      : U8 DataIn[],U8 Num,char* Flash_ptr
+// 1425 * 返      回      : 无
+// 1426 *******************************************************************************/
+// 1427 //void Write_Flash(U8 DataIn[],U8 Num,char* Flash_ptr)
+// 1428 //{
+// 1429 //    _DINT();                    // 5xx Workaround: Disable global
+// 1430 //    // interrupt while erasing. Re-Enable
+// 1431 //    // GIE if needed
+// 1432 //    FCTL3 = FWKEY;                            // Clear Lock bit
+// 1433 //    FCTL1 = FWKEY+ERASE;                      // Set Erase bit
+// 1434 //    *Flash_ptr = 0;                           // Dummy write to erase Flash seg
+// 1435 //    FCTL1 = FWKEY+WRT;                        // Set WRT bit for write operation
+// 1436 //    for(U8 i=0; i<Num; i++)
+// 1437 //    {
+// 1438 //        *Flash_ptr++ = DataIn[i];
+// 1439 //    }
+// 1440 //    FCTL1 = FWKEY;                            // Clear WRT bit
+// 1441 //    FCTL3 = FWKEY+LOCK;                       // Set LOCK bit
+// 1442 //    _EINT();
+// 1443 //}
+// 1444 /*******************************************************************************
+// 1445 * 函  数  名      : Write_WFlash
+// 1446 * 描      述      : 字写数据到flash
+// 1447 * 输      入      : U8 DataIn[],U8 Num,int* Flash_ptr
+// 1448 * 返      回      : 无
+// 1449 *******************************************************************************/
+// 1450 //void Write_WFlash(U16 DataIn[],U8 Num,int* Flash_ptr)
+// 1451 //{
+// 1452 //    _DINT();                    // 5xx Workaround: Disable global
+// 1453 //    // interrupt while erasing. Re-Enable
+// 1454 //    // GIE if needed
+// 1455 //  FCTL3 = FWKEY;                            // Clear Lock bit
+// 1456 //  FCTL1 = FWKEY+ERASE;                      // Set Erase bit
+// 1457 //  *Flash_ptr = 0;                           // Dummy write to erase Flash seg
+// 1458 //  FCTL1 = FWKEY+BLKWRT;                     // Enable long-word write
+// 1459 //  for(U8 i=0; i<Num; i++)
+// 1460 //  {
+// 1461 //        *Flash_ptr++ = DataIn[i];
+// 1462 //  }
+// 1463 //  FCTL1 = FWKEY;                            // Clear WRT bit
+// 1464 //  FCTL3 = FWKEY+LOCK;                       // Set LOCK bit
+// 1465 //    _EINT();
+// 1466 //}
+// 1467 /*******************************************************************************
+// 1468 * 函  数  名      : GUI_EventMonitor
+// 1469 * 描      述      : 事件监测显示，NPage[101~114]为事件的类别叠加;
+// 1470 * 输      入      : 无
+// 1471 * 返      回      : 无
+// 1472 *******************************************************************************/
+// 1473 //void GUI_EventMonitor(U8 U_DISK)
+// 1474 //{
+// 1475 //    U16 EVENTMONXY[28]= {200,51,200,81,200,111,200,141,200,171,200,201,200,231,200,
+// 1476 //                         261,200,291,200,321,496,54,496,84,496,114,496,144
+// 1477 //                        };
+// 1478 //    U16 MONITC108[98]={0};
+// 1479 //    U8 temp=0;
+// 1480 //    for(U8 k=0; k<14; k++)
+// 1481 //    {
+// 1482 //        temp=7*k;
+// 1483 //        MONITC108[temp + 0] = 0x6004;         //P  显示数据的模式
+// 1484 //        MONITC108[temp + 1] =EVENTMONXY[2*k];            //显示相位的X坐标
+// 1485 //        MONITC108[temp + 2] = EVENTMONXY[2*k + 1];     //Y坐标
+// 1486 //        MONITC108[temp + 3] = 0xffff;         //白色，下为黑色
+// 1487 //        MONITC108[temp + 4] = 0x0000;
+// 1488 //        MONITC108[temp + 5] =0;
+// 1489 //        MONITC108[temp + 6] =NPage[k+101];
+// 1490 //    }
+// 1491 //    YADA_C0(EventMonLAddr, MONITC108, 70);
+// 1492 //    YADA_C108(EventMonLAddr, 10);   //写入事件，每次10个
+// 1493 //    YADA_C0(EventMonRAddr, &MONITC108[70], 28);
+// 1494 //    YADA_C108(EventMonRAddr, 4);   //写入事件，每次4个
+// 1495 //}
 // 1496 /*******************************************************************************
-// 1497 * 函  数  名      : Write_Flash
-// 1498 * 描      述      : 字节写数据到flash
-// 1499 * 输      入      : U8 DataIn[],U8 Num,char* Flash_ptr
+// 1497 * 函  数  名      : GUI_EventList
+// 1498 * 描      述      : 事件列表显示，从nandflash中读取。
+// 1499 * 输      入      : 无
 // 1500 * 返      回      : 无
 // 1501 *******************************************************************************/
-// 1502 //void Write_Flash(U8 DataIn[],U8 Num,char* Flash_ptr)
+// 1502 //void GUI_EventList(void)
 // 1503 //{
-// 1504 //    _DINT();                    // 5xx Workaround: Disable global
-// 1505 //    // interrupt while erasing. Re-Enable
-// 1506 //    // GIE if needed
-// 1507 //    FCTL3 = FWKEY;                            // Clear Lock bit
-// 1508 //    FCTL1 = FWKEY+ERASE;                      // Set Erase bit
-// 1509 //    *Flash_ptr = 0;                           // Dummy write to erase Flash seg
-// 1510 //    FCTL1 = FWKEY+WRT;                        // Set WRT bit for write operation
-// 1511 //    for(U8 i=0; i<Num; i++)
-// 1512 //    {
-// 1513 //        *Flash_ptr++ = DataIn[i];
-// 1514 //    }
-// 1515 //    FCTL1 = FWKEY;                            // Clear WRT bit
-// 1516 //    FCTL3 = FWKEY+LOCK;                       // Set LOCK bit
-// 1517 //    _EINT();
-// 1518 //}
-// 1519 /*******************************************************************************
-// 1520 * 函  数  名      : Write_WFlash
-// 1521 * 描      述      : 字写数据到flash
-// 1522 * 输      入      : U8 DataIn[],U8 Num,int* Flash_ptr
-// 1523 * 返      回      : 无
-// 1524 *******************************************************************************/
-// 1525 //void Write_WFlash(U16 DataIn[],U8 Num,int* Flash_ptr)
-// 1526 //{
-// 1527 //    _DINT();                    // 5xx Workaround: Disable global
-// 1528 //    // interrupt while erasing. Re-Enable
-// 1529 //    // GIE if needed
-// 1530 //  FCTL3 = FWKEY;                            // Clear Lock bit
-// 1531 //  FCTL1 = FWKEY+ERASE;                      // Set Erase bit
-// 1532 //  *Flash_ptr = 0;                           // Dummy write to erase Flash seg
-// 1533 //  FCTL1 = FWKEY+BLKWRT;                     // Enable long-word write
-// 1534 //  for(U8 i=0; i<Num; i++)
-// 1535 //  {
-// 1536 //        *Flash_ptr++ = DataIn[i];
-// 1537 //  }
-// 1538 //  FCTL1 = FWKEY;                            // Clear WRT bit
-// 1539 //  FCTL3 = FWKEY+LOCK;                       // Set LOCK bit
-// 1540 //    _EINT();
-// 1541 //}
-// 1542 /*******************************************************************************
-// 1543 * 函  数  名      : GUI_EventMonitor
-// 1544 * 描      述      : 事件监测显示，NPage[101~114]为事件的类别叠加;
-// 1545 * 输      入      : 无
-// 1546 * 返      回      : 无
-// 1547 *******************************************************************************/
-// 1548 //void GUI_EventMonitor(U8 U_DISK)
-// 1549 //{
-// 1550 //    U16 EVENTMONXY[28]= {200,51,200,81,200,111,200,141,200,171,200,201,200,231,200,
-// 1551 //                         261,200,291,200,321,496,54,496,84,496,114,496,144
-// 1552 //                        };
-// 1553 //    U16 MONITC108[98]={0};
-// 1554 //    U8 temp=0;
-// 1555 //    for(U8 k=0; k<14; k++)
-// 1556 //    {
-// 1557 //        temp=7*k;
-// 1558 //        MONITC108[temp + 0] = 0x6004;         //P  显示数据的模式
-// 1559 //        MONITC108[temp + 1] =EVENTMONXY[2*k];            //显示相位的X坐标
-// 1560 //        MONITC108[temp + 2] = EVENTMONXY[2*k + 1];     //Y坐标
-// 1561 //        MONITC108[temp + 3] = 0xffff;         //白色，下为黑色
-// 1562 //        MONITC108[temp + 4] = 0x0000;
-// 1563 //        MONITC108[temp + 5] =0;
-// 1564 //        MONITC108[temp + 6] =NPage[k+101];
-// 1565 //    }
-// 1566 //    YADA_C0(EventMonLAddr, MONITC108, 70);
-// 1567 //    YADA_C108(EventMonLAddr, 10);   //写入事件，每次10个
-// 1568 //    YADA_C0(EventMonRAddr, &MONITC108[70], 28);
-// 1569 //    YADA_C108(EventMonRAddr, 4);   //写入事件，每次4个
-// 1570 //}
-// 1571 /*******************************************************************************
-// 1572 * 函  数  名      : GUI_EventList
-// 1573 * 描      述      : 事件列表显示，从nandflash中读取。
-// 1574 * 输      入      : 无
-// 1575 * 返      回      : 无
-// 1576 *******************************************************************************/
-// 1577 //void GUI_EventList(void)
-// 1578 //{
-// 1579 //    U16 EVELSTXY[]= {30,40,35,63,30,70,35,93,30,98,35,121,30,125,35,148,30,152,35,175,30,179,35,202,30,206,
-// 1580 //                     35,229,30,233,35,256,30,262,35,285,30,288,35,311,30,316,35,339,30,342,35,365,30,370,35,393,30,396,35,419
-// 1581 //                    };
-// 1582 //    U8 EVECONTENT[14][35]= {0},i,temp=0;
-// 1583 //    YADA_40(0x0000,0xfc00);//前景色为黑色，背景色为橙色 set only once
-// 1584 //    if(EVEfunflg==1)  //功能键发生标志置一
-// 1585 //    {
-// 1586 //        YADA_5B(&EVELSTXY[EventOldIndex*4],4);//擦除前一处
-// 1587 //        YADA_5A(&EVELSTXY[EVEline*4],4);    //背景色填充相所在的矩形区域
-// 1588 //        EventOldIndex=EVEline;
-// 1589 //        EVEfunflg=0;
-// 1590 //    }
-// 1591 //   for(i=14*EVEpage; i<14*EVEpage+14; i++)
-// 1592 //    {
-// 1593 //      temp=14*EVEpage;
-// 1594 //        PageRead(NBlock[i],NPage[i],EVECONTENT[i-temp]); //从nandflash中把事件基本情况读到EVECONTENT
-// 1595 //        delay_us(1);
-// 1596 //        YADA_98(40, EVELSTXY[(i-temp)*4+1], 0x22, 0x81, 0x02, 0xffff, 0x0000, EVECONTENT[i-temp], numsize);
-// 1597 //        _NOP();
-// 1598 //    } 
-// 1599 //}
-// 1600 /*******************************************************************************
-// 1601 * 函  数  名      : GUI_EventWave
-// 1602 * 描      述      : 事件波形显示
-// 1603 * 输      入      : 无
-// 1604 * 返      回      : 无
-// 1605 *******************************************************************************/
-// 1606 //void GUI_EventWave(U8 U_DISK)
-// 1607 //{
-// 1608 //  if(U_DISK==1)
-// 1609 //  {
-// 1610 //    //LCD暂存缓冲区多次写入一次读出显示,或者调整为分次读取分次显示，是否能增加一次读取的点数？？
-// 1611 //    U32 filesize=0;
-// 1612 //    U16 bufsize=1600;
-// 1613 //    U8 readnum=0;//读取次数
-// 1614 //    U8 linenum=0;//csv中每行6个数据，每一通道可画点数，bufsize为3200时，linenum大概为80左右.
-// 1615 //    //C0发送数据个数与linenum有关，linenum应小于120.亦涉及到EVEUI数组大小
-// 1616 //    U16 totalline=0;
-// 1617 //    U8 lastrestflt=0;//上一次读取剩余未画线的点数0-5，浮点数个数
-// 1618 //    U16 Coord_UI[]= {14,68,614,225,273,429};   //剪切及原点坐标
-// 1619 ////    int EVEUI[50*6]= {0};  //int *EveUI;
-// 1620 //    U16 EVEUI[50*6]= {0};  //int *EveUI;  // modified by wk 
-// 1621 //    U8 EveWav[80*20]= {0}; //*EveWav;
-// 1622 //    U8 buf[20],LEN[2],length,s;
-// 1623 //    float Evefloat[50*6]= {0}; //留有一定余量
-// 1624 //   
-// 1625 //    sprintf(buf, "/FAULTRD/%d.CSV" ,EVEnum-EVEline*EVEpage);
-// 1626 //    s = CH376FileOpenPath( buf );  //直接打开多级目录下的文件,这是CH376FileOpenPath子程序内部由多次逐级打开组合而成
-// 1627 //    //???当文件不存在时？
-// 1628 //    s = CH376ByteLocate( 0 );
-// 1629 //    s=CH376ByteRead(LEN,4,NULL);
-// 1630 //    length=atoi(LEN);
-// 1631 //    filesize= CH376GetFileSize();//读取文件大小必须紧接对filesize的操作
-// 1632 //    readnum=(filesize-length-4)/bufsize+1;
-// 1633 //    U16 j=0;
-// 1634 //    char txt[9],k=0;
-// 1635 //    for(U8 lv_num=0; lv_num<readnum; lv_num++)
-// 1636 //    {
-// 1637 //        s=CH376ByteLocate(length+4+bufsize*lv_num);
-// 1638 //        if(lv_num!=readnum-1)
-// 1639 //        {
-// 1640 //            bufsize=1600;
-// 1641 //        }
-// 1642 //        else
-// 1643 //        {
-// 1644 //            bufsize=filesize-length-4-(readnum-1)*1600;    //最后一次读取可能只需读取小于1600的数据量
-// 1645 //        }
-// 1646 //        //EveWav=(U8 *) malloc(bufsize * sizeof(U8));
-// 1647 //        s=CH376ByteRead(EveWav,bufsize,NULL);//EVEUILEN*16
-// 1648 //        for(U16 i=0; i<bufsize; i++)
-// 1649 //        {
-// 1650 //            txt[k]=EveWav[i];
-// 1651 //            k++;
-// 1652 //            if((EveWav[i]==',')||EveWav[i]==0x0d)
-// 1653 //            {
-// 1654 //                Evefloat[j]=atof(txt);
-// 1655 //                k=0;
-// 1656 //                j++;
-// 1657 //            }
+// 1504 //    U16 EVELSTXY[]= {30,40,35,63,30,70,35,93,30,98,35,121,30,125,35,148,30,152,35,175,30,179,35,202,30,206,
+// 1505 //                     35,229,30,233,35,256,30,262,35,285,30,288,35,311,30,316,35,339,30,342,35,365,30,370,35,393,30,396,35,419
+// 1506 //                    };
+// 1507 //    U8 EVECONTENT[14][35]= {0},i,temp=0;
+// 1508 //    YADA_40(0x0000,0xfc00);//前景色为黑色，背景色为橙色 set only once
+// 1509 //    if(EVEfunflg==1)  //功能键发生标志置一
+// 1510 //    {
+// 1511 //        YADA_5B(&EVELSTXY[EventOldIndex*4],4);//擦除前一处
+// 1512 //        YADA_5A(&EVELSTXY[EVEline*4],4);    //背景色填充相所在的矩形区域
+// 1513 //        EventOldIndex=EVEline;
+// 1514 //        EVEfunflg=0;
+// 1515 //    }
+// 1516 //   for(i=14*EVEpage; i<14*EVEpage+14; i++)
+// 1517 //    {
+// 1518 //      temp=14*EVEpage;
+// 1519 //        PageRead(NBlock[i],NPage[i],EVECONTENT[i-temp]); //从nandflash中把事件基本情况读到EVECONTENT
+// 1520 //        delay_us(1);
+// 1521 //        YADA_98(40, EVELSTXY[(i-temp)*4+1], 0x22, 0x81, 0x02, 0xffff, 0x0000, EVECONTENT[i-temp], numsize);
+// 1522 //        _NOP();
+// 1523 //    } 
+// 1524 //}
+// 1525 /*******************************************************************************
+// 1526 * 函  数  名      : GUI_EventWave
+// 1527 * 描      述      : 事件波形显示
+// 1528 * 输      入      : 无
+// 1529 * 返      回      : 无
+// 1530 *******************************************************************************/
+// 1531 //void GUI_EventWave(U8 U_DISK)
+// 1532 //{
+// 1533 //  if(U_DISK==1)
+// 1534 //  {
+// 1535 //    //LCD暂存缓冲区多次写入一次读出显示,或者调整为分次读取分次显示，是否能增加一次读取的点数？？
+// 1536 //    U32 filesize=0;
+// 1537 //    U16 bufsize=1600;
+// 1538 //    U8 readnum=0;//读取次数
+// 1539 //    U8 linenum=0;//csv中每行6个数据，每一通道可画点数，bufsize为3200时，linenum大概为80左右.
+// 1540 //    //C0发送数据个数与linenum有关，linenum应小于120.亦涉及到EVEUI数组大小
+// 1541 //    U16 totalline=0;
+// 1542 //    U8 lastrestflt=0;//上一次读取剩余未画线的点数0-5，浮点数个数
+// 1543 //    U16 Coord_UI[]= {14,68,614,225,273,429};   //剪切及原点坐标
+// 1544 ////    int EVEUI[50*6]= {0};  //int *EveUI;
+// 1545 //    U16 EVEUI[50*6]= {0};  //int *EveUI;  // modified by wk 
+// 1546 //    U8 EveWav[80*20]= {0}; //*EveWav;
+// 1547 //    U8 buf[20],LEN[2],length,s;
+// 1548 //    float Evefloat[50*6]= {0}; //留有一定余量
+// 1549 //   
+// 1550 //    sprintf(buf, "/FAULTRD/%d.CSV" ,EVEnum-EVEline*EVEpage);
+// 1551 //    s = CH376FileOpenPath( buf );  //直接打开多级目录下的文件,这是CH376FileOpenPath子程序内部由多次逐级打开组合而成
+// 1552 //    //???当文件不存在时？
+// 1553 //    s = CH376ByteLocate( 0 );
+// 1554 //    s=CH376ByteRead(LEN,4,NULL);
+// 1555 //    length=atoi(LEN);
+// 1556 //    filesize= CH376GetFileSize();//读取文件大小必须紧接对filesize的操作
+// 1557 //    readnum=(filesize-length-4)/bufsize+1;
+// 1558 //    U16 j=0;
+// 1559 //    char txt[9],k=0;
+// 1560 //    for(U8 lv_num=0; lv_num<readnum; lv_num++)
+// 1561 //    {
+// 1562 //        s=CH376ByteLocate(length+4+bufsize*lv_num);
+// 1563 //        if(lv_num!=readnum-1)
+// 1564 //        {
+// 1565 //            bufsize=1600;
+// 1566 //        }
+// 1567 //        else
+// 1568 //        {
+// 1569 //            bufsize=filesize-length-4-(readnum-1)*1600;    //最后一次读取可能只需读取小于1600的数据量
+// 1570 //        }
+// 1571 //        //EveWav=(U8 *) malloc(bufsize * sizeof(U8));
+// 1572 //        s=CH376ByteRead(EveWav,bufsize,NULL);//EVEUILEN*16
+// 1573 //        for(U16 i=0; i<bufsize; i++)
+// 1574 //        {
+// 1575 //            txt[k]=EveWav[i];
+// 1576 //            k++;
+// 1577 //            if((EveWav[i]==',')||EveWav[i]==0x0d)
+// 1578 //            {
+// 1579 //                Evefloat[j]=atof(txt);
+// 1580 //                k=0;
+// 1581 //                j++;
+// 1582 //            }
+// 1583 //        }
+// 1584 //        //free(EveWav);
+// 1585 //        linenum=j/6;
+// 1586 //        lastrestflt=j%6;
+// 1587 //        FLTOINT_UI(Evefloat,EVEUI,linenum);//把U盘里的浮点数转化为需要的int数据做曲线
+// 1588 //        YADA_C0 (0x0000+totalline,EVEUI,linenum);
+// 1589 //        YADA_C0 (0x0280+totalline,&EVEUI[linenum],linenum);//,UB_addr
+// 1590 //        YADA_C0 (0x0640+totalline,&EVEUI[linenum*2],linenum);
+// 1591 //        //将所有采样数据写入触摸屏,分次写入。不需要擦除，不动的，不用104指令。
+// 1592 //        for(U8 m=0; m<lastrestflt; m++)
+// 1593 //        {
+// 1594 //            Evefloat[m]=Evefloat[linenum*6+m];
+// 1595 //        }
+// 1596 //        j=lastrestflt;
+// 1597 //        totalline=linenum+totalline;
+// 1598 //    }
+// 1599 //    YADA_C103 (0x0000,14,Coord_UI[3],totalline-1,1,3,16,COLOR[0]);
+// 1600 //    YADA_C103 (0x0280,14,Coord_UI[3],totalline-1,1,3,16,COLOR[1]);
+// 1601 //    YADA_C103 (0x0640,14,Coord_UI[3],totalline-1,1,3,16,COLOR[2]);
+// 1602 //    s = CH376FileClose( TRUE );  //关闭文件,自动更新文件长度 /
+// 1603 //  }
+// 1604 //    
+// 1605 //}
+// 1606 /*******************************************************************************
+// 1607 * 函  数  名      : EventSave
+// 1608 * 描      述      : 事件存储
+// 1609 * 输      入      :
+// 1610 * 返      回      : 无
+// 1611 *******************************************************************************/
+// 1612 //void EventSave(U8 U_DISK)
+// 1613 //{
+// 1614 //    float EVEUI[EVEUILEN*3]= {0}; //事件电压电流浮点数组
+// 1615 //    char EVETYPE[][5]= {"F_ERR","U_ERR","U_WAV","L_FLK","U_UBA","U_OVE","U_UND","U_SWL","U_DIP","U_INT","U_THD","O_HAM","E_HAM","I_HAM"};
+// 1616 //    char EVEPHASE[6][11]= {"A_IN       ","A_OUT      ","B_IN       ","B_OUT      ","C_IN       ","C_OUT      "};
+// 1617 //    U8 Filebuf[400]= {0},buf[70]= {0},length,CurrentTime[7],s,i,j,TESTT[34]={0};
+// 1618 //    U16 Total=0;
+// 1619 //    NPage[EvntRxchar[0]+101]++; //事件类别叠加
+// 1620 //    Read8025(CurrentTime,0,7); //获取当前时间
+// 1621 //    if(EVEnum>100)
+// 1622 //      EVEnum=0;
+// 1623 //    for(i=0; i<7; i++)
+// 1624 //    {
+// 1625 //        CurrentTime[i] = (CurrentTime[i] >> 4) *10+(CurrentTime[i] &0x0f);    ///将时间的BCD码转换为10进制数
+// 1626 //    }
+// 1627 //    
+// 1628 //     sprintf( buf, "%d %d-%d-%d %d:%d:%d %.5s %.5s",EVEnum-1,(CurrentTime[6]+2000),CurrentTime[5],CurrentTime[4],CurrentTime[2],CurrentTime[1],CurrentTime[0],EVETYPE[EvntRxchar[0]],EVEPHASE[EvntRxchar[1]]);
+// 1629 //     
+// 1630 //    
+// 1631 //    if((EVEnum!=1)&&(nBlock_old==1024)) //若EVEnum不为0且上电的第一次事件
+// 1632 //    {
+// 1633 //      if((NBlock[EVEnum-2]==0)&&(NPage[EVEnum-2]==0))
+// 1634 //      {
+// 1635 //         nBlock=0;
+// 1636 //         npage=0;
+// 1637 //      }
+// 1638 //      else
+// 1639 //      {
+// 1640 //         nBlock=NBlock[EVEnum-2]+1;
+// 1641 //         npage=0;
+// 1642 //      }
+// 1643 //      nBlock_old=1025;
+// 1644 //    }
+// 1645 //   while(nBlock<1024)
+// 1646 //   {
+// 1647 //      if((nBlock!=nBlock_old)||(nBlock_old==1025))
+// 1648 //      {
+// 1649 //        if(!check_block(nBlock)) //检查坏块
+// 1650 //        {
+// 1651 //            nBlock++;
+// 1652 //            continue;
+// 1653 //        }
+// 1654 //        if(BlockErase(nBlock))  //block擦除
+// 1655 //        {
+// 1656 //            nBlock++;
+// 1657 //            continue;
 // 1658 //        }
-// 1659 //        //free(EveWav);
-// 1660 //        linenum=j/6;
-// 1661 //        lastrestflt=j%6;
-// 1662 //        FLTOINT_UI(Evefloat,EVEUI,linenum);//把U盘里的浮点数转化为需要的int数据做曲线
-// 1663 //        YADA_C0 (0x0000+totalline,EVEUI,linenum);
-// 1664 //        YADA_C0 (0x0280+totalline,&EVEUI[linenum],linenum);//,UB_addr
-// 1665 //        YADA_C0 (0x0640+totalline,&EVEUI[linenum*2],linenum);
-// 1666 //        //将所有采样数据写入触摸屏,分次写入。不需要擦除，不动的，不用104指令。
-// 1667 //        for(U8 m=0; m<lastrestflt; m++)
-// 1668 //        {
-// 1669 //            Evefloat[m]=Evefloat[linenum*6+m];
-// 1670 //        }
-// 1671 //        j=lastrestflt;
-// 1672 //        totalline=linenum+totalline;
-// 1673 //    }
-// 1674 //    YADA_C103 (0x0000,14,Coord_UI[3],totalline-1,1,3,16,COLOR[0]);
-// 1675 //    YADA_C103 (0x0280,14,Coord_UI[3],totalline-1,1,3,16,COLOR[1]);
-// 1676 //    YADA_C103 (0x0640,14,Coord_UI[3],totalline-1,1,3,16,COLOR[2]);
-// 1677 //    s = CH376FileClose( TRUE );  //关闭文件,自动更新文件长度 /
-// 1678 //  }
-// 1679 //    
-// 1680 //}
-// 1681 /*******************************************************************************
-// 1682 * 函  数  名      : EventSave
-// 1683 * 描      述      : 事件存储
-// 1684 * 输      入      :
-// 1685 * 返      回      : 无
-// 1686 *******************************************************************************/
-// 1687 //void EventSave(U8 U_DISK)
-// 1688 //{
-// 1689 //    float EVEUI[EVEUILEN*3]= {0}; //事件电压电流浮点数组
-// 1690 //    char EVETYPE[][5]= {"F_ERR","U_ERR","U_WAV","L_FLK","U_UBA","U_OVE","U_UND","U_SWL","U_DIP","U_INT","U_THD","O_HAM","E_HAM","I_HAM"};
-// 1691 //    char EVEPHASE[6][11]= {"A_IN       ","A_OUT      ","B_IN       ","B_OUT      ","C_IN       ","C_OUT      "};
-// 1692 //    U8 Filebuf[400]= {0},buf[70]= {0},length,CurrentTime[7],s,i,j,TESTT[34]={0};
-// 1693 //    U16 Total=0;
-// 1694 //    NPage[EvntRxchar[0]+101]++; //事件类别叠加
-// 1695 //    Read8025(CurrentTime,0,7); //获取当前时间
-// 1696 //    if(EVEnum>100)
-// 1697 //      EVEnum=0;
-// 1698 //    for(i=0; i<7; i++)
-// 1699 //    {
-// 1700 //        CurrentTime[i] = (CurrentTime[i] >> 4) *10+(CurrentTime[i] &0x0f);    ///将时间的BCD码转换为10进制数
-// 1701 //    }
+// 1659 //        else
+// 1660 //         delay_ms(3); 
+// 1661 //      }
+// 1662 //        while(1)
+// 1663 //        {
+// 1664 //          if(nBlock==0&&npage==0)
+// 1665 //          {
+// 1666 //            PageWrite(nBlock,npage,TESTT);  //写nandflash的（0，0）页面
+// 1667 //            npage++;
+// 1668 //          }
+// 1669 //          else
+// 1670 //          {
+// 1671 //            if(PageWrite(nBlock,npage,buf))//将事件的时间类型写入nandflash
+// 1672 //            {
+// 1673 //               NBlock[EVEnum-1]=nBlock;  //将block和page地址保存到该数组方便备份
+// 1674 //               NPage[EVEnum-1]=npage;
+// 1675 //               npage++;
+// 1676 //               nBlock_old=nBlock;
+// 1677 //               if(npage>=64)
+// 1678 //               {
+// 1679 //                 nBlock++;
+// 1680 //                 npage=0;
+// 1681 //               }
+// 1682 //               break;
+// 1683 //            }
+// 1684 //            else
+// 1685 //            {
+// 1686 //              npage++;
+// 1687 //              continue;
+// 1688 //            }
+// 1689 //        }
+// 1690 //      }     
+// 1691 //      break;
+// 1692 //    }
+// 1693 //     
+// 1694 //    if(U_DISK)
+// 1695 //    {
+// 1696 //      U16TOFL_UI(&EvntRxchar[2],EVEUILEN,EVEUI);   //DSP发来的已经处理过的char数据变为浮点数
+// 1697 //    U16TOFL_UI(&EvntRxchar[EVEUILEN*2+2],EVEUILEN,&EVEUI[EVEUILEN]);
+// 1698 //    U16TOFL_UI(&EvntRxchar[EVEUILEN*4+2],EVEUILEN,&EVEUI[EVEUILEN*2]);
+// 1699 //    //U16TOFL_UI(&EvntRxchar[EVEUILEN*6+6],EVEUILEN,&EVEUI[EVEUILEN*3]);
+// 1700 //    //U16TOFL_UI(&EvntRxchar[EVEUILEN*8+6],EVEUILEN,&EVEUI[EVEUILEN*4]);
+// 1701 //    //U16TOFL_UI(&EvntRxchar[EVEUILEN*10+6],EVEUILEN,&EVEUI[EVEUILEN*5]);
 // 1702 //    
-// 1703 //     sprintf( buf, "%d %d-%d-%d %d:%d:%d %.5s %.5s",EVEnum-1,(CurrentTime[6]+2000),CurrentTime[5],CurrentTime[4],CurrentTime[2],CurrentTime[1],CurrentTime[0],EVETYPE[EvntRxchar[0]],EVEPHASE[EvntRxchar[1]]);
-// 1704 //     
-// 1705 //    
-// 1706 //    if((EVEnum!=1)&&(nBlock_old==1024)) //若EVEnum不为0且上电的第一次事件
-// 1707 //    {
-// 1708 //      if((NBlock[EVEnum-2]==0)&&(NPage[EVEnum-2]==0))
-// 1709 //      {
-// 1710 //         nBlock=0;
-// 1711 //         npage=0;
-// 1712 //      }
-// 1713 //      else
-// 1714 //      {
-// 1715 //         nBlock=NBlock[EVEnum-2]+1;
-// 1716 //         npage=0;
-// 1717 //      }
-// 1718 //      nBlock_old=1025;
-// 1719 //    }
-// 1720 //   while(nBlock<1024)
-// 1721 //   {
-// 1722 //      if((nBlock!=nBlock_old)||(nBlock_old==1025))
-// 1723 //      {
-// 1724 //        if(!check_block(nBlock)) //检查坏块
-// 1725 //        {
-// 1726 //            nBlock++;
-// 1727 //            continue;
-// 1728 //        }
-// 1729 //        if(BlockErase(nBlock))  //block擦除
-// 1730 //        {
-// 1731 //            nBlock++;
-// 1732 //            continue;
-// 1733 //        }
-// 1734 //        else
-// 1735 //         delay_ms(3); 
-// 1736 //      }
-// 1737 //        while(1)
-// 1738 //        {
-// 1739 //          if(nBlock==0&&npage==0)
-// 1740 //          {
-// 1741 //            PageWrite(nBlock,npage,TESTT);  //写nandflash的（0，0）页面
-// 1742 //            npage++;
-// 1743 //          }
-// 1744 //          else
-// 1745 //          {
-// 1746 //            if(PageWrite(nBlock,npage,buf))//将事件的时间类型写入nandflash
-// 1747 //            {
-// 1748 //               NBlock[EVEnum-1]=nBlock;  //将block和page地址保存到该数组方便备份
-// 1749 //               NPage[EVEnum-1]=npage;
-// 1750 //               npage++;
-// 1751 //               nBlock_old=nBlock;
-// 1752 //               if(npage>=64)
-// 1753 //               {
-// 1754 //                 nBlock++;
-// 1755 //                 npage=0;
-// 1756 //               }
-// 1757 //               break;
-// 1758 //            }
-// 1759 //            else
-// 1760 //            {
-// 1761 //              npage++;
-// 1762 //              continue;
-// 1763 //            }
-// 1764 //        }
-// 1765 //      }     
-// 1766 //      break;
-// 1767 //    }
-// 1768 //     
-// 1769 //    if(U_DISK)
-// 1770 //    {
-// 1771 //      U16TOFL_UI(&EvntRxchar[2],EVEUILEN,EVEUI);   //DSP发来的已经处理过的char数据变为浮点数
-// 1772 //    U16TOFL_UI(&EvntRxchar[EVEUILEN*2+2],EVEUILEN,&EVEUI[EVEUILEN]);
-// 1773 //    U16TOFL_UI(&EvntRxchar[EVEUILEN*4+2],EVEUILEN,&EVEUI[EVEUILEN*2]);
-// 1774 //    //U16TOFL_UI(&EvntRxchar[EVEUILEN*6+6],EVEUILEN,&EVEUI[EVEUILEN*3]);
-// 1775 //    //U16TOFL_UI(&EvntRxchar[EVEUILEN*8+6],EVEUILEN,&EVEUI[EVEUILEN*4]);
-// 1776 //    //U16TOFL_UI(&EvntRxchar[EVEUILEN*10+6],EVEUILEN,&EVEUI[EVEUILEN*5]);
-// 1777 //    
-// 1778 //    sprintf(buf, "/FAULTRD/%d.CSV" ,EVEnum);  // CH376FileOpenPath的文件名缓冲区必须在RAM中 /
-// 1779 //    s = CH376FileOpenPath( buf ); // 直接打开多级目录下的文件,这是CH376FileOpenPath子程序内部由多次逐级打开组合而成 /
-// 1780 //    //文件存在并且已经被打开,移动文件指针到尾部以便添加数据 移到文件的尾部/
-// 1781 //     s = CH376FileCreatePath( NULL );   //新建文件并打开,如果文件已经存在则先删除后再新建,不必再提供文件名,刚才已经提供给CH376FileOpen
-// 1782 //        sprintf( buf, "%d %d-%d-%d %d:%d:%d %.5s %.5s\nUA,UB,UC,IA,IB,IC\xd\xa",EVEnum,(CurrentTime[6]+2000),CurrentTime[5],CurrentTime[4],CurrentTime[2],CurrentTime[1],CurrentTime[0],EVETYPE[EvntRxchar[0]],EVEPHASE[EvntRxchar[1]]);
-// 1783 //        length=strlen(buf)+4;
-// 1784 //        Total += sprintf( Filebuf+Total, "%d\xd\xa%d %d-%d-%d %d:%d:%d %.5s %.5s\nUA,UB,UC,IA,IB,IC\xd\xa",length,EVEnum,(CurrentTime[6]+2000),CurrentTime[5],CurrentTime[4],CurrentTime[2],CurrentTime[1],CurrentTime[0],EVETYPE[EvntRxchar[0]],EVEPHASE[EvntRxchar[1]]);
-// 1785 //    for(j=0; j<32; j++)
-// 1786 //    {
-// 1787 //        for(i=0; i<10; i++)
-// 1788 //        {
-// 1789 //            Total += sprintf( Filebuf+Total, "%.2f,%.2f,%.2f\xd\xa",EVEUI[i+10*j],EVEUI[EVEUILEN+i+10*j],EVEUI[EVEUILEN*2+i+10*j]);  //,EVEUI[EVEUILEN*3+i+20*j],EVEUI[EVEUILEN*4+i+20*j],EVEUI[EVEUILEN*5+i+20*j]
-// 1790 //        }
-// 1791 //        s = CH376ByteWrite( Filebuf, Total, NULL );//将所有电能数据全部写入U盘
-// 1792 //        Total=0;
-// 1793 //    }
-// 1794 //    s = CH376FileClose( TRUE );  //关闭文件,自动更新文件长度
-// 1795 //    }
-// 1796 //    
-// 1797 //}
-// 1798 /*******************************************************************************
-// 1799 * 函  数  名      : PowerSave
-// 1800 * 描      述      : 电能数据存储
-// 1801 * 输      入      : 无
-// 1802 * 返      回      : 无
-// 1803 *******************************************************************************/
-// 1804 //void PowerSave(void)
-// 1805 //{
-// 1806 //    U8 Filebuf[500]= {0},CurrentTime[7],s,buf[70]= {0};
-// 1807 //    float FLOAT[40]= {0};
-// 1808 //    U16 Total=0;
-// 1809 //    Read8025(CurrentTime,0,7);
-// 1810 //    for(U8 i=0; i<7; i++)
-// 1811 //    {
-// 1812 //        CurrentTime[i] = (CurrentTime[i] >> 4) *10+(CurrentTime[i] &0x0f);    ///将BCD码转换为10进制数
-// 1813 //    }
-// 1814 //    strcpy( buf, "/RMS/QUALITY.CSV" );  // CH376FileOpenPath的文件名缓冲区必须在RAM中 /
-// 1815 //    s = CH376FileOpenPath( buf );  // 直接打开多级目录下的文件,这是CH376FileOpenPath子程序内部由多次逐级打开组合而成 /
-// 1816 //    //文件存在并且已经被打开,移动文件指针到尾部以便添加数据 移到文件的尾部
-// 1817 //    if ( s == USB_INT_SUCCESS )
-// 1818 //    {
-// 1819 //        s = CH376ByteLocate( 0xFFFFFFFF );
-// 1820 //    }
-// 1821 //    //没有找到文件,必须新建文件
-// 1822 //    else if ( s == ERR_MISS_FILE )
-// 1823 //    {
-// 1824 //        s = CH376FileCreatePath( NULL );   //新建文件并打开,如果文件已经存在则先删除后再新建,不必再提供文件名,刚才已经提供给CH376FileOpen
-// 1825 //        //strcpy( buf, "TIME,UAEF,UATHD,IAEF,UBEF,UBTHD,IBEF,UCEF,UCTHD,ICEF\xd\xa" ); //sprintf和strcpy互换
-// 1826 //       // length=strlen(buf);
-// 1827 //        //s = CH376ByteWrite( buf, length, NULL );        
-// 1828 //    }
-// 1829 //    ChartoFloat(&PowRxchar[0],FLOAT,40,10000);   //将char型电能数据变为浮点数
-// 1830 //    //将浮点数变为字符型ASCII送入U盘显示
-// 1831 //    Total += sprintf( Filebuf+Total, "%d-%d-%d %d:%d:%d,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f",(CurrentTime[6]+2000),CurrentTime[5],CurrentTime[4],CurrentTime[2],CurrentTime[1],CurrentTime[0],FLOAT[0],FLOAT[1],FLOAT[2],FLOAT[3],FLOAT[4],FLOAT[5],FLOAT[6],FLOAT[7],FLOAT[8],FLOAT[9]);
-// 1832 //    for(U8 k=1; k<10; k++)
-// 1833 //    {
-// 1834 //      ChartoFloat(&PowRxchar[200*k],FLOAT,40,10000);
-// 1835 //      for(U8 i=0; i<4; i++)
-// 1836 //      {
-// 1837 //        if(k==5&&i==0)
-// 1838 //        {
-// 1839 //           Total += sprintf( Filebuf+Total, "%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,\xd\xa,",FLOAT[i*4],FLOAT[1+i*4],FLOAT[2+i*4],FLOAT[3+i*4],FLOAT[4+i*4],FLOAT[5+i*4],FLOAT[6+i*4],FLOAT[7+i*4],FLOAT[8+i*4],FLOAT[9+i*4]);
-// 1840 //        }
-// 1841 //        else if(k==9&&i==3)
-// 1842 //        {
-// 1843 //            Total += sprintf( Filebuf+Total, "%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,END\xd\xa",FLOAT[i*4],FLOAT[1+i*4],FLOAT[2+i*4],FLOAT[3+i*4],FLOAT[4+i*4],FLOAT[5+i*4],FLOAT[6+i*4],FLOAT[7+i*4],FLOAT[8+i*4],FLOAT[9+i*4]);         
-// 1844 //        }
-// 1845 //        else
-// 1846 //        Total += sprintf( Filebuf+Total, "%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,",FLOAT[i*4],FLOAT[1+i*4],FLOAT[2+i*4],FLOAT[3+i*4],FLOAT[4+i*4],FLOAT[5+i*4],FLOAT[6+i*4],FLOAT[7+i*4],FLOAT[8+i*4],FLOAT[9+i*4]);
-// 1847 //      }
-// 1848 //      s = CH376ByteWrite( Filebuf, Total, NULL );//将所有电能数据全部写入U盘
-// 1849 //      Total=0;
-// 1850 //    }
-// 1851 //    s = CH376FileClose( TRUE );  //关闭文件,自动更新文件长度
-// 1852 //}
+// 1703 //    sprintf(buf, "/FAULTRD/%d.CSV" ,EVEnum);  // CH376FileOpenPath的文件名缓冲区必须在RAM中 /
+// 1704 //    s = CH376FileOpenPath( buf ); // 直接打开多级目录下的文件,这是CH376FileOpenPath子程序内部由多次逐级打开组合而成 /
+// 1705 //    //文件存在并且已经被打开,移动文件指针到尾部以便添加数据 移到文件的尾部/
+// 1706 //     s = CH376FileCreatePath( NULL );   //新建文件并打开,如果文件已经存在则先删除后再新建,不必再提供文件名,刚才已经提供给CH376FileOpen
+// 1707 //        sprintf( buf, "%d %d-%d-%d %d:%d:%d %.5s %.5s\nUA,UB,UC,IA,IB,IC\xd\xa",EVEnum,(CurrentTime[6]+2000),CurrentTime[5],CurrentTime[4],CurrentTime[2],CurrentTime[1],CurrentTime[0],EVETYPE[EvntRxchar[0]],EVEPHASE[EvntRxchar[1]]);
+// 1708 //        length=strlen(buf)+4;
+// 1709 //        Total += sprintf( Filebuf+Total, "%d\xd\xa%d %d-%d-%d %d:%d:%d %.5s %.5s\nUA,UB,UC,IA,IB,IC\xd\xa",length,EVEnum,(CurrentTime[6]+2000),CurrentTime[5],CurrentTime[4],CurrentTime[2],CurrentTime[1],CurrentTime[0],EVETYPE[EvntRxchar[0]],EVEPHASE[EvntRxchar[1]]);
+// 1710 //    for(j=0; j<32; j++)
+// 1711 //    {
+// 1712 //        for(i=0; i<10; i++)
+// 1713 //        {
+// 1714 //            Total += sprintf( Filebuf+Total, "%.2f,%.2f,%.2f\xd\xa",EVEUI[i+10*j],EVEUI[EVEUILEN+i+10*j],EVEUI[EVEUILEN*2+i+10*j]);  //,EVEUI[EVEUILEN*3+i+20*j],EVEUI[EVEUILEN*4+i+20*j],EVEUI[EVEUILEN*5+i+20*j]
+// 1715 //        }
+// 1716 //        s = CH376ByteWrite( Filebuf, Total, NULL );//将所有电能数据全部写入U盘
+// 1717 //        Total=0;
+// 1718 //    }
+// 1719 //    s = CH376FileClose( TRUE );  //关闭文件,自动更新文件长度
+// 1720 //    }
+// 1721 //    
+// 1722 //}
+// 1723 /*******************************************************************************
+// 1724 * 函  数  名      : PowerSave
+// 1725 * 描      述      : 电能数据存储
+// 1726 * 输      入      : 无
+// 1727 * 返      回      : 无
+// 1728 *******************************************************************************/
+// 1729 //void PowerSave(void)
+// 1730 //{
+// 1731 //    U8 Filebuf[500]= {0},CurrentTime[7],s,buf[70]= {0};
+// 1732 //    float FLOAT[40]= {0};
+// 1733 //    U16 Total=0;
+// 1734 //    Read8025(CurrentTime,0,7);
+// 1735 //    for(U8 i=0; i<7; i++)
+// 1736 //    {
+// 1737 //        CurrentTime[i] = (CurrentTime[i] >> 4) *10+(CurrentTime[i] &0x0f);    ///将BCD码转换为10进制数
+// 1738 //    }
+// 1739 //    strcpy( buf, "/RMS/QUALITY.CSV" );  // CH376FileOpenPath的文件名缓冲区必须在RAM中 /
+// 1740 //    s = CH376FileOpenPath( buf );  // 直接打开多级目录下的文件,这是CH376FileOpenPath子程序内部由多次逐级打开组合而成 /
+// 1741 //    //文件存在并且已经被打开,移动文件指针到尾部以便添加数据 移到文件的尾部
+// 1742 //    if ( s == USB_INT_SUCCESS )
+// 1743 //    {
+// 1744 //        s = CH376ByteLocate( 0xFFFFFFFF );
+// 1745 //    }
+// 1746 //    //没有找到文件,必须新建文件
+// 1747 //    else if ( s == ERR_MISS_FILE )
+// 1748 //    {
+// 1749 //        s = CH376FileCreatePath( NULL );   //新建文件并打开,如果文件已经存在则先删除后再新建,不必再提供文件名,刚才已经提供给CH376FileOpen
+// 1750 //        //strcpy( buf, "TIME,UAEF,UATHD,IAEF,UBEF,UBTHD,IBEF,UCEF,UCTHD,ICEF\xd\xa" ); //sprintf和strcpy互换
+// 1751 //       // length=strlen(buf);
+// 1752 //        //s = CH376ByteWrite( buf, length, NULL );        
+// 1753 //    }
+// 1754 //    ChartoFloat(&PowRxchar[0],FLOAT,40,10000);   //将char型电能数据变为浮点数
+// 1755 //    //将浮点数变为字符型ASCII送入U盘显示
+// 1756 //    Total += sprintf( Filebuf+Total, "%d-%d-%d %d:%d:%d,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f",(CurrentTime[6]+2000),CurrentTime[5],CurrentTime[4],CurrentTime[2],CurrentTime[1],CurrentTime[0],FLOAT[0],FLOAT[1],FLOAT[2],FLOAT[3],FLOAT[4],FLOAT[5],FLOAT[6],FLOAT[7],FLOAT[8],FLOAT[9]);
+// 1757 //    for(U8 k=1; k<10; k++)
+// 1758 //    {
+// 1759 //      ChartoFloat(&PowRxchar[200*k],FLOAT,40,10000);
+// 1760 //      for(U8 i=0; i<4; i++)
+// 1761 //      {
+// 1762 //        if(k==5&&i==0)
+// 1763 //        {
+// 1764 //           Total += sprintf( Filebuf+Total, "%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,\xd\xa,",FLOAT[i*4],FLOAT[1+i*4],FLOAT[2+i*4],FLOAT[3+i*4],FLOAT[4+i*4],FLOAT[5+i*4],FLOAT[6+i*4],FLOAT[7+i*4],FLOAT[8+i*4],FLOAT[9+i*4]);
+// 1765 //        }
+// 1766 //        else if(k==9&&i==3)
+// 1767 //        {
+// 1768 //            Total += sprintf( Filebuf+Total, "%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,END\xd\xa",FLOAT[i*4],FLOAT[1+i*4],FLOAT[2+i*4],FLOAT[3+i*4],FLOAT[4+i*4],FLOAT[5+i*4],FLOAT[6+i*4],FLOAT[7+i*4],FLOAT[8+i*4],FLOAT[9+i*4]);         
+// 1769 //        }
+// 1770 //        else
+// 1771 //        Total += sprintf( Filebuf+Total, "%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,",FLOAT[i*4],FLOAT[1+i*4],FLOAT[2+i*4],FLOAT[3+i*4],FLOAT[4+i*4],FLOAT[5+i*4],FLOAT[6+i*4],FLOAT[7+i*4],FLOAT[8+i*4],FLOAT[9+i*4]);
+// 1772 //      }
+// 1773 //      s = CH376ByteWrite( Filebuf, Total, NULL );//将所有电能数据全部写入U盘
+// 1774 //      Total=0;
+// 1775 //    }
+// 1776 //    s = CH376FileClose( TRUE );  //关闭文件,自动更新文件长度
+// 1777 //}
 // 
 //    565 bytes in section .bss
 //     62 bytes in section .data
-//  5 280 bytes in section .rodata
-// 10 450 bytes in section .text
+//  5 220 bytes in section .rodata
+// 10 486 bytes in section .text
 // 
-// 10 450 bytes of CODE  memory
-//  5 280 bytes of CONST memory
+// 10 486 bytes of CODE  memory
+//  5 220 bytes of CONST memory
 //    627 bytes of DATA  memory
 //
 //Errors: none

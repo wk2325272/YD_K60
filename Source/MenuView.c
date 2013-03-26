@@ -129,10 +129,9 @@ void GUI_VIEW_I(void)
 *******************************************************************************/
 void GUI_VIEW_VECT(void)
 {
-#if 1
     U16 VI_line[4];                                 //一条向量的数组
     U16 C108Dat[42] = {0};                          //剪切及原点坐标
-    U16 VEC_ORIG_YCOORD=134;       //wk @20130325 --> old:96        //相位的初始Y 坐标
+    U16 VEC_ORIG_YCOORD=95;       //wk @20130325 --> old:96        //相位的初始Y 坐标
     U16 Vec_Angle1[6]= {0};
     U32 Vec_Angle[6];
     float Vec_Anglefloat[6]= {0};                   //向量的浮点型，调用方便
@@ -173,7 +172,6 @@ void GUI_VIEW_VECT(void)
     YADA_C108(Vectoraddr,6);
     delay_ms(5);
     //delay_ms(50);
-#endif
 }
 /*******************************************************************************
 * 函  数  名      : GUI_VIEW_ListMeasure
@@ -275,18 +273,21 @@ void GUI_VIEW_ListMeasure()   // wk --> 电能计量参数
 void GUI_VIEW_ListQuality() // wk --> 电能质量参数
 {
 #if 1 //wk -->
+    U8 temp1;
     U16 ListQC108[6*3*7];//24个数据 显示顺序：
     for(int num=0;num<6;num++) //数据类型切换 
       for(int abc=0;abc<3;abc++)//ABC切换
       {
+        temp1=8*num+16*abc;
         ListQC108[num*21+abc*7]=C108Mode_64;//显示数据的模式
         ListQC108[num*21+abc*7+1]=164+abc*152;//显示左边列数据的X坐标75
         ListQC108[num*21+abc*7+2]=150+num*40;// Y轴坐标
         ListQC108[num*21+abc*7+3]=C108FC_W;
         ListQC108[num*21+abc*7+4]=C108BC_Bk;
         /* wk --> 显示的电能质量数据*/
-        ListQC108[num*21+abc*7+5]=0;// -----------------待补充
-        ListQC108[num*21+abc*7+6]=0;// -----------------待补充
+         
+        ListQC108[num*21+abc*7+5]=((U16)(PowRxchar[temp1+Pst_INDEX])<<8)+(U16)(PowRxchar[temp1+Pst_INDEX+1]);// -----------------待补充
+        ListQC108[num*21+abc*7+6]=((U16)(PowRxchar[temp1+Pst_INDEX+2])<<8)+(U16)(PowRxchar[temp1+Pst_INDEX+3]);// -----------------待补充
       }
     
     YADA_C0(DMMPowerInfoAdr,ListQC108,9*7);
@@ -356,7 +357,7 @@ void GUI_VIEW_ListQuality() // wk --> 电能质量参数
 void GUI_VIEW_ListQuality2(U8 U_DISK)
 {
 #if 1 // wk --> 
-  U16 BlockC108[5*3*7]={0};
+  U16 BlockC108[5*2*7]={0};
   for(int num=0;num<5;num++)
     for(int ui=0;ui<2;ui++)
     {
@@ -1059,7 +1060,7 @@ void GUI_SYS_EVENTSET(void)
         
         shell_ptr->ARGC=5;
         shell_ptr->ARGV[0]="read";
-        shell_ptr->ARGV[1]="sysset.txt";
+        shell_ptr->ARGV[1]="sysevent.txt";
         shell_ptr->ARGV[2]="84";
         shell_ptr->ARGV[3]="begin";
         shell_ptr->ARGV[4]="0";
@@ -1083,10 +1084,10 @@ void GUI_SYS_EVENTSET(void)
         
         shell_ptr->ARGC=5;
         shell_ptr->ARGV[0]="read";
-        shell_ptr->ARGV[1]="sysset.txt";
+        shell_ptr->ARGV[1]="sysevent.txt";
         shell_ptr->ARGV[2]="44";
         shell_ptr->ARGV[3]="begin";
-        shell_ptr->ARGV[4]="26";   // WK @130326  --> 事件设置参数偏移26保存
+        shell_ptr->ARGV[4]="0";   // WK @130326  --> 事件设置参数偏移26保存
         Shell_read_wk(shell_ptr->ARGC, shell_ptr->ARGV,&(SysFlashData[25]));  
 #endif      
         SysSet.SwFlg=0;
@@ -1255,10 +1256,10 @@ void GUI_SYS_EVENTSET(void)
         switch(i)
         {
           case 0:
-           SysFlashData[4*i+25]=(U8)(NumWave*100)%256;
-           SysFlashData[4*i+26]=(U8)((NumWave*100)>>8)%256;
-           SysFlashData[4*i+27]=(U8)((NumWave*100)>>16)%256;
-           SysFlashData[4*i+28]=(U8)((NumWave*100)>>24)%256;
+           SysFlashData[4*i+25]=(U8)(NumWave)%256;
+           SysFlashData[4*i+26]=(U8)((NumWave)>>8)%256;
+           SysFlashData[4*i+27]=(U8)((NumWave)>>16)%256;
+           SysFlashData[4*i+28]=(U8)((NumWave)>>24)%256;
            flg_event[i]=0;
            break;
          case 1:
@@ -1351,7 +1352,7 @@ void GUI_SYS_EVENTSET(void)
     
     shell_ptr->ARGC=4;
     shell_ptr->ARGV[0]="w";
-    shell_ptr->ARGV[1]="sysset.txt";
+    shell_ptr->ARGV[1]="sysevent.txt";
     shell_ptr->ARGV[2]="begin";
     shell_ptr->ARGV[3]="0";
     Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,84,SysFlashSave);
@@ -1380,9 +1381,9 @@ void GUI_SYS_EVENTSET(void)
     
     shell_ptr->ARGC=4;
     shell_ptr->ARGV[0]="w";
-    shell_ptr->ARGV[1]="sysset.txt";
+    shell_ptr->ARGV[1]="sysevent.txt";
     shell_ptr->ARGV[2]="begin";
-    shell_ptr->ARGV[3]="26";  // WK @130326 --> 偏移 26  注意：偏移25时，初始上电时，波形个数为2.55，因此该到了偏移26
+    shell_ptr->ARGV[3]="0";  // WK @130326 --> 偏移 26  注意：偏移25时，初始上电时，波形个数为2.55，因此该到了偏移26
     Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,44,&(SysFlashSave[25]));
     
     shell_ptr->ARGC=2;

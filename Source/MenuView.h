@@ -30,7 +30,7 @@
 #define VEC_INDEX 1940   //电压相角的初始下标
 #define Pst_INDEX 1964      //APst-BPst-CPst-APlt-BPlt-CPlt-ε
 #define UNBALANCED_INDEX 1988 //U-电压不平衡度、ABC(幅值相位)零、正、负，εI，ABC零、正、负
-#define WAVEUI_INDEX 2140   //采样波形的初始下标
+#define WAVEUI_INDEX 2052   //采样波形的初始下标
 //使用C108指令显示浮点型数据时的格式控制
 #define C108Mode_64 0x6404
 #define C108FC_W  0xffff
@@ -85,7 +85,7 @@ MenuV_EXT int *NFBAddr;//(char*)0x1880
 MenuV_EXT char *SysSetAddr;//系统设置芯片内部flash入口地址定义
 
 
-MenuV_EXT U8 SysFlashData[84];   //系统设置的数据的临时参数
+MenuV_EXT U8 SysFlashData[99];   //系统设置的数据的临时参数
 MenuV_EXT U8 SysFlashSave[84];   //wk @130326 -->写入Flash的系统设置参数
 MenuV_EXT U8 NPage[115]; //写入芯片flash有关的数组。NPage[0~99]为事件nandflash的页值，NPage[100]为事件总次数，NPage[101~114]为各类事件次数
 MenuV_EXT U16 NBlock[100]; //写入芯片flash有关的数组。nandflash的block数
