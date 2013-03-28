@@ -10,8 +10,8 @@
 
 #define UIS_SIZE 240               //发送的波形采样数据总数
 #define size_UI 100               //波形采样数据各相总数
-#define Vec_X0 187               //向量图的坐标原点X坐标
-#define Vec_Y0 240               //向量图的坐标原点X坐标
+#define Vec_X0 170               //向量图的坐标原点X坐标
+#define Vec_Y0 236               //向量图的坐标原点X坐标
 #define Vec_R0 165                //向量图的半径
 #define PI 3.14
 #define D_y1 1
@@ -30,7 +30,7 @@
 #define VEC_INDEX 1940   //电压相角的初始下标
 #define Pst_INDEX 1964      //APst-BPst-CPst-APlt-BPlt-CPlt-ε
 #define UNBALANCED_INDEX 1988 //U-电压不平衡度、ABC(幅值相位)零、正、负，εI，ABC零、正、负
-#define WAVEUI_INDEX 2052   //采样波形的初始下标
+#define WAVEUI_INDEX 2052+112   //采样波形的初始下标
 //使用C108指令显示浮点型数据时的格式控制
 #define C108Mode_64 0x6404
 #define C108FC_W  0xffff
@@ -101,7 +101,7 @@ MenuV_EXT void Write_WFlash(U16 DataIn[],U8 Num,int* Flash_ptr);
 #define EVESEND_FLAG 85
 
 /*WK @130326 --> 事件限值宏定义 */
-/* wk @130326 --> 扩大100倍 */
+/* wk @130326 --> 扩大了100倍 */
 #define NumWave 10000
 MenuV_EXT U16 DotWave ;
 #define UDeviation 220*7  

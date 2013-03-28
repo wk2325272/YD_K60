@@ -20,7 +20,7 @@
 #define _SPIDMADATA_DBUG_  // 是否有 DBUG 输出信息
 
 //U8 BufRxchar[ARRAY_SIZE]= {0};//转存数组，仅在此C文件中使用
-U8 BufRxchar[2700]= {0};// wk -->转存数组，仅在此C文件中使用
+U8 BufRxchar[3000]= {0};// wk -->转存数组，仅在此C文件中使用
 U8 PowRxchar[Pow_SIZE]= {0}; //去除起始符结束符的有效数据，通信协议中的数据长度减去结束符
 U8 EvntRxchar[Evnt_SIZE]= {0};
 U8 SPIRxCnt=0;   //SPI接收标志，作用域在此文件
@@ -53,8 +53,9 @@ void spi2_dma_int(void)
 // @20130312 --> wk
 //  spi_rw.BUFFER_LENGTH = 1; //初始化 spi_rw结构体数据长度
   /**************************** spi2 configure *************************/
-  
+#ifdef _SPIDBG_ 
     printf("\n-------------- Int SPI2 configure --------------\n\n");
+#endif
 //     /* Open the SPI driver */
    spifd_2 = fopen(TEST_CHANNEL_INT2,NULL);
      
@@ -69,9 +70,13 @@ void spi2_dma_int(void)
       param = SPI_CLK_POL_PHA_MODE1;
    if (SPI_OK == ioctl (spifd_2, IO_IOCTL_SPI_SET_MODE, &param))
    {
+#ifdef _SPIDBG_
       printf ("SPI2 is OK!\n");
+#endif
    } else {
+#ifdef _SPIDBG_
       printf ("ERROR\n");
+#endif
    }
 
    /* Set big endian */
@@ -79,28 +84,42 @@ void spi2_dma_int(void)
 //   printf ("Setting endian to %s ... ", param == SPI_DEVICE_BIG_ENDIAN ? "SPI_DEVICE_BIG_ENDIAN" : "SPI_DEVICE_LITTLE_ENDIAN");
    if (SPI_OK == ioctl (spifd_2, IO_IOCTL_SPI_SET_ENDIAN, &param))
    {
+#ifdef _SPIDBG_
       printf ("OK\n");
+#endif   
    } else {
+#ifdef _SPIDBG_     
       printf ("ERROR\n");
+#endif      
    }
       /* Set transfer mode */
    param = SPI_DEVICE_SLAVE_MODE;
 //   printf ("Setting SPI2 transfer mode to %s ... ", device_mode[param]);
    if (SPI_OK == ioctl (spifd_2, IO_IOCTL_SPI_SET_TRANSFER_MODE, &param))
    {
+#ifdef _SPIDBG_      
       printf ("OK\n");
+#endif     
    } else {
+#ifdef _SPIDBG_
       printf ("ERROR\n");
+#endif      
    }
    /* Clear statistics */
 //   printf ("Clearing statistics ... ");
    if (SPI_OK == ioctl (spifd_2, IO_IOCTL_SPI_CLEAR_STATS, NULL))
    {
+ #ifdef _SPIDBG_    
       printf ("OK\n");
+ #endif 
    } else {
+ #ifdef _SPIDBG_     
       printf ("ERROR\n");
+  #endif     
    }
+ #ifdef _SPIDBG_  
    printf("\n--------------       End       --------------\n\n");
+ #endif  
    /******************************* spi2 conf end ****************************/
 }
 
@@ -131,13 +150,12 @@ void DMA_RecData_OK
         if(HeadFlg[0]==0x33 && HeadFlg[1]==0x33 && HeadFlg[2]==0x33 && (HeadFlg[3]== 0x44 ||HeadFlg[3]== 0x55))
         {
           if(HeadFlg[3]==0x44)
-//            DataSize=3896-1;  // 3896=spi_len-4;
-            DataSize= Pow_SIZE + 4;  // wk @20130325 --> Pow_SIZE 是去掉数据头和尾的电能质量有效数据
+            DataSize= Pow_SIZE+OffSET-2;  // wk @20130325 -->总的数据量=OffSET+Pow_SIZE，其中OffSET是电能质量数据前的一些标志或是预留
           else
             DataSize= Evnt_SIZE + 4; // wk @20130325 -->
           
           count=5; //  wk --> 数据头已经找到 
-          printf("\n1");
+//          printf("\n1");
         }
         else
         {
@@ -156,12 +174,15 @@ void DMA_RecData_OK
     {
       
        if(HeadFlg[3]==0x44) // wk @20130325 -->
-         for(int i=2;i<Pow_SIZE;i++)
-           PowRxchar[i] = BufRxchar[i];
+         for(int i=0;i<Pow_SIZE;i++)
+         {
+           PowRxchar[i] = BufRxchar[i+OffSET];
+           SPIPowerFlg=1;
+         }
        else
-         for(int i=0;i<Evnt_SIZE;i++)
-           PowRxchar[i] = BufRxchar[i];
-
+           printf("event\n");  // 事件数据还没有处理
+       
+        printf("%x\t%x\n",BufRxchar[0],BufRxchar[1]); // test 
 //        printf("\n2");
         count=0; 
         DataSize=1;

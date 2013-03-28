@@ -175,7 +175,6 @@ void YaDa
 
 void MainLoop()
 {
-//  printf("Dis_PicID=%d\n",Dis_PicID);  // wk --> test
   if (SPIPowerFlg) //接收到电能数据
   {
     if (VIEWHoldFlg == 0)

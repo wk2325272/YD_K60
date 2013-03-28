@@ -9,7 +9,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=-163275596
+Checksum=-1012219190
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -37,6 +37,24 @@ ActionState=1
 TraceBufferSize=0x00010000
 TraceStallIfFIFOFull=0x00000000
 TracePortSize=0x00000004
+[Log file]
+LoggingEnabled=_ 0
+LogFile=_ ""
+Category=_ 0
+[TermIOLog]
+LoggingEnabled=_ 0
+LogFile=_ ""
+[Trace1]
+Enabled=0
+ShowSource=1
+[CallStackLog]
+Enabled=0
+[DriverProfiling]
+Enabled=0
+Mode=1
+Graph=0
+Symbiont=0
+Exclusions=
 [Disassemble mode]
 mode=0
 [Breakpoints2]
@@ -50,15 +68,8 @@ Bp6=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Freescale MQX 3.8\shell\source\shell}.
 Bp7=_ 0 "EMUL_CODE" "{C:\Users\MCD\Desktop}.92.7" 0 0 1 "" 0 "" 0
 Bp8=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Freescale MQX 3.8\shell\source\shell\shell.c}.125.4" 0 0 1 "" 0 "" 0
 Bp9=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Freescale MQX 3.8\shell\source\shell\shell.c}.125.4" 0 0 1 "" 0 "" 0
-Bp10=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Source\LCDUart.c}.185.7" 0 0 1 "" 0 "" 0
+Bp10=_ 0 "EMUL_CODE" "{C:\Users\gans\Desktop}.185.7" 0 0 1 "" 0 "" 0
 Count=11
-[Log file]
-LoggingEnabled=_ 0
-LogFile=_ ""
-Category=_ 0
-[TermIOLog]
-LoggingEnabled=_ 0
-LogFile=_ ""
 [Aliases]
 A0=_ "D:\Freescale\Freescale MQX 3.8\mqx\source\bsp\twrk60n512\init_hw.c" "E:\Freescale\Freescale MQX 3.8\mqx\source\bsp\twrk60n512\init_hw.c"
 A1=_ "D:\Freescale\Freescale MQX 3.8\mqx\source\psp\cortex\cortex_boot.s" "E:\Freescale\Freescale MQX 3.8\mqx\source\psp\cortex\cortex_boot.s"
@@ -66,18 +77,8 @@ A2=_ "D:\Freescale\Freescale MQX 3.8\mqx\source\psp\cortex\dispatch.s" ""
 A3=_ "E:\Freescale\mqx_test\YD_PRJ_NEW_0121206\Source\yada_prj.c" "E:\Freescale\mqx_test\YD_PRJ_NEW_20121206\Source\yada_prj.c"
 A4=_ "E:\Freescale\mqx_test\YD_PRJ_NEW_20130103_b\Source\Source_MQX\USB_File.c" "E:\Freescale\mqx_test\YD_PRJ_NEW_20130125\Source\Source_MQX\USB_File.c"
 A5=_ "E:\Freescale\mqx_test\YD_PRJ_NEW_20130103_b\Source\System.C" "E:\Freescale\mqx_test\YD_PRJ_NEW_20130125\Source\System.C"
-A6=_ "c:\Program Files\Freescale\Freescale MQX 3.8\mfs\source\generic\mfs_cluster.c" "E:\Freescale\Freescale MQX 3.8\mfs\source\generic\mfs_cluster.c"
-A7=_ "c:\Program Files\Freescale\Freescale MQX 3.8\mfs\source\generic\mfs_misc.c" "E:\Freescale\Freescale MQX 3.8\mfs\source\generic\mfs_misc.c"
-Count=8
+A6=_ "L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\System.C" "E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\System.C"
+A7=_ "c:\Program Files\Freescale\Freescale MQX 3.8\mfs\source\generic\mfs_cluster.c" "E:\Freescale\Freescale MQX 3.8\mfs\source\generic\mfs_cluster.c"
+A8=_ "c:\Program Files\Freescale\Freescale MQX 3.8\mfs\source\generic\mfs_misc.c" "E:\Freescale\Freescale MQX 3.8\mfs\source\generic\mfs_misc.c"
+Count=9
 SuppressDialog=1
-[Trace1]
-Enabled=0
-ShowSource=1
-[CallStackLog]
-Enabled=0
-[DriverProfiling]
-Enabled=0
-Mode=1
-Graph=0
-Symbiont=0
-Exclusions=

@@ -11,7 +11,8 @@
 //#define ARRAY_SIZE 2686
 //#define Pow_SIZE  2666
 #define ARRAY_SIZE 1 // wk --> for test
-#define Pow_SIZE  2672
+#define Pow_SIZE  2532+112+16+4//
+#define OffSET 111 // WK --> 用于从BufRxchar中取电能质量数据到PowRxchar中的偏移
 #define Evnt_SIZE 2006
 
 DSPSPI_EXT volatile U8 SPIPowerFlg;//默认值0

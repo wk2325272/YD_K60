@@ -1,44 +1,46 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    26/Mar/2013  17:01:34 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    28/Mar/2013  16:26:39 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\MenuVi /
-//                    ew.c                                                    /
-//    Command line =  L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\MenuVi /
-//                    ew.c -D _DEBUG=1 -lC "L:\git_workspace\YD_PRJ_NEW_20130 /
-//                    323_git_\IAR\twrk60n512\Int Flash Debug\List\" -lA      /
-//                    "L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\twrk60n5 /
-//                    12\Int Flash Debug\List\" --diag_suppress               /
-//                    Pa039,Pa082,Pe186 -o "L:\git_workspace\YD_PRJ_NEW_20130 /
-//                    323_git_\IAR\twrk60n512\Int Flash Debug\Obj\" --no_cse  /
-//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
-//                    --no_clustering --no_scheduling --debug                 /
-//                    --endian=little --cpu=Cortex-M4 -e --fpu=None           /
-//                    --dlib_config "D:\Program Files\IAR Systems\Embedded    /
-//                    Workbench 6.0\arm\INC\c\DLib_Config_Normal.h" -I        /
-//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\tw /
-//                    rk60n512.iar\ -I L:\git_workspace\YD_PRJ_NEW_20130323_g /
-//                    it_\IAR\..\lib\twrk60n512.iar\bsp\ -I                   /
-//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\tw /
-//                    rk60n512.iar\psp\ -I L:\git_workspace\YD_PRJ_NEW_201303 /
-//                    23_git_\IAR\..\lib\twrk60n512.iar\bsp\Generated_Code\   /
-//                    -I L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib /
-//                    \twrk60n512.iar\rtcs\ -I L:\git_workspace\YD_PRJ_NEW_20 /
-//                    130323_git_\IAR\..\lib\twrk60n512.iar\mfs\ -I           /
-//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\tw /
-//                    rk60n512.iar\usb\host\ -I L:\git_workspace\YD_PRJ_NEW_2 /
-//                    0130323_git_\IAR\..\lib\twrk60n512.iar\shell\ -I        /
-//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\tw /
-//                    rk60n512.iar\usb\ -I L:\git_workspace\YD_PRJ_NEW_201303 /
-//                    23_git_\IAR\..\ -I L:\git_workspace\YD_PRJ_NEW_20130323 /
-//                    _git_\IAR\..\Source\Source_MQX\ -I                      /
-//                    "E:\Freescale\Freescale MQX 3.8\shell\source\include\"  /
-//                    -Ol --use_c++_inline                                    /
-//    List file    =  L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\twrk60n51 /
-//                    2\Int Flash Debug\List\MenuView.s                       /
+//    Source file  =  E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\M /
+//                    enuView.c                                               /
+//    Command line =  E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\M /
+//                    enuView.c -D _DEBUG=1 -lC "E:\Freescale\mqx_test\YD_PRJ /
+//                    _NEW_20130323_git_\IAR\twrk60n512\Int Flash             /
+//                    Debug\List\" -lA "E:\Freescale\mqx_test\YD_PRJ_NEW_2013 /
+//                    0323_git_\IAR\twrk60n512\Int Flash Debug\List\"         /
+//                    --diag_suppress Pa039,Pa082,Pe186 -o                    /
+//                    "E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\twr /
+//                    k60n512\Int Flash Debug\Obj\" --no_cse --no_unroll      /
+//                    --no_inline --no_code_motion --no_tbaa --no_clustering  /
+//                    --no_scheduling --debug --endian=little                 /
+//                    --cpu=Cortex-M4 -e --fpu=None --dlib_config             /
+//                    "D:\Program Files\IAR Systems\Embedded Workbench        /
+//                    6.0\arm\INC\c\DLib_Config_Normal.h" -I                  /
+//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\l /
+//                    ib\twrk60n512.iar\ -I E:\Freescale\mqx_test\YD_PRJ_NEW_ /
+//                    20130323_git_\IAR\..\lib\twrk60n512.iar\bsp\ -I         /
+//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\l /
+//                    ib\twrk60n512.iar\psp\ -I E:\Freescale\mqx_test\YD_PRJ_ /
+//                    NEW_20130323_git_\IAR\..\lib\twrk60n512.iar\bsp\Generat /
+//                    ed_Code\ -I E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_g /
+//                    it_\IAR\..\lib\twrk60n512.iar\rtcs\ -I                  /
+//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\l /
+//                    ib\twrk60n512.iar\mfs\ -I E:\Freescale\mqx_test\YD_PRJ_ /
+//                    NEW_20130323_git_\IAR\..\lib\twrk60n512.iar\usb\host\   /
+//                    -I E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\. /
+//                    .\lib\twrk60n512.iar\shell\ -I                          /
+//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\l /
+//                    ib\twrk60n512.iar\usb\ -I E:\Freescale\mqx_test\YD_PRJ_ /
+//                    NEW_20130323_git_\IAR\..\ -I                            /
+//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\S /
+//                    ource\Source_MQX\ -I "E:\Freescale\Freescale MQX        /
+//                    3.8\shell\source\include\" -Ol --use_c++_inline         /
+//    List file    =  E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\twrk /
+//                    60n512\Int Flash Debug\List\MenuView.s                  /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -166,7 +168,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\MenuView.c
+// E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\MenuView.c
 //    1 /*******************************************************************************
 //    2 * File Name        : MenuView.c
 //    3 * Author             : LB&TX
@@ -1353,10 +1355,10 @@ GUI_VIEW_VECT:
           CFI FunCall YADA_40
         BL       YADA_40
 //  147             VI_line[0]=Vec_X0;
-        MOVS     R0,#+187
+        MOVS     R0,#+170
         STRH     R0,[SP, #+24]
 //  148             VI_line[1]=Vec_Y0;
-        MOVS     R0,#+240
+        MOVS     R0,#+236
         STRH     R0,[SP, #+26]
 //  149             VI_line[2]=(U16)(Vec_X0+Vec_R0*cos(Vec_Angle1[i+j*2]*PI/180));
         UXTB     R6,R6            ;; ZeroExt  R6,R6,#+24,#+24
@@ -1381,7 +1383,7 @@ GUI_VIEW_VECT:
           CFI FunCall __aeabi_dmul
         BL       __aeabi_dmul
         MOVS     R2,#+0
-        LDR.W    R3,??DataTable6_8  ;; 0x40676000
+        LDR.W    R3,??DataTable6_8  ;; 0x40654000
           CFI FunCall __aeabi_dadd
         BL       __aeabi_dadd
           CFI FunCall __aeabi_d2iz
@@ -1412,7 +1414,7 @@ GUI_VIEW_VECT:
         MOVS     R2,R0
         MOVS     R3,R1
         MOVS     R0,#+0
-        LDR.W    R1,??DataTable6_9  ;; 0x406e0000
+        LDR.W    R1,??DataTable6_9  ;; 0x406d8000
           CFI FunCall __aeabi_dsub
         BL       __aeabi_dsub
           CFI FunCall __aeabi_d2iz
@@ -1496,7 +1498,7 @@ GUI_VIEW_VECT:
         MOVS     R2,R0
         MOVS     R3,R1
         MOVS     R0,#+0
-        LDR.W    R1,??DataTable6_9  ;; 0x406e0000
+        LDR.W    R1,??DataTable6_9  ;; 0x406d8000
           CFI FunCall __aeabi_dsub
         BL       __aeabi_dsub
           CFI FunCall __aeabi_d2iz
@@ -1521,7 +1523,7 @@ GUI_VIEW_VECT:
         MOVS     R2,R0
         MOVS     R3,R1
         MOVS     R0,#+0
-        LDR.W    R1,??DataTable6_8  ;; 0x40676000
+        LDR.W    R1,??DataTable6_8  ;; 0x40654000
           CFI FunCall __aeabi_dadd
         BL       __aeabi_dadd
           CFI FunCall __aeabi_d2iz
@@ -1578,7 +1580,7 @@ GUI_VIEW_VECT:
         ADD      R3,SP,#+92
         MOVW     R4,#+13316
         STRH     R4,[R3, R2, LSL #+1]
-//  163             C108Dat[21*k + 7*i + 1] = 460;            //显示相位的X坐标
+//  163             C108Dat[21*k + 7*i + 1] = 455;            //显示相位的X坐标
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         MOVS     R2,#+21
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
@@ -1587,9 +1589,9 @@ GUI_VIEW_VECT:
         MLA      R2,R2,R0,R3
         ADD      R3,SP,#+92
         ADDS     R2,R3,R2, LSL #+1
-        MOV      R3,#+460
+        MOVW     R3,#+455
         STRH     R3,[R2, #+2]
-//  164             C108Dat[21*k + 7*i + 2] = VEC_ORIG_YCOORD + i*43 + k*157;     //Y坐标
+//  164             C108Dat[21*k + 7*i + 2] = VEC_ORIG_YCOORD + i*44 + k*158;     //Y坐标
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         MOVS     R2,#+21
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
@@ -1600,11 +1602,11 @@ GUI_VIEW_VECT:
         ADDS     R2,R3,R2, LSL #+1
         LDRH     R3,[SP, #+20]
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-        MOVS     R4,#+43
+        MOVS     R4,#+44
         MUL      R4,R4,R1
         UXTAH    R3,R4,R3
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        MOVS     R4,#+157
+        MOVS     R4,#+158
         MLA      R3,R4,R0,R3
         STRH     R3,[R2, #+4]
 //  165             C108Dat[21*k + 7*i + 3] = 0xffff;         //白色，下为黑色
@@ -2196,7 +2198,7 @@ GUI_VIEW_ListQuality:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable5_1:
-        DC32     PowRxchar+0x804
+        DC32     PowRxchar+0x874
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -2326,15 +2328,15 @@ GUI_VIEW_ListQuality2:
         BGE.N    ??GUI_VIEW_ListQuality2_3
         MOVS     R1,#+0
         B.N      ??GUI_VIEW_ListQuality2_2
-//  374   YADA_C0(ListUnblanceAdr, BlockC108,15*7);
+//  374   YADA_C0(ListUnblanceAdr, BlockC108,10*7);
 ??GUI_VIEW_ListQuality2_3:
-        MOVS     R2,#+105
+        MOVS     R2,#+70
         ADD      R1,SP,#+0
         MOV      R0,#+32768
           CFI FunCall YADA_C0
         BL       YADA_C0
-//  375   YADA_C108(ListUnblanceAdr,15);
-        MOVS     R1,#+15
+//  375   YADA_C108(ListUnblanceAdr,10);
+        MOVS     R1,#+10
         MOV      R0,#+32768
           CFI FunCall YADA_C108
         BL       YADA_C108
@@ -3076,7 +3078,7 @@ GUI_VIEW_HarmoGraph:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable6_2:
-        DC32     PowRxchar+0x8F4
+        DC32     PowRxchar+0x964
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -3112,13 +3114,13 @@ GUI_VIEW_HarmoGraph:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable6_8:
-        DC32     0x40676000
+        DC32     0x40654000
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable6_9:
-        DC32     0x406e0000
+        DC32     0x406d8000
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0

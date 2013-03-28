@@ -160,8 +160,8 @@ void GUI_VIEW_VECT(void)
         for(U8 i=0; i<3; i++)
         {
             C108Dat[21*k + 7*i + 0] = 0x3404;         //P  显示数据的模式
-            C108Dat[21*k + 7*i + 1] = 460;            //显示相位的X坐标
-            C108Dat[21*k + 7*i + 2] = VEC_ORIG_YCOORD + i*43 + k*157;     //Y坐标
+            C108Dat[21*k + 7*i + 1] = 455;            //显示相位的X坐标
+            C108Dat[21*k + 7*i + 2] = VEC_ORIG_YCOORD + i*44 + k*158;     //Y坐标
             C108Dat[21*k + 7*i + 3] = 0xffff;         //白色，下为黑色
             C108Dat[21*k + 7*i + 4] = 0x0000;
             C108Dat[21*k + 7*i + 5] = (U16)(Vec_Angle[2*i+k]>>16);//两个字节转为一个字
@@ -371,8 +371,8 @@ void GUI_VIEW_ListQuality2(U8 U_DISK)
       BlockC108[num*14+ui*7+5]=0;  // ----------------待补充
       BlockC108[num*14+ui*7+6]=0;  // ----------------待补充
     }
-  YADA_C0(ListUnblanceAdr, BlockC108,15*7);
-  YADA_C108(ListUnblanceAdr,15);
+  YADA_C0(ListUnblanceAdr, BlockC108,10*7);
+  YADA_C108(ListUnblanceAdr,10);
 #endif // wk --> end
 #if 0 //old
   U8 pBuf1[64]={0},i,j,k,index=0;
