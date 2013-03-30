@@ -3692,11 +3692,7 @@
   <group>
     <name>MQX Libraries</name>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\lib\twrk60n512.iar\bsp\bsp_twrk60n512.a</name>
-      <excluded>
-        <configuration>Int Flash Debug</configuration>
-        <configuration>Int Ram Debug</configuration>
-      </excluded>
+      <name>$PROJ_DIR$\..\lib\twrk60n512.iar\bsp\bsp_twrk60n512_130330_no_event_lpt.a</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\lib\twrk60n512.iar\bsp\bsp_twrk60n512_20130103.a</name>
@@ -3742,6 +3738,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$\..\lib\twrk60n512.iar\bsp\bsp_twrk60n512_20130322_no_event.a</name>
+      <excluded>
+        <configuration>Int Flash Debug</configuration>
+      </excluded>
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\..\Freescale MQX 3.8\lib\twrk60n512.iar\bsp\bsp_twrk60n512_d_20121014.a</name>
@@ -3762,17 +3761,7 @@
       </excluded>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\lib\twrk60n512.iar\psp\psp_twrk60n512.a</name>
-      <excluded>
-        <configuration>Int Flash Debug</configuration>
-        <configuration>Int Ram Debug</configuration>
-      </excluded>
-    </file>
-    <file>
       <name>$PROJ_DIR$\..\lib\twrk60n512.iar\psp\psp_twrk60n512_d.a</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\lib\twrk60n512.iar\twrk60n512_lib.txt</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\lib\twrk60n512.iar\bsp\wk_bsp_twrk60n512_d.a</name>

@@ -68,3 +68,26 @@ E:\Freescale\Freescale MQX 3.8\shell\source\include
 目前通信协议：
 4（数据头）+1（K60的DMA启动一次，修改DMA的接收寄存器接收数据长度）+111（未知）+2052（电能质量数据）+112（未知）+480（波形数据）+12（电流放大倍数）+4（空）+4（数据尾）
 2、事件数据还没有处理
+
+2013-03-30:定时器 LPT测试完成
+测试过程：
+1、从MQX3.8中拷贝如下三个文件到MQX3.81中：timer_lpt.c、timer_lpt.h、timer_lpt_kinetis.c（位置在/mqx/source/io/timer中的某个位置，自己定义即可）
+2、重新编译库文件
+3、在项目工程中安装 LPT以及编写回调函数
+安装：
+#define LPT_FLAG_CLOCK_SOURCE_LPO           (0x00000002) 
+_lpt_install (0,3 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO, 11, timer_isr, TRUE);
+回调函数：
+static void timer_isr
+    (
+        pointer parameter
+    )
+{
+    uint_32 timer = (uint_32)parameter;
+    /* Stop the timer */
+    _lpt_run (timer, FALSE);
+    _lpt_clear_int (timer);
+    printf("\nhellow\n");    
+    _lpt_init(0,2 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO,TRUE);
+}
+

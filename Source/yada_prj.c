@@ -20,6 +20,7 @@
 #define _GUI_DBUG_
 /* Task IDs */
 #define RS232_TASK 5
+#define LPT_FLAG_CLOCK_SOURCE_LPO           (0x00000002) // wk @130330 --> test timer
 
 volatile U8 RefreshFlg; // 页面刷新标志
 U8 U_FLAG = 0;
@@ -49,6 +50,31 @@ void int_callback(void)
   _event_set(ppin2_event,0x04);
   
   printf("Switch2 is pressed(int mode)!\n");
+}
+/*******************************************************************************
+** Function Name	：timser_isr
+** Input		：device num of timer
+** Return		：void
+** Author		：wk
+** Version	：v1.0
+** Date		：130330
+** Dessription	：LPT 定时器中断函数入口
+** Reverse	：
+*******************************************************************************/
+static void timer_isr
+    (
+        pointer parameter
+    )
+{
+    uint_32 timer = (uint_32)parameter;
+    
+    /* Stop the timer */
+    _lpt_run (timer, FALSE);
+    _lpt_clear_int (timer);
+
+    printf("\nhellow\n");
+    
+    _lpt_init(0,2 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO,TRUE);
 }
 
 /*
@@ -142,11 +168,8 @@ void YaDa
       shell_ptr->ARGV[0]="mkdir";
       shell_ptr->ARGV[1]="sysset"; 
       Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
-//      char_ptr buf_mkdir[]={"mkdir","sysset"};
-//      Shell_mkdir(2,buf_mkdir);
       File_flg=1;
     }
-////    Shell_cd(2,buf_mkdir);
   /* Test end */
   
   /* button1 into interrupt for shell or maingui task change */
@@ -160,6 +183,9 @@ void YaDa
          ioctl(port_file4, GPIO_IOCTL_SET_IRQ_FUNCTION, (pointer)int_callback);        
   /* end */
  
+  /* wk @130330 -->timer of lpt */
+   _lpt_install (0,3 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO, 11, timer_isr, TRUE);//2 * 1000000  --> 2秒     
+  /* wk @130330 -->timer end */
   while(1)
   {
     MainLoop(); //循环主程序

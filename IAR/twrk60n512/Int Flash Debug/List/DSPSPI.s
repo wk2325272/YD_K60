@@ -1,45 +1,44 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    28/Mar/2013  16:16:12 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    30/Mar/2013  18:18:49 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\D /
-//                    SPSPI.c                                                 /
-//    Command line =  E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\D /
-//                    SPSPI.c -D _DEBUG=1 -lC "E:\Freescale\mqx_test\YD_PRJ_N /
-//                    EW_20130323_git_\IAR\twrk60n512\Int Flash Debug\List\"  /
-//                    -lA "E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR /
-//                    \twrk60n512\Int Flash Debug\List\" --diag_suppress      /
-//                    Pa039,Pa082,Pe186 -o "E:\Freescale\mqx_test\YD_PRJ_NEW_ /
-//                    20130323_git_\IAR\twrk60n512\Int Flash Debug\Obj\"      /
-//                    --no_cse --no_unroll --no_inline --no_code_motion       /
-//                    --no_tbaa --no_clustering --no_scheduling --debug       /
+//    Source file  =  L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\DSPSPI /
+//                    .c                                                      /
+//    Command line =  L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\DSPSPI /
+//                    .c -D _DEBUG=1 -lC "L:\git_workspace\YD_PRJ_NEW_2013032 /
+//                    3_git_\IAR\twrk60n512\Int Flash Debug\List\" -lA        /
+//                    "L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\twrk60n5 /
+//                    12\Int Flash Debug\List\" --diag_suppress               /
+//                    Pa039,Pa082,Pe186 -o "L:\git_workspace\YD_PRJ_NEW_20130 /
+//                    323_git_\IAR\twrk60n512\Int Flash Debug\Obj\" --no_cse  /
+//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
+//                    --no_clustering --no_scheduling --debug                 /
 //                    --endian=little --cpu=Cortex-M4 -e --fpu=None           /
 //                    --dlib_config "D:\Program Files\IAR Systems\Embedded    /
 //                    Workbench 6.0\arm\INC\c\DLib_Config_Normal.h" -I        /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\l /
-//                    ib\twrk60n512.iar\ -I E:\Freescale\mqx_test\YD_PRJ_NEW_ /
-//                    20130323_git_\IAR\..\lib\twrk60n512.iar\bsp\ -I         /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\l /
-//                    ib\twrk60n512.iar\psp\ -I E:\Freescale\mqx_test\YD_PRJ_ /
-//                    NEW_20130323_git_\IAR\..\lib\twrk60n512.iar\bsp\Generat /
-//                    ed_Code\ -I E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_g /
-//                    it_\IAR\..\lib\twrk60n512.iar\rtcs\ -I                  /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\l /
-//                    ib\twrk60n512.iar\mfs\ -I E:\Freescale\mqx_test\YD_PRJ_ /
-//                    NEW_20130323_git_\IAR\..\lib\twrk60n512.iar\usb\host\   /
-//                    -I E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\. /
-//                    .\lib\twrk60n512.iar\shell\ -I                          /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\l /
-//                    ib\twrk60n512.iar\usb\ -I E:\Freescale\mqx_test\YD_PRJ_ /
-//                    NEW_20130323_git_\IAR\..\ -I                            /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\S /
-//                    ource\Source_MQX\ -I "E:\Freescale\Freescale MQX        /
-//                    3.8\shell\source\include\" -Ol --use_c++_inline         /
-//    List file    =  E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\twrk /
-//                    60n512\Int Flash Debug\List\DSPSPI.s                    /
+//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\tw /
+//                    rk60n512.iar\ -I L:\git_workspace\YD_PRJ_NEW_20130323_g /
+//                    it_\IAR\..\lib\twrk60n512.iar\bsp\ -I                   /
+//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\tw /
+//                    rk60n512.iar\psp\ -I L:\git_workspace\YD_PRJ_NEW_201303 /
+//                    23_git_\IAR\..\lib\twrk60n512.iar\bsp\Generated_Code\   /
+//                    -I L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib /
+//                    \twrk60n512.iar\rtcs\ -I L:\git_workspace\YD_PRJ_NEW_20 /
+//                    130323_git_\IAR\..\lib\twrk60n512.iar\mfs\ -I           /
+//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\tw /
+//                    rk60n512.iar\usb\host\ -I L:\git_workspace\YD_PRJ_NEW_2 /
+//                    0130323_git_\IAR\..\lib\twrk60n512.iar\shell\ -I        /
+//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\tw /
+//                    rk60n512.iar\usb\ -I L:\git_workspace\YD_PRJ_NEW_201303 /
+//                    23_git_\IAR\..\ -I L:\git_workspace\YD_PRJ_NEW_20130323 /
+//                    _git_\IAR\..\Source\Source_MQX\ -I                      /
+//                    "E:\Freescale\Freescale MQX 3.8\shell\source\include\"  /
+//                    -Ol --use_c++_inline                                    /
+//    List file    =  L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\twrk60n51 /
+//                    2\Int Flash Debug\List\DSPSPI.s                         /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -109,7 +108,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\DSPSPI.c
+// L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\DSPSPI.c
 //    1 /*******************************************************************************
 //    2 * File Name        : DSPSPI.c
 //    3 * Author             : LB&TX
@@ -536,13 +535,13 @@ DMA_RecData_OK:
         ADDS     R0,R0,#+1
         B.N      ??DMA_RecData_OK_8
 //  182        else
-//  183            printf("event\n");
+//  183            printf("event\n");  // 事件数据还没有处理
 ??DMA_RecData_OK_7:
         LDR.N    R0,??DataTable2_10
           CFI FunCall _io_printf
         BL       _io_printf
 //  184        
-//  185          printf("%x\t%x\n",BufRxchar[0],BufRxchar[1]);
+//  185         printf("%x\t%x\n",BufRxchar[0],BufRxchar[1]); // test 
 ??DMA_RecData_OK_9:
         LDR.N    R0,??DataTable2_6
         LDRB     R2,[R0, #+1]
