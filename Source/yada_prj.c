@@ -5,6 +5,7 @@
 #include <string.h>
 #include "shell.h" // shell function
 #include "sh_prv.h"// shell function
+#include <mfs.h>  // wk @130330 --> test mfs func
 
 #include "System.h"
 /* application *.h */
@@ -39,7 +40,9 @@ extern void SPIDMA_Task( uint_32 param);
 extern void sdcard_task(uint_32 temp);
 extern void PIN2(uint_32 temp);
 extern void mem_flash_app(uint_32 temp);
+extern void tcp_socket_task( uint_32 val);
 //void LCDTouchSel(uint_32 param);
+
 void flg_int();
 
 /*  pin2 int callback function */
@@ -72,7 +75,7 @@ static void timer_isr
     _lpt_run (timer, FALSE);
     _lpt_clear_int (timer);
 
-    printf("\nhellow\n");
+//    printf("\nhellow\n");
     
     _lpt_init(0,2 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO,TRUE);
 }
@@ -91,6 +94,7 @@ const TASK_TEMPLATE_STRUCT  MQX_template_list[] =    //  | MQX_TIME_SLICE_TASK
    {2,  Shell_Task, 4000L,  12, "Shell_Task",   MQX_AUTO_START_TASK, 0,     1000 },  //  | MQX_TIME_SLICE_TASK
    
    {3,  FTP_task,   2000,   9L,   "FTP_Task",     MQX_AUTO_START_TASK, 0,     0 },
+   {4,  tcp_socket_task,   3000,   9L,   "tcp_socket_task",     0, 0,     0 },
    {5,  USB_task,   5200L,  8L,   "USB_Task",     MQX_AUTO_START_TASK, 0,     0 },
    {6,  mem_flash_app, 4000L,  8L,   "Flash_Task",     MQX_AUTO_START_TASK, 0,     0 },
    
@@ -134,12 +138,12 @@ void YaDa
   RefreshFlg = 0; //页面无刷新
   
   /* test function of USB */  // wk --> for test  2013-02-28
-//  char_ptr create[]={"test","kkM2.txt"},write[]={"write","kkM2.txt","6"};  // wk --> test array of USB
+  char_ptr create[]={"test","kkM2.txt"},write[]={"write","kkM2.txt","6"};  // wk --> test array of USB
 //  char_ptr buf[]={"test","kkM1.txt","6","begin","5","123456"};
 //  char_ptr buf_1[]={"test","kkM4.txt","begin","5"};
 //  uchar data[]={1,2,3,4,5,6};
-////  Shell_create(2,create); 
-////  Shell_write(3,write); 
+  Shell_create(2,create); 
+  Shell_write(3,write);   
 ////  Shell_write_buf(6,buf);
 //  Shell_write_binary(4,buf_1,6,data);
 //  /* read test */
@@ -171,7 +175,34 @@ void YaDa
       File_flg=1;
     }
   /* Test end */
-  
+    /*wk@130330 -->  test mfs function */
+    MQX_FILE_PTR mfs_fd_ptr;
+    mfs_fd_ptr = fopen("f:",NULL);
+    uchar result;   
+//    char pathname[261];
+//    ioctl(mfs_fs_ptr, IO_IOCTL_GET_CURRENT_DIR,(uint_32_ptr) pathname);
+//    printf("The current directory is: %s\n", pathname);   
+    uint_64 space_fr,space;
+    result= ioctl(mfs_fd_ptr,IO_IOCTL_FREE_SPACE,&space_fr);
+    printf("\nspace=%d\tresult=%d\n",space_fr,result);
+    
+    result=ioctl(mfs_fd_ptr,IO_IOCTL_GET_CLUSTER_SIZE,&space );
+    printf("\nspace=%d\tresult=%d\n",space,result);
+    
+    SHELL_CONTEXT_PTR    shell_ptr;
+    shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
+    _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
+    
+    shell_ptr->ARGC = 2;
+    shell_ptr->ARGV[0]="cd";
+    shell_ptr->ARGV[1]="f:\\sysset"; 
+    Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+              
+    shell_ptr->ARGC=1;
+    shell_ptr->ARGV[0]="pwd";
+    Shell_pwd(shell_ptr->ARGC, shell_ptr->ARGV);
+    /* wk --> mfs func test end */
+    
   /* button1 into interrupt for shell or maingui task change */
    GPIO_PIN_STRUCT pins_int[] = {
             BSP_BUTTON1 | GPIO_PIN_IRQ_RISING ,
@@ -182,10 +213,10 @@ void YaDa
          port_file4 = fopen("gpio:read", (char_ptr) &pins_int );
          ioctl(port_file4, GPIO_IOCTL_SET_IRQ_FUNCTION, (pointer)int_callback);        
   /* end */
- 
   /* wk @130330 -->timer of lpt */
    _lpt_install (0,3 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO, 11, timer_isr, TRUE);//2 * 1000000  --> 2秒     
   /* wk @130330 -->timer end */
+   
   while(1)
   {
     MainLoop(); //循环主程序

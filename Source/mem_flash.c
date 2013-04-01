@@ -86,6 +86,12 @@ void mem_flash_app
     /* wk --> open flash device */
     flashx_handle = fopen(FLASH_NAME_B, NULL); // "flashx:bank0"
     
+     /*wk@130330 -->  test mfs function */
+    uchar result;   
+//    char pathname[261];
+//    ioctl(mfs_fs_ptr, IO_IOCTL_GET_CURRENT_DIR,(uint_32_ptr) pathname);
+//    printf("The current directory is: %s\n", pathname);  
+   
     if (flashx_handle == NULL) {
       printf("\nUnable to open file %s", FLASH_NAME_B);
       _task_block();

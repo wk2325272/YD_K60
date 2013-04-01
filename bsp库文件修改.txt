@@ -1,0 +1,23 @@
+bsp_twrk60n512_20130125.a:
+修改：
+1、spi_dma_dspi.c-->_dspi_dma_enable()
+    /* wk --> make spi interrupt mode while it is default as "ispi" */
+    // default
+//    dspi_ptr->RSER |= SPI_RSER_RFOF_RE_MASK | SPI_RSER_TFUF_RE_MASK | SPI_RSER_RFDF_RE_MASK | SPI_RSER_TFFF_RE_MASK | SPI_RSER_RFDF_DIRS_MASK | SPI_RSER_TFFF_DIRS_MASK;
+    // wk 
+    dspi_ptr->RSER |= SPI_RSER_RFOF_RE_MASK | SPI_RSER_TFUF_RE_MASK | SPI_RSER_RFDF_RE_MASK | SPI_RSER_TFFF_RE_MASK ;
+    /* wk --> end @20130125 */
+
+
+问题：
+在"ispi2:"模式下直接关掉DMA启动标志而改用中断会出问题，此方案宣告失败，原因待分析已解决之。！！！！！
+
+
+bsp_twrk60n512_20130301.a:  2013-03-01
+
+#define BSPCFG_ENABLE_FLASHX     1 // modified @2013-03-01
+
+
+bsp_twrk60n512_20130322_no_event.a:
+
+将DMA中断中事件唤醒应用程序改到直接调用（BUG:用事件时，只能进一次中断应用程序。）

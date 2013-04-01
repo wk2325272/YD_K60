@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    30/Mar/2013  18:18:50 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    01/Apr/2013  14:27:43 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -96,6 +96,7 @@
         EXTERN _RTCS_socket_part_init
         EXTERN _RTCS_socket_part_max
         EXTERN _io_printf
+        EXTERN _task_create
 
         PUBLIC FTP_task
         PUBLIC FTPd_commands
@@ -274,10 +275,17 @@ FTP_task:
         LDR.N    R0,??FTP_task_0+0x3C
           CFI FunCall FTPd_init
         BL       FTPd_init
-//   55    }
-//   56 }
+//   55    _task_create(0, 4, 0);  // wk --> 建立 TCP/IP socket 任务
+        MOVS     R2,#+0
+        MOVS     R1,#+4
+        MOVS     R0,#+0
+          CFI FunCall _task_create
+        BL       _task_create
+//   56    }
+//   57 }
 ??FTP_task_1:
         POP      {R0-R6,PC}       ;; return
+        Nop      
         DATA
 ??FTP_task_0:
         DC32     0x317b48f8
@@ -297,10 +305,10 @@ FTP_task:
         DC32     RTCS_IF_ENET
         DC32     `?<Constant "FTP_server">`
           CFI EndBlock cfiBlock0
-//   57 
+//   58 
 
         SECTION `.data`:DATA:REORDER:NOROOT(2)
-//   58 char FTPd_rootdir[] = {"u:\\"};//dx  c:
+//   59 char FTPd_rootdir[] = {"u:\\"};//dx  c:
 FTPd_rootdir:
         DATA
         DC8 "u:\\"
@@ -515,7 +523,7 @@ FTPd_rootdir:
         DC8 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-//   59 const FTPd_COMMAND_STRUCT FTPd_commands[] = {
+//   60 const FTPd_COMMAND_STRUCT FTPd_commands[] = {
 FTPd_commands:
         DATA
         DC32 `?<Constant "abor">`, FTPd_unimplemented, `?<Constant "acct">`
@@ -548,47 +556,47 @@ FTPd_commands:
         SECTION_TYPE SHT_PROGBITS, 0
 
         END
-//   60 
 //   61 
-//   62    { "abor", FTPd_unimplemented },
-//   63    { "acct", FTPd_unimplemented },
-//   64    { "cdup", FTPd_cdup },
-//   65    { "cwd",  FTPd_cd   },        
-//   66    { "feat", FTPd_feat },       
-//   67    { "help", FTPd_help },       
-//   68    { "dele", FTPd_dele },       
-//   69    { "list", FTPd_list },       
-//   70    { "mkd",  FTPd_mkdir},       
-//   71    { "noop", FTPd_noop },
-//   72    { "nlst", FTPd_nlst },       
-//   73    { "opts", FTPd_opts },
-//   74    { "pass", FTPd_pass },
-//   75    { "pasv", FTPd_pasv },
-//   76    { "port", FTPd_port },
-//   77    { "pwd",  FTPd_pwd  },       
-//   78    { "quit", FTPd_quit },
-//   79    { "rnfr", FTPd_rnfr },
-//   80    { "rnto", FTPd_rnto },
-//   81    { "retr", FTPd_retr },
-//   82    { "stor", FTPd_stor },
-//   83    { "rmd",  FTPd_rmdir},       
-//   84    { "site", FTPd_site },
-//   85    { "size", FTPd_size },
-//   86    { "syst", FTPd_syst },
-//   87    { "type", FTPd_type },
-//   88    { "user", FTPd_user },
-//   89    { "xcwd", FTPd_cd    },        
-//   90    { "xmkd", FTPd_mkdir },       
-//   91    { "xpwd", FTPd_pwd   },       
-//   92    { "xrmd", FTPd_rmdir },       
-//   93    { NULL,   NULL } 
-//   94 };
+//   62 
+//   63    { "abor", FTPd_unimplemented },
+//   64    { "acct", FTPd_unimplemented },
+//   65    { "cdup", FTPd_cdup },
+//   66    { "cwd",  FTPd_cd   },        
+//   67    { "feat", FTPd_feat },       
+//   68    { "help", FTPd_help },       
+//   69    { "dele", FTPd_dele },       
+//   70    { "list", FTPd_list },       
+//   71    { "mkd",  FTPd_mkdir},       
+//   72    { "noop", FTPd_noop },
+//   73    { "nlst", FTPd_nlst },       
+//   74    { "opts", FTPd_opts },
+//   75    { "pass", FTPd_pass },
+//   76    { "pasv", FTPd_pasv },
+//   77    { "port", FTPd_port },
+//   78    { "pwd",  FTPd_pwd  },       
+//   79    { "quit", FTPd_quit },
+//   80    { "rnfr", FTPd_rnfr },
+//   81    { "rnto", FTPd_rnto },
+//   82    { "retr", FTPd_retr },
+//   83    { "stor", FTPd_stor },
+//   84    { "rmd",  FTPd_rmdir},       
+//   85    { "site", FTPd_site },
+//   86    { "size", FTPd_size },
+//   87    { "syst", FTPd_syst },
+//   88    { "type", FTPd_type },
+//   89    { "user", FTPd_user },
+//   90    { "xcwd", FTPd_cd    },        
+//   91    { "xmkd", FTPd_mkdir },       
+//   92    { "xpwd", FTPd_pwd   },       
+//   93    { "xrmd", FTPd_rmdir },       
+//   94    { NULL,   NULL } 
+//   95 };
 // 
 //   4 bytes in section .data
 // 628 bytes in section .rodata
-// 232 bytes in section .text
+// 244 bytes in section .text
 // 
-// 232 bytes of CODE  memory
+// 244 bytes of CODE  memory
 // 628 bytes of CONST memory
 //   4 bytes of DATA  memory
 //

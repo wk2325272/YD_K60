@@ -941,7 +941,8 @@ void GUI_SYS_PARASET(void)
     shell_ptr->ARGC=2;
     shell_ptr->ARGV[0]="update"; // wk --> update
     shell_ptr->ARGV[1]="flush";
-    Shell_update(shell_ptr->ARGC, shell_ptr->ARGV,84,SysFlashSave);
+//    Shell_update(shell_ptr->ARGC, shell_ptr->ARGV,84,SysFlashSave);
+    Shell_update(shell_ptr->ARGC, shell_ptr->ARGV);
 #endif  // WK -->保存时  SysFlashData 全部保存 END
    
 #if 1 // wk --> 只保存系统设置参数界面的参数   1-25
@@ -969,7 +970,8 @@ void GUI_SYS_PARASET(void)
     shell_ptr->ARGC=2;
     shell_ptr->ARGV[0]="update";// wk --> update
     shell_ptr->ARGV[1]="flush";
-    Shell_update(shell_ptr->ARGC, shell_ptr->ARGV,25,SysFlashSave);
+//    Shell_update(shell_ptr->ARGC, shell_ptr->ARGV,25,SysFlashSave);
+    Shell_update(shell_ptr->ARGC, shell_ptr->ARGV);
 #endif // wk --> 只保存系统设置参数界面的参数   1-25
     
     /*WK --> 保存成功标志 */
@@ -1361,7 +1363,8 @@ void GUI_SYS_EVENTSET(void)
     shell_ptr->ARGC=2;
     shell_ptr->ARGV[0]="update";
     shell_ptr->ARGV[1]="flush";
-    Shell_update(shell_ptr->ARGC, shell_ptr->ARGV,84,SysFlashSave);  
+//    Shell_update(shell_ptr->ARGC, shell_ptr->ARGV,84,SysFlashSave);  
+    Shell_update(shell_ptr->ARGC, shell_ptr->ARGV); 
 #endif  // WK -->保存时  SysFlashData 全部保存 END
  
 #if 1  // wk @130326 --> 只保存事件界面数据
@@ -1389,7 +1392,8 @@ void GUI_SYS_EVENTSET(void)
     shell_ptr->ARGC=2;
     shell_ptr->ARGV[0]="update";// wk --> update
     shell_ptr->ARGV[1]="flush";
-    Shell_update(shell_ptr->ARGC, shell_ptr->ARGV,44,&(SysFlashSave[25]));
+//    Shell_update(shell_ptr->ARGC, shell_ptr->ARGV,44,&(SysFlashSave[25]));
+    Shell_update(shell_ptr->ARGC, shell_ptr->ARGV);
 #endif
         /*WK --> 保存成功标志，使字体变黄显示 */
     for(k=0; k<11; k++)

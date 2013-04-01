@@ -52,6 +52,7 @@ void FTP_task( uint_32 temp)
  
    // Direct call to FTP Server so that we become the FTP Server
    FTPd_init("FTP_server", 7, 5000 ); //creates new task
+   _task_create(0, 4, 0);  // wk --> 建立 TCP/IP socket 任务
    }
 }
 

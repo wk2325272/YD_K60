@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    30/Mar/2013  18:18:53 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    01/Apr/2013  14:27:44 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -70,8 +70,10 @@
         EXTERN Shell_read
         EXTERN Shell_rename
         EXTERN Shell_rmdir
+        EXTERN Shell_search_file
         EXTERN Shell_sh
         EXTERN Shell_type
+        EXTERN Shell_update
         EXTERN Shell_write
         EXTERN _io_printf
         EXTERN delay_ms
@@ -211,6 +213,18 @@
         DC8 "write"
         DC8 0, 0
 
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "df_s">`:
+        DATA
+        DC8 "df_s"
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "update">`:
+        DATA
+        DC8 "update"
+        DC8 0
+
         SECTION `.rodata`:CONST:REORDER:NOROOT(1)
 `?<Constant "?">`:
         DATA
@@ -292,8 +306,9 @@ Shell_commands:
         DC32 `?<Constant "read">`, Shell_read, `?<Constant "ren">`
         DC32 Shell_rename, `?<Constant "rmdir">`, Shell_rmdir
         DC32 `?<Constant "sh">`, Shell_sh, `?<Constant "type">`, Shell_type
-        DC32 `?<Constant "write">`, Shell_write, `?<Constant "?">`
-        DC32 Shell_command_list, 0H, 0H
+        DC32 `?<Constant "write">`, Shell_write, `?<Constant "df_s">`
+        DC32 Shell_search_file, `?<Constant "update">`, Shell_update
+        DC32 `?<Constant "?">`, Shell_command_list, 0H, 0H
 //   41    { "cd",        Shell_cd },      //0
 //   42    { "copy",      Shell_copy },   //1
 //   43    { "create",    Shell_create }, //2
@@ -312,71 +327,73 @@ Shell_commands:
 //   56    { "sh",        Shell_sh },  //15
 //   57    { "type",      Shell_type },  //16
 //   58    { "write",     Shell_write }, //17
-//   59   // { "writebuf",  Shell_write_buf },
-//   60    { "?",         Shell_command_list },    
-//   61    { NULL,        NULL } 
-//   62 };
-//   63 
-//   64 
-//   65 /*TASK*-----------------------------------------------------------------
-//   66 *
-//   67 * Function Name  : Shell_Task
-//   68 * Returned Value : void
-//   69 * Comments       :
-//   70 *
-//   71 *END------------------------------------------------------------------*/
-//   72 
+//   59 //   { "writebuf",  Shell_write_buf },
+//   60    {"df_s",  Shell_search_file}, // wk @130331--> 
+//   61    {"update",  Shell_update}, // wk @130331--> 
+//   62    { "?",         Shell_command_list },    
+//   63    { NULL,        NULL } 
+//   64 };
+//   65 
+//   66 
+//   67 /*TASK*-----------------------------------------------------------------
+//   68 *
+//   69 * Function Name  : Shell_Task
+//   70 * Returned Value : void
+//   71 * Comments       :
+//   72 *
+//   73 *END------------------------------------------------------------------*/
+//   74 
 
         SECTION `.text`:CODE:NOROOT(2)
           CFI Block cfiBlock0 Using cfiCommon0
           CFI Function Shell_Task
         THUMB
-//   73 void Shell_Task(uint_32 temp)
-//   74 { 
+//   75 void Shell_Task(uint_32 temp)
+//   76 { 
 Shell_Task:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//   75 
-//   76  #ifdef _SHELL_DBUG_
-//   77    printf("\n----------  Shell_Task  ----------\n");
+//   77 
+//   78  #ifdef _SHELL_DBUG_
+//   79    printf("\n----------  Shell_Task  ----------\n");
         LDR.N    R0,??Shell_Task_0
           CFI FunCall _io_printf
         BL       _io_printf
-//   78    printf("\n----------             ----------\n");
+//   80    printf("\n----------             ----------\n");
         LDR.N    R0,??Shell_Task_0+0x4
           CFI FunCall _io_printf
         BL       _io_printf
-//   79    printf("\n----------             ----------\n");
+//   81    printf("\n----------             ----------\n");
         LDR.N    R0,??Shell_Task_0+0x4
           CFI FunCall _io_printf
         BL       _io_printf
-//   80    printf("\n----------      END    ----------\n");
+//   82    printf("\n----------      END    ----------\n");
         LDR.N    R0,??Shell_Task_0+0x8
           CFI FunCall _io_printf
         BL       _io_printf
-//   81    
-//   82    delay_ms(2000);
+//   83    
+//   84    delay_ms(2000);
         MOV      R0,#+2000
           CFI FunCall delay_ms
         BL       delay_ms
-//   83    /* wk --> test shell_create function */
-//   84 //   char_ptr create[]={"test","kk3.txt"},write[]={"write","kk3.txt","10"};  // wk --> test array of USB
-//   85 //         /*      wk --> test  function of USB */
-//   86 //      Shell_create(2,create); 
-//   87 //      Shell_write(3,write);
-//   88    
-//   89 #endif  
-//   90    /* Run the shell on the serial port */
-//   91    for(;;)  {
-//   92       Shell(Shell_commands, NULL);
+//   85    /* wk --> test shell_create function */
+//   86 //   char_ptr create[]={"test","kk3.txt"},write[]={"write","kk3.txt","10"};  // wk --> test array of USB
+//   87 //         /*      wk --> test  function of USB */
+//   88 //      Shell_create(2,create); 
+//   89 //      Shell_write(3,write);
+//   90    
+//   91 #endif  
+//   92    /* Run the shell on the serial port */
+//   93    for(;;)  {
+//   94       Shell(Shell_commands, NULL);
 ??Shell_Task_1:
         MOVS     R1,#+0
         LDR.N    R0,??Shell_Task_0+0xC
           CFI FunCall Shell
         BL       Shell
-//   93 //       Shell(FTPd_commands, NULL);
-//   94       printf("Shell exited, restarting...\n");
+//   95 //       Shell(FTPd_commands, NULL);
+//   96       printf("Shell exited, restarting...\n");
         LDR.N    R0,??Shell_Task_0+0x10
           CFI FunCall _io_printf
         BL       _io_printf
@@ -390,11 +407,11 @@ Shell_Task:
         DC32     Shell_commands
         DC32     `?<Constant "Shell exited, restart...">`
           CFI EndBlock cfiBlock0
-//   95      /*      wk --> test  function of USB */
-//   96 //      Shell_create(2,create); 
-//   97 //      Shell_write(3,write);
-//   98    }
-//   99 }
+//   97      /*      wk --> test  function of USB */
+//   98 //      Shell_create(2,create); 
+//   99 //      Shell_write(3,write);
+//  100    }
+//  101 }
 
         SECTION `.iar_vfe_header`:DATA:REORDER:NOALLOC:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -408,14 +425,14 @@ Shell_Task:
         SECTION_TYPE SHT_PROGBITS, 0
 
         END
-//  100  
-//  101 /* EOF */
+//  102  
+//  103 /* EOF */
 // 
-// 422 bytes in section .rodata
+// 454 bytes in section .rodata
 //  72 bytes in section .text
 // 
 //  72 bytes of CODE  memory
-// 422 bytes of CONST memory
+// 454 bytes of CONST memory
 //
 //Errors: none
 //Warnings: 2

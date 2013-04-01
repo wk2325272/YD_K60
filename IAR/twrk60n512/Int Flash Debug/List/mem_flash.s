@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    30/Mar/2013  18:18:55 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    01/Apr/2013  14:27:45 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -209,54 +209,60 @@ mem_flash_app:
         BL       _io_fopen
         MOVS     R4,R0
 //   88     
-//   89     if (flashx_handle == NULL) {
+//   89      /*wk@130330 -->  test mfs function */
+//   90     uchar result;   
+//   91 //    char pathname[261];
+//   92 //    ioctl(mfs_fs_ptr, IO_IOCTL_GET_CURRENT_DIR,(uint_32_ptr) pathname);
+//   93 //    printf("The current directory is: %s\n", pathname);  
+//   94    
+//   95     if (flashx_handle == NULL) {
         CMP      R4,#+0
         BNE.N    ??mem_flash_app_1
-//   90       printf("\nUnable to open file %s", FLASH_NAME_B);
+//   96       printf("\nUnable to open file %s", FLASH_NAME_B);
         LDR.N    R1,??mem_flash_app_0+0xC
         LDR.N    R0,??mem_flash_app_0+0x10
           CFI FunCall _io_printf
         BL       _io_printf
-//   91       _task_block();
+//   97       _task_block();
           CFI FunCall _task_block
         BL       _task_block
         B.N      ??mem_flash_app_2
-//   92    } else {
-//   93       printf("\nFlash file %s opened", FLASH_NAME_B);
+//   98    } else {
+//   99       printf("\nFlash file %s opened", FLASH_NAME_B);
 ??mem_flash_app_1:
         LDR.N    R1,??mem_flash_app_0+0xC
         LDR.N    R0,??mem_flash_app_0+0x14
           CFI FunCall _io_printf
         BL       _io_printf
-//   94    } 
-//   95    
-//   96    ioctl(flashx_handle, FLASH_IOCTL_ENABLE_SECTOR_CACHE, NULL);/////////////////////重要
+//  100    } 
+//  101    
+//  102    ioctl(flashx_handle, FLASH_IOCTL_ENABLE_SECTOR_CACHE, NULL);/////////////////////重要
 ??mem_flash_app_2:
         MOVS     R2,#+0
         MOVW     R1,#+525
         MOVS     R0,R4
           CFI FunCall _io_ioctl
         BL       _io_ioctl
-//   97 //   int len;
-//   98 //   len = write(flashx_handle, "world",strlen("world"));
-//   99 //   fseek(flashx_handle, 0, IO_SEEK_SET);
-//  100 //   
-//  101 //   fseek(flashx_handle, -32, IO_SEEK_END);
-//  102 //   len = write(flashx_handle, "hello",strlen("hello"));
-//  103 
-//  104    /* wk --> 安装分区 */
-//  105     error = _io_part_mgr_install(flashx_handle, flashx_partman_name, 0);// 分区管理
+//  103 //   int len;
+//  104 //   len = write(flashx_handle, "world",strlen("world"));
+//  105 //   fseek(flashx_handle, 0, IO_SEEK_SET);
+//  106 //   
+//  107 //   fseek(flashx_handle, -32, IO_SEEK_END);
+//  108 //   len = write(flashx_handle, "hello",strlen("hello"));
+//  109 
+//  110    /* wk --> 安装分区 */
+//  111     error = _io_part_mgr_install(flashx_handle, flashx_partman_name, 0);// 分区管理
         MOVS     R2,#+0
         ADD      R1,SP,#+8
         MOVS     R0,R4
           CFI FunCall _io_part_mgr_install
         BL       _io_part_mgr_install
         MOVS     R6,R0
-//  106     if (error!= MFS_NO_ERROR)
+//  112     if (error!= MFS_NO_ERROR)
         CMP      R6,#+0
         BEQ.N    ??mem_flash_app_3
-//  107     {
-//  108       printf("\nError installing partition manager: %s", MFS_Error_text((uint_32)error));
+//  113     {
+//  114       printf("\nError installing partition manager: %s", MFS_Error_text((uint_32)error));
         MOVS     R0,R6
           CFI FunCall MFS_Error_text
         BL       MFS_Error_text
@@ -264,29 +270,29 @@ mem_flash_app:
         LDR.N    R0,??mem_flash_app_0+0x18
           CFI FunCall _io_printf
         BL       _io_printf
-//  109       _task_block();
+//  115       _task_block();
           CFI FunCall _task_block
         BL       _task_block
-//  110     }
-//  111     
-//  112     /* Open partition manager */
-//  113     flashx_partman_handle = fopen(flashx_partman_name, NULL);// 打开分区
+//  116     }
+//  117     
+//  118     /* Open partition manager */
+//  119     flashx_partman_handle = fopen(flashx_partman_name, NULL);// 打开分区
 ??mem_flash_app_3:
         MOVS     R1,#+0
         ADD      R0,SP,#+8
           CFI FunCall _io_fopen
         BL       _io_fopen
         MOVS     R5,R0
-//  114     if (flashx_partman_handle == NULL)
+//  120     if (flashx_partman_handle == NULL)
         CMP      R5,#+0
         BNE.N    ??mem_flash_app_4
-//  115     {
-//  116       error = ferror(flashx_partman_handle);
+//  121     {
+//  122       error = ferror(flashx_partman_handle);
         MOVS     R0,R5
           CFI FunCall _io_ferror
         BL       _io_ferror
         MOVS     R6,R0
-//  117       printf("\nError opening partition manager: %s", MFS_Error_text((uint_32)error));
+//  123       printf("\nError opening partition manager: %s", MFS_Error_text((uint_32)error));
         MOVS     R0,R6
           CFI FunCall MFS_Error_text
         BL       MFS_Error_text
@@ -294,39 +300,39 @@ mem_flash_app:
         LDR.N    R0,??mem_flash_app_0+0x1C
           CFI FunCall _io_printf
         BL       _io_printf
-//  118       _task_block();
+//  124       _task_block();
           CFI FunCall _task_block
         BL       _task_block
-//  119     }
-//  120     /* Validate partition 1 */
-//  121     param = 1;
+//  125     }
+//  126     /* Validate partition 1 */
+//  127     param = 1;
 ??mem_flash_app_4:
         MOVS     R0,#+1
         STR      R0,[SP, #+4]
-//  122     error = _io_ioctl(flashx_partman_handle, IO_IOCTL_VAL_PART, &param);// 控制分区
+//  128     error = _io_ioctl(flashx_partman_handle, IO_IOCTL_VAL_PART, &param);// 控制分区
         ADD      R2,SP,#+4
         MOVW     R1,#+291
         MOVS     R0,R5
           CFI FunCall _io_ioctl
         BL       _io_ioctl
         MOVS     R6,R0
-//  123     if (error == MQX_OK)
+//  129     if (error == MQX_OK)
         CMP      R6,#+0
         BNE.N    ??mem_flash_app_5
-//  124     { 
-//  125       /* Install MFS over Flashx driver */
-//  126       error = _io_mfs_install(flashx_partman_handle, flashx_filesystem_name, param);// 安装文件系统，基于分区
+//  130     { 
+//  131       /* Install MFS over Flashx driver */
+//  132       error = _io_mfs_install(flashx_partman_handle, flashx_filesystem_name, param);// 安装文件系统，基于分区
         LDR      R2,[SP, #+4]
         ADD      R1,SP,#+0
         MOVS     R0,R5
           CFI FunCall _io_mfs_install
         BL       _io_mfs_install
         MOVS     R6,R0
-//  127       if (error != MFS_NO_ERROR)
+//  133       if (error != MFS_NO_ERROR)
         CMP      R6,#+0
         BEQ.N    ??mem_flash_app_6
-//  128       {
-//  129         printf("\nError initializing MFS: %s", MFS_Error_text((uint_32)error));
+//  134       {
+//  135         printf("\nError initializing MFS: %s", MFS_Error_text((uint_32)error));
         MOVS     R0,R6
           CFI FunCall MFS_Error_text
         BL       MFS_Error_text
@@ -334,15 +340,15 @@ mem_flash_app:
         LDR.N    R0,??mem_flash_app_0+0x20
           CFI FunCall _io_printf
         BL       _io_printf
-//  130         _task_block();
+//  136         _task_block();
           CFI FunCall _task_block
         BL       _task_block
         B.N      ??mem_flash_app_6
-//  131       }
-//  132     } else
-//  133     { 
-//  134       /* Install MFS over SD card driver */
-//  135       error = _io_mfs_install(flashx_handle, flashx_filesystem_name, (_file_size)0);// 安装文件系统，无分区
+//  137       }
+//  138     } else
+//  139     { 
+//  140       /* Install MFS over SD card driver */
+//  141       error = _io_mfs_install(flashx_handle, flashx_filesystem_name, (_file_size)0);// 安装文件系统，无分区
 ??mem_flash_app_5:
         MOVS     R2,#+0
         ADD      R1,SP,#+0
@@ -350,11 +356,11 @@ mem_flash_app:
           CFI FunCall _io_mfs_install
         BL       _io_mfs_install
         MOVS     R6,R0
-//  136       if (error != MFS_NO_ERROR)
+//  142       if (error != MFS_NO_ERROR)
         CMP      R6,#+0
         BEQ.N    ??mem_flash_app_6
-//  137       {
-//  138         printf("\nError initializing MFS: %s", MFS_Error_text((uint_32)error));
+//  143       {
+//  144         printf("\nError initializing MFS: %s", MFS_Error_text((uint_32)error));
         MOVS     R0,R6
           CFI FunCall MFS_Error_text
         BL       MFS_Error_text
@@ -362,31 +368,31 @@ mem_flash_app:
         LDR.N    R0,??mem_flash_app_0+0x20
           CFI FunCall _io_printf
         BL       _io_printf
-//  139         _task_block();
+//  145         _task_block();
           CFI FunCall _task_block
         BL       _task_block
-//  140       }
-//  141     }
-//  142 
-//  143    /* Open file system */
-//  144    flashx_file_handle = fopen(flashx_filesystem_name, NULL);// 打开文件系统
+//  146       }
+//  147     }
+//  148 
+//  149    /* Open file system */
+//  150    flashx_file_handle = fopen(flashx_filesystem_name, NULL);// 打开文件系统
 ??mem_flash_app_6:
         MOVS     R1,#+0
         ADD      R0,SP,#+0
           CFI FunCall _io_fopen
         BL       _io_fopen
-//  145    error = ferror (flashx_file_handle);
+//  151    error = ferror (flashx_file_handle);
           CFI FunCall _io_ferror
         BL       _io_ferror
         MOVS     R6,R0
-//  146    if ((error != MFS_NO_ERROR) && (error != MFS_NOT_A_DOS_DISK))
+//  152    if ((error != MFS_NO_ERROR) && (error != MFS_NOT_A_DOS_DISK))
         CMP      R6,#+0
         BEQ.N    ??mem_flash_app_7
         MOVW     R0,#+12314
         CMP      R6,R0
         BEQ.N    ??mem_flash_app_7
-//  147    {
-//  148      printf("\nError opening filesystem: %s", MFS_Error_text((uint_32)error));
+//  153    {
+//  154      printf("\nError opening filesystem: %s", MFS_Error_text((uint_32)error));
         MOVS     R0,R6
           CFI FunCall MFS_Error_text
         BL       MFS_Error_text
@@ -394,37 +400,37 @@ mem_flash_app:
         LDR.N    R0,??mem_flash_app_0+0x24
           CFI FunCall _io_printf
         BL       _io_printf
-//  149      _task_block();
+//  155      _task_block();
           CFI FunCall _task_block
         BL       _task_block
-//  150    }
-//  151    if ( error == MFS_NOT_A_DOS_DISK )//////////////////
+//  156    }
+//  157    if ( error == MFS_NOT_A_DOS_DISK )//////////////////
 ??mem_flash_app_7:
         MOVW     R0,#+12314
         CMP      R6,R0
         BNE.N    ??mem_flash_app_8
-//  152    {
-//  153      printf("\nNOT A DOS DISK! You must format to continue.");
+//  158    {
+//  159      printf("\nNOT A DOS DISK! You must format to continue.");
         LDR.N    R0,??mem_flash_app_0+0x28
           CFI FunCall _io_printf
         BL       _io_printf
-//  154      
-//  155    }
-//  156   
-//  157    printf ("\nFlashx  installed to %s", flashx_filesystem_name);
+//  160      
+//  161    }
+//  162   
+//  163    printf ("\nFlashx  installed to %s", flashx_filesystem_name);
 ??mem_flash_app_8:
         ADD      R1,SP,#+0
         LDR.N    R0,??mem_flash_app_0+0x2C
           CFI FunCall _io_printf
         BL       _io_printf
-//  158     ////////////////////////////////////////////////////////////////#dx 20130103
-//  159 
-//  160    _task_block();
+//  164     ////////////////////////////////////////////////////////////////#dx 20130103
+//  165 
+//  166    _task_block();
           CFI FunCall _task_block
         BL       _task_block
-//  161    //_task_destroy(_task_get_id());
-//  162    
-//  163 }
+//  167    //_task_destroy(_task_get_id());
+//  168    
+//  169 }
         POP      {R0-R6,PC}       ;; return
         Nop      
         DATA
@@ -523,8 +529,8 @@ mem_flash_app:
         DC8 0, 0, 0
 
         END
-//  164 
-//  165 /* EOF */
+//  170 
+//  171 /* EOF */
 // 
 // 304 bytes in section .rodata
 // 364 bytes in section .text
@@ -533,4 +539,4 @@ mem_flash_app:
 // 304 bytes of CONST memory
 //
 //Errors: none
-//Warnings: none
+//Warnings: 1

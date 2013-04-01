@@ -56,7 +56,9 @@ const SHELL_COMMAND_STRUCT Shell_commands[] = {
    { "sh",        Shell_sh },  //15
    { "type",      Shell_type },  //16
    { "write",     Shell_write }, //17
-  // { "writebuf",  Shell_write_buf },
+//   { "writebuf",  Shell_write_buf },
+   {"df_s",  Shell_search_file}, // wk @130331-->  查找文件
+   {"update",  Shell_update}, // wk @130331-->  更新flash
    { "?",         Shell_command_list },    
    { NULL,        NULL } 
 };
