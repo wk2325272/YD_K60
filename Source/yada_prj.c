@@ -25,8 +25,9 @@
 
 volatile U8 RefreshFlg; // 页面刷新标志
 U8 U_FLAG = 0;
-uchar read_buffer[8]={0x12,0x23};
-static U8 File_flg; // 第一次启动时建立文件夹标志
+uchar read_buffer[8]={0x12,0x23};  // wk @130403 --> uncomment
+//static U8 File_flg; // 第一次启动时建立文件夹标志
+U8 SavePowerFlg; // WK @130401 --> 电能质量数据存储标志 1时存储
 
 extern void YaDa(uint_32);
 extern void MainLoop();
@@ -76,8 +77,9 @@ static void timer_isr
     _lpt_clear_int (timer);
 
 //    printf("\nhellow\n");
-    
-    _lpt_init(0,2 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO,TRUE);
+    SavePowerFlg =1;
+//    EventKeyFlg=1; // wk @130401 --> test event data save
+    _lpt_init(0,3 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO,TRUE);
 }
 
 /*
@@ -124,7 +126,8 @@ void YaDa
    printf("\n----------             ----------\n");
    printf("\n----------      END    ----------\n");
 #endif 
-  
+  U8 status;
+   
   UartLCD_init();  // uart initialization
   UartTouch_init();
   flg_int(); // wk --> 初始化一些标志 !  
@@ -138,12 +141,12 @@ void YaDa
   RefreshFlg = 0; //页面无刷新
   
   /* test function of USB */  // wk --> for test  2013-02-28
-  char_ptr create[]={"test","kkM2.txt"},write[]={"write","kkM2.txt","6"};  // wk --> test array of USB
+//  char_ptr create[]={"test","kkM2.txt"},write[]={"write","kkM2.txt","6"};  // wk --> test array of USB
 //  char_ptr buf[]={"test","kkM1.txt","6","begin","5","123456"};
 //  char_ptr buf_1[]={"test","kkM4.txt","begin","5"};
 //  uchar data[]={1,2,3,4,5,6};
-  Shell_create(2,create); 
-  Shell_write(3,write);   
+//  Shell_create(2,create); 
+//  Shell_write(3,write);   
 ////  Shell_write_buf(6,buf);
 //  Shell_write_binary(4,buf_1,6,data);
 //  /* read test */
@@ -157,52 +160,97 @@ void YaDa
 //    }
 //    printf("end\n\n");
 //    
-    if(File_flg==0)
-    {
+  /* wk @130403 --> 这段代码可以考虑放在U盘启动里面 ，或者考虑一下如何让 U 盘启动早于主任务启动 */
+  {
+#if 0  // wk @130403
      SHELL_CONTEXT_PTR    shell_ptr;
      shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
      _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
-     
+     /* wk @130401 --> 新建 sysset 用于系统变量保存 */
       shell_ptr->ARGC = 2;
       shell_ptr->ARGV[0]="cd";
       shell_ptr->ARGV[1]="f:\\"; 
       Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
       
       shell_ptr->ARGC = 2;
+      shell_ptr->ARGV[0]="df_s";
+      shell_ptr->ARGV[1]="SYSSET";   //wk --> 注意：查找的文件名暂时必须要是大写
+      status=Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,NULL);
+      if(status=0)
+      {
+        shell_ptr->ARGC = 2;
+        shell_ptr->ARGV[0]="mkdir";
+        shell_ptr->ARGV[1]="SYSSET"; 
+        Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
+      }
+      /* wk @130401 --> 新建 power/event用于基本电能质量/事件数据保存 */
+      /* ??????????? 这里后期加上 U 盘插入标志监测 */
+      shell_ptr->ARGC = 2;
+      shell_ptr->ARGV[0]="cd";
+      shell_ptr->ARGV[1]="u:\\"; 
+      Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+//      
+      shell_ptr->ARGC = 2;
+      shell_ptr->ARGV[0]="df_s";
+      shell_ptr->ARGV[1]="POWER";   //wk --> 注意：查找的文件名暂时必须要是大写
+      status=Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,NULL);
+      if(status==0)
+      {
+        shell_ptr->ARGC = 2;
+        shell_ptr->ARGV[0]="mkdir";
+        shell_ptr->ARGV[1]="POWER"; 
+        Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
+      }
+      shell_ptr->ARGC = 2;
+      shell_ptr->ARGV[0]="df_s";
+      shell_ptr->ARGV[1]="EVENT";   //wk --> 注意：查找的文件名暂时必须要是大写
+      status=Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,NULL);
+      shell_ptr->ARGC = 2;
+      if(status==0)
+      {
+        shell_ptr->ARGV[0]="mkdir";
+        shell_ptr->ARGV[1]="EVENT"; 
+        Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
+      }
+      
+      _mem_free(shell_ptr);
+#endif  //wk @130403 --> end
+       SHELL_CONTEXT_PTR    shell_ptr;
+     shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
+     _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
+     /* wk @130401 --> 新建 sysset 用于系统变量保存 */
+      shell_ptr->ARGC = 2;
+      shell_ptr->ARGV[0]="cd";
+      shell_ptr->ARGV[1]="f:\\"; 
+      Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+     
+      shell_ptr->ARGC = 2;
       shell_ptr->ARGV[0]="mkdir";
-      shell_ptr->ARGV[1]="sysset"; 
+      shell_ptr->ARGV[1]="SYSSET"; 
       Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
-      File_flg=1;
+      
+      /* wk @130401 --> 新建 power/event用于基本电能质量/事件数据保存 */
+      /* ??????????? 这里后期加上 U 盘插入标志监测 */
+      shell_ptr->ARGC = 2;
+      shell_ptr->ARGV[0]="cd";
+      shell_ptr->ARGV[1]="u:\\"; 
+      Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+      
+      shell_ptr->ARGC = 2;
+      shell_ptr->ARGV[0]="mkdir";
+      shell_ptr->ARGV[1]="POWER"; 
+      Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
+      
+      shell_ptr->ARGC = 2;
+      shell_ptr->ARGV[0]="mkdir";
+      shell_ptr->ARGV[1]="EVENT"; 
+      Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
+      
+      
+      _mem_free(shell_ptr);
     }
+    
   /* Test end */
-    /*wk@130330 -->  test mfs function */
-    MQX_FILE_PTR mfs_fd_ptr;
-    mfs_fd_ptr = fopen("f:",NULL);
-    uchar result;   
-//    char pathname[261];
-//    ioctl(mfs_fs_ptr, IO_IOCTL_GET_CURRENT_DIR,(uint_32_ptr) pathname);
-//    printf("The current directory is: %s\n", pathname);   
-    uint_64 space_fr,space;
-    result= ioctl(mfs_fd_ptr,IO_IOCTL_FREE_SPACE,&space_fr);
-    printf("\nspace=%d\tresult=%d\n",space_fr,result);
-    
-    result=ioctl(mfs_fd_ptr,IO_IOCTL_GET_CLUSTER_SIZE,&space );
-    printf("\nspace=%d\tresult=%d\n",space,result);
-    
-    SHELL_CONTEXT_PTR    shell_ptr;
-    shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
-    _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
-    
-    shell_ptr->ARGC = 2;
-    shell_ptr->ARGV[0]="cd";
-    shell_ptr->ARGV[1]="f:\\sysset"; 
-    Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
-              
-    shell_ptr->ARGC=1;
-    shell_ptr->ARGV[0]="pwd";
-    Shell_pwd(shell_ptr->ARGC, shell_ptr->ARGV);
-    /* wk --> mfs func test end */
-    
   /* button1 into interrupt for shell or maingui task change */
    GPIO_PIN_STRUCT pins_int[] = {
             BSP_BUTTON1 | GPIO_PIN_IRQ_RISING ,
@@ -247,14 +295,20 @@ void MainLoop()
     RefreshFlg = 2;
     ViewKeyFlg = 0;
   }
-  
+  /* wk @130401 --> 基本电能质量数据保存 */
+  if(SavePowerFlg)
+  {
+    PowerSave(); 
+    SavePowerFlg=0;
+  }
+  /* wk @130401 --> end */
 #if 0 // WK --> 数据存储  待完善
   if (SPIEventFlg || EventKeyFlg) //接收到事件数据或者事件记录相关页有键按下时需要刷新
   {
-    ReflashFlg = 3;
+    RefreshFlg = 3;
     if (SPIEventFlg)
     {
-      EVEnum++;
+//      EVEnum++;
       EventSave(U_FLAG);
     }
     SPIEventFlg = 0;
@@ -379,5 +433,6 @@ void flg_int()   // wk --> 一些标志的初始化
     EVEline=0;
     EVEfunflg=0;
     
-    File_flg=0;// wk -->
+//    File_flg=0;// wk -->
+    SavePowerFlg =0;
 }

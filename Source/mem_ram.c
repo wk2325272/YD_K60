@@ -49,7 +49,8 @@
 #define RAM_DISK_SIZE   BSP_EXTERNAL_MRAM_RAM_SIZE
 #else 
 #warning Modify the RAM_DISK_SIZE if you need more or less ramdisk space. 
-#define RAM_DISK_SIZE   0x4000 //#32KB=0x8000 #16KB=0x4000 #10KB=0x2800 #6KB= 0x1800 
+//#define RAM_DISK_SIZE   0x4000 //#32KB=0x8000 #16KB=0x4000 #10KB=0x2800 #6KB= 0x1800 //default-->
+#define RAM_DISK_SIZE   0x4000 //#32KB=0x8000 #16KB=0x4000 #10KB=0x2800 #6KB= 0x1800 // wk -->
    static uchar   ram_disk[RAM_DISK_SIZE];
 #define RAM_DISK_BASE   &ram_disk[0]
 #endif

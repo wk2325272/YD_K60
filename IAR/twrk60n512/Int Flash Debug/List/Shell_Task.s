@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    01/Apr/2013  14:27:44 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    02/Apr/2013  15:44:15 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -70,7 +70,7 @@
         EXTERN Shell_read
         EXTERN Shell_rename
         EXTERN Shell_rmdir
-        EXTERN Shell_search_file
+        EXTERN Shell_search_file_r
         EXTERN Shell_sh
         EXTERN Shell_type
         EXTERN Shell_update
@@ -307,7 +307,7 @@ Shell_commands:
         DC32 Shell_rename, `?<Constant "rmdir">`, Shell_rmdir
         DC32 `?<Constant "sh">`, Shell_sh, `?<Constant "type">`, Shell_type
         DC32 `?<Constant "write">`, Shell_write, `?<Constant "df_s">`
-        DC32 Shell_search_file, `?<Constant "update">`, Shell_update
+        DC32 Shell_search_file_r, `?<Constant "update">`, Shell_update
         DC32 `?<Constant "?">`, Shell_command_list, 0H, 0H
 //   41    { "cd",        Shell_cd },      //0
 //   42    { "copy",      Shell_copy },   //1
@@ -328,8 +328,8 @@ Shell_commands:
 //   57    { "type",      Shell_type },  //16
 //   58    { "write",     Shell_write }, //17
 //   59 //   { "writebuf",  Shell_write_buf },
-//   60    {"df_s",  Shell_search_file}, // wk @130331--> 
-//   61    {"update",  Shell_update}, // wk @130331--> 
+//   60    {"df_s",  Shell_search_file_r}, // wk @130331-->  查找文件
+//   61    {"update",  Shell_update}, // wk @130331-->  更新flash
 //   62    { "?",         Shell_command_list },    
 //   63    { NULL,        NULL } 
 //   64 };

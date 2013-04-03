@@ -20,31 +20,32 @@
 #define _SPIDMADATA_DBUG_  // 是否有 DBUG 输出信息
 
 //U8 BufRxchar[ARRAY_SIZE]= {0};//转存数组，仅在此C文件中使用
-U8 BufRxchar[3000]= {0};// wk -->转存数组，仅在此C文件中使用
+U8 BufRxchar[2900]= {0};// wk -->转存数组，仅在此C文件中使用
 U8 PowRxchar[Pow_SIZE]= {0}; //去除起始符结束符的有效数据，通信协议中的数据长度减去结束符
 U8 EvntRxchar[Evnt_SIZE]= {0};
 U8 SPIRxCnt=0;   //SPI接收标志，作用域在此文件
 U16 TotalNum=0;//需接收数据的长度，作用域在此文件
 //U8 DataType=0;//作用域在此文件
-U8 HeadFlg[4]={0}; // wk @20130325 -->
+//U8 HeadFlg[4]={0}; // wk @20130325 -->  // wk @130403 --> uncomment
 
 U16 DataSize = ARRAY_SIZE ;  //wk -->传给 DMA 寄存器的一次服务数据长度
 static uchar count=0; // 用于数据头检测
 
-volatile U16 Time_save=0;  //备份事件参数
-volatile U8 testflgg=0;   //MCU发送数据个数
+//volatile U16 Time_save=0;  //备份事件参数
+//volatile U8 testflgg=0;   //MCU发送数据个数
  
-MQX_FILE_PTR spifd_2,ptbfd_10; // spifd_2 --> spi2设备的句柄  ptbfd_10 --> PTB10 设备的句柄
+MQX_FILE_PTR spifd_2; //,ptbfd_10 // spifd_2 --> spi2设备的句柄  ptbfd_10 --> PTB10 设备的句柄
 // @20130312 --> wk
 //SPI_READ_WRITE_STRUCT  spi_rw;  // --> IOCTL 操作 SPI 时使用的结构体
 //SPI_READ_WRITE_STRUCT *spi_rw_ptr = &spi_rw; 
 //U8 *BufRxchar_ptr = BufRxchar;
 //U8 *PowRxchar_ptr = PowRxchar;
 
-GPIO_PIN_STRUCT pins_int[] = {    /* PTB10 定义结构体 */  // 定义 PTB10 上升沿中断
-            BSP_PTB10 | GPIO_PIN_IRQ_FALLING,
-            GPIO_LIST_END
-            };
+ // wk @130403 --> uncomment
+//GPIO_PIN_STRUCT pins_int[] = {    /* PTB10 定义结构体 */  // 定义 PTB10 上升沿中断
+//            BSP_PTB10 | GPIO_PIN_IRQ_FALLING,
+//            GPIO_LIST_END
+//            };
 
 /* wk --> 初始化与 DSP 通信使用的 SPI2 */
 void spi2_dma_int(void)
@@ -123,14 +124,14 @@ void spi2_dma_int(void)
    /******************************* spi2 conf end ****************************/
 }
 
-/* wk --> 初始化 PTB10 用于数据中断接收 */
-inline void ptb_10_int(void)
-{
- /* wk --> set gpio of ptb10 in int mode for spi data read */
-    ptbfd_10 = fopen("gpio:read", (char_ptr) &pins_int );
-    ioctl(ptbfd_10,GPIO_IOCTL_SET_IRQ_FUNCTION, (pointer)int_callback);
-/* end */
-}
+/* wk --> 初始化 PTB10 用于数据中断接收 */  // wk @130403 --> uncomment
+//inline void ptb_10_int(void)
+//{
+// /* wk --> set gpio of ptb10 in int mode for spi data read */
+//    ptbfd_10 = fopen("gpio:read", (char_ptr) &pins_int );
+//    ioctl(ptbfd_10,GPIO_IOCTL_SET_IRQ_FUNCTION, (pointer)int_callback);
+///* end */
+//}
 
 /*
 ** 函数名：
@@ -142,6 +143,8 @@ void DMA_RecData_OK
   void
 )
 {
+   U8 HeadFlg[4]={0};
+   
     if(count<4)
     {
       HeadFlg[count]=BufRxchar[0];

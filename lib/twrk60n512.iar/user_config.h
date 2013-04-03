@@ -64,6 +64,8 @@
 #define BSPCFG_ENABLE_SPI0       1
 #define BSPCFG_ENABLE_SPI1       1
 
+#define MQX_USE_TIMER 1 // wk @130401--> add for timer
+
 //#define RTCSCFG_ENABLE_SNMP      1
 // 2012-10-04
 //#define BSPCFG_ENABLE_ADC1       0

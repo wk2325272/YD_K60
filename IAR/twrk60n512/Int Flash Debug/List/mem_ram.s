@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    01/Apr/2013  14:27:45 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    02/Apr/2013  15:44:16 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -142,35 +142,36 @@
 //   49 #define RAM_DISK_SIZE   BSP_EXTERNAL_MRAM_RAM_SIZE
 //   50 #else 
 //   51 #warning Modify the RAM_DISK_SIZE if you need more or less ramdisk space. 
-//   52 #define RAM_DISK_SIZE   0x4000 //#32KB=0x8000 #16KB=0x4000 #10KB=0x2800 #6KB= 0x1800 
+//   52 //#define RAM_DISK_SIZE   0x4000 //#32KB=0x8000 #16KB=0x4000 #10KB=0x2800 #6KB= 0x1800 //default-->
+//   53 #define RAM_DISK_SIZE   0x4000 //#32KB=0x8000 #16KB=0x4000 #10KB=0x2800 #6KB= 0x1800 // wk -->
 
         SECTION `.bss`:DATA:REORDER:NOROOT(2)
-//   53    static uchar   ram_disk[RAM_DISK_SIZE];
+//   54    static uchar   ram_disk[RAM_DISK_SIZE];
 ram_disk:
         DS8 16384
-//   54 #define RAM_DISK_BASE   &ram_disk[0]
-//   55 #endif
-//   56 //////////////////////////////////////////////////////////////////////#dx 201314
-//   57 
-//   58 /* function prototypes */
-//   59 void mem_ram_app(uint_32);
-//   60 
-//   61 /*TASK*-----------------------------------------------------
-//   62 * 
-//   63 * Task Name    : mem_ram_app
-//   64 * Comments     :
-//   65 *
-//   66 *END*-----------------------------------------------------*/
+//   55 #define RAM_DISK_BASE   &ram_disk[0]
+//   56 #endif
+//   57 //////////////////////////////////////////////////////////////////////#dx 201314
+//   58 
+//   59 /* function prototypes */
+//   60 void mem_ram_app(uint_32);
+//   61 
+//   62 /*TASK*-----------------------------------------------------
+//   63 * 
+//   64 * Task Name    : mem_ram_app
+//   65 * Comments     :
+//   66 *
+//   67 *END*-----------------------------------------------------*/
 
         SECTION `.text`:CODE:NOROOT(2)
           CFI Block cfiBlock0 Using cfiCommon0
           CFI Function mem_ram_app
         THUMB
-//   67 void mem_ram_app
-//   68    (
-//   69       uint_32 initial_data
-//   70    )
-//   71 {
+//   68 void mem_ram_app
+//   69    (
+//   70       uint_32 initial_data
+//   71    )
+//   72 {
 mem_ram_app:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
@@ -178,65 +179,65 @@ mem_ram_app:
           CFI CFA R13+8
         SUB      SP,SP,#+16
           CFI CFA R13+24
-//   72   ////////////////////////////////////////////////////////////////#dx 201314   
-//   73 
-//   74    MQX_FILE_PTR               dev_handle1,
-//   75    a_fd_ptr;
-//   76    int_32                     error_code;
-//   77    _mqx_uint                  mqx_status;
-//   78    a_fd_ptr = 0;
+//   73   ////////////////////////////////////////////////////////////////#dx 201314   
+//   74 
+//   75    MQX_FILE_PTR               dev_handle1,
+//   76    a_fd_ptr;
+//   77    int_32                     error_code;
+//   78    _mqx_uint                  mqx_status;
+//   79    a_fd_ptr = 0;
         MOVS     R4,#+0
-//   79    char  ramdisk_filesystem_name[] = "r:";///////////////////安装盘符
+//   80    char  ramdisk_filesystem_name[] = "r:";///////////////////安装盘符
         ADD      R0,SP,#+0
         LDR.N    R1,??mem_ram_app_0
         LDR      R2,[R1, #0]
         STR      R2,[R0, #+0]
-//   80    /* install device */
-//   81    mqx_status = _io_mem_install("mfs_ramdisk:", (uchar_ptr)RAM_DISK_BASE,
-//   82                                 (_file_size)RAM_DISK_SIZE);
+//   81    /* install device */
+//   82    mqx_status = _io_mem_install("mfs_ramdisk:", (uchar_ptr)RAM_DISK_BASE,
+//   83                                 (_file_size)RAM_DISK_SIZE);
         MOV      R2,#+16384
         LDR.N    R1,??mem_ram_app_0+0x4
         LDR.N    R0,??mem_ram_app_0+0x8
           CFI FunCall _io_mem_install
         BL       _io_mem_install
         MOVS     R1,R0
-//   83    /* Number of sectors is returned by ioctl IO_IOCTL_GET_NUM_SECTORS function */
-//   84    /* If another disc structure is desired, use MFS_FORMAT_DATA structure to   */
-//   85    /* define it and call standart format function instead default_format       */   
-//   86    if ( mqx_status != MQX_OK ) {
+//   84    /* Number of sectors is returned by ioctl IO_IOCTL_GET_NUM_SECTORS function */
+//   85    /* If another disc structure is desired, use MFS_FORMAT_DATA structure to   */
+//   86    /* define it and call standart format function instead default_format       */   
+//   87    if ( mqx_status != MQX_OK ) {
         CMP      R1,#+0
         BEQ.N    ??mem_ram_app_1
-//   87      printf("\nError installing memory device (0x%x)", mqx_status);
+//   88      printf("\nError installing memory device (0x%x)", mqx_status);
         LDR.N    R0,??mem_ram_app_0+0xC
           CFI FunCall _io_printf
         BL       _io_printf
-//   88      _task_block();
+//   89      _task_block();
           CFI FunCall _task_block
         BL       _task_block
-//   89    } /* Endif */
-//   90    
-//   91    /* Open the device which MFS will be installed on */
-//   92    dev_handle1 = fopen("mfs_ramdisk:", 0);
+//   90    } /* Endif */
+//   91    
+//   92    /* Open the device which MFS will be installed on */
+//   93    dev_handle1 = fopen("mfs_ramdisk:", 0);
 ??mem_ram_app_1:
         MOVS     R1,#+0
         LDR.N    R0,??mem_ram_app_0+0x8
           CFI FunCall _io_fopen
         BL       _io_fopen
         MOVS     R4,R0
-//   93    if ( dev_handle1 == NULL ) {
+//   94    if ( dev_handle1 == NULL ) {
         CMP      R4,#+0
         BNE.N    ??mem_ram_app_2
-//   94      printf("\nUnable to open Ramdisk device");
+//   95      printf("\nUnable to open Ramdisk device");
         LDR.N    R0,??mem_ram_app_0+0x10
           CFI FunCall _io_printf
         BL       _io_printf
-//   95      _task_block();
+//   96      _task_block();
           CFI FunCall _task_block
         BL       _task_block
-//   96    } /* Endif */
-//   97    
-//   98    /* Install MFS  */
-//   99    mqx_status = _io_mfs_install(dev_handle1, ramdisk_filesystem_name, (_file_size)0);
+//   97    } /* Endif */
+//   98    
+//   99    /* Install MFS  */
+//  100    mqx_status = _io_mfs_install(dev_handle1, ramdisk_filesystem_name, (_file_size)0);
 ??mem_ram_app_2:
         MOVS     R2,#+0
         ADD      R1,SP,#+0
@@ -244,48 +245,48 @@ mem_ram_app:
           CFI FunCall _io_mfs_install
         BL       _io_mfs_install
         MOVS     R1,R0
-//  100    if (mqx_status != MFS_NO_ERROR) {
+//  101    if (mqx_status != MFS_NO_ERROR) {
         CMP      R1,#+0
         BEQ.N    ??mem_ram_app_3
-//  101      printf("\nError initializing%s",ramdisk_filesystem_name);
+//  102      printf("\nError initializing%s",ramdisk_filesystem_name);
         ADD      R1,SP,#+0
         LDR.N    R0,??mem_ram_app_0+0x14
           CFI FunCall _io_printf
         BL       _io_printf
-//  102      _task_block();
+//  103      _task_block();
           CFI FunCall _task_block
         BL       _task_block
         B.N      ??mem_ram_app_4
-//  103    } else {
-//  104      printf("\nInitialized Ram Disk to %s\\",ramdisk_filesystem_name);
+//  104    } else {
+//  105      printf("\nInitialized Ram Disk to %s\\",ramdisk_filesystem_name);
 ??mem_ram_app_3:
         ADD      R1,SP,#+0
         LDR.N    R0,??mem_ram_app_0+0x18
           CFI FunCall _io_printf
         BL       _io_printf
-//  105    } /* Endif */
-//  106    
-//  107    /* Open the filesystem and format detect, if format is required */
-//  108    a_fd_ptr = fopen(ramdisk_filesystem_name, NULL);
+//  106    } /* Endif */
+//  107    
+//  108    /* Open the filesystem and format detect, if format is required */
+//  109    a_fd_ptr = fopen(ramdisk_filesystem_name, NULL);
 ??mem_ram_app_4:
         MOVS     R1,#+0
         ADD      R0,SP,#+0
           CFI FunCall _io_fopen
         BL       _io_fopen
         MOVS     R4,R0
-//  109    error_code    = ferror(a_fd_ptr);
+//  110    error_code    = ferror(a_fd_ptr);
         MOVS     R0,R4
           CFI FunCall _io_ferror
         BL       _io_ferror
         MOVS     R4,R0
-//  110    if ((error_code != MFS_NO_ERROR) && (error_code != MFS_NOT_A_DOS_DISK))
+//  111    if ((error_code != MFS_NO_ERROR) && (error_code != MFS_NOT_A_DOS_DISK))
         CMP      R4,#+0
         BEQ.N    ??mem_ram_app_5
         MOVW     R0,#+12314
         CMP      R4,R0
         BEQ.N    ??mem_ram_app_5
-//  111    {
-//  112      printf("\nError while opening %s\\ (%s)", ramdisk_filesystem_name, MFS_Error_text((uint_32)(uint_32)error_code));
+//  112    {
+//  113      printf("\nError while opening %s\\ (%s)", ramdisk_filesystem_name, MFS_Error_text((uint_32)(uint_32)error_code));
         MOVS     R0,R4
           CFI FunCall MFS_Error_text
         BL       MFS_Error_text
@@ -294,16 +295,16 @@ mem_ram_app:
         LDR.N    R0,??mem_ram_app_0+0x1C
           CFI FunCall _io_printf
         BL       _io_printf
-//  113      _task_block();
+//  114      _task_block();
           CFI FunCall _task_block
         BL       _task_block
-//  114    } /* Endif */
-//  115    if ( error_code == MFS_NOT_A_DOS_DISK ) {
+//  115    } /* Endif */
+//  116    if ( error_code == MFS_NOT_A_DOS_DISK ) {
 ??mem_ram_app_5:
         MOVW     R0,#+12314
         CMP      R4,R0
         BNE.N    ??mem_ram_app_6
-//  116      char_ptr argv[]={"format",ramdisk_filesystem_name};///////////////////////////ramdisk_filesystem_name
+//  117      char_ptr argv[]={"format",ramdisk_filesystem_name};///////////////////////////ramdisk_filesystem_name
         ADD      R0,SP,#+4
         LDR.N    R1,??mem_ram_app_0+0x20
         LDM      R1!,{R2,R3}
@@ -312,25 +313,25 @@ mem_ram_app:
         SUBS     R0,R0,#+8
         ADD      R0,SP,#+0
         STR      R0,[SP, #+8]
-//  117      //strcpy(argv,ramdisk_filesystem_name);
-//  118      Shell_format(2,argv);
+//  118      //strcpy(argv,ramdisk_filesystem_name);
+//  119      Shell_format(2,argv);
         ADD      R1,SP,#+4
         MOVS     R0,#+2
           CFI FunCall Shell_format
         BL       Shell_format
-//  119      printf("\nNOT A DOS DISK! You must format to continue.");
+//  120      printf("\nNOT A DOS DISK! You must format to continue.");
         LDR.N    R0,??mem_ram_app_0+0x24
           CFI FunCall _io_printf
         BL       _io_printf
-//  120    } /* Endif */
-//  121 ////////////////////////////////////////////////////////////////#dx 201314
-//  122   
-//  123     _task_block();    
+//  121    } /* Endif */
+//  122 ////////////////////////////////////////////////////////////////#dx 201314
+//  123   
+//  124     _task_block();    
 ??mem_ram_app_6:
           CFI FunCall _task_block
         BL       _task_block
-//  124    // _task_destroy(_task_get_id());
-//  125 }
+//  125    // _task_destroy(_task_get_id());
+//  126 }
         POP      {R0-R4,PC}       ;; return
         Nop      
         DATA
@@ -418,8 +419,8 @@ mem_ram_app:
         DC8 0, 0
 
         END
-//  126 
-//  127 /* EOF */
+//  127 
+//  128 /* EOF */
 // 
 // 16 384 bytes in section .bss
 //    244 bytes in section .rodata
