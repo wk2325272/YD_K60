@@ -78,7 +78,7 @@ static void timer_isr
 
 //    printf("\nhellow\n");
     SavePowerFlg =1;
-//    EventKeyFlg=1; // wk @130401 --> test event data save
+    EventKeyFlg=1; SPIEventFlg=1;// wk @130401 --> test event data save
     _lpt_init(0,3 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO,TRUE);
 }
 
@@ -302,7 +302,7 @@ void MainLoop()
     SavePowerFlg=0;
   }
   /* wk @130401 --> end */
-#if 0 // WK --> 数据存储  待完善
+#if 1 // WK --> 数据存储  待完善
   if (SPIEventFlg || EventKeyFlg) //接收到事件数据或者事件记录相关页有键按下时需要刷新
   {
     RefreshFlg = 3;

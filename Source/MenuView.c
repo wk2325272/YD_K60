@@ -50,7 +50,7 @@ U8 SysParaOldIndex=0,SysEventOldIndex=0,EventOldIndex=0,EVEnum_old;
 //volatile U8 npage=0; // wk @130403 --> uncomment
 //volatile U16 nBlock=0,nBlock_old=1024; // wk @130403 --> uncomment
 /* function 申明 */
-uchar_ptr num2string(int_32 num,uchar len,uchar type);
+char_ptr num2string(int_32 num,uchar len,uchar type);
 /*******************************************************************************
 * 函  数  名      : GUI_VIEW_UI
 * 描      述      : 电流电压波形及有效值显示，颜色为黄绿红，采用C104指令可自动擦除。
@@ -1623,88 +1623,88 @@ void GUI_SYS_EVENTSET(void)
 void EventSave(U8 U_DISK)
 {
     
-//      SHELL_CONTEXT_PTR    shell_ptr;
-//      shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
-//      _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
-//      static   char_ptr file_name=NULL,dir_name,monthDir_name;
-//      static uint_16 year_old=0,month_old=0;
-//      uint_32 file_size;
-//      
-//      TIME_STRUCT             time_sf;
-//      DATE_STRUCT             date_sf;     
-//      _time_get(&time_sf);
-//      _time_to_date(&time_sf,&date_sf);
-//
-//      shell_ptr->ARGC = 2;
-//      shell_ptr->ARGV[0]="cd";
-//      shell_ptr->ARGV[1]="u:\\event"; 
-//      Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
-//    
-//      if(year_old!=date_sf.YEAR) // wk --> creata a dir named of year
-//      {
-//        dir_name=num2string(date_sf.YEAR,4,0);
-//        year_old=date_sf.YEAR;
-//        
-//        shell_ptr->ARGC = 2;
-//        shell_ptr->ARGV[0]="mkdir";
-//        shell_ptr->ARGV[1]=dir_name; 
-//        Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
-//      }
-//      
-//      shell_ptr->ARGC = 2;
-//      shell_ptr->ARGV[0]="cd";
-//      shell_ptr->ARGV[1]=dir_name; 
-//      Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
-//      if(month_old!=date_sf.MONTH)
-//      {
-//        monthDir_name=num2string(date_sf.YEAR,2,0);
-//        month_old=date_sf.MONTH;
-//        
-//        shell_ptr->ARGC = 2;
-//        shell_ptr->ARGV[0]="mkdir";
-//        shell_ptr->ARGV[1]=monthDir_name; 
-//        Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
-//      }
-//      shell_ptr->ARGC = 2;
-//      shell_ptr->ARGV[0]="cd";
-//      shell_ptr->ARGV[1]=monthDir_name; 
-//      Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
-//      
-//      if(file_name=NULL)
-//      {
-//        file_name=num2string(date_sf.DAY*1000000+date_sf.HOUR*10000+date_sf.MINUTE*100+
-//                             date_sf.SECOND,8,1);       
-//      }
-//      else
-//      {
-//        shell_ptr->ARGC = 2;
-//        shell_ptr->ARGV[0]="df_s";
-//        shell_ptr->ARGV[1]=file_name;   //wk --> 注意：查找的文件名暂时必须要是大写
-//        Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
-//        
-//        if(file_size>134217728)  // wk --> 128M = 128*1024*1024 bytes
-//        {
-//          file_name=num2string(date_sf.DAY*1000000+date_sf.HOUR*10000+date_sf.MINUTE*100+
-//                               date_sf.SECOND,8,1); 
-//        }
-//      }
-//      
-//      shell_ptr->ARGC=4;
-//      shell_ptr->ARGV[0]="write";
-//      shell_ptr->ARGV[1]=file_name;
-//      shell_ptr->ARGV[2]="current";
-//      shell_ptr->ARGV[3]="0";
-//      Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,7,&date_sf);
-//      
-//      uchar test[]={0,1,2,3,4,5,6,7,8,9,10};
-//      shell_ptr->ARGC=4;
-//      shell_ptr->ARGV[0]="write";
-//      shell_ptr->ARGV[1]=file_name;
-//      shell_ptr->ARGV[2]="current";
-//      shell_ptr->ARGV[3]="0";
-//      Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,1000,test);
-//
-//     _mem_free(shell_ptr);  // wk @130403 --> important
+      SHELL_CONTEXT_PTR    shell_ptr;
+      shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
+      _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
+      static   char_ptr file_name="12345678.csv",dir_name,monthDir_name;
+      static uint_16 year_old=0,month_old=0;
+      uint_32 file_size;
+      
+      TIME_STRUCT             time_sf;
+      DATE_STRUCT             date_sf;     
+      _time_get(&time_sf);
+      _time_to_date(&time_sf,&date_sf);
+
+      shell_ptr->ARGC = 2;
+      shell_ptr->ARGV[0]="cd";
+      shell_ptr->ARGV[1]="u:\\event"; 
+      Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+    
+      if(year_old!=date_sf.YEAR) // wk --> creata a dir named of year
+      {
+        dir_name=num2string(date_sf.YEAR,4,0);
+        year_old=date_sf.YEAR;
+        
+        shell_ptr->ARGC = 2;
+        shell_ptr->ARGV[0]="mkdir";
+        shell_ptr->ARGV[1]=dir_name; 
+        Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
+      }
+      
+      shell_ptr->ARGC = 2;
+      shell_ptr->ARGV[0]="cd";
+      shell_ptr->ARGV[1]=dir_name; 
+      Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+      if(month_old!=date_sf.MONTH)
+      {
+        monthDir_name=num2string(date_sf.YEAR,2,0);
+        month_old=date_sf.MONTH;
+        
+        shell_ptr->ARGC = 2;
+        shell_ptr->ARGV[0]="mkdir";
+        shell_ptr->ARGV[1]=monthDir_name; 
+        Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
+      }
+      shell_ptr->ARGC = 2;
+      shell_ptr->ARGV[0]="cd";
+      shell_ptr->ARGV[1]=monthDir_name; 
+      Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+      
+      if(file_name="12345678.csv")
+      {
+        file_name=num2string(date_sf.DAY*1000000+date_sf.HOUR*10000+date_sf.MINUTE*100+
+                             date_sf.SECOND,8,1);       
+      }
+      else
+      {
+        shell_ptr->ARGC = 2;
+        shell_ptr->ARGV[0]="df_s";
+        shell_ptr->ARGV[1]=file_name;   //wk --> 注意：查找的文件名暂时必须要是大写
+        Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
+        
+        if(file_size>134217728)  // wk --> 128M = 128*1024*1024 bytes
+        {
+          file_name=num2string(date_sf.DAY*1000000+date_sf.HOUR*10000+date_sf.MINUTE*100+
+                               date_sf.SECOND,8,1); 
+        }
+      }
+      
+      shell_ptr->ARGC=4;
+      shell_ptr->ARGV[0]="write";
+      shell_ptr->ARGV[1]=file_name;
+      shell_ptr->ARGV[2]="current";
+      shell_ptr->ARGV[3]="0";
+      Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,7,&date_sf);
+      
+      uchar test[]={0,1,2,3,4,5,6,7,8,9,10};
+      shell_ptr->ARGC=4;
+      shell_ptr->ARGV[0]="write";
+      shell_ptr->ARGV[1]=file_name;
+      shell_ptr->ARGV[2]="current";
+      shell_ptr->ARGV[3]="0";
+      Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,1000,test);
+
+     _mem_free(shell_ptr);  // wk @130403 --> important
 }
 /*******************************************************************************
 * 函  数  名      : PowerSave
@@ -1714,24 +1714,19 @@ void EventSave(U8 U_DISK)
 *******************************************************************************/
 void PowerSave(void)
 {
-#if 1
       SHELL_CONTEXT_PTR    shell_ptr;
       shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
       _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
-      
       uint_32 file_size;
-//      uchar status;
-      static   uchar_ptr file_name="hello.csv",dir_name;
+      static   char_ptr file_name="123456.csv",dir_name="1000";
       static uint_16 year_old=0;
       TIME_STRUCT             time_sf;
       DATE_STRUCT             date_sf;
-//     uchar time_c[7];
       
       _time_get(&time_sf);
       _time_to_date(&time_sf,&date_sf);
       
 //      printf("Y=%d\tM=%d\tD=%d\tH=%d\tM=%d\tS=%d\n",date_sf.YEAR,date_sf.MONTH,date_sf.DAY,date_sf.HOUR,date_sf.MINUTE,date_sf.SECOND);
-      
       
       shell_ptr->ARGC = 2;
       shell_ptr->ARGV[0]="cd";
@@ -1740,7 +1735,9 @@ void PowerSave(void)
       
       if(year_old!=date_sf.YEAR) // wk --> creata a dir named of year
       {
-        dir_name=num2string(date_sf.YEAR,4,0);
+        dir_name=num2string((uint_32)date_sf.YEAR,4,0);
+//        dir_name=num2string_s((uint_32)date_sf.YEAR,4);
+//        dir_name="2013";
         year_old=date_sf.YEAR;
         
         shell_ptr->ARGC = 2;
@@ -1754,24 +1751,20 @@ void PowerSave(void)
       shell_ptr->ARGV[1]=dir_name; 
       Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
       
-      if(file_name=="hello.csv")
+      if(file_name=="123456.csv")
       {
        file_name=num2string(date_sf.MONTH*10000+date_sf.DAY*100+date_sf.MINUTE,6,1);
-//       file_name=num2string(date_sf.MONTH*100+date_sf.DAY,4);
-
       }
       else
       {
         shell_ptr->ARGC = 2;
         shell_ptr->ARGV[0]="df_s";
         shell_ptr->ARGV[1]=file_name;   //wk --> 注意：查找的文件名暂时必须要是大写
-//        status=Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
         Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
         
         if(file_size>134217728)  // wk --> 128M = 128*1024*1024 bytes
         {
           file_name=num2string(date_sf.MONTH*10000+date_sf.DAY*100+date_sf.MINUTE,6,1);
-//          file_name=num2string(date_sf.MONTH*100+date_sf.DAY,4);
         }
       }
       
@@ -1791,8 +1784,8 @@ void PowerSave(void)
       Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,100,test);
 
      _mem_free(shell_ptr);  // wk @130403 --> important
-#endif
-     printf("is it ok?\n");
+     
+//     printf("is it ok?\n");
      
 }
 
@@ -1806,14 +1799,14 @@ void PowerSave(void)
 ** Dessription	：
 ** Reverse	：
 *******************************************************************************/
-uchar_ptr num2string(int_32 num,uchar len,uchar type) // wk --> len <= 13-4-1=8
+char_ptr num2string(int_32 num,uchar len,uchar type) // wk --> len <= 13-4-1=8
 {
   char_ptr name;
-//  name = _mem_alloc_zero( sizeof( len+5 ));
+  name = _mem_alloc_zero( len+5 );
   uchar sep_data[9];uint_32 temp;
   for(int i=0;i<len;i++)
   {
-    temp=pow(10,i);
+    temp=(uint_32)pow(10,i);
     sep_data[i]=(num/temp)%10;
   }
   
