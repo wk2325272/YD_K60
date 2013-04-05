@@ -78,7 +78,7 @@ static void timer_isr
 
 //    printf("\nhellow\n");
     SavePowerFlg =1;
-    EventKeyFlg=1; SPIEventFlg=1;// wk @130401 --> test event data save
+//    EventKeyFlg=1; SPIEventFlg=1;// wk @130401 --> test event data save
     _lpt_init(0,3 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO,TRUE);
 }
 
@@ -135,6 +135,7 @@ void YaDa
   
   YADA_70(PageStart); //必要的初始化后进入首页
   delay_ms(1000); // wk -->test  延时1s
+  delay_ms(4000); // wk -->test  延时4s，等待U盘启动完成
 //  YADA_E4();  // wk --> 屏幕校正
   YADA_70(MenuTop);  // 进入菜单首页
   
@@ -398,7 +399,7 @@ void MainLoop()
 //      GUI_EventWave(U_FLAG);   // 涉及 U 盘数据  --> wk
       break;
     case MenuEventMON:
-//      GUI_EventMonitor(U_FLAG);  // 涉及 U 盘数据  --> wk
+      GUI_EventMonitor(U_FLAG);  // 涉及 U 盘数据  --> wk
       break;
       
     default:

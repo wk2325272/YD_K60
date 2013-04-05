@@ -85,20 +85,23 @@ MenuV_EXT int *NFBAddr;//(char*)0x1880
 MenuV_EXT char *SysSetAddr;//系统设置芯片内部flash入口地址定义
 
 
-MenuV_EXT U8 SysFlashData[99];   //系统设置的数据的临时参数
-MenuV_EXT U8 SysFlashSave[84];   //wk @130326 -->写入Flash的系统设置参数
-MenuV_EXT U8 NPage[115]; //写入芯片flash有关的数组。NPage[0~99]为事件nandflash的页值，NPage[100]为事件总次数，NPage[101~114]为各类事件次数
-MenuV_EXT U16 NBlock[100]; //写入芯片flash有关的数组。nandflash的block数
+MenuV_EXT U8 SysFlashDataT[84];   //系统设置的数据的临时参数
+MenuV_EXT U8 SysFlashData[84];   //wk @130326 -->写入Flash的系统设置参数
+//MenuV_EXT U8 NPage[115]; //写入芯片flash有关的数组。NPage[0~99]为事件nandflash的页值，NPage[100]为事件总次数，NPage[101~114]为各类事件次数
+//MenuV_EXT U16 NBlock[100]; //写入芯片flash有关的数组。nandflash的block数
+MenuV_EXT U8 EventNum[18]; // wk @130405 --> 9次事件发生次数保存，每个事件占2字节，能记录65535次
+MenuV_EXT U8 EventAddr[400];// wk@130405 -->记录事件发生的时间：月、日、时、分、秒，每个占4字节
 
-MenuV_EXT void Write_Flash(U8 DataIn[],U8 Num,char* Flash_ptr);
-MenuV_EXT void Write_WFlash(U16 DataIn[],U8 Num,int* Flash_ptr);
+//MenuV_EXT void Write_Flash(U8 DataIn[],U8 Num,char* Flash_ptr);
+//MenuV_EXT void Write_WFlash(U16 DataIn[],U8 Num,int* Flash_ptr);
 #define EVENTLEN 2880
 #define EVEUILEN (160*2)
 // REVERSE BY WK @2013-03-13
 //#define EVESET_INDEX 29
 #define EVESET_INDEX 25
 
-#define EVESEND_FLAG 85
+//#define EVESEND_FLAG 85
+#define EVESEND_FLAG 70
 
 /*WK @130326 --> 事件限值宏定义 */
 /* wk @130326 --> 扩大了100倍 */

@@ -709,7 +709,7 @@ void GUI_SYS_PARASET(void)
         shell_ptr->ARGV[2]="25";
         shell_ptr->ARGV[3]="begin";
         shell_ptr->ARGV[4]="0";
-        Shell_read_wk(shell_ptr->ARGC, shell_ptr->ARGV,SysFlashData);   
+        Shell_read_wk(shell_ptr->ARGC, shell_ptr->ARGV,SysFlashDataT);   
 #endif //  wk --> 只读取Flash中系统参数
         
         //DISTIME(0);//显示当前的时间
@@ -738,7 +738,7 @@ void GUI_SYS_PARASET(void)
           ParaSetC108[temp1 + 3] = 0xffff;         //白色，下为黑色
           ParaSetC108[temp1 + 4] = 0x0000;
           ParaSetC108[temp1 + 5] = 0;         //白色，下为黑色
-          ParaSetC108[temp1 + 6] = (U16) (SysFlashData[temp+8]<<8)+(U16)(SysFlashData[temp+7]);
+          ParaSetC108[temp1 + 6] = (U16) (SysFlashDataT[temp+8]<<8)+(U16)(SysFlashDataT[temp+7]);
         }
                
         YADA_C0(ParaSetAddr, ParaSetC108, 63);  // WK --> 写暂存缓冲区
@@ -751,7 +751,7 @@ void GUI_SYS_PARASET(void)
           PARA_y=63+i*37;
           /* WK --> 清除上一次的状态 */
           YADA_71(MenuParaSET,148, PARA_y,240,PARA_y+24, 148, PARA_y);  //WK --> 剪切图标显示
-          YADA_98(152, PARA_y, 0x22, 0x81, 0x02, 0xffff, 0x0000, OFF_ON[SysFlashData[i]], 4);// WK -->字库选择
+          YADA_98(152, PARA_y, 0x22, 0x81, 0x02, 0xffff, 0x0000, OFF_ON[SysFlashDataT[i]], 4);// WK -->字库选择
           delay_us(10);
        }
     }
@@ -780,13 +780,13 @@ void GUI_SYS_PARASET(void)
         }
         
              temp=(SysSet.ParaIndex)*2; //WK --> 
-             SysFlashData[temp+7]=(U8)(string2U16);
-             SysFlashData[temp+8]=(U8)(string2U16>>8);
+             SysFlashDataT[temp+7]=(U8)(string2U16);
+             SysFlashDataT[temp+8]=(U8)(string2U16>>8);
              /*　WK --> 重新显示修改过的数据 */
             U16 OneC108[7]= {SysSet.ParaIndex<3?0x5004:(SysSet.ParaIndex==3?0x4004:0x2004),
                               SysParaXY[temp],SysParaXY[temp+1],0xffff,0x0000}; //0x0000 --> 黑
             OneC108[5] =0;
-            OneC108[6] =(U16) (SysFlashData[temp+8]<<8)+(U16)(SysFlashData[temp+7]);
+            OneC108[6] =(U16) (SysFlashDataT[temp+8]<<8)+(U16)(SysFlashDataT[temp+7]);
             
             switch(SysSet.ParaIndex) // WK --> 阈值判断
             {
@@ -864,10 +864,10 @@ void GUI_SYS_PARASET(void)
       for(i=0;i<7;i++)  // WK --> 向屏幕 7 个控制按钮写 “开 ”、“关 ”状态
       {
             PARA_y=63+i*37;
-            SysFlashData[i]=SysSet.SwitchSet[i];
+            SysFlashDataT[i]=SysSet.SwitchSet[i];
             /* WK --> 清除上一次的状态 */
             YADA_71(MenuParaSET,148, PARA_y,240,PARA_y+24, 148, PARA_y);  //WK --> 剪切图标显示
-            YADA_98(152, PARA_y, 0x22, 0x81, 0x02, 0xffff, 0x0000, OFF_ON[SysFlashData[i]], 4);// WK -->字库选择
+            YADA_98(152, PARA_y, 0x22, 0x81, 0x02, 0xffff, 0x0000, OFF_ON[SysFlashDataT[i]], 4);// WK -->字库选择
             delay_us(10);
       }
     }
@@ -886,38 +886,38 @@ void GUI_SYS_PARASET(void)
           case 0:
           case 1:
           case 2:
-            SysFlashData[2*i+7]=200;
-            SysFlashData[2*i+8]=0;
+            SysFlashDataT[2*i+7]=200;
+            SysFlashDataT[2*i+8]=0;
             flg_sys[i]=0;
            break;
           case 3:
-            SysFlashData[2*i+7]=0x88;
-            SysFlashData[2*i+8]=0x13;
+            SysFlashDataT[2*i+7]=0x88;
+            SysFlashDataT[2*i+8]=0x13;
             flg_sys[i]=0;
            break;
           case 4:
-            SysFlashData[2*i+7]=12;
-            SysFlashData[2*i+8]=0;
+            SysFlashDataT[2*i+7]=12;
+            SysFlashDataT[2*i+8]=0;
             flg_sys[i]=0;
             break;
           case 5:
-            SysFlashData[2*i+7]=60;
-            SysFlashData[2*i+8]=0;
+            SysFlashDataT[2*i+7]=60;
+            SysFlashDataT[2*i+8]=0;
             flg_sys[i]=0;
             break;
           case 6:
-            SysFlashData[2*i+7]=24;
-            SysFlashData[2*i+8]=0;
+            SysFlashDataT[2*i+7]=24;
+            SysFlashDataT[2*i+8]=0;
             flg_sys[i]=0;
             break;
           case 7:
-            SysFlashData[2*i+7]=60;
-            SysFlashData[2*i+8]=0;
+            SysFlashDataT[2*i+7]=60;
+            SysFlashDataT[2*i+8]=0;
             flg_sys[i]=0;
             break;
           case 8:
-            SysFlashData[2*i+7]=60;
-            SysFlashData[2*i+8]=0;
+            SysFlashDataT[2*i+7]=60;
+            SysFlashDataT[2*i+8]=0;
             flg_sys[i]=0;
             break;
           }
@@ -926,7 +926,7 @@ void GUI_SYS_PARASET(void)
 #if 0 //WK -->保存时  SysFlashData 全部保存 
     for(int i=0;i<84;i++) 
     {
-      SysFlashSave[i]=SysFlashData[i];
+      SysFlashSave[i]=SysFlashDataT[i];
     }
     shell_ptr->ARGC=2;
     shell_ptr->ARGV[0]="cd";
@@ -943,7 +943,7 @@ void GUI_SYS_PARASET(void)
     shell_ptr->ARGV[1]="sysset.txt";
     shell_ptr->ARGV[2]="begin";
     shell_ptr->ARGV[3]="0";
-    Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,84,SysFlashSave);
+    Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,84,SysFlashDataT);
     
     shell_ptr->ARGC=2;
     shell_ptr->ARGV[0]="update"; // wk --> update
@@ -953,9 +953,9 @@ void GUI_SYS_PARASET(void)
 #endif  // WK -->保存时  SysFlashData 全部保存 END
    
 #if 1 // wk --> 只保存系统设置参数界面的参数   1-25
-    for(int i=0;i<84;i++) 
+    for(int i=0;i<25;i++) 
     {
-      SysFlashSave[i]=SysFlashData[i];
+      SysFlashData[i]=SysFlashDataT[i];
     }
     shell_ptr->ARGC=2;
     shell_ptr->ARGV[0]="cd";
@@ -972,7 +972,7 @@ void GUI_SYS_PARASET(void)
     shell_ptr->ARGV[1]="sysset.txt";
     shell_ptr->ARGV[2]="begin";
     shell_ptr->ARGV[3]="0";
-    Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,25,SysFlashSave); 
+    Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,25,SysFlashData); 
     
     shell_ptr->ARGC=2;
     shell_ptr->ARGV[0]="update";// wk --> update
@@ -1003,15 +1003,18 @@ void GUI_SYS_PARASET(void)
           ParaSetC108[temp1 + 3] = 0xffc1;         //黄色，下为黑色
           ParaSetC108[temp1 + 4] = 0x0000;
           ParaSetC108[temp1 + 5] = 0;         //白色，下为黑色
-          ParaSetC108[temp1 + 6] = (U16) (SysFlashData[temp+8]<<8)+(U16)(SysFlashData[temp+7]);
+          ParaSetC108[temp1 + 6] = (U16) (SysFlashDataT[temp+8]<<8)+(U16)(SysFlashDataT[temp+7]);
         }
         YADA_C0(ParaSetAddr, ParaSetC108, 63);  // WK --> 写暂存缓冲区
         delay_us(10);
         YADA_C108(ParaSetAddr, 9);   //写入有效值，每次10个
         delay_us(10);  
         
-    SysSet.SaveFlg=0;  // WK --> 清楚标志
-    } 
+        SysSet.SaveFlg=0;  // WK --> 清楚标志
+        _mem_free(shell_ptr); 
+    }
+    else
+       _mem_free(shell_ptr); 
 }
 /*******************************************************************************
 * 函  数  名      : GUI_SYS_EVENTSET
@@ -1097,7 +1100,7 @@ void GUI_SYS_EVENTSET(void)
         shell_ptr->ARGV[2]="44";
         shell_ptr->ARGV[3]="begin";
         shell_ptr->ARGV[4]="0";   // WK @130326  --> 事件设置参数偏移26保存
-        Shell_read_wk(shell_ptr->ARGC, shell_ptr->ARGV,&(SysFlashData[25]));  
+        Shell_read_wk(shell_ptr->ARGC, shell_ptr->ARGV,&(SysFlashDataT[25]));  
 #endif      
         SysSet.SwFlg=0;
         
@@ -1107,17 +1110,18 @@ void GUI_SYS_EVENTSET(void)
             ParaSetC108[temp + 0] = 0x5204;         //P  显示数据的模式
             ParaSetC108[temp + 1] = SysEventXY[2*k];            //显示相位的X坐标
             ParaSetC108[temp + 2] = SysEventXY[2*k + 1];     //Y坐标
-            if(SysFlashData[EVESEND_FLAG+k]==0)
-            {
-              ParaSetC108[temp + 3] = 0xffff;         //白色，下为黑色
-            }
-            else
-            {
-              ParaSetC108[temp + 3] = 0xffe0;         //白色，下为黑色
-            }
+//            if(SysFlashDataT[EVESEND_FLAG+k]==0)
+//            {
+//              ParaSetC108[temp + 3] = 0xffff;         //白色，下为黑色
+//            }
+//            else
+//            {
+//              ParaSetC108[temp + 3] = 0xffe0;         //白色，下为黑色
+//            }
+            ParaSetC108[temp + 3] = 0xffff;         //白色，下为黑色
             ParaSetC108[temp + 4] = 0x0000;
-            ParaSetC108[temp + 5] =(U16) (SysFlashData[3+4*k+EVESET_INDEX]<<8)+(U16)(SysFlashData[2+4*k+EVESET_INDEX]);
-            ParaSetC108[temp + 6] =(U16) (SysFlashData[1+4*k+EVESET_INDEX]<<8)+(U16)(SysFlashData[4*k+EVESET_INDEX]);
+            ParaSetC108[temp + 5] =(U16) (SysFlashDataT[3+4*k+EVESET_INDEX]<<8)+(U16)(SysFlashDataT[2+4*k+EVESET_INDEX]);
+            ParaSetC108[temp + 6] =(U16) (SysFlashDataT[1+4*k+EVESET_INDEX]<<8)+(U16)(SysFlashDataT[4*k+EVESET_INDEX]);
         }
         YADA_C0(EventSetAddr, ParaSetC108, 11*7);
         YADA_C108(EventSetAddr, 11);   //写入有效值，每次10个
@@ -1132,11 +1136,11 @@ void GUI_SYS_EVENTSET(void)
         SysSet.DataCnt=0;//切换时键盘输入清零 so you don't need to clear the SysSet.Data Array
     }
     
-    if(SysSet.DataFlg||SysFlashData[EVESEND_FLAG+SysSet.ParaIndex])//修改一项数据
+    if(SysSet.DataFlg)//修改一项数据
     {
       if(SysSet.DataFlg)
       {
-        SysFlashData[EVESEND_FLAG+SysSet.ParaIndex]=0;
+        SysFlashDataT[EVESEND_FLAG]=0;
       }
       
       if(SysSet.DataCnt==0)//clear key
@@ -1161,18 +1165,18 @@ void GUI_SYS_EVENTSET(void)
           
         Float2L=(long)(String2F*100);//enlarge 100 times
         temp=SysSet.EvntIndex*4;
-        SysFlashData[temp+EVESET_INDEX]=(U8)(Float2L);  //四字节数
-        SysFlashData[temp+1+EVESET_INDEX]=(U8)(Float2L>>8);
-        SysFlashData[temp+2+EVESET_INDEX]=(U8)(Float2L>>16);
-        SysFlashData[temp+3+EVESET_INDEX]=(U8)(Float2L>>24);
+        SysFlashDataT[temp+EVESET_INDEX]=(U8)(Float2L);  //四字节数
+        SysFlashDataT[temp+1+EVESET_INDEX]=(U8)(Float2L>>8);
+        SysFlashDataT[temp+2+EVESET_INDEX]=(U8)(Float2L>>16);
+        SysFlashDataT[temp+3+EVESET_INDEX]=(U8)(Float2L>>24);
         
         U16 OneC108[7]= {0x5204,SysEventXY[2*SysSet.EvntIndex],SysEventXY[2*SysSet.EvntIndex + 1],0xffff,0x0000};
-        if(SysFlashData[EVESEND_FLAG+SysSet.ParaIndex])
+        if(SysFlashDataT[EVESEND_FLAG])
         {
           OneC108[3]=0xffe0;
         }
-        OneC108[5] =(U16) (SysFlashData[3+temp+EVESET_INDEX]<<8)+(U16)(SysFlashData[2+temp+EVESET_INDEX]);
-        OneC108[6] =(U16) (SysFlashData[1+temp+EVESET_INDEX]<<8)+(U16)(SysFlashData[temp+EVESET_INDEX]);
+        OneC108[5] =(U16) (SysFlashDataT[3+temp+EVESET_INDEX]<<8)+(U16)(SysFlashDataT[2+temp+EVESET_INDEX]);
+        OneC108[6] =(U16) (SysFlashDataT[1+temp+EVESET_INDEX]<<8)+(U16)(SysFlashDataT[temp+EVESET_INDEX]);
         
         /* WK --> 阈值判断 */
         switch(SysSet.EvntIndex)
@@ -1265,80 +1269,80 @@ void GUI_SYS_EVENTSET(void)
         switch(i)
         {
           case 0:
-           SysFlashData[4*i+25]=(U8)(NumWave)%256;
-           SysFlashData[4*i+26]=(U8)((NumWave)>>8)%256;
-           SysFlashData[4*i+27]=(U8)((NumWave)>>16)%256;
-           SysFlashData[4*i+28]=(U8)((NumWave)>>24)%256;
+           SysFlashDataT[4*i+25]=(U8)(NumWave)%256;
+           SysFlashDataT[4*i+26]=(U8)((NumWave)>>8)%256;
+           SysFlashDataT[4*i+27]=(U8)((NumWave)>>16)%256;
+           SysFlashDataT[4*i+28]=(U8)((NumWave)>>24)%256;
            flg_event[i]=0;
            break;
          case 1:
-           if( (SysFlashData[4*i+25]+(SysFlashData[4*i+26]<<8)+(SysFlashData[4*i+27]<<16))<=6400)
+           if( (SysFlashDataT[4*i+25]+(SysFlashDataT[4*i+26]<<8)+(SysFlashDataT[4*i+27]<<16))<=6400)
              DotWave=6400;
-           else if((SysFlashData[4*i+25]+(SysFlashData[4*i+26]<<8)+(SysFlashData[4*i+27]<<16))<=12800)
+           else if((SysFlashDataT[4*i+25]+(SysFlashDataT[4*i+26]<<8)+(SysFlashDataT[4*i+27]<<16))<=12800)
              DotWave=12800;
            else
              DotWave=25600;
-           SysFlashData[4*i+25]=(U8)(DotWave)%256;
-           SysFlashData[4*i+26]=(U8)(DotWave>>8)%256;
-           SysFlashData[4*i+27]=(U8)(DotWave>>16)%256;
-           SysFlashData[4*i+28]=(U8)(DotWave>>24)%256;
+           SysFlashDataT[4*i+25]=(U8)(DotWave)%256;
+           SysFlashDataT[4*i+26]=(U8)(DotWave>>8)%256;
+           SysFlashDataT[4*i+27]=(U8)(DotWave>>16)%256;
+           SysFlashDataT[4*i+28]=(U8)(DotWave>>24)%256;
            flg_event[i]=0;
            break;
         case 2:
-           SysFlashData[4*i+25]=(U8)(UDeviation)%256;
-           SysFlashData[4*i+26]=(U8)(UDeviation>>8)%256;
-           SysFlashData[4*i+27]=(U8)(UDeviation>>16)%256;
-           SysFlashData[4*i+28]=(U8)(UDeviation>>24)%256;
+           SysFlashDataT[4*i+25]=(U8)(UDeviation)%256;
+           SysFlashDataT[4*i+26]=(U8)(UDeviation>>8)%256;
+           SysFlashDataT[4*i+27]=(U8)(UDeviation>>16)%256;
+           SysFlashDataT[4*i+28]=(U8)(UDeviation>>24)%256;
            flg_event[i]=0;
            break;
         case 3:
-           SysFlashData[4*i+25]=(U8)(FDeviation)%256;
-           SysFlashData[4*i+26]=(U8)(FDeviation>>8)%256;
-           SysFlashData[4*i+27]=(U8)(FDeviation>>16)%256;
-           SysFlashData[4*i+28]=(U8)(FDeviation>>24)%256;
+           SysFlashDataT[4*i+25]=(U8)(FDeviation)%256;
+           SysFlashDataT[4*i+26]=(U8)(FDeviation>>8)%256;
+           SysFlashDataT[4*i+27]=(U8)(FDeviation>>16)%256;
+           SysFlashDataT[4*i+28]=(U8)(FDeviation>>24)%256;
            flg_event[i]=0;
            break;
         case 4:
-           SysFlashData[4*i+25]=(U8)(USurge)%256;
-           SysFlashData[4*i+26]=(U8)(USurge>>8)%256;
-           SysFlashData[4*i+27]=(U8)(USurge>>16)%256;
-           SysFlashData[4*i+28]=(U8)(USurge>>24)%256;
+           SysFlashDataT[4*i+25]=(U8)(USurge)%256;
+           SysFlashDataT[4*i+26]=(U8)(USurge>>8)%256;
+           SysFlashDataT[4*i+27]=(U8)(USurge>>16)%256;
+           SysFlashDataT[4*i+28]=(U8)(USurge>>24)%256;
            flg_event[i]=0;
            break;
         case 5:
-           SysFlashData[4*i+25]=(U8)(NUnblance)%256;
-           SysFlashData[4*i+26]=(U8)(NUnblance>>8)%256;
-           SysFlashData[4*i+27]=(U8)(NUnblance>>16)%256;
-           SysFlashData[4*i+28]=(U8)(NUnblance>>24)%256;
+           SysFlashDataT[4*i+25]=(U8)(NUnblance)%256;
+           SysFlashDataT[4*i+26]=(U8)(NUnblance>>8)%256;
+           SysFlashDataT[4*i+27]=(U8)(NUnblance>>16)%256;
+           SysFlashDataT[4*i+28]=(U8)(NUnblance>>24)%256;
            flg_event[i]=0;
            break;
         case 6:
-           SysFlashData[4*i+25]=(U8)(LngFlick)%256;
-           SysFlashData[4*i+26]=(U8)(LngFlick>>8)%256;
-           SysFlashData[4*i+27]=(U8)(LngFlick>>16)%256;
-           SysFlashData[4*i+28]=(U8)(LngFlick>>24)%256;
+           SysFlashDataT[4*i+25]=(U8)(LngFlick)%256;
+           SysFlashDataT[4*i+26]=(U8)(LngFlick>>8)%256;
+           SysFlashDataT[4*i+27]=(U8)(LngFlick>>16)%256;
+           SysFlashDataT[4*i+28]=(U8)(LngFlick>>24)%256;
            flg_event[i]=0;
            break;
         case 7:
-           SysFlashData[4*i+25]=(U8)(TotalHarmonic)%256;
-           SysFlashData[4*i+26]=(U8)(TotalHarmonic>>8)%256;
-           SysFlashData[4*i+27]=(U8)(TotalHarmonic>>16)%256;
-           SysFlashData[4*i+28]=(U8)(TotalHarmonic>>24)%256;
+           SysFlashDataT[4*i+25]=(U8)(TotalHarmonic)%256;
+           SysFlashDataT[4*i+26]=(U8)(TotalHarmonic>>8)%256;
+           SysFlashDataT[4*i+27]=(U8)(TotalHarmonic>>16)%256;
+           SysFlashDataT[4*i+28]=(U8)(TotalHarmonic>>24)%256;
            flg_event[i]=0;
         case 8: //间谐波没有做
           break;
         case 9:
-           SysFlashData[4*i+25]=(U8)(UHarmonic)%256;
-           SysFlashData[4*i+26]=(U8)(UHarmonic>>8)%256;
-           SysFlashData[4*i+27]=(U8)(UHarmonic>>16)%256;
-           SysFlashData[4*i+28]=(U8)(UHarmonic>>24)%256;
+           SysFlashDataT[4*i+25]=(U8)(UHarmonic)%256;
+           SysFlashDataT[4*i+26]=(U8)(UHarmonic>>8)%256;
+           SysFlashDataT[4*i+27]=(U8)(UHarmonic>>16)%256;
+           SysFlashDataT[4*i+28]=(U8)(UHarmonic>>24)%256;
            flg_event[i]=0;
            break;
         case 10:
-           SysFlashData[4*i+25]=(U8)(IHarmonic)%256;
-           SysFlashData[4*i+26]=(U8)(IHarmonic>>8)%256;
-           SysFlashData[4*i+27]=(U8)(IHarmonic>>16)%256;
-           SysFlashData[4*i+28]=(U8)(IHarmonic>>24)%256;
+           SysFlashDataT[4*i+25]=(U8)(IHarmonic)%256;
+           SysFlashDataT[4*i+26]=(U8)(IHarmonic>>8)%256;
+           SysFlashDataT[4*i+27]=(U8)(IHarmonic>>16)%256;
+           SysFlashDataT[4*i+28]=(U8)(IHarmonic>>24)%256;
            flg_event[i]=0;
            break;
           default:
@@ -1347,7 +1351,7 @@ void GUI_SYS_EVENTSET(void)
 #if 0 //WK -->保存时  SysFlashData 全部保存     
     for(int i=0;i<84;i++) 
     {
-      SysFlashSave[i]=SysFlashData[i];
+      SysFlashSave[i]=SysFlashDataT[i];
     }
     shell_ptr->ARGC=2;
     shell_ptr->ARGV[0]="cd";
@@ -1377,7 +1381,7 @@ void GUI_SYS_EVENTSET(void)
 #if 1  // wk @130326 --> 只保存事件界面数据
     for(int i=0;i<44;i++) 
     {
-      SysFlashSave[i+25]=SysFlashData[i+25];  
+      SysFlashData[i+25]=SysFlashDataT[i+25];  
     }
     shell_ptr->ARGC=2;
     shell_ptr->ARGV[0]="cd";
@@ -1394,7 +1398,7 @@ void GUI_SYS_EVENTSET(void)
     shell_ptr->ARGV[1]="sysevent.txt";
     shell_ptr->ARGV[2]="begin";
     shell_ptr->ARGV[3]="0";  // WK @130326 --> 偏移 26  注意：偏移25时，初始上电时，波形个数为2.55，因此该到了偏移26
-    Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,44,&(SysFlashSave[25]));
+    Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,44,&(SysFlashData[25]));
     
     shell_ptr->ARGC=2;
     shell_ptr->ARGV[0]="update";// wk --> update
@@ -1411,14 +1415,15 @@ void GUI_SYS_EVENTSET(void)
             ParaSetC108[temp + 2] = SysEventXY[2*k + 1];     //Y坐标
             ParaSetC108[temp + 3] = 0xffc1;         //白色，下为黑色
             ParaSetC108[temp + 4] = 0x0000;
-            ParaSetC108[temp + 5] =(U16) (SysFlashData[3+4*k+EVESET_INDEX]<<8)+(U16)(SysFlashData[2+4*k+EVESET_INDEX]);
-            ParaSetC108[temp + 6] =(U16) (SysFlashData[1+4*k+EVESET_INDEX]<<8)+(U16)(SysFlashData[4*k+EVESET_INDEX]);
+            ParaSetC108[temp + 5] =(U16) (SysFlashDataT[3+4*k+EVESET_INDEX]<<8)+(U16)(SysFlashDataT[2+4*k+EVESET_INDEX]);
+            ParaSetC108[temp + 6] =(U16) (SysFlashDataT[1+4*k+EVESET_INDEX]<<8)+(U16)(SysFlashDataT[4*k+EVESET_INDEX]);
         }
          YADA_C0(EventSetAddr, ParaSetC108, 11*7);
          YADA_C108(EventSetAddr,11);   //写入有效值，每次10个
        /* wk --> 保存成功标志 END */
          
        SysSet.SaveFlg=0; //清楚保存标志
+       _mem_free(shell_ptr); 
        
 //       TEST[7]=SysSet.ParaIndex;
 //       temp=SysSet.EvntIndex*4;
@@ -1426,84 +1431,40 @@ void GUI_SYS_EVENTSET(void)
 //       {
 //         TEST[7+i]=SysFlashData[temp+i+EVESET_INDEX];
 //       }
+       
     }
+    else
+      _mem_free(shell_ptr); 
     
 }
-/*******************************************************************************
-* 函  数  名      : Write_Flash
-* 描      述      : 字节写数据到flash
-* 输      入      : U8 DataIn[],U8 Num,char* Flash_ptr
-* 返      回      : 无
-*******************************************************************************/
-//void Write_Flash(U8 DataIn[],U8 Num,char* Flash_ptr)
-//{
-//    _DINT();                    // 5xx Workaround: Disable global
-//    // interrupt while erasing. Re-Enable
-//    // GIE if needed
-//    FCTL3 = FWKEY;                            // Clear Lock bit
-//    FCTL1 = FWKEY+ERASE;                      // Set Erase bit
-//    *Flash_ptr = 0;                           // Dummy write to erase Flash seg
-//    FCTL1 = FWKEY+WRT;                        // Set WRT bit for write operation
-//    for(U8 i=0; i<Num; i++)
-//    {
-//        *Flash_ptr++ = DataIn[i];
-//    }
-//    FCTL1 = FWKEY;                            // Clear WRT bit
-//    FCTL3 = FWKEY+LOCK;                       // Set LOCK bit
-//    _EINT();
-//}
-/*******************************************************************************
-* 函  数  名      : Write_WFlash
-* 描      述      : 字写数据到flash
-* 输      入      : U8 DataIn[],U8 Num,int* Flash_ptr
-* 返      回      : 无
-*******************************************************************************/
-//void Write_WFlash(U16 DataIn[],U8 Num,int* Flash_ptr)
-//{
-//    _DINT();                    // 5xx Workaround: Disable global
-//    // interrupt while erasing. Re-Enable
-//    // GIE if needed
-//  FCTL3 = FWKEY;                            // Clear Lock bit
-//  FCTL1 = FWKEY+ERASE;                      // Set Erase bit
-//  *Flash_ptr = 0;                           // Dummy write to erase Flash seg
-//  FCTL1 = FWKEY+BLKWRT;                     // Enable long-word write
-//  for(U8 i=0; i<Num; i++)
-//  {
-//        *Flash_ptr++ = DataIn[i];
-//  }
-//  FCTL1 = FWKEY;                            // Clear WRT bit
-//  FCTL3 = FWKEY+LOCK;                       // Set LOCK bit
-//    _EINT();
-//}
+
 /*******************************************************************************
 * 函  数  名      : GUI_EventMonitor
 * 描      述      : 事件监测显示，NPage[101~114]为事件的类别叠加;
 * 输      入      : 无
 * 返      回      : 无
 *******************************************************************************/
-//void GUI_EventMonitor(U8 U_DISK)
-//{
-//    U16 EVENTMONXY[28]= {200,51,200,81,200,111,200,141,200,171,200,201,200,231,200,
-//                         261,200,291,200,321,496,54,496,84,496,114,496,144
-//                        };
-//    U16 MONITC108[98]={0};
-//    U8 temp=0;
-//    for(U8 k=0; k<14; k++)
-//    {
-//        temp=7*k;
-//        MONITC108[temp + 0] = 0x6004;         //P  显示数据的模式
-//        MONITC108[temp + 1] =EVENTMONXY[2*k];            //显示相位的X坐标
-//        MONITC108[temp + 2] = EVENTMONXY[2*k + 1];     //Y坐标
-//        MONITC108[temp + 3] = 0xffff;         //白色，下为黑色
-//        MONITC108[temp + 4] = 0x0000;
-//        MONITC108[temp + 5] =0;
-//        MONITC108[temp + 6] =NPage[k+101];
-//    }
-//    YADA_C0(EventMonLAddr, MONITC108, 70);
-//    YADA_C108(EventMonLAddr, 10);   //写入事件，每次10个
-//    YADA_C0(EventMonRAddr, &MONITC108[70], 28);
-//    YADA_C108(EventMonRAddr, 4);   //写入事件，每次4个
-//}
+void GUI_EventMonitor(U8 U_DISK)
+{
+        U16 EVENTMONXY[18]= {181,127,181,174,181,219,181,265,181,310,505,127,505,174,
+                         505,219,505,265
+                        };
+    U16 MONITC108[63]={0};
+    U8 temp=0;
+    for(U8 k=0; k<9; k++)
+    {
+        temp=7*k;
+        MONITC108[temp + 0] = 0x6004;         //P  显示数据的模式
+        MONITC108[temp + 1] =EVENTMONXY[2*k];            //显示相位的X坐标
+        MONITC108[temp + 2] = EVENTMONXY[2*k + 1];     //Y坐标
+        MONITC108[temp + 3] = 0xffff;         //白色，下为黑色
+        MONITC108[temp + 4] = 0x0000;
+        MONITC108[temp + 5] =0;
+        MONITC108[temp + 6] =0;
+    }
+    YADA_C0(EventMonLAddr, MONITC108, 63);
+    YADA_C108(EventMonLAddr, 9);   //写入事件，每次10个
+}
 /*******************************************************************************
 * 函  数  名      : GUI_EventList
 * 描      述      : 事件列表显示，从nandflash中读取。
@@ -1670,7 +1631,7 @@ void EventSave(U8 U_DISK)
       shell_ptr->ARGV[1]=monthDir_name; 
       Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
       
-      if(file_name="12345678.csv")
+      if(file_name=="12345678.csv")
       {
         file_name=num2string(date_sf.DAY*1000000+date_sf.HOUR*10000+date_sf.MINUTE*100+
                              date_sf.SECOND,8,1);       
@@ -1826,6 +1787,5 @@ char_ptr num2string(int_32 num,uchar len,uchar type) // wk --> len <= 13-4-1=8
     *(name+len+3)=0x56; // V
     *(name+len+4)='\0';
   }
-  
   return name;
 }

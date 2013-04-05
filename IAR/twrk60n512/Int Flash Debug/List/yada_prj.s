@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    03/Apr/2013  23:04:33 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    05/Apr/2013  18:51:02 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -59,6 +59,7 @@
         EXTERN EventKeyFlg
         EXTERN EventSave
         EXTERN FTP_task
+        EXTERN GUI_EventMonitor
         EXTERN GUI_SYS_EVENTSET
         EXTERN GUI_SYS_PARASET
         EXTERN GUI_VIEW_HarmoGraph
@@ -291,17 +292,11 @@ timer_isr:
         LDR.W    R0,??DataTable4_2
         MOVS     R1,#+1
         STRB     R1,[R0, #+0]
-//   81     EventKeyFlg=1; SPIEventFlg=1;// wk @130401 --> test event data save
-        LDR.W    R0,??DataTable4_3
-        MOVS     R1,#+1
-        STRB     R1,[R0, #+0]
-        LDR.W    R0,??DataTable4_4
-        MOVS     R1,#+1
-        STRB     R1,[R0, #+0]
+//   81 //    EventKeyFlg=1; SPIEventFlg=1;// wk @130401 --> test event data save
 //   82     _lpt_init(0,3 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO,TRUE);
         MOVS     R3,#+1
         MOVS     R2,#+2
-        LDR.W    R1,??DataTable4_5  ;; 0x2dc6c0
+        LDR.W    R1,??DataTable4_3  ;; 0x2dc6c0
         MOVS     R0,#+0
           CFI FunCall _lpt_init
         BL       _lpt_init
@@ -501,19 +496,19 @@ YaDa:
           CFI CFA R13+24
 //  123 #ifdef _GUI_DBUG_
 //  124    printf("\n----------MAIN&GUI_Task----------\n");
-        LDR.W    R0,??DataTable4_6
+        LDR.W    R0,??DataTable4_4
           CFI FunCall _io_printf
         BL       _io_printf
 //  125    printf("\n----------             ----------\n");
-        LDR.W    R0,??DataTable4_7
+        LDR.W    R0,??DataTable4_5
           CFI FunCall _io_printf
         BL       _io_printf
 //  126    printf("\n----------             ----------\n");
-        LDR.W    R0,??DataTable4_7
+        LDR.W    R0,??DataTable4_5
           CFI FunCall _io_printf
         BL       _io_printf
 //  127    printf("\n----------      END    ----------\n");
-        LDR.N    R0,??DataTable4_8
+        LDR.W    R0,??DataTable4_6
           CFI FunCall _io_printf
         BL       _io_printf
 //  128 #endif 
@@ -540,8 +535,8 @@ YaDa:
         MOV      R0,#+1000
           CFI FunCall delay_ms
         BL       delay_ms
-//  138   delay_ms(2000); // wk -->test  延时1s
-        MOV      R0,#+2000
+//  138   delay_ms(4000); // wk -->test  延时4s，等待U盘启动完成
+        MOV      R0,#+4000
           CFI FunCall delay_ms
         BL       delay_ms
 //  139 //  YADA_E4();  // wk --> 屏幕校正
@@ -551,7 +546,7 @@ YaDa:
         BL       YADA_70
 //  141   
 //  142   RefreshFlg = 0; //页面无刷新
-        LDR.N    R0,??DataTable4_9
+        LDR.N    R0,??DataTable4_7
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
 //  143   
@@ -661,10 +656,10 @@ YaDa:
         MOVS     R0,#+2
         STR      R0,[R4, #+32]
 //  229       shell_ptr->ARGV[0]="mkdir";
-        LDR.N    R0,??DataTable4_10
+        LDR.N    R0,??DataTable4_8
         STR      R0,[R4, #+0]
 //  230       shell_ptr->ARGV[1]="SYSSET"; 
-        LDR.N    R0,??DataTable4_11
+        LDR.N    R0,??DataTable4_9
         STR      R0,[R4, #+4]
 //  231       Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
         MOVS     R1,R4
@@ -693,10 +688,10 @@ YaDa:
         MOVS     R0,#+2
         STR      R0,[R4, #+32]
 //  241       shell_ptr->ARGV[0]="mkdir";
-        LDR.N    R0,??DataTable4_10
+        LDR.N    R0,??DataTable4_8
         STR      R0,[R4, #+0]
 //  242       shell_ptr->ARGV[1]="POWER"; 
-        LDR.N    R0,??DataTable4_12
+        LDR.N    R0,??DataTable4_10
         STR      R0,[R4, #+4]
 //  243       Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
         MOVS     R1,R4
@@ -708,10 +703,10 @@ YaDa:
         MOVS     R0,#+2
         STR      R0,[R4, #+32]
 //  246       shell_ptr->ARGV[0]="mkdir";
-        LDR.N    R0,??DataTable4_10
+        LDR.N    R0,??DataTable4_8
         STR      R0,[R4, #+0]
 //  247       shell_ptr->ARGV[1]="EVENT"; 
-        LDR.N    R0,??DataTable4_13
+        LDR.N    R0,??DataTable4_11
         STR      R0,[R4, #+4]
 //  248       Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
         MOVS     R1,R4
@@ -733,7 +728,7 @@ YaDa:
 //  258             GPIO_LIST_END
 //  259         };
         ADD      R0,SP,#+8
-        LDR.N    R1,??DataTable4_14
+        LDR.N    R1,??DataTable4_12
         LDM      R1!,{R2,R3}
         STM      R0!,{R2,R3}
         SUBS     R1,R1,#+8
@@ -742,11 +737,11 @@ YaDa:
 //  261          /* 这是按键1 上升沿中断*/
 //  262          port_file4 = fopen("gpio:read", (char_ptr) &pins_int );
         ADD      R1,SP,#+8
-        LDR.N    R0,??DataTable4_15
+        LDR.N    R0,??DataTable4_13
           CFI FunCall _io_fopen
         BL       _io_fopen
 //  263          ioctl(port_file4, GPIO_IOCTL_SET_IRQ_FUNCTION, (pointer)int_callback);        
-        LDR.N    R2,??DataTable4_16
+        LDR.N    R2,??DataTable4_14
         MOVW     R1,#+774
           CFI FunCall _io_ioctl
         BL       _io_ioctl
@@ -755,11 +750,11 @@ YaDa:
 //  266    _lpt_install (0,3 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO, 11, timer_isr, TRUE);//2 * 1000000  --> 2秒     
         MOVS     R0,#+1
         STR      R0,[SP, #+4]
-        LDR.N    R0,??DataTable4_17
+        LDR.N    R0,??DataTable4_15
         STR      R0,[SP, #+0]
         MOVS     R3,#+11
         MOVS     R2,#+2
-        LDR.N    R1,??DataTable4_5  ;; 0x2dc6c0
+        LDR.N    R1,??DataTable4_3  ;; 0x2dc6c0
         MOVS     R0,#+0
           CFI FunCall _lpt_install
         BL       _lpt_install
@@ -795,47 +790,47 @@ MainLoop:
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
 //  284   if (SPIPowerFlg) //接收到电能数据
-        LDR.N    R0,??DataTable4_18
+        LDR.N    R0,??DataTable4_16
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??MainLoop_0
 //  285   {
 //  286     if (VIEWHoldFlg == 0)
-        LDR.N    R0,??DataTable4_19
+        LDR.N    R0,??DataTable4_17
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
         BNE.N    ??MainLoop_1
 //  287     {
 //  288       RefreshFlg = 2;
-        LDR.N    R0,??DataTable4_9
+        LDR.N    R0,??DataTable4_7
         MOVS     R1,#+2
         STRB     R1,[R0, #+0]
 //  289       ViewKeyFlg = 0; //VIEWHoldFlg为0时，可能有其余键按下，需要清零
-        LDR.N    R0,??DataTable4_20
+        LDR.N    R0,??DataTable4_18
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
 //  290     }
 //  291     
 //  292     SPIPowerFlg = 0; // 清除标志
 ??MainLoop_1:
-        LDR.N    R0,??DataTable4_18
+        LDR.N    R0,??DataTable4_16
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
         B.N      ??MainLoop_2
 //  293   }
 //  294   else if(ViewKeyFlg) //  ? ViewKeyFlg ?
 ??MainLoop_0:
-        LDR.N    R0,??DataTable4_20
+        LDR.N    R0,??DataTable4_18
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??MainLoop_2
 //  295   {
 //  296     RefreshFlg = 2;
-        LDR.N    R0,??DataTable4_9
+        LDR.N    R0,??DataTable4_7
         MOVS     R1,#+2
         STRB     R1,[R0, #+0]
 //  297     ViewKeyFlg = 0;
-        LDR.N    R0,??DataTable4_20
+        LDR.N    R0,??DataTable4_18
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
 //  298   }
@@ -859,22 +854,22 @@ MainLoop:
 //  306 #if 1 // WK --> 数据存储  待完善
 //  307   if (SPIEventFlg || EventKeyFlg) //接收到事件数据或者事件记录相关页有键按下时需要刷新
 ??MainLoop_3:
-        LDR.N    R0,??DataTable4_4
+        LDR.N    R0,??DataTable4_19
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
         BNE.N    ??MainLoop_4
-        LDR.N    R0,??DataTable4_3
+        LDR.N    R0,??DataTable4_20
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??MainLoop_5
 //  308   {
 //  309     RefreshFlg = 3;
 ??MainLoop_4:
-        LDR.N    R0,??DataTable4_9
+        LDR.N    R0,??DataTable4_7
         MOVS     R1,#+3
         STRB     R1,[R0, #+0]
 //  310     if (SPIEventFlg)
-        LDR.N    R0,??DataTable4_4
+        LDR.N    R0,??DataTable4_19
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??MainLoop_6
@@ -888,11 +883,11 @@ MainLoop:
 //  314     }
 //  315     SPIEventFlg = 0;
 ??MainLoop_6:
-        LDR.N    R0,??DataTable4_4
+        LDR.N    R0,??DataTable4_19
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
 //  316     EventKeyFlg = 0;
-        LDR.N    R0,??DataTable4_3
+        LDR.N    R0,??DataTable4_20
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
 //  317   }
@@ -910,7 +905,7 @@ MainLoop:
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
 //  323      RefreshFlg = 1; 
-        LDR.N    R0,??DataTable4_9
+        LDR.N    R0,??DataTable4_7
         MOVS     R1,#+1
         STRB     R1,[R0, #+0]
 //  324   }
@@ -944,7 +939,7 @@ MainLoop:
 //  334   /* ……*/
 //  335   switch(RefreshFlg)
 ??MainLoop_8:
-        LDR.N    R0,??DataTable4_9
+        LDR.N    R0,??DataTable4_7
         LDRB     R0,[R0, #+0]
         CMP      R0,#+1
         BEQ.N    ??MainLoop_9
@@ -957,7 +952,7 @@ MainLoop:
 //  337   case 1:
 //  338     RefreshFlg = 0;
 ??MainLoop_9:
-        LDR.N    R0,??DataTable4_9
+        LDR.N    R0,??DataTable4_7
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
 //  339     switch (Dis_PicID)
@@ -994,7 +989,7 @@ MainLoop:
 //  352   case 2:
 //  353     RefreshFlg = 0;
 ??MainLoop_12:
-        LDR.N    R0,??DataTable4_9
+        LDR.N    R0,??DataTable4_7
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
 //  354     switch (Dis_PicID)
@@ -1098,7 +1093,7 @@ MainLoop:
 //  391   case 3:
 //  392     RefreshFlg = 0;
 ??MainLoop_11:
-        LDR.N    R0,??DataTable4_9
+        LDR.N    R0,??DataTable4_7
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
 //  393     switch (Dis_PicID)
@@ -1122,9 +1117,13 @@ MainLoop:
 ??MainLoop_31:
         B.N      ??MainLoop_33
 //  401     case MenuEventMON:
-//  402 //      GUI_EventMonitor(U_FLAG);  // 涉及 U 盘数据  --> wk
-//  403       break;
+//  402       GUI_EventMonitor(U_FLAG);  // 涉及 U 盘数据  --> wk
 ??MainLoop_29:
+        LDR.N    R0,??DataTable4_21
+        LDRB     R0,[R0, #+0]
+          CFI FunCall GUI_EventMonitor
+        BL       GUI_EventMonitor
+//  403       break;
         B.N      ??MainLoop_33
 //  404       
 //  405     default:
@@ -1213,11 +1212,11 @@ flg_int:
         MOVS     R1,#+1
         STRB     R1,[R0, #+0]
 //  428     VIEWHoldFlg=0; //保 持键默认为0，键按下时值变为1，再次按下时值变为0；
-        LDR.N    R0,??DataTable4_19
+        LDR.N    R0,??DataTable4_17
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
 //  429     ViewKeyFlg=0;
-        LDR.N    R0,??DataTable4_20
+        LDR.N    R0,??DataTable4_18
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
 //  430     SysSetKeyFlg=0;
@@ -1225,7 +1224,7 @@ flg_int:
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
 //  431     EventKeyFlg=0;
-        LDR.N    R0,??DataTable4_3
+        LDR.N    R0,??DataTable4_20
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
 //  432     MenuSwFlg=0;
@@ -1276,109 +1275,109 @@ flg_int:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable4_3:
-        DC32     EventKeyFlg
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable4_4:
-        DC32     SPIEventFlg
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable4_5:
         DC32     0x2dc6c0
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable4_6:
+??DataTable4_4:
         DC32     `?<Constant "\\n----------MAIN&GUI_T...">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable4_7:
+??DataTable4_5:
         DC32     `?<Constant "\\n----------          ...">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable4_8:
+??DataTable4_6:
         DC32     `?<Constant "\\n----------      END ...">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable4_9:
+??DataTable4_7:
         DC32     RefreshFlg
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable4_10:
+??DataTable4_8:
         DC32     `?<Constant "mkdir">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable4_11:
+??DataTable4_9:
         DC32     `?<Constant "SYSSET">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable4_12:
+??DataTable4_10:
         DC32     `?<Constant "POWER">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable4_13:
+??DataTable4_11:
         DC32     `?<Constant "EVENT">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable4_14:
+??DataTable4_12:
         DC32     `?<Constant {2181038099L, 0L}>`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable4_15:
+??DataTable4_13:
         DC32     `?<Constant "gpio:read">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable4_16:
+??DataTable4_14:
         DC32     int_callback
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable4_17:
+??DataTable4_15:
         DC32     timer_isr
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable4_18:
+??DataTable4_16:
         DC32     SPIPowerFlg
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable4_19:
+??DataTable4_17:
         DC32     VIEWHoldFlg
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable4_20:
+??DataTable4_18:
         DC32     ViewKeyFlg
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable4_19:
+        DC32     SPIEventFlg
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable4_20:
+        DC32     EventKeyFlg
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -1492,9 +1491,9 @@ flg_int:
 //   3 bytes in section .bss
 //   8 bytes in section .data
 // 656 bytes in section .rodata
-// 998 bytes in section .text
+// 992 bytes in section .text
 // 
-// 998 bytes of CODE  memory
+// 992 bytes of CODE  memory
 // 656 bytes of CONST memory
 //  11 bytes of DATA  memory
 //

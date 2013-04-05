@@ -3908,18 +3908,18 @@
   <group>
     <name>USB_Libs</name>
     <file>
+      <name>E:\Freescale\Freescale MQX 3.8\shell\source\mfs\sh_cd.c</name>
+    </file>
+    <file>
+      <name>E:\Freescale\Freescale MQX 3.8\shell\source\mfs\sh_di.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\lib\twrk60n512.iar\usb\host\usb_classes.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\lib\twrk60n512.iar\usb\host\usb_hdk_twrk60n512_d.a</name>
     </file>
   </group>
-  <file>
-    <name>E:\Freescale\Freescale MQX 3.8\shell\source\mfs\sh_cd.c</name>
-  </file>
-  <file>
-    <name>E:\Freescale\Freescale MQX 3.8\shell\source\mfs\sh_di.c</name>
-  </file>
 </project>
 
 
