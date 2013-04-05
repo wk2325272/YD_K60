@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM     05/Apr/2013  18:51:00 #
+# IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM     05/Apr/2013  19:38:13 #
 # Copyright 1999-2011 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -811,6 +811,45 @@ L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\DataConvert.c
     245            }*/
     246          }
    \   00000044   0xE8BD 0x81F0      POP      {R4-R8,PC}       ;; return
+    247          /*******************************************************************************
+    248          * 函  数  名      : Sig_Fiq
+    249          * 描      述      : 将电能数据按要求的有效数字进行转换
+    250          * 输      入      : U8 DADAIN[],U8 TIMES，10为不缩小10倍即3位有效数字,
+    251                              100为缩小100倍即2位有效数字,1000为不缩小1000倍即1位有效数字
+    252          * 返      回      : 返float DATAOUT[]
+    253          *******************************************************************************/
+
+   \                                 In section .text, align 2, keep-with-next
+    254          void Sig_Fiq(U8 DADAIN[],U8 DATAOUT[],U16 TIMES)
+    255          {
+   \                     Sig_Fiq:
+   \   00000000   0xB410             PUSH     {R4}
+    256            long temp;
+    257            temp=(((long)(DADAIN[0])<<24)+((long)(DADAIN[1])<<16)+((long)(DADAIN[2])<<8)+((long)(DADAIN[3])))/TIMES;
+   \   00000002   0x7803             LDRB     R3,[R0, #+0]
+   \   00000004   0x7844             LDRB     R4,[R0, #+1]
+   \   00000006   0x0424             LSLS     R4,R4,#+16
+   \   00000008   0xEB14 0x6303      ADDS     R3,R4,R3, LSL #+24
+   \   0000000C   0x7884             LDRB     R4,[R0, #+2]
+   \   0000000E   0xEB13 0x2304      ADDS     R3,R3,R4, LSL #+8
+   \   00000012   0x78C0             LDRB     R0,[R0, #+3]
+   \   00000014   0x1818             ADDS     R0,R3,R0
+   \   00000016   0xB292             UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
+   \   00000018   0xFB90 0xF0F2      SDIV     R0,R0,R2
+    258            DATAOUT[3]=temp;
+   \   0000001C   0x70C8             STRB     R0,[R1, #+3]
+    259            DATAOUT[2]=temp>>8;
+   \   0000001E   0x1202             ASRS     R2,R0,#+8
+   \   00000020   0x708A             STRB     R2,[R1, #+2]
+    260            DATAOUT[1]=temp>>16;
+   \   00000022   0x1402             ASRS     R2,R0,#+16
+   \   00000024   0x704A             STRB     R2,[R1, #+1]
+    261            DATAOUT[0]=temp>>24;
+   \   00000026   0x1600             ASRS     R0,R0,#+24
+   \   00000028   0x7008             STRB     R0,[R1, #+0]
+    262          }
+   \   0000002A   0xBC10             POP      {R4}
+   \   0000002C   0x4770             BX       LR               ;; return
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable3:
@@ -859,6 +898,7 @@ L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\DataConvert.c
              24 -> __aeabi_fadd
              24 -> __aeabi_fmul
              24 -> __aeabi_fsub
+        4  Sig_Fiq
        24  U16TOFL_UI
              24 -> __aeabi_fadd
              24 -> __aeabi_fdiv
@@ -888,14 +928,15 @@ L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\DataConvert.c
       60  EVEUISHIFT
      140  FLTOINT_UI
      188  PhaseShift
+      46  Sig_Fiq
       72  U16TOFL_UI
       64  UIValues2HR
      302  WR_WAVE_UI
 
  
- 1 338 bytes in section .text
+ 1 384 bytes in section .text
  
- 1 338 bytes of CODE memory
+ 1 384 bytes of CODE memory
 
 Errors: none
 Warnings: none

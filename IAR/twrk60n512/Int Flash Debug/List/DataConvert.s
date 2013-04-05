@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    05/Apr/2013  18:51:00 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    05/Apr/2013  19:38:13 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -74,6 +74,7 @@
         PUBLIC EVEUISHIFT
         PUBLIC FLTOINT_UI
         PUBLIC PhaseShift
+        PUBLIC Sig_Fiq
         PUBLIC U16TOFL_UI
         PUBLIC UIValues2HR
         PUBLIC WR_WAVE_UI
@@ -1057,6 +1058,54 @@ U16TOFL_UI:
         DATA
 ??DataTable3_4:
         DC32     0x41200000
+//  247 /*******************************************************************************
+//  248 * 函  数  名      : Sig_Fiq
+//  249 * 描      述      : 将电能数据按要求的有效数字进行转换
+//  250 * 输      入      : U8 DADAIN[],U8 TIMES，10为不缩小10倍即3位有效数字,
+//  251                     100为缩小100倍即2位有效数字,1000为不缩小1000倍即1位有效数字
+//  252 * 返      回      : 返float DATAOUT[]
+//  253 *******************************************************************************/
+
+        SECTION `.text`:CODE:NOROOT(1)
+          CFI Block cfiBlock10 Using cfiCommon0
+          CFI Function Sig_Fiq
+          CFI NoCalls
+        THUMB
+//  254 void Sig_Fiq(U8 DADAIN[],U8 DATAOUT[],U16 TIMES)
+//  255 {
+Sig_Fiq:
+        PUSH     {R4}
+          CFI R4 Frame(CFA, -4)
+          CFI CFA R13+4
+//  256   long temp;
+//  257   temp=(((long)(DADAIN[0])<<24)+((long)(DADAIN[1])<<16)+((long)(DADAIN[2])<<8)+((long)(DADAIN[3])))/TIMES;
+        LDRB     R3,[R0, #+0]
+        LDRB     R4,[R0, #+1]
+        LSLS     R4,R4,#+16
+        ADDS     R3,R4,R3, LSL #+24
+        LDRB     R4,[R0, #+2]
+        ADDS     R3,R3,R4, LSL #+8
+        LDRB     R0,[R0, #+3]
+        ADDS     R0,R3,R0
+        UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
+        SDIV     R0,R0,R2
+//  258   DATAOUT[3]=temp;
+        STRB     R0,[R1, #+3]
+//  259   DATAOUT[2]=temp>>8;
+        ASRS     R2,R0,#+8
+        STRB     R2,[R1, #+2]
+//  260   DATAOUT[1]=temp>>16;
+        ASRS     R2,R0,#+16
+        STRB     R2,[R1, #+1]
+//  261   DATAOUT[0]=temp>>24;
+        ASRS     R0,R0,#+24
+        STRB     R0,[R1, #+0]
+//  262 }
+        POP      {R4}
+          CFI R4 SameValue
+          CFI CFA R13+0
+        BX       LR               ;; return
+          CFI EndBlock cfiBlock10
 
         SECTION `.iar_vfe_header`:DATA:REORDER:NOALLOC:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -1071,9 +1120,9 @@ U16TOFL_UI:
 
         END
 // 
-// 1 338 bytes in section .text
+// 1 384 bytes in section .text
 // 
-// 1 338 bytes of CODE memory
+// 1 384 bytes of CODE memory
 //
 //Errors: none
 //Warnings: none

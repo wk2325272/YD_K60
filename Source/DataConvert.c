@@ -244,3 +244,19 @@ void U16TOFL_UI(U8 DADAIN[],U16 NUM,float DATAOUT[])//NUM为待转换数据个数
      DATAOUT[i]=(((int)(DADAIN[2*i])<<8)+(int)(DADAIN[2*i+1]))*0.00026;
   }*/
 }
+/*******************************************************************************
+* 函  数  名      : Sig_Fiq
+* 描      述      : 将电能数据按要求的有效数字进行转换
+* 输      入      : U8 DADAIN[],U8 TIMES，10为不缩小10倍即3位有效数字,
+                    100为缩小100倍即2位有效数字,1000为不缩小1000倍即1位有效数字
+* 返      回      : 返float DATAOUT[]
+*******************************************************************************/
+void Sig_Fiq(U8 DADAIN[],U8 DATAOUT[],U16 TIMES)
+{
+  long temp;
+  temp=(((long)(DADAIN[0])<<24)+((long)(DADAIN[1])<<16)+((long)(DADAIN[2])<<8)+((long)(DADAIN[3])))/TIMES;
+  DATAOUT[3]=temp;
+  DATAOUT[2]=temp>>8;
+  DATAOUT[1]=temp>>16;
+  DATAOUT[0]=temp>>24;
+}

@@ -85,7 +85,6 @@ void GUI_VIEW_UI(void)
 *******************************************************************************/
 void GUI_VIEW_U(void)
 {
-#if 1
     U16 WAVE_U[3*size_UI]= {0};
     U16 Coord_U[]= {14,86,614,174,212,295,330,415};    //剪切及原点坐标a
     linemark(48,0);                                    //电压图标注上面的电压,及有效值
@@ -98,7 +97,6 @@ void GUI_VIEW_U(void)
     delay_ms(5);
     WR_WAVE_UI(WAVE_U,2,1);                      //将所有原采样数据写入触摸屏的另一地址
     // delay_ms(50);
-#endif 
 }
 /*******************************************************************************
 * 函  数  名      : GUI_VIEW_I
@@ -139,7 +137,7 @@ void GUI_VIEW_VECT(void)
     U16 VEC_ORIG_YCOORD=95;       //wk @20130325 --> old:96        //相位的初始Y 坐标
     U16 Vec_Angle1[6]= {0};
     U32 Vec_Angle[6];
-    float Vec_Anglefloat[6]= {0};                   //向量的浮点型，调用方便
+    float Vec_Anglefloat[6]= {0.0};                   //向量的浮点型，调用方便
     YADA_71 (MenuViewVector,0,40,366,417,0,40);
     /**电压电流各向量及标识**/
     ChartoFloat(&PowRxchar[VEC_INDEX],Vec_Anglefloat,6,10000);
@@ -612,6 +610,7 @@ void GUI_VIEW_HarmoList()
 *******************************************************************************/
 void linemark(U16 Y_COORD, U16 UorI)
 {
+#if 0  // wk @130405-->修改显示位数之前
     U16 C108Dat[21]= {0};
     U8 UORI[][2]= {"V","A"};
     for(U8 k=0; k<3; k++)
@@ -628,6 +627,41 @@ void linemark(U16 Y_COORD, U16 UorI)
     }
     delay_ms(5);
     YADA_C0(WAVEUIaddr + UorI*42, C108Dat, 21);  
+    YADA_C108(WAVEUIaddr + UorI*42, 3);   //写入有效值，每次3个
+#endif
+    
+    U16 C108Dat[21]= {0};
+    U8 VI_DIS[12]={0};
+    U8 UORI[][2]= {"V","A"},temp,temp1,k;
+    for(k=0; k<3; k++)
+    {
+      if(UorI)
+        Sig_Fiq(&PowRxchar[UI_VIRTUAL_INDEX+8+16*k],&VI_DIS[4*k],10);   //数据显示为要求的有效数字
+      else
+        Sig_Fiq(&PowRxchar[UI_VIRTUAL_INDEX+16*k],&VI_DIS[4*k],100);
+    }
+    for(k=0; k<3; k++)
+    {
+      temp=7*k;
+      temp1=k*4;
+      if(UorI)
+      {
+        C108Dat[temp + 0] = 0x3303;//P
+      }
+      else
+      {
+         C108Dat[temp + 0] = 0x3203;//P  
+      }
+        C108Dat[temp + 1] = 118+200*k;//显示左边列谐波数据的X坐标118 318,518
+        C108Dat[temp + 2] = Y_COORD;//Y坐标
+        C108Dat[temp + 3] = COLOR[k];
+        C108Dat[temp + 4] = 0x0000;
+        C108Dat[temp + 5] = ((U16)(VI_DIS[temp1]) << 8) + (U16)(VI_DIS[1 + temp1]);
+        C108Dat[temp + 6] = ((U16)(VI_DIS[temp1+2]) << 8) + (U16)(VI_DIS[3 + temp1]);
+        YADA_98(198+200*k, Y_COORD, 0x22, 0x81, 0x01, COLOR[k], 0x0000, UORI[UorI], 0);  //标注电压或电流的单位
+    }
+    delay_ms(5);
+    YADA_C0(WAVEUIaddr + UorI*42, C108Dat, 21);
     YADA_C108(WAVEUIaddr + UorI*42, 3);   //写入有效值，每次3个
 }
 /*******************************************************************************
