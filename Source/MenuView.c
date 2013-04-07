@@ -1771,11 +1771,11 @@ void PowerSave(void)
       Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,7,&date_sf);
       
       uchar test[]={0,1,2,3,4,5,6,7,8,9,10};
-      shell_ptr->ARGC=4;
-      shell_ptr->ARGV[0]="write";
-      shell_ptr->ARGV[1]=file_name;
-      shell_ptr->ARGV[2]="current";
-      shell_ptr->ARGV[3]="0";
+//      shell_ptr->ARGC=4;
+//      shell_ptr->ARGV[0]="write";
+//      shell_ptr->ARGV[1]=file_name;
+//      shell_ptr->ARGV[2]="current";
+//      shell_ptr->ARGV[3]="0";
       Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,100,test);
 
      _mem_free(shell_ptr);  // wk @130403 --> important
@@ -1785,13 +1785,13 @@ void PowerSave(void)
 }
 
 /*******************************************************************************
-** Function Name	：
+** Function Name	：num2string
 ** Input		： type =0 文件夹，=1 .CSV文件
 ** Return		：
 ** Author		：
 ** Version	：
 ** Date		：
-** Dessription	：
+** Dessription	： 将 32 位整数转换成字符串
 ** Reverse	：
 *******************************************************************************/
 char_ptr num2string(int_32 num,uchar len,uchar type) // wk --> len <= 13-4-1=8

@@ -104,16 +104,16 @@ MenuV_EXT U8 EventAddr[400];// wk@130405 -->记录事件发生的时间：月、日、时、分、
 #define EVESEND_FLAG 70
 
 /*WK @130326 --> 事件限值宏定义 */
-/* wk @130326 --> 扩大了100倍 */
-#define NumWave 10000
+/* wk @130326 --> 扩大了100倍 ：显示时的模式会将数据除100显示*/
+#define NumWave 100*100
 MenuV_EXT U16 DotWave ;
-#define UDeviation 220*7  
+#define UDeviation 100*7  
 #define FDeviation 2
-#define USurge 220*2
-#define NUnblance 220*2
+#define USurge 100*2
+#define NUnblance 100*2
 #define LngFlick 100
-#define TotalHarmonic 220*5
+#define TotalHarmonic 100*5
 //#define JHarmonic
-#define UHarmonic 220*4 
-#define IHarmonic 220*2
+#define UHarmonic 100*4 
+#define IHarmonic 100*2
 
