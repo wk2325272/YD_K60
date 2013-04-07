@@ -57,9 +57,13 @@
 #include "usb_file.h"
 
 #include <mfs.h>
+#include "shell.h" // shell function
+#include "sh_prv.h"// shell function
 
 //#include "demo.h"
 #include "FTP_Task.h"
+
+#include "MenuView.h"
 
 #define USB_EVENT 0x01
 
@@ -191,6 +195,7 @@ void USB_task(uint_32 param)
          _lwevent_wait_ticks(&USB_Event,USB_EVENT,FALSE,0);
 
          if ( device.STATE== USB_DEVICE_ATTACHED) {
+           
 
             if (device.SUPPORTED)  {
                error = _usb_hostdev_select_interface(device.DEV_HANDLE,
@@ -206,6 +211,65 @@ void USB_task(uint_32 param)
                      // signal the application
                      _lwsem_post(&USB_Stick);
                   }
+/* wk @130405 --> make some dirs */
+      SHELL_CONTEXT_PTR    shell_ptr;
+      shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
+      _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
+      uint_32 file_size;
+      
+      uchar status;
+     /* wk @130401 --> 新建 sysset 用于系统变量保存 */
+      shell_ptr->ARGC = 2;
+      shell_ptr->ARGV[0]="cd";
+      shell_ptr->ARGV[1]="f:\\"; 
+      Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+      
+//      shell_ptr->ARGC = 2;
+//      shell_ptr->ARGV[0]="df_s";
+      shell_ptr->ARGV[1]="SYSSET";   //wk --> 注意：查找的文件名暂时必须要是大写
+      status=Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
+      if(status==0)
+      {
+//        shell_ptr->ARGC = 2;
+//        shell_ptr->ARGV[0]="mkdir";
+        shell_ptr->ARGV[1]="SYSSET"; 
+        Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
+      }
+      /* wk @130401 --> 新建 power/event用于基本电能质量/事件数据保存 */
+//      shell_ptr->ARGC = 2;
+//      shell_ptr->ARGV[0]="cd";
+      shell_ptr->ARGV[1]="u:\\"; 
+      Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+      
+//      shell_ptr->ARGC = 2;
+//      shell_ptr->ARGV[0]="df_s";
+      shell_ptr->ARGV[1]="POWER";   //wk --> 注意：查找的文件名暂时必须要是大写
+      status=Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
+      if(status==0)
+      {
+//        shell_ptr->ARGC = 2;
+//        shell_ptr->ARGV[0]="mkdir";
+        shell_ptr->ARGV[1]="POWER"; 
+        Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
+      }
+//      shell_ptr->ARGC = 2;
+//      shell_ptr->ARGV[0]="df_s";
+      shell_ptr->ARGV[1]="EVENT";   //wk --> 注意：查找的文件名暂时必须要是大写
+      status=Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
+     
+      if(status==0)
+      { 
+//        shell_ptr->ARGC = 2;
+//        shell_ptr->ARGV[0]="mkdir";
+        shell_ptr->ARGV[1]="EVENT"; 
+        Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
+      }
+      
+      _mem_free(shell_ptr);
+                        
+      USB_Flg=1; // wk @130407 --> USB 插入
+  /* wk @130405 --> make some dirs <-- end */    
+      
                }
             } else {
                 device.STATE = USB_DEVICE_INTERFACED;
@@ -214,8 +278,10 @@ void USB_task(uint_32 param)
             _lwsem_wait(&USB_Stick);
             // remove the file system
            usb_filesystem_uninstall(usb_fs_handle);
+           
+           USB_Flg=0; // wk @130407 --> USB 拔出
          }
-
+         
          // clear the event
          _lwevent_clear(&USB_Event,USB_EVENT);
       }

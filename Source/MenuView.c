@@ -28,11 +28,13 @@
 #include "sh_prv.h"
 #include <timer.h>
 #include <math.h>
+
 /* end */
 
 /* REVERSE BY WK TO TEST SysEventSet*/
 //extern U8 PowRxchar[],EvntRxchar[],TEST[20];
 extern U8 PowRxchar[],EvntRxchar[];
+U8 USB_Flg=0;
 //       U8 TEST[20];
 /* END */
 
@@ -1617,89 +1619,95 @@ void GUI_EventMonitor(U8 U_DISK)
 *******************************************************************************/
 void EventSave(U8 U_DISK)
 {
+    if(USB_Flg==1) // ==1 时插入
+    {
+          SHELL_CONTEXT_PTR    shell_ptr;
+          shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
+          _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
+          static   char_ptr file_name="12345678.csv",dir_name,monthDir_name;
+          static uint_16 year_old=0,month_old=0;
+          uint_32 file_size;
+          
+          TIME_STRUCT             time_sf;
+          DATE_STRUCT             date_sf;     
+          _time_get(&time_sf);
+          _time_to_date(&time_sf,&date_sf);
     
-      SHELL_CONTEXT_PTR    shell_ptr;
-      shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
-      _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
-      static   char_ptr file_name="12345678.csv",dir_name,monthDir_name;
-      static uint_16 year_old=0,month_old=0;
-      uint_32 file_size;
-      
-      TIME_STRUCT             time_sf;
-      DATE_STRUCT             date_sf;     
-      _time_get(&time_sf);
-      _time_to_date(&time_sf,&date_sf);
-
-      shell_ptr->ARGC = 2;
-      shell_ptr->ARGV[0]="cd";
-      shell_ptr->ARGV[1]="u:\\event"; 
-      Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+          shell_ptr->ARGC = 2;
+          shell_ptr->ARGV[0]="cd";
+          shell_ptr->ARGV[1]="u:\\event"; 
+          Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+        
+          if(year_old!=date_sf.YEAR) // wk --> creata a dir named of year
+          {
+            dir_name=num2string(date_sf.YEAR,4,0);
+            year_old=date_sf.YEAR;
+            
+            shell_ptr->ARGC = 2;
+            shell_ptr->ARGV[0]="mkdir";
+            shell_ptr->ARGV[1]=dir_name; 
+            Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
+          }
+          
+          shell_ptr->ARGC = 2;
+          shell_ptr->ARGV[0]="cd";
+          shell_ptr->ARGV[1]=dir_name; 
+          Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+          if(month_old!=date_sf.MONTH)
+          {
+            monthDir_name=num2string(date_sf.YEAR,2,0);
+            month_old=date_sf.MONTH;
+            
+            shell_ptr->ARGC = 2;
+            shell_ptr->ARGV[0]="mkdir";
+            shell_ptr->ARGV[1]=monthDir_name; 
+            Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
+          }
+          shell_ptr->ARGC = 2;
+          shell_ptr->ARGV[0]="cd";
+          shell_ptr->ARGV[1]=monthDir_name; 
+          Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+          
+          if(file_name=="12345678.csv")
+          {
+            file_name=num2string(date_sf.DAY*1000000+date_sf.HOUR*10000+date_sf.MINUTE*100+
+                                 date_sf.SECOND,8,1);       
+          }
+          else
+          {
+            shell_ptr->ARGC = 2;
+            shell_ptr->ARGV[0]="df_s";
+            shell_ptr->ARGV[1]=file_name;   //wk --> 注意：查找的文件名暂时必须要是大写
+            Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
+            
+            if(file_size>134217728)  // wk --> 128M = 128*1024*1024 bytes
+            {
+              file_name=num2string(date_sf.DAY*1000000+date_sf.HOUR*10000+date_sf.MINUTE*100+
+                                   date_sf.SECOND,8,1); 
+            }
+          }
+          
+          shell_ptr->ARGC=4;
+          shell_ptr->ARGV[0]="write";
+          shell_ptr->ARGV[1]=file_name;
+          shell_ptr->ARGV[2]="current";
+          shell_ptr->ARGV[3]="0";
+          Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,7,&date_sf);
+          
+          uchar test[1000]={0,1,2,3,4,5,6,7,8,9,10};
+    //      shell_ptr->ARGC=4;
+    //      shell_ptr->ARGV[0]="write";
+    //      shell_ptr->ARGV[1]=file_name;
+    //      shell_ptr->ARGV[2]="current";
+    //      shell_ptr->ARGV[3]="0";
+          Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,1000,test);
     
-      if(year_old!=date_sf.YEAR) // wk --> creata a dir named of year
-      {
-        dir_name=num2string(date_sf.YEAR,4,0);
-        year_old=date_sf.YEAR;
-        
-        shell_ptr->ARGC = 2;
-        shell_ptr->ARGV[0]="mkdir";
-        shell_ptr->ARGV[1]=dir_name; 
-        Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
-      }
-      
-      shell_ptr->ARGC = 2;
-      shell_ptr->ARGV[0]="cd";
-      shell_ptr->ARGV[1]=dir_name; 
-      Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
-      if(month_old!=date_sf.MONTH)
-      {
-        monthDir_name=num2string(date_sf.YEAR,2,0);
-        month_old=date_sf.MONTH;
-        
-        shell_ptr->ARGC = 2;
-        shell_ptr->ARGV[0]="mkdir";
-        shell_ptr->ARGV[1]=monthDir_name; 
-        Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
-      }
-      shell_ptr->ARGC = 2;
-      shell_ptr->ARGV[0]="cd";
-      shell_ptr->ARGV[1]=monthDir_name; 
-      Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
-      
-      if(file_name=="12345678.csv")
-      {
-        file_name=num2string(date_sf.DAY*1000000+date_sf.HOUR*10000+date_sf.MINUTE*100+
-                             date_sf.SECOND,8,1);       
-      }
-      else
-      {
-        shell_ptr->ARGC = 2;
-        shell_ptr->ARGV[0]="df_s";
-        shell_ptr->ARGV[1]=file_name;   //wk --> 注意：查找的文件名暂时必须要是大写
-        Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
-        
-        if(file_size>134217728)  // wk --> 128M = 128*1024*1024 bytes
-        {
-          file_name=num2string(date_sf.DAY*1000000+date_sf.HOUR*10000+date_sf.MINUTE*100+
-                               date_sf.SECOND,8,1); 
-        }
-      }
-      
-      shell_ptr->ARGC=4;
-      shell_ptr->ARGV[0]="write";
-      shell_ptr->ARGV[1]=file_name;
-      shell_ptr->ARGV[2]="current";
-      shell_ptr->ARGV[3]="0";
-      Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,7,&date_sf);
-      
-      uchar test[]={0,1,2,3,4,5,6,7,8,9,10};
-      shell_ptr->ARGC=4;
-      shell_ptr->ARGV[0]="write";
-      shell_ptr->ARGV[1]=file_name;
-      shell_ptr->ARGV[2]="current";
-      shell_ptr->ARGV[3]="0";
-      Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,1000,test);
-
-     _mem_free(shell_ptr);  // wk @130403 --> important
+         _mem_free(shell_ptr);  // wk @130403 --> important
+    }
+    else
+    {
+      printf("\nATTENTION:USB is DETACHED\n");
+    }
 }
 /*******************************************************************************
 * 函  数  名      : PowerSave
@@ -1709,6 +1717,8 @@ void EventSave(U8 U_DISK)
 *******************************************************************************/
 void PowerSave(void)
 {
+  if(USB_Flg==1)
+  {
       SHELL_CONTEXT_PTR    shell_ptr;
       shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
       _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
@@ -1735,14 +1745,14 @@ void PowerSave(void)
 //        dir_name="2013";
         year_old=date_sf.YEAR;
         
-        shell_ptr->ARGC = 2;
-        shell_ptr->ARGV[0]="mkdir";
+//        shell_ptr->ARGC = 2;
+//        shell_ptr->ARGV[0]="mkdir";
         shell_ptr->ARGV[1]=dir_name; 
         Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
       }
-      
-      shell_ptr->ARGC = 2;  //WK --> 进入 dir_name 下面
-      shell_ptr->ARGV[0]="cd";
+      /* wk @130407 --> 注意： 这里可以添加年份文件夹查找的，确定文件夹已经建立在打开 */
+//      shell_ptr->ARGC = 2;  //WK --> 进入 dir_name 下面
+//      shell_ptr->ARGV[0]="cd";
       shell_ptr->ARGV[1]=dir_name; 
       Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
       
@@ -1752,8 +1762,8 @@ void PowerSave(void)
       }
       else
       {
-        shell_ptr->ARGC = 2;
-        shell_ptr->ARGV[0]="df_s";
+//        shell_ptr->ARGC = 2;
+//        shell_ptr->ARGV[0]="df_s";
         shell_ptr->ARGV[1]=file_name;   //wk --> 注意：查找的文件名暂时必须要是大写
         Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
         
@@ -1779,8 +1789,11 @@ void PowerSave(void)
       Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,100,test);
 
      _mem_free(shell_ptr);  // wk @130403 --> important
-     
-//     printf("is it ok?\n");
+  }
+  else
+  {
+    printf("\nATTENTION:USB is DETACHED\n");
+  }
      
 }
 

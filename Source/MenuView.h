@@ -117,3 +117,5 @@ MenuV_EXT U16 DotWave ;
 #define UHarmonic 100*4 
 #define IHarmonic 100*2
 
+MenuV_EXT U8 USB_Flg; // wk @130407 --> USB 是否插入标志
+
