@@ -96,14 +96,13 @@ const TASK_TEMPLATE_STRUCT  MQX_template_list[] =    //  | MQX_TIME_SLICE_TASK
    {2,  Shell_Task, 4000L,  12, "Shell_Task",   MQX_AUTO_START_TASK, 0,     1000 },  //  | MQX_TIME_SLICE_TASK
    
    {3,  FTP_task,   2000,   9L,   "FTP_Task",     MQX_AUTO_START_TASK, 0,     0 },
-   {4,  tcp_socket_task,   3000,   9L,   "tcp_socket_task",     0, 0,     0 },
-   {5,  USB_task,   5200L,  8L,   "USB_Task",     MQX_AUTO_START_TASK, 0,     0 },
+   {4,  tcp_socket_task,   3000-1000L,   9L,   "tcp_socket_task",     0, 0,     0 },
+   {5,  USB_task,   5200L,  8L,   "USB_Task",     MQX_AUTO_START_TASK, 0,     0 },  // MQX_AUTO_START_TASK
    {6,  mem_flash_app, 4000L,  8L,   "Flash_Task",     MQX_AUTO_START_TASK, 0,     0 },
-   
    {7,  LCDTouchSel_Task ,1000,7 , "UartTouch_Task", MQX_AUTO_START_TASK, 0 , 0},
    {8,  SPIDMA_Task , 5000, 6 , "SPIDMA_Task",MQX_AUTO_START_TASK,0 ,0 },
    //   {10,  sdcard_task,2000L,  8L, "SDcard",  MQX_AUTO_START_TASK, 0,     0 },
-   {11, PIN2,       500,   9L,  "PIN2_Task", MQX_AUTO_START_TASK,0 ,0 }, // 按键的处理任务
+   {11, PIN2,       500-100L,   9L,  "PIN2_Task", MQX_AUTO_START_TASK,0 ,0 }, // 按键的处理任务
    { 0 }
 };
 
@@ -126,7 +125,6 @@ void YaDa
    printf("\n----------             ----------\n");
    printf("\n----------      END    ----------\n");
 #endif 
-  U8 status;
    
   UartLCD_init();  // uart initialization
   UartTouch_init();
@@ -135,32 +133,35 @@ void YaDa
   
   YADA_70(PageStart); //必要的初始化后进入首页
   delay_ms(1000); // wk -->test  延时1s
-  delay_ms(4000); // wk -->test  延时4s，等待U盘启动完成
+//  delay_ms(4000); // wk -->test  延时4s，等待U盘启动完成
 //  YADA_E4();  // wk --> 屏幕校正
   YADA_70(MenuTop);  // 进入菜单首页
   
-  RefreshFlg = 0; //页面无刷新
-  
-  /* test function of USB */  // wk --> for test  2013-02-28
-//  char_ptr create[]={"test","kkM2.txt"},write[]={"write","kkM2.txt","6"};  // wk --> test array of USB
-//  char_ptr buf[]={"test","kkM1.txt","6","begin","5","123456"};
-//  char_ptr buf_1[]={"test","kkM4.txt","begin","5"};
-//  uchar data[]={1,2,3,4,5,6};
-//  Shell_create(2,create); 
-//  Shell_write(3,write);   
-////  Shell_write_buf(6,buf);
-//  Shell_write_binary(4,buf_1,6,data);
-//  /* read test */
-//    uchar data_r[10]={0};
-//    char_ptr read_buf[]={"read","kkM4.txt","5","begin","0"};
-//    Shell_read_wk(5,read_buf,data_r);
-//    printf("\n-------------------------read_test--------------------\n");
-//    for(int i=0;i<10;i++)
-//    {
-//      printf("data_r[%d]=%x\n",i,data_r[i]);
-//    }
-//    printf("end\n\n");
-//    
+  RefreshFlg = 0; //页面无刷新 
+    
+      SHELL_CONTEXT_PTR    shell_ptr;
+      shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
+      _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
+      uint_32 file_size;   
+      uchar status;
+     /* wk @130401 --> 在 flash中 新建 sysset 用于系统变量保存 */
+      shell_ptr->ARGC = 2;
+      shell_ptr->ARGV[0]="cd";
+      shell_ptr->ARGV[1]="f:\\"; 
+      Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+      
+//      shell_ptr->ARGC = 2;
+//      shell_ptr->ARGV[0]="df_s";
+      shell_ptr->ARGV[1]="SYSSET";   //wk --> 注意：查找的文件名暂时必须要是大写
+      status=Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
+      if(status==0)
+      {
+//        shell_ptr->ARGC = 2;
+//        shell_ptr->ARGV[0]="mkdir";
+        shell_ptr->ARGV[1]="SYSSET"; 
+        Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
+      }
+    _mem_free(shell_ptr);
     
   /* Test end */
   /* button1 into interrupt for shell or maingui task change */
@@ -177,9 +178,22 @@ void YaDa
    _lpt_install (0,3 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO, 11, timer_isr, TRUE);//2 * 1000000  --> 2秒     
   /* wk @130330 -->timer end */
    
+   for(int i=0;i<84;i++)
+   {
+     SysFlashData[i]=10;
+   }
   while(1)
-  {
-    MainLoop(); //循环主程序
+  {   
+      if(SysFlashDataT[5])                           //背光标志，1为开背光，0为关。
+        {
+            YADA_5F(0x3f);                            //背光全开
+        }
+        else
+        {
+            YADA_5F(0x08);                             //背光部分开
+        }
+      
+      MainLoop(); //循环主程序
   }
 }
 

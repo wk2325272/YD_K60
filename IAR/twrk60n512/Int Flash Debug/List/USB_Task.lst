@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM     07/Apr/2013  20:37:41 #
+# IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM     08/Apr/2013  09:57:39 #
 # Copyright 1999-2011 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -232,33 +232,33 @@ Warning[Pe177]: variable "intf_ptr" was declared but never referenced
     123                   if (device.STATE == USB_DEVICE_IDLE ||
     124                      device.STATE == USB_DEVICE_DETACHED)
    \                     ??usb_host_mass_device_event_0:
-   \   00000014   0x....             LDR.N    R2,??DataTable1_4
+   \   00000014   0x....             LDR.N    R2,??DataTable1_3
    \   00000016   0x6812             LDR      R2,[R2, #+0]
    \   00000018   0x2A00             CMP      R2,#+0
    \   0000001A   0xD003             BEQ.N    ??usb_host_mass_device_event_4
-   \   0000001C   0x....             LDR.N    R2,??DataTable1_4
+   \   0000001C   0x....             LDR.N    R2,??DataTable1_3
    \   0000001E   0x6812             LDR      R2,[R2, #+0]
    \   00000020   0x2A05             CMP      R2,#+5
    \   00000022   0xD10D             BNE.N    ??usb_host_mass_device_event_5
     125                   {
     126                      device.DEV_HANDLE = dev_handle;
    \                     ??usb_host_mass_device_event_4:
-   \   00000024   0x....             LDR.N    R2,??DataTable1_4
+   \   00000024   0x....             LDR.N    R2,??DataTable1_3
    \   00000026   0x6050             STR      R0,[R2, #+4]
     127                      device.INTF_HANDLE = intf_handle;
-   \   00000028   0x....             LDR.N    R0,??DataTable1_4
+   \   00000028   0x....             LDR.N    R0,??DataTable1_3
    \   0000002A   0x6081             STR      R1,[R0, #+8]
     128                      device.STATE = USB_DEVICE_ATTACHED;
-   \   0000002C   0x....             LDR.N    R0,??DataTable1_4
+   \   0000002C   0x....             LDR.N    R0,??DataTable1_3
    \   0000002E   0x2101             MOVS     R1,#+1
    \   00000030   0x6001             STR      R1,[R0, #+0]
     129                      device.SUPPORTED = TRUE;
-   \   00000032   0x....             LDR.N    R0,??DataTable1_4
+   \   00000032   0x....             LDR.N    R0,??DataTable1_3
    \   00000034   0x2101             MOVS     R1,#+1
    \   00000036   0x61C1             STR      R1,[R0, #+28]
     130                      _lwevent_set(&USB_Event,USB_EVENT);
    \   00000038   0x2101             MOVS     R1,#+1
-   \   0000003A   0x....             LDR.N    R0,??DataTable1_5
+   \   0000003A   0x....             LDR.N    R0,??DataTable1_4
    \   0000003C   0x.... 0x....      BL       _lwevent_set
     131                   }
     132                   break;
@@ -267,7 +267,7 @@ Warning[Pe177]: variable "intf_ptr" was declared but never referenced
     133                case USB_INTF_EVENT:
     134                   device.STATE = USB_DEVICE_INTERFACED;
    \                     ??usb_host_mass_device_event_3:
-   \   00000042   0x....             LDR.N    R0,??DataTable1_4
+   \   00000042   0x....             LDR.N    R0,??DataTable1_3
    \   00000044   0x2104             MOVS     R1,#+4
    \   00000046   0x6001             STR      R1,[R0, #+0]
     135                   break;
@@ -275,27 +275,27 @@ Warning[Pe177]: variable "intf_ptr" was declared but never referenced
     136                case USB_DETACH_EVENT:
     137                   device.DEV_HANDLE = NULL;
    \                     ??usb_host_mass_device_event_2:
-   \   0000004A   0x....             LDR.N    R0,??DataTable1_4
+   \   0000004A   0x....             LDR.N    R0,??DataTable1_3
    \   0000004C   0x2100             MOVS     R1,#+0
    \   0000004E   0x6041             STR      R1,[R0, #+4]
     138                   device.INTF_HANDLE = NULL;
-   \   00000050   0x....             LDR.N    R0,??DataTable1_4
+   \   00000050   0x....             LDR.N    R0,??DataTable1_3
    \   00000052   0x2100             MOVS     R1,#+0
    \   00000054   0x6081             STR      R1,[R0, #+8]
     139                   device.STATE = USB_DEVICE_DETACHED;
-   \   00000056   0x....             LDR.N    R0,??DataTable1_4
+   \   00000056   0x....             LDR.N    R0,??DataTable1_3
    \   00000058   0x2105             MOVS     R1,#+5
    \   0000005A   0x6001             STR      R1,[R0, #+0]
     140                   _lwevent_set(&USB_Event,USB_EVENT);
    \   0000005C   0x2101             MOVS     R1,#+1
-   \   0000005E   0x....             LDR.N    R0,??DataTable1_5
+   \   0000005E   0x....             LDR.N    R0,??DataTable1_4
    \   00000060   0x.... 0x....      BL       _lwevent_set
     141                   break;
    \   00000064   0xE002             B.N      ??usb_host_mass_device_event_6
     142                default:
     143                   device.STATE = USB_DEVICE_IDLE;
    \                     ??usb_host_mass_device_event_1:
-   \   00000066   0x....             LDR.N    R0,??DataTable1_4
+   \   00000066   0x....             LDR.N    R0,??DataTable1_3
    \   00000068   0x2100             MOVS     R1,#+0
    \   0000006A   0x6001             STR      R1,[R0, #+0]
     144                   break;
@@ -327,16 +327,16 @@ Warning[Pe177]: variable "intf_ptr" was declared but never referenced
     162             
     163          #ifdef _USB_DBUG_
     164             printf("\n----------   USB_Task  ----------\n");
-   \   00000006   0x....             LDR.N    R0,??DataTable1_6
+   \   00000006   0x....             LDR.N    R0,??DataTable1_5
    \   00000008   0x.... 0x....      BL       _io_printf
     165             printf("\n----------             ----------\n");
-   \   0000000C   0x....             LDR.N    R0,??DataTable1_7
+   \   0000000C   0x....             LDR.N    R0,??DataTable1_6
    \   0000000E   0x.... 0x....      BL       _io_printf
     166             printf("\n----------             ----------\n");
-   \   00000012   0x....             LDR.N    R0,??DataTable1_7
+   \   00000012   0x....             LDR.N    R0,??DataTable1_6
    \   00000014   0x.... 0x....      BL       _io_printf
     167             printf("\n----------      END    ----------\n");
-   \   00000018   0x....             LDR.N    R0,??DataTable1_8
+   \   00000018   0x....             LDR.N    R0,??DataTable1_7
    \   0000001A   0x.... 0x....      BL       _io_printf
     168          #endif 
     169          
@@ -346,11 +346,11 @@ Warning[Pe177]: variable "intf_ptr" was declared but never referenced
     173          
     174             _lwsem_create(&USB_Stick,0);
    \   0000001E   0x2100             MOVS     R1,#+0
-   \   00000020   0x....             LDR.N    R0,??DataTable1_9
+   \   00000020   0x....             LDR.N    R0,??DataTable1_8
    \   00000022   0x.... 0x....      BL       _lwsem_create
     175             _lwevent_create(&USB_Event,0);
    \   00000026   0x2100             MOVS     R1,#+0
-   \   00000028   0x....             LDR.N    R0,??DataTable1_5
+   \   00000028   0x....             LDR.N    R0,??DataTable1_4
    \   0000002A   0x.... 0x....      BL       _lwevent_create
     176          
     177             USB_lock();
@@ -358,12 +358,12 @@ Warning[Pe177]: variable "intf_ptr" was declared but never referenced
     178             _int_install_unexpected_isr();
    \   00000032   0x.... 0x....      BL       _int_install_unexpected_isr
     179             _usb_host_driver_install(USBCFG_DEFAULT_HOST_CONTROLLER,  (pointer) &_bsp_usb_host_callback_table);
-   \   00000036   0x....             LDR.N    R1,??DataTable1_10
+   \   00000036   0x....             LDR.N    R1,??DataTable1_9
    \   00000038   0x2000             MOVS     R0,#+0
    \   0000003A   0x.... 0x....      BL       _usb_host_driver_install
     180          
     181             error = _usb_host_init(USBCFG_DEFAULT_HOST_CONTROLLER, 4, &host_handle);
-   \   0000003E   0xAA01             ADD      R2,SP,#+4
+   \   0000003E   0xAA00             ADD      R2,SP,#+0
    \   00000040   0x2104             MOVS     R1,#+4
    \   00000042   0x2000             MOVS     R0,#+0
    \   00000044   0x.... 0x....      BL       _usb_host_init
@@ -372,8 +372,8 @@ Warning[Pe177]: variable "intf_ptr" was declared but never referenced
    \   0000004A   0x2D00             CMP      R5,#+0
    \   0000004C   0xD10C             BNE.N    ??USB_task_0
     183                error = _usb_host_driver_info_register(host_handle, (pointer)ClassDriverInfoTable);
-   \   0000004E   0x....             LDR.N    R1,??DataTable1_11
-   \   00000050   0x9801             LDR      R0,[SP, #+4]
+   \   0000004E   0x....             LDR.N    R1,??DataTable1_10
+   \   00000050   0x9800             LDR      R0,[SP, #+0]
    \   00000052   0x.... 0x....      BL       _usb_host_driver_info_register
    \   00000056   0x0005             MOVS     R5,R0
     184                if (error == USB_OK) {
@@ -382,7 +382,7 @@ Warning[Pe177]: variable "intf_ptr" was declared but never referenced
     185                   error = _usb_host_register_service(host_handle, USB_SERVICE_HOST_RESUME,NULL);
    \   0000005C   0x2200             MOVS     R2,#+0
    \   0000005E   0x2101             MOVS     R1,#+1
-   \   00000060   0x9801             LDR      R0,[SP, #+4]
+   \   00000060   0x9800             LDR      R0,[SP, #+0]
    \   00000062   0x.... 0x....      BL       _usb_host_register_service
    \   00000066   0x0005             MOVS     R5,R0
     186                }
@@ -422,167 +422,116 @@ Warning[Pe177]: variable "intf_ptr" was declared but never referenced
     216                shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
     217                _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
     218                uint_32 file_size;
-    219                
-    220                uchar status;
-    221               /* wk @130401 --> 新建 sysset 用于系统变量保存 */
+    219                uchar status;
+    220               
+    221                /* wk @130401 --> 新建 power/event用于基本电能质量/事件数据保存 */
     222                shell_ptr->ARGC = 2;
     223                shell_ptr->ARGV[0]="cd";
-    224                shell_ptr->ARGV[1]="f:\\"; 
+    224                shell_ptr->ARGV[1]="u:\\"; 
     225                Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
     226                
     227          //      shell_ptr->ARGC = 2;
     228          //      shell_ptr->ARGV[0]="df_s";
-    229                shell_ptr->ARGV[1]="SYSSET";   //wk --> 注意：查找的文件名暂时必须要是大写
+    229                shell_ptr->ARGV[1]="POWER";   //wk --> 注意：查找的文件名暂时必须要是大写
     230                status=Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
     231                if(status==0)
     232                {
     233          //        shell_ptr->ARGC = 2;
     234          //        shell_ptr->ARGV[0]="mkdir";
-    235                  shell_ptr->ARGV[1]="SYSSET"; 
+    235                  shell_ptr->ARGV[1]="POWER"; 
     236                  Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
     237                }
-    238                /* wk @130401 --> 新建 power/event用于基本电能质量/事件数据保存 */
-    239          //      shell_ptr->ARGC = 2;
-    240          //      shell_ptr->ARGV[0]="cd";
-    241                shell_ptr->ARGV[1]="u:\\"; 
-    242                Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
-    243                
-    244          //      shell_ptr->ARGC = 2;
-    245          //      shell_ptr->ARGV[0]="df_s";
-    246                shell_ptr->ARGV[1]="POWER";   //wk --> 注意：查找的文件名暂时必须要是大写
-    247                status=Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
-    248                if(status==0)
-    249                {
-    250          //        shell_ptr->ARGC = 2;
-    251          //        shell_ptr->ARGV[0]="mkdir";
-    252                  shell_ptr->ARGV[1]="POWER"; 
-    253                  Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
-    254                }
-    255          //      shell_ptr->ARGC = 2;
-    256          //      shell_ptr->ARGV[0]="df_s";
-    257                shell_ptr->ARGV[1]="EVENT";   //wk --> 注意：查找的文件名暂时必须要是大写
-    258                status=Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
-    259               
-    260                if(status==0)
-    261                { 
-    262          //        shell_ptr->ARGC = 2;
-    263          //        shell_ptr->ARGV[0]="mkdir";
-    264                  shell_ptr->ARGV[1]="EVENT"; 
-    265                  Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
-    266                }
-    267                
-    268                _mem_free(shell_ptr);
-    269                            
-    270          #if 0                  
-    271                SHELL_CONTEXT_PTR    shell_ptr;
-    272                shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
-    273                _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
-    274               /* wk @130401 --> 新建 sysset 用于系统变量保存 */
-    275                shell_ptr->ARGC = 2;
-    276                shell_ptr->ARGV[0]="cd";
-    277                shell_ptr->ARGV[1]="f:\\"; 
-    278                Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
-    279               
-    280                shell_ptr->ARGC = 2;
-    281                shell_ptr->ARGV[0]="mkdir";
-    282                shell_ptr->ARGV[1]="SYSSET"; 
-    283                Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
-    284                
-    285                /* wk @130401 --> 新建 power/event用于基本电能质量/事件数据保存 */
-    286                /* ??????????? 这里后期加上 U 盘插入标志监测 */
-    287                shell_ptr->ARGC = 2;
-    288                shell_ptr->ARGV[0]="cd";
-    289                shell_ptr->ARGV[1]="u:\\"; 
-    290                Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
-    291                
-    292                shell_ptr->ARGC = 2;
-    293                shell_ptr->ARGV[0]="mkdir";
-    294                shell_ptr->ARGV[1]="POWER"; 
-    295                Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
-    296                
-    297                shell_ptr->ARGC = 2;
-    298                shell_ptr->ARGV[0]="mkdir";
-    299                shell_ptr->ARGV[1]="EVENT"; 
-    300                Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
-    301                _mem_free(shell_ptr);
-    302          #endif
-    303                
-    304                USB_Flg=1; // wk @130407 --> USB 插入
-    305            /* wk @130405 --> make some dirs <-- end */    
-    306                
-    307                         }
-    308                      } else {
-    309                          device.STATE = USB_DEVICE_INTERFACED;
-    310                      }
-    311                   } else if ( device.STATE==USB_DEVICE_DETACHED) {
-    312                      _lwsem_wait(&USB_Stick);
-    313                      // remove the file system
-    314                     usb_filesystem_uninstall(usb_fs_handle);
-    315                     
-    316                     USB_Flg=0; // wk @130407 --> USB 拔出
-    317                   }
-    318                   
-    319                   // clear the event
-    320                   _lwevent_clear(&USB_Event,USB_EVENT);
-    321                }
-    322             }
-    323          }
+    238          //      shell_ptr->ARGC = 2;
+    239          //      shell_ptr->ARGV[0]="df_s";
+    240                shell_ptr->ARGV[1]="EVENT";   //wk --> 注意：查找的文件名暂时必须要是大写
+    241                status=Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
+    242               
+    243                if(status==0)
+    244                { 
+    245          //        shell_ptr->ARGC = 2;
+    246          //        shell_ptr->ARGV[0]="mkdir";
+    247                  shell_ptr->ARGV[1]="EVENT"; 
+    248                  Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
+    249                }
+    250                
+    251                _mem_free(shell_ptr);
+    252                                  
+    253                USB_Flg=1; // wk @130407 --> USB 插入
+    254            /* wk @130405 --> make some dirs <-- end */    
+    255                
+    256                         }
+    257                      } else {
+    258                          device.STATE = USB_DEVICE_INTERFACED;
+    259                      }
+    260                   } else if ( device.STATE==USB_DEVICE_DETACHED) {
+    261                      _lwsem_wait(&USB_Stick);
+    262                      // remove the file system
+    263                     usb_filesystem_uninstall(usb_fs_handle);
+    264                     
+    265                     USB_Flg=0; // wk @130407 --> USB 拔出
+    266                   }
+    267                   
+    268                   // clear the event
+    269                   _lwevent_clear(&USB_Event,USB_EVENT);
+    270                }
+    271             }
+    272          }
    \   00000070   0xBD37             POP      {R0-R2,R4,R5,PC}  ;; return
    \                     ??USB_task_2:
-   \   00000072   0x....             LDR.N    R0,??DataTable1_4
+   \   00000072   0x....             LDR.N    R0,??DataTable1_3
    \   00000074   0x6800             LDR      R0,[R0, #+0]
    \   00000076   0x2805             CMP      R0,#+5
    \   00000078   0xD108             BNE.N    ??USB_task_3
-   \   0000007A   0x....             LDR.N    R0,??DataTable1_9
+   \   0000007A   0x....             LDR.N    R0,??DataTable1_8
    \   0000007C   0x.... 0x....      BL       _lwsem_wait
    \   00000080   0x0020             MOVS     R0,R4
    \   00000082   0x.... 0x....      BL       usb_filesystem_uninstall
-   \   00000086   0x....             LDR.N    R0,??DataTable1_12
+   \   00000086   0x....             LDR.N    R0,??DataTable1_11
    \   00000088   0x2100             MOVS     R1,#+0
    \   0000008A   0x7001             STRB     R1,[R0, #+0]
    \                     ??USB_task_3:
    \   0000008C   0x2101             MOVS     R1,#+1
-   \   0000008E   0x....             LDR.N    R0,??DataTable1_5
+   \   0000008E   0x....             LDR.N    R0,??DataTable1_4
    \   00000090   0x.... 0x....      BL       _lwevent_clear
    \                     ??USB_task_1:
    \   00000094   0x2300             MOVS     R3,#+0
    \   00000096   0x2200             MOVS     R2,#+0
    \   00000098   0x2101             MOVS     R1,#+1
-   \   0000009A   0x....             LDR.N    R0,??DataTable1_5
+   \   0000009A   0x....             LDR.N    R0,??DataTable1_4
    \   0000009C   0x.... 0x....      BL       _lwevent_wait_ticks
-   \   000000A0   0x....             LDR.N    R0,??DataTable1_4
+   \   000000A0   0x....             LDR.N    R0,??DataTable1_3
    \   000000A2   0x6800             LDR      R0,[R0, #+0]
    \   000000A4   0x2801             CMP      R0,#+1
    \   000000A6   0xD1E4             BNE.N    ??USB_task_2
-   \   000000A8   0x....             LDR.N    R0,??DataTable1_4
+   \   000000A8   0x....             LDR.N    R0,??DataTable1_3
    \   000000AA   0x69C0             LDR      R0,[R0, #+28]
    \   000000AC   0x2800             CMP      R0,#+0
-   \   000000AE   0xD06D             BEQ.N    ??USB_task_4
-   \   000000B0   0x....             LDR.N    R2,??DataTable1_13
-   \   000000B2   0x....             LDR.N    R0,??DataTable1_4
+   \   000000AE   0xD057             BEQ.N    ??USB_task_4
+   \   000000B0   0x....             LDR.N    R2,??DataTable1_12
+   \   000000B2   0x....             LDR.N    R0,??DataTable1_3
    \   000000B4   0x6881             LDR      R1,[R0, #+8]
-   \   000000B6   0x....             LDR.N    R0,??DataTable1_4
+   \   000000B6   0x....             LDR.N    R0,??DataTable1_3
    \   000000B8   0x6840             LDR      R0,[R0, #+4]
    \   000000BA   0x.... 0x....      BL       _usb_hostdev_select_interface
    \   000000BE   0x0005             MOVS     R5,R0
    \   000000C0   0x2D00             CMP      R5,#+0
    \   000000C2   0xD1E3             BNE.N    ??USB_task_3
-   \   000000C4   0x....             LDR.N    R0,??DataTable1_4
+   \   000000C4   0x....             LDR.N    R0,??DataTable1_3
    \   000000C6   0x2104             MOVS     R1,#+4
    \   000000C8   0x6001             STR      R1,[R0, #+0]
-   \   000000CA   0x....             LDR.N    R0,??DataTable1_14
-   \   000000CC   0x....             LDR.N    R1,??DataTable1_13
+   \   000000CA   0x....             LDR.N    R0,??DataTable1_13
+   \   000000CC   0x....             LDR.N    R1,??DataTable1_12
    \   000000CE   0x6001             STR      R1,[R0, #+0]
    \   000000D0   0x....             ADR.N    R3,??DataTable1  ;; 0x75, 0x3A, 0x00, 0x00
-   \   000000D2   0x....             LDR.N    R2,??DataTable1_15
-   \   000000D4   0x....             LDR.N    R1,??DataTable1_16
-   \   000000D6   0x....             LDR.N    R0,??DataTable1_14
+   \   000000D2   0x....             LDR.N    R2,??DataTable1_14
+   \   000000D4   0x....             LDR.N    R1,??DataTable1_15
+   \   000000D6   0x....             LDR.N    R0,??DataTable1_13
    \   000000D8   0x6800             LDR      R0,[R0, #+0]
    \   000000DA   0x.... 0x....      BL       usb_filesystem_install
    \   000000DE   0x0004             MOVS     R4,R0
    \   000000E0   0x2C00             CMP      R4,#+0
    \   000000E2   0xD002             BEQ.N    ??USB_task_5
-   \   000000E4   0x....             LDR.N    R0,??DataTable1_9
+   \   000000E4   0x....             LDR.N    R0,??DataTable1_8
    \   000000E6   0x.... 0x....      BL       _lwsem_post
    \                     ??USB_task_5:
    \   000000EA   0xF44F 0x70F2      MOV      R0,#+484
@@ -595,72 +544,52 @@ Warning[Pe177]: variable "intf_ptr" was declared but never referenced
    \   00000100   0x6228             STR      R0,[R5, #+32]
    \   00000102   0x....             ADR.N    R0,??DataTable1_1  ;; 0x63, 0x64, 0x00, 0x00
    \   00000104   0x6028             STR      R0,[R5, #+0]
-   \   00000106   0x....             ADR.N    R0,??DataTable1_2  ;; "f:\\"
+   \   00000106   0x....             ADR.N    R0,??DataTable1_2  ;; "u:\\"
    \   00000108   0x6068             STR      R0,[R5, #+4]
    \   0000010A   0x0029             MOVS     R1,R5
    \   0000010C   0x6A28             LDR      R0,[R5, #+32]
    \   0000010E   0x.... 0x....      BL       Shell_cd
-   \   00000112   0x....             LDR.N    R0,??DataTable1_17
+   \   00000112   0x....             LDR.N    R0,??DataTable1_16
    \   00000114   0x6068             STR      R0,[R5, #+4]
-   \   00000116   0xAA00             ADD      R2,SP,#+0
+   \   00000116   0xAA01             ADD      R2,SP,#+4
    \   00000118   0x0029             MOVS     R1,R5
    \   0000011A   0x6A28             LDR      R0,[R5, #+32]
    \   0000011C   0x.... 0x....      BL       Shell_search_file_r1
    \   00000120   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
    \   00000122   0x2800             CMP      R0,#+0
    \   00000124   0xD105             BNE.N    ??USB_task_6
-   \   00000126   0x....             LDR.N    R0,??DataTable1_17
+   \   00000126   0x....             LDR.N    R0,??DataTable1_16
    \   00000128   0x6068             STR      R0,[R5, #+4]
    \   0000012A   0x0029             MOVS     R1,R5
    \   0000012C   0x6A28             LDR      R0,[R5, #+32]
    \   0000012E   0x.... 0x....      BL       Shell_mkdir
    \                     ??USB_task_6:
-   \   00000132   0x....             ADR.N    R0,??DataTable1_3  ;; "u:\\"
+   \   00000132   0x....             LDR.N    R0,??DataTable1_17
    \   00000134   0x6068             STR      R0,[R5, #+4]
-   \   00000136   0x0029             MOVS     R1,R5
-   \   00000138   0x6A28             LDR      R0,[R5, #+32]
-   \   0000013A   0x.... 0x....      BL       Shell_cd
-   \   0000013E   0x....             LDR.N    R0,??DataTable1_18
-   \   00000140   0x6068             STR      R0,[R5, #+4]
-   \   00000142   0xAA00             ADD      R2,SP,#+0
-   \   00000144   0x0029             MOVS     R1,R5
-   \   00000146   0x6A28             LDR      R0,[R5, #+32]
-   \   00000148   0x.... 0x....      BL       Shell_search_file_r1
-   \   0000014C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   0000014E   0x2800             CMP      R0,#+0
-   \   00000150   0xD105             BNE.N    ??USB_task_7
-   \   00000152   0x....             LDR.N    R0,??DataTable1_18
-   \   00000154   0x6068             STR      R0,[R5, #+4]
-   \   00000156   0x0029             MOVS     R1,R5
-   \   00000158   0x6A28             LDR      R0,[R5, #+32]
-   \   0000015A   0x.... 0x....      BL       Shell_mkdir
+   \   00000136   0xAA01             ADD      R2,SP,#+4
+   \   00000138   0x0029             MOVS     R1,R5
+   \   0000013A   0x6A28             LDR      R0,[R5, #+32]
+   \   0000013C   0x.... 0x....      BL       Shell_search_file_r1
+   \   00000140   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000142   0x2800             CMP      R0,#+0
+   \   00000144   0xD105             BNE.N    ??USB_task_7
+   \   00000146   0x....             LDR.N    R0,??DataTable1_17
+   \   00000148   0x6068             STR      R0,[R5, #+4]
+   \   0000014A   0x0029             MOVS     R1,R5
+   \   0000014C   0x6A28             LDR      R0,[R5, #+32]
+   \   0000014E   0x.... 0x....      BL       Shell_mkdir
    \                     ??USB_task_7:
-   \   0000015E   0x....             LDR.N    R0,??DataTable1_19
-   \   00000160   0x6068             STR      R0,[R5, #+4]
-   \   00000162   0xAA00             ADD      R2,SP,#+0
-   \   00000164   0x0029             MOVS     R1,R5
-   \   00000166   0x6A28             LDR      R0,[R5, #+32]
-   \   00000168   0x.... 0x....      BL       Shell_search_file_r1
-   \   0000016C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   0000016E   0x2800             CMP      R0,#+0
-   \   00000170   0xD105             BNE.N    ??USB_task_8
-   \   00000172   0x....             LDR.N    R0,??DataTable1_19
-   \   00000174   0x6068             STR      R0,[R5, #+4]
-   \   00000176   0x0029             MOVS     R1,R5
-   \   00000178   0x6A28             LDR      R0,[R5, #+32]
-   \   0000017A   0x.... 0x....      BL       Shell_mkdir
-   \                     ??USB_task_8:
-   \   0000017E   0x0028             MOVS     R0,R5
-   \   00000180   0x.... 0x....      BL       _lwmem_free
-   \   00000184   0x....             LDR.N    R0,??DataTable1_12
-   \   00000186   0x2101             MOVS     R1,#+1
-   \   00000188   0x7001             STRB     R1,[R0, #+0]
-   \   0000018A   0xE77F             B.N      ??USB_task_3
+   \   00000152   0x0028             MOVS     R0,R5
+   \   00000154   0x.... 0x....      BL       _lwmem_free
+   \   00000158   0x....             LDR.N    R0,??DataTable1_11
+   \   0000015A   0x2101             MOVS     R1,#+1
+   \   0000015C   0x7001             STRB     R1,[R0, #+0]
+   \   0000015E   0xE795             B.N      ??USB_task_3
    \                     ??USB_task_4:
-   \   0000018C   0x....             LDR.N    R0,??DataTable1_4
-   \   0000018E   0x2104             MOVS     R1,#+4
-   \   00000190   0x6001             STR      R1,[R0, #+0]
-   \   00000192   0xE77B             B.N      ??USB_task_3
+   \   00000160   0x....             LDR.N    R0,??DataTable1_3
+   \   00000162   0x2104             MOVS     R1,#+4
+   \   00000164   0x6001             STR      R1,[R0, #+0]
+   \   00000166   0xE791             B.N      ??USB_task_3
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable1:
@@ -674,76 +603,67 @@ Warning[Pe177]: variable "intf_ptr" was declared but never referenced
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable1_2:
-   \   00000000   0x66 0x3A          DC8      "f:\\"
-   \              0x5C 0x00    
-
-   \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable1_3:
    \   00000000   0x75 0x3A          DC8      "u:\\"
    \              0x5C 0x00    
 
    \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable1_4:
+   \                     ??DataTable1_3:
    \   00000000   0x........         DC32     device
 
    \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable1_5:
+   \                     ??DataTable1_4:
    \   00000000   0x........         DC32     USB_Event
 
    \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable1_6:
+   \                     ??DataTable1_5:
    \   00000000   0x........         DC32     `?<Constant "\\n----------   USB_Tas...">`
 
    \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable1_7:
+   \                     ??DataTable1_6:
    \   00000000   0x........         DC32     `?<Constant "\\n----------          ...">`
 
    \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable1_8:
+   \                     ??DataTable1_7:
    \   00000000   0x........         DC32     `?<Constant "\\n----------      END ...">`
 
    \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable1_9:
+   \                     ??DataTable1_8:
    \   00000000   0x........         DC32     USB_Stick
 
    \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable1_10:
+   \                     ??DataTable1_9:
    \   00000000   0x........         DC32     _bsp_usb_host_callback_table
 
    \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable1_11:
+   \                     ??DataTable1_10:
    \   00000000   0x........         DC32     ClassDriverInfoTable
 
    \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable1_12:
+   \                     ??DataTable1_11:
    \   00000000   0x........         DC32     USB_Flg
 
    \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable1_13:
+   \                     ??DataTable1_12:
    \   00000000   0x........         DC32     device+0xC
 
    \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable1_14:
+   \                     ??DataTable1_13:
    \   00000000   0x........         DC32     USB_handle
 
    \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable1_15:
+   \                     ??DataTable1_14:
    \   00000000   0x........         DC32     `?<Constant "PM_C1:">`
 
    \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable1_16:
+   \                     ??DataTable1_15:
    \   00000000   0x........         DC32     `?<Constant "USB:">`
 
    \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable1_17:
-   \   00000000   0x........         DC32     `?<Constant "SYSSET">`
-
-   \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable1_18:
+   \                     ??DataTable1_16:
    \   00000000   0x........         DC32     `?<Constant "POWER">`
 
    \                                 In section .text, align 4, keep-with-next
-   \                     ??DataTable1_19:
+   \                     ??DataTable1_17:
    \   00000000   0x........         DC32     `?<Constant "EVENT">`
 
    \                                 In section .rodata, align 4
@@ -836,18 +756,6 @@ Warning[Pe177]: variable "intf_ptr" was declared but never referenced
    \   00000003   0x00               DC8 0
 
    \                                 In section .rodata, align 4
-   \   00000000   0x66 0x3A          DC8 "f:\\"
-   \              0x5C 0x00    
-
-   \                                 In section .rodata, align 4
-   \                     `?<Constant "SYSSET">`:
-   \   00000000   0x53 0x59          DC8 "SYSSET"
-   \              0x53 0x53    
-   \              0x45 0x54    
-   \              0x00         
-   \   00000007   0x00               DC8 0
-
-   \                                 In section .rodata, align 4
    \   00000000   0x75 0x3A          DC8 "u:\\"
    \              0x5C 0x00    
 
@@ -864,8 +772,8 @@ Warning[Pe177]: variable "intf_ptr" was declared but never referenced
    \              0x45 0x4E    
    \              0x54 0x00    
    \   00000006   0x00 0x00          DC8 0, 0
-    324          
-    325          /* EOF */
+    273          
+    274          /* EOF */
 
    Maximum stack usage in bytes:
 
@@ -906,13 +814,11 @@ Warning[Pe177]: variable "intf_ptr" was declared but never referenced
        8  ?<Constant "EVENT">
        8  ?<Constant "PM_C1:">
        8  ?<Constant "POWER">
-       8  ?<Constant "SYSSET">
        8  ?<Constant "USB:">
       36  ?<Constant "\n----------          ...">
       36  ?<Constant "\n----------      END ...">
       36  ?<Constant "\n----------   USB_Tas...">
        4  ?<Constant "cd">
-       4  ?<Constant "f:\\">
        4  ?<Constant "u:">
        4  ?<Constant "u:\\">
        4  ??DataTable1
@@ -925,8 +831,6 @@ Warning[Pe177]: variable "intf_ptr" was declared but never referenced
        4  ??DataTable1_15
        4  ??DataTable1_16
        4  ??DataTable1_17
-       4  ??DataTable1_18
-       4  ??DataTable1_19
        4  ??DataTable1_2
        4  ??DataTable1_3
        4  ??DataTable1_4
@@ -939,17 +843,17 @@ Warning[Pe177]: variable "intf_ptr" was declared but never referenced
       36  USB_Event
       28  USB_Stick
        4  USB_handle
-     404  USB_task
+     360  USB_task
       32  device
      110  usb_host_mass_device_event
 
  
  100 bytes in section .bss
- 212 bytes in section .rodata
- 594 bytes in section .text
+ 200 bytes in section .rodata
+ 542 bytes in section .text
  
- 594 bytes of CODE  memory
- 212 bytes of CONST memory
+ 542 bytes of CODE  memory
+ 200 bytes of CONST memory
  100 bytes of DATA  memory
 
 Errors: none

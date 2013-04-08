@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    07/Apr/2013  19:59:14 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    08/Apr/2013  20:23:42 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -1548,7 +1548,7 @@ LCDUartSET:
 //  474        break;
         B.N      ??LCDUartSET_24
 //  475      
-//  476     case 0x60:  // WK --> TCP/IP开关      0开启 1 关闭
+//  476     case 0x60:  // WK --> TCP/IP开关      0 关闭  1 开启
 //  477       SysSet.SwitchSet[0]==0?(SysSet.SwitchSet[0]=1):(SysSet.SwitchSet[0]=0);
 ??LCDUartSET_15:
         LDR.W    R0,??DataTable5_30

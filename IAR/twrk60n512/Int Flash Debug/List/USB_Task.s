@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    07/Apr/2013  20:37:41 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    08/Apr/2013  09:57:39 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -250,16 +250,6 @@ device:
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
         DATA
-        DC8 "f:\\"
-
-        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant "SYSSET">`:
-        DATA
-        DC8 "SYSSET"
-        DC8 0
-
-        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-        DATA
         DC8 "u:\\"
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
@@ -352,33 +342,33 @@ usb_host_mass_device_event:
 //  123          if (device.STATE == USB_DEVICE_IDLE ||
 //  124             device.STATE == USB_DEVICE_DETACHED)
 ??usb_host_mass_device_event_0:
-        LDR.N    R2,??DataTable1_4
+        LDR.N    R2,??DataTable1_3
         LDR      R2,[R2, #+0]
         CMP      R2,#+0
         BEQ.N    ??usb_host_mass_device_event_4
-        LDR.N    R2,??DataTable1_4
+        LDR.N    R2,??DataTable1_3
         LDR      R2,[R2, #+0]
         CMP      R2,#+5
         BNE.N    ??usb_host_mass_device_event_5
 //  125          {
 //  126             device.DEV_HANDLE = dev_handle;
 ??usb_host_mass_device_event_4:
-        LDR.N    R2,??DataTable1_4
+        LDR.N    R2,??DataTable1_3
         STR      R0,[R2, #+4]
 //  127             device.INTF_HANDLE = intf_handle;
-        LDR.N    R0,??DataTable1_4
+        LDR.N    R0,??DataTable1_3
         STR      R1,[R0, #+8]
 //  128             device.STATE = USB_DEVICE_ATTACHED;
-        LDR.N    R0,??DataTable1_4
+        LDR.N    R0,??DataTable1_3
         MOVS     R1,#+1
         STR      R1,[R0, #+0]
 //  129             device.SUPPORTED = TRUE;
-        LDR.N    R0,??DataTable1_4
+        LDR.N    R0,??DataTable1_3
         MOVS     R1,#+1
         STR      R1,[R0, #+28]
 //  130             _lwevent_set(&USB_Event,USB_EVENT);
         MOVS     R1,#+1
-        LDR.N    R0,??DataTable1_5
+        LDR.N    R0,??DataTable1_4
           CFI FunCall _lwevent_set
         BL       _lwevent_set
 //  131          }
@@ -388,7 +378,7 @@ usb_host_mass_device_event:
 //  133       case USB_INTF_EVENT:
 //  134          device.STATE = USB_DEVICE_INTERFACED;
 ??usb_host_mass_device_event_3:
-        LDR.N    R0,??DataTable1_4
+        LDR.N    R0,??DataTable1_3
         MOVS     R1,#+4
         STR      R1,[R0, #+0]
 //  135          break;
@@ -396,20 +386,20 @@ usb_host_mass_device_event:
 //  136       case USB_DETACH_EVENT:
 //  137          device.DEV_HANDLE = NULL;
 ??usb_host_mass_device_event_2:
-        LDR.N    R0,??DataTable1_4
+        LDR.N    R0,??DataTable1_3
         MOVS     R1,#+0
         STR      R1,[R0, #+4]
 //  138          device.INTF_HANDLE = NULL;
-        LDR.N    R0,??DataTable1_4
+        LDR.N    R0,??DataTable1_3
         MOVS     R1,#+0
         STR      R1,[R0, #+8]
 //  139          device.STATE = USB_DEVICE_DETACHED;
-        LDR.N    R0,??DataTable1_4
+        LDR.N    R0,??DataTable1_3
         MOVS     R1,#+5
         STR      R1,[R0, #+0]
 //  140          _lwevent_set(&USB_Event,USB_EVENT);
         MOVS     R1,#+1
-        LDR.N    R0,??DataTable1_5
+        LDR.N    R0,??DataTable1_4
           CFI FunCall _lwevent_set
         BL       _lwevent_set
 //  141          break;
@@ -417,7 +407,7 @@ usb_host_mass_device_event:
 //  142       default:
 //  143          device.STATE = USB_DEVICE_IDLE;
 ??usb_host_mass_device_event_1:
-        LDR.N    R0,??DataTable1_4
+        LDR.N    R0,??DataTable1_3
         MOVS     R1,#+0
         STR      R1,[R0, #+0]
 //  144          break;
@@ -458,19 +448,19 @@ USB_task:
 //  162    
 //  163 #ifdef _USB_DBUG_
 //  164    printf("\n----------   USB_Task  ----------\n");
-        LDR.N    R0,??DataTable1_6
+        LDR.N    R0,??DataTable1_5
           CFI FunCall _io_printf
         BL       _io_printf
 //  165    printf("\n----------             ----------\n");
-        LDR.N    R0,??DataTable1_7
+        LDR.N    R0,??DataTable1_6
           CFI FunCall _io_printf
         BL       _io_printf
 //  166    printf("\n----------             ----------\n");
-        LDR.N    R0,??DataTable1_7
+        LDR.N    R0,??DataTable1_6
           CFI FunCall _io_printf
         BL       _io_printf
 //  167    printf("\n----------      END    ----------\n");
-        LDR.N    R0,??DataTable1_8
+        LDR.N    R0,??DataTable1_7
           CFI FunCall _io_printf
         BL       _io_printf
 //  168 #endif 
@@ -481,12 +471,12 @@ USB_task:
 //  173 
 //  174    _lwsem_create(&USB_Stick,0);
         MOVS     R1,#+0
-        LDR.N    R0,??DataTable1_9
+        LDR.N    R0,??DataTable1_8
           CFI FunCall _lwsem_create
         BL       _lwsem_create
 //  175    _lwevent_create(&USB_Event,0);
         MOVS     R1,#+0
-        LDR.N    R0,??DataTable1_5
+        LDR.N    R0,??DataTable1_4
           CFI FunCall _lwevent_create
         BL       _lwevent_create
 //  176 
@@ -497,13 +487,13 @@ USB_task:
           CFI FunCall _int_install_unexpected_isr
         BL       _int_install_unexpected_isr
 //  179    _usb_host_driver_install(USBCFG_DEFAULT_HOST_CONTROLLER,  (pointer) &_bsp_usb_host_callback_table);
-        LDR.N    R1,??DataTable1_10
+        LDR.N    R1,??DataTable1_9
         MOVS     R0,#+0
           CFI FunCall _usb_host_driver_install
         BL       _usb_host_driver_install
 //  180 
 //  181    error = _usb_host_init(USBCFG_DEFAULT_HOST_CONTROLLER, 4, &host_handle);
-        ADD      R2,SP,#+4
+        ADD      R2,SP,#+0
         MOVS     R1,#+4
         MOVS     R0,#+0
           CFI FunCall _usb_host_init
@@ -513,8 +503,8 @@ USB_task:
         CMP      R5,#+0
         BNE.N    ??USB_task_0
 //  183       error = _usb_host_driver_info_register(host_handle, (pointer)ClassDriverInfoTable);
-        LDR.N    R1,??DataTable1_11
-        LDR      R0,[SP, #+4]
+        LDR.N    R1,??DataTable1_10
+        LDR      R0,[SP, #+0]
           CFI FunCall _usb_host_driver_info_register
         BL       _usb_host_driver_info_register
         MOVS     R5,R0
@@ -524,7 +514,7 @@ USB_task:
 //  185          error = _usb_host_register_service(host_handle, USB_SERVICE_HOST_RESUME,NULL);
         MOVS     R2,#+0
         MOVS     R1,#+1
-        LDR      R0,[SP, #+4]
+        LDR      R0,[SP, #+0]
           CFI FunCall _usb_host_register_service
         BL       _usb_host_register_service
         MOVS     R5,R0
@@ -566,173 +556,122 @@ USB_task:
 //  216       shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
 //  217       _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
 //  218       uint_32 file_size;
-//  219       
-//  220       uchar status;
-//  221      /* wk @130401 --> 新建 sysset 用于系统变量保存 */
+//  219       uchar status;
+//  220      
+//  221       /* wk @130401 --> 新建 power/event用于基本电能质量/事件数据保存 */
 //  222       shell_ptr->ARGC = 2;
 //  223       shell_ptr->ARGV[0]="cd";
-//  224       shell_ptr->ARGV[1]="f:\\"; 
+//  224       shell_ptr->ARGV[1]="u:\\"; 
 //  225       Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
 //  226       
 //  227 //      shell_ptr->ARGC = 2;
 //  228 //      shell_ptr->ARGV[0]="df_s";
-//  229       shell_ptr->ARGV[1]="SYSSET";   //wk --> 注意：查找的文件名暂时必须要是大写
+//  229       shell_ptr->ARGV[1]="POWER";   //wk --> 注意：查找的文件名暂时必须要是大写
 //  230       status=Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
 //  231       if(status==0)
 //  232       {
 //  233 //        shell_ptr->ARGC = 2;
 //  234 //        shell_ptr->ARGV[0]="mkdir";
-//  235         shell_ptr->ARGV[1]="SYSSET"; 
+//  235         shell_ptr->ARGV[1]="POWER"; 
 //  236         Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
 //  237       }
-//  238       /* wk @130401 --> 新建 power/event用于基本电能质量/事件数据保存 */
-//  239 //      shell_ptr->ARGC = 2;
-//  240 //      shell_ptr->ARGV[0]="cd";
-//  241       shell_ptr->ARGV[1]="u:\\"; 
-//  242       Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
-//  243       
-//  244 //      shell_ptr->ARGC = 2;
-//  245 //      shell_ptr->ARGV[0]="df_s";
-//  246       shell_ptr->ARGV[1]="POWER";   //wk --> 注意：查找的文件名暂时必须要是大写
-//  247       status=Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
-//  248       if(status==0)
-//  249       {
-//  250 //        shell_ptr->ARGC = 2;
-//  251 //        shell_ptr->ARGV[0]="mkdir";
-//  252         shell_ptr->ARGV[1]="POWER"; 
-//  253         Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
-//  254       }
-//  255 //      shell_ptr->ARGC = 2;
-//  256 //      shell_ptr->ARGV[0]="df_s";
-//  257       shell_ptr->ARGV[1]="EVENT";   //wk --> 注意：查找的文件名暂时必须要是大写
-//  258       status=Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
-//  259      
-//  260       if(status==0)
-//  261       { 
-//  262 //        shell_ptr->ARGC = 2;
-//  263 //        shell_ptr->ARGV[0]="mkdir";
-//  264         shell_ptr->ARGV[1]="EVENT"; 
-//  265         Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
-//  266       }
-//  267       
-//  268       _mem_free(shell_ptr);
-//  269                   
-//  270 #if 0                  
-//  271       SHELL_CONTEXT_PTR    shell_ptr;
-//  272       shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
-//  273       _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
-//  274      /* wk @130401 --> 新建 sysset 用于系统变量保存 */
-//  275       shell_ptr->ARGC = 2;
-//  276       shell_ptr->ARGV[0]="cd";
-//  277       shell_ptr->ARGV[1]="f:\\"; 
-//  278       Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
-//  279      
-//  280       shell_ptr->ARGC = 2;
-//  281       shell_ptr->ARGV[0]="mkdir";
-//  282       shell_ptr->ARGV[1]="SYSSET"; 
-//  283       Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
-//  284       
-//  285       /* wk @130401 --> 新建 power/event用于基本电能质量/事件数据保存 */
-//  286       /* ??????????? 这里后期加上 U 盘插入标志监测 */
-//  287       shell_ptr->ARGC = 2;
-//  288       shell_ptr->ARGV[0]="cd";
-//  289       shell_ptr->ARGV[1]="u:\\"; 
-//  290       Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
-//  291       
-//  292       shell_ptr->ARGC = 2;
-//  293       shell_ptr->ARGV[0]="mkdir";
-//  294       shell_ptr->ARGV[1]="POWER"; 
-//  295       Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
-//  296       
-//  297       shell_ptr->ARGC = 2;
-//  298       shell_ptr->ARGV[0]="mkdir";
-//  299       shell_ptr->ARGV[1]="EVENT"; 
-//  300       Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
-//  301       _mem_free(shell_ptr);
-//  302 #endif
-//  303       
-//  304       USB_Flg=1; // wk @130407 --> USB 插入
-//  305   /* wk @130405 --> make some dirs <-- end */    
-//  306       
-//  307                }
-//  308             } else {
-//  309                 device.STATE = USB_DEVICE_INTERFACED;
-//  310             }
-//  311          } else if ( device.STATE==USB_DEVICE_DETACHED) {
-//  312             _lwsem_wait(&USB_Stick);
-//  313             // remove the file system
-//  314            usb_filesystem_uninstall(usb_fs_handle);
-//  315            
-//  316            USB_Flg=0; // wk @130407 --> USB 拔出
-//  317          }
-//  318          
-//  319          // clear the event
-//  320          _lwevent_clear(&USB_Event,USB_EVENT);
-//  321       }
-//  322    }
-//  323 }
+//  238 //      shell_ptr->ARGC = 2;
+//  239 //      shell_ptr->ARGV[0]="df_s";
+//  240       shell_ptr->ARGV[1]="EVENT";   //wk --> 注意：查找的文件名暂时必须要是大写
+//  241       status=Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
+//  242      
+//  243       if(status==0)
+//  244       { 
+//  245 //        shell_ptr->ARGC = 2;
+//  246 //        shell_ptr->ARGV[0]="mkdir";
+//  247         shell_ptr->ARGV[1]="EVENT"; 
+//  248         Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
+//  249       }
+//  250       
+//  251       _mem_free(shell_ptr);
+//  252                         
+//  253       USB_Flg=1; // wk @130407 --> USB 插入
+//  254   /* wk @130405 --> make some dirs <-- end */    
+//  255       
+//  256                }
+//  257             } else {
+//  258                 device.STATE = USB_DEVICE_INTERFACED;
+//  259             }
+//  260          } else if ( device.STATE==USB_DEVICE_DETACHED) {
+//  261             _lwsem_wait(&USB_Stick);
+//  262             // remove the file system
+//  263            usb_filesystem_uninstall(usb_fs_handle);
+//  264            
+//  265            USB_Flg=0; // wk @130407 --> USB 拔出
+//  266          }
+//  267          
+//  268          // clear the event
+//  269          _lwevent_clear(&USB_Event,USB_EVENT);
+//  270       }
+//  271    }
+//  272 }
         POP      {R0-R2,R4,R5,PC}  ;; return
 ??USB_task_2:
-        LDR.N    R0,??DataTable1_4
+        LDR.N    R0,??DataTable1_3
         LDR      R0,[R0, #+0]
         CMP      R0,#+5
         BNE.N    ??USB_task_3
-        LDR.N    R0,??DataTable1_9
+        LDR.N    R0,??DataTable1_8
           CFI FunCall _lwsem_wait
         BL       _lwsem_wait
         MOVS     R0,R4
           CFI FunCall usb_filesystem_uninstall
         BL       usb_filesystem_uninstall
-        LDR.N    R0,??DataTable1_12
+        LDR.N    R0,??DataTable1_11
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
 ??USB_task_3:
         MOVS     R1,#+1
-        LDR.N    R0,??DataTable1_5
+        LDR.N    R0,??DataTable1_4
           CFI FunCall _lwevent_clear
         BL       _lwevent_clear
 ??USB_task_1:
         MOVS     R3,#+0
         MOVS     R2,#+0
         MOVS     R1,#+1
-        LDR.N    R0,??DataTable1_5
+        LDR.N    R0,??DataTable1_4
           CFI FunCall _lwevent_wait_ticks
         BL       _lwevent_wait_ticks
-        LDR.N    R0,??DataTable1_4
+        LDR.N    R0,??DataTable1_3
         LDR      R0,[R0, #+0]
         CMP      R0,#+1
         BNE.N    ??USB_task_2
-        LDR.N    R0,??DataTable1_4
+        LDR.N    R0,??DataTable1_3
         LDR      R0,[R0, #+28]
         CMP      R0,#+0
         BEQ.N    ??USB_task_4
-        LDR.N    R2,??DataTable1_13
-        LDR.N    R0,??DataTable1_4
+        LDR.N    R2,??DataTable1_12
+        LDR.N    R0,??DataTable1_3
         LDR      R1,[R0, #+8]
-        LDR.N    R0,??DataTable1_4
+        LDR.N    R0,??DataTable1_3
         LDR      R0,[R0, #+4]
           CFI FunCall _usb_hostdev_select_interface
         BL       _usb_hostdev_select_interface
         MOVS     R5,R0
         CMP      R5,#+0
         BNE.N    ??USB_task_3
-        LDR.N    R0,??DataTable1_4
+        LDR.N    R0,??DataTable1_3
         MOVS     R1,#+4
         STR      R1,[R0, #+0]
-        LDR.N    R0,??DataTable1_14
-        LDR.N    R1,??DataTable1_13
+        LDR.N    R0,??DataTable1_13
+        LDR.N    R1,??DataTable1_12
         STR      R1,[R0, #+0]
         ADR.N    R3,??DataTable1  ;; 0x75, 0x3A, 0x00, 0x00
-        LDR.N    R2,??DataTable1_15
-        LDR.N    R1,??DataTable1_16
-        LDR.N    R0,??DataTable1_14
+        LDR.N    R2,??DataTable1_14
+        LDR.N    R1,??DataTable1_15
+        LDR.N    R0,??DataTable1_13
         LDR      R0,[R0, #+0]
           CFI FunCall usb_filesystem_install
         BL       usb_filesystem_install
         MOVS     R4,R0
         CMP      R4,#+0
         BEQ.N    ??USB_task_5
-        LDR.N    R0,??DataTable1_9
+        LDR.N    R0,??DataTable1_8
           CFI FunCall _lwsem_post
         BL       _lwsem_post
 ??USB_task_5:
@@ -748,15 +687,15 @@ USB_task:
         STR      R0,[R5, #+32]
         ADR.N    R0,??DataTable1_1  ;; 0x63, 0x64, 0x00, 0x00
         STR      R0,[R5, #+0]
-        ADR.N    R0,??DataTable1_2  ;; "f:\\"
+        ADR.N    R0,??DataTable1_2  ;; "u:\\"
         STR      R0,[R5, #+4]
         MOVS     R1,R5
         LDR      R0,[R5, #+32]
           CFI FunCall Shell_cd
         BL       Shell_cd
-        LDR.N    R0,??DataTable1_17
+        LDR.N    R0,??DataTable1_16
         STR      R0,[R5, #+4]
-        ADD      R2,SP,#+0
+        ADD      R2,SP,#+4
         MOVS     R1,R5
         LDR      R0,[R5, #+32]
           CFI FunCall Shell_search_file_r1
@@ -764,22 +703,16 @@ USB_task:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+0
         BNE.N    ??USB_task_6
-        LDR.N    R0,??DataTable1_17
+        LDR.N    R0,??DataTable1_16
         STR      R0,[R5, #+4]
         MOVS     R1,R5
         LDR      R0,[R5, #+32]
           CFI FunCall Shell_mkdir
         BL       Shell_mkdir
 ??USB_task_6:
-        ADR.N    R0,??DataTable1_3  ;; "u:\\"
+        LDR.N    R0,??DataTable1_17
         STR      R0,[R5, #+4]
-        MOVS     R1,R5
-        LDR      R0,[R5, #+32]
-          CFI FunCall Shell_cd
-        BL       Shell_cd
-        LDR.N    R0,??DataTable1_18
-        STR      R0,[R5, #+4]
-        ADD      R2,SP,#+0
+        ADD      R2,SP,#+4
         MOVS     R1,R5
         LDR      R0,[R5, #+32]
           CFI FunCall Shell_search_file_r1
@@ -787,39 +720,22 @@ USB_task:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+0
         BNE.N    ??USB_task_7
-        LDR.N    R0,??DataTable1_18
+        LDR.N    R0,??DataTable1_17
         STR      R0,[R5, #+4]
         MOVS     R1,R5
         LDR      R0,[R5, #+32]
           CFI FunCall Shell_mkdir
         BL       Shell_mkdir
 ??USB_task_7:
-        LDR.N    R0,??DataTable1_19
-        STR      R0,[R5, #+4]
-        ADD      R2,SP,#+0
-        MOVS     R1,R5
-        LDR      R0,[R5, #+32]
-          CFI FunCall Shell_search_file_r1
-        BL       Shell_search_file_r1
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+0
-        BNE.N    ??USB_task_8
-        LDR.N    R0,??DataTable1_19
-        STR      R0,[R5, #+4]
-        MOVS     R1,R5
-        LDR      R0,[R5, #+32]
-          CFI FunCall Shell_mkdir
-        BL       Shell_mkdir
-??USB_task_8:
         MOVS     R0,R5
           CFI FunCall _lwmem_free
         BL       _lwmem_free
-        LDR.N    R0,??DataTable1_12
+        LDR.N    R0,??DataTable1_11
         MOVS     R1,#+1
         STRB     R1,[R0, #+0]
         B.N      ??USB_task_3
 ??USB_task_4:
-        LDR.N    R0,??DataTable1_4
+        LDR.N    R0,??DataTable1_3
         MOVS     R1,#+4
         STR      R1,[R0, #+0]
         B.N      ??USB_task_3
@@ -841,108 +757,96 @@ USB_task:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable1_2:
-        DC8      "f:\\"
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable1_3:
         DC8      "u:\\"
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable1_4:
+??DataTable1_3:
         DC32     device
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable1_5:
+??DataTable1_4:
         DC32     USB_Event
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable1_6:
+??DataTable1_5:
         DC32     `?<Constant "\\n----------   USB_Tas...">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable1_7:
+??DataTable1_6:
         DC32     `?<Constant "\\n----------          ...">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable1_8:
+??DataTable1_7:
         DC32     `?<Constant "\\n----------      END ...">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable1_9:
+??DataTable1_8:
         DC32     USB_Stick
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable1_10:
+??DataTable1_9:
         DC32     _bsp_usb_host_callback_table
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable1_11:
+??DataTable1_10:
         DC32     ClassDriverInfoTable
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable1_12:
+??DataTable1_11:
         DC32     USB_Flg
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable1_13:
+??DataTable1_12:
         DC32     device+0xC
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable1_14:
+??DataTable1_13:
         DC32     USB_handle
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable1_15:
+??DataTable1_14:
         DC32     `?<Constant "PM_C1:">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable1_16:
+??DataTable1_15:
         DC32     `?<Constant "USB:">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable1_17:
-        DC32     `?<Constant "SYSSET">`
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable1_18:
+??DataTable1_16:
         DC32     `?<Constant "POWER">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable1_19:
+??DataTable1_17:
         DC32     `?<Constant "EVENT">`
 
         SECTION `.iar_vfe_header`:DATA:REORDER:NOALLOC:NOROOT(2)
@@ -957,15 +861,15 @@ USB_task:
         SECTION_TYPE SHT_PROGBITS, 0
 
         END
-//  324 
-//  325 /* EOF */
+//  273 
+//  274 /* EOF */
 // 
 // 100 bytes in section .bss
-// 212 bytes in section .rodata
-// 594 bytes in section .text
+// 200 bytes in section .rodata
+// 542 bytes in section .text
 // 
-// 594 bytes of CODE  memory
-// 212 bytes of CONST memory
+// 542 bytes of CODE  memory
+// 200 bytes of CONST memory
 // 100 bytes of DATA  memory
 //
 //Errors: none

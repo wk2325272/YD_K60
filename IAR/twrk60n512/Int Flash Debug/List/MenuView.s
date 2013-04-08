@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    07/Apr/2013  20:39:19 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    08/Apr/2013  21:33:57 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -651,10 +651,10 @@ USB_Flg:
         DC8 "A"
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-`?<Constant {"\\277\\252\\306\\364", "\\271\\330\\261\\`:
+`?<Constant {"\\271\\330\\261\\325", "\\277\\252\\306\\`:
         DATA
-        DC8 0BFH, 0AAH, 0C6H, 0F4H
         DC8 0B9H, 0D8H, 0B1H, 0D5H
+        DC8 0BFH, 0AAH, 0C6H, 0F4H
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
         DATA
@@ -852,68 +852,7 @@ USB_Flg:
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}>`:
         DATA
-        DC8 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        DC8 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "\\nATTENTION:USB is DET...">`:
@@ -935,13 +874,30 @@ USB_Flg:
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}>_1`:
         DATA
-        DC8 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0
+        DC8 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0, 0, 0, 0, 0, 0, 0
+        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "1000">`:
         DATA
         DC8 "1000"
         DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "\\nATTENTION:USB is DET...">_1`:
+        DATA
+        DC8 "\012ATTENTION:USB is DETACHED!\012"
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "\\nATTENTION:USB Switch...">`:
+        DATA
+        DC8 "\012ATTENTION:USB Switch is CLOSED!\012"
+        DC8 0, 0
 //   38 //       U8 TEST[20];
 //   39 /* END */
 //   40 
@@ -4296,7 +4252,7 @@ GUI_SYS_PARASET:
           CFI CFA R13+28
         SUB      SP,SP,#+284
           CFI CFA R13+312
-//  682     U8 OFF_ON[][4]= {"开启","关闭"},i,temp=0,temp1=0;
+//  682     U8 OFF_ON[][4]= {"关闭","开启"},i,temp=0,temp1=0;
         ADD      R0,SP,#+36
         LDR.W    R1,??DataTable9_10
         LDM      R1!,{R2,R3}
@@ -5591,7 +5547,7 @@ GUI_SYS_PARASET:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable9_10:
-        DC32     `?<Constant {"\\277\\252\\306\\364", "\\271\\330\\261\\`
+        DC32     `?<Constant {"\\271\\330\\261\\325", "\\277\\252\\306\\`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -5959,7 +5915,7 @@ GUI_SYS_EVENTSET:
 // 1167     {
 // 1168         YADA_5B(&SysEventSetSq[SysEventOldIndex*4],4);//擦除前一处
         MOVS     R1,#+4
-        LDR.W    R0,??DataTable13_2
+        LDR.W    R0,??DataTable12_8
         LDRB     R0,[R0, #+0]
         ADD      R2,SP,#+60
         ADDS     R0,R2,R0, LSL #+3
@@ -5976,7 +5932,7 @@ GUI_SYS_EVENTSET:
 // 1170         SysEventOldIndex=SysSet.EvntIndex;
         LDR.W    R0,??DataTable13
         LDRB     R0,[R0, #+5]
-        LDR.W    R1,??DataTable13_2
+        LDR.W    R1,??DataTable12_8
         STRB     R0,[R1, #+0]
 // 1171         SysSet.FuncFlg=0;
         LDR.W    R0,??DataTable13
@@ -6030,7 +5986,7 @@ GUI_SYS_EVENTSET:
 // 1192             {
 // 1193                 String2F=String2F*10+SysSet.Data[i]-'0';    //求整数部分
 ??GUI_SYS_EVENTSET_10:
-        LDR.W    R0,??DataTable14  ;; 0x41200000
+        LDR.W    R0,??DataTable13_2  ;; 0x41200000
         MOVS     R1,R6
           CFI FunCall __aeabi_fmul
         BL       __aeabi_fmul
@@ -6044,7 +6000,7 @@ GUI_SYS_EVENTSET:
         MOVS     R1,R6
           CFI FunCall __aeabi_fadd
         BL       __aeabi_fadd
-        LDR.W    R1,??DataTable14_1  ;; 0xc2400000
+        LDR.W    R1,??DataTable13_3  ;; 0xc2400000
           CFI FunCall __aeabi_fadd
         BL       __aeabi_fadd
         MOVS     R6,R0
@@ -6072,7 +6028,7 @@ GUI_SYS_EVENTSET:
         BNE.N    ??GUI_SYS_EVENTSET_8
 // 1196                 for(i++,k=0.1; i<SysSet.DataCnt&&SysSet.Data[i]!='.'; i++,k=k/10)
         ADDS     R5,R5,#+1
-        LDR.W    R7,??DataTable14_2  ;; 0x3dcccccd
+        LDR.W    R7,??DataTable14  ;; 0x3dcccccd
         B.N      ??GUI_SYS_EVENTSET_12
         Nop      
         DATA
@@ -6103,7 +6059,7 @@ GUI_SYS_EVENTSET:
 // 1199                 }
         ADDS     R5,R5,#+1
         MOVS     R0,R7
-        LDR.W    R1,??DataTable14  ;; 0x41200000
+        LDR.W    R1,??DataTable13_2  ;; 0x41200000
           CFI FunCall __aeabi_fdiv
         BL       __aeabi_fdiv
         MOVS     R7,R0
@@ -6123,7 +6079,7 @@ GUI_SYS_EVENTSET:
 // 1201           
 // 1202         Float2L=(long)(String2F*100);//enlarge 100 times
 ??GUI_SYS_EVENTSET_8:
-        LDR.W    R0,??DataTable14_4  ;; 0x42c80000
+        LDR.W    R0,??DataTable14_2  ;; 0x42c80000
         MOVS     R1,R6
           CFI FunCall __aeabi_fmul
         BL       __aeabi_fmul
@@ -6161,7 +6117,7 @@ GUI_SYS_EVENTSET:
 // 1208         
 // 1209         U16 OneC108[7]= {0x5204,SysEventXY[2*SysSet.EvntIndex],SysEventXY[2*SysSet.EvntIndex + 1],0xffff,0x0000};
         ADD      R0,SP,#+0
-        LDR.W    R1,??DataTable14_5
+        LDR.W    R1,??DataTable14_3
         MOVS     R2,#+16
           CFI FunCall __aeabi_memcpy4
         BL       __aeabi_memcpy4
@@ -6251,7 +6207,7 @@ GUI_SYS_EVENTSET:
         MOV      R0,#+63488
         STRH     R0,[SP, #+6]
 // 1224             flg_event[0]=1;
-        LDR.W    R0,??DataTable14_7
+        LDR.W    R0,??DataTable14_5
         MOVS     R1,#+1
         STRB     R1,[R0, #+0]
 // 1225            }
@@ -6286,7 +6242,7 @@ GUI_SYS_EVENTSET:
         MOV      R0,#+63488
         STRH     R0,[SP, #+6]
 // 1232             flg_event[1]=1;
-        LDR.W    R0,??DataTable14_7
+        LDR.W    R0,??DataTable14_5
         MOVS     R1,#+1
         STRB     R1,[R0, #+1]
 // 1233           }
@@ -6307,7 +6263,7 @@ GUI_SYS_EVENTSET:
         MOV      R0,#+63488
         STRH     R0,[SP, #+6]
 // 1239             flg_event[2]=1;
-        LDR.W    R0,??DataTable14_7
+        LDR.W    R0,??DataTable14_5
         MOVS     R1,#+1
         STRB     R1,[R0, #+2]
 // 1240            }
@@ -6328,7 +6284,7 @@ GUI_SYS_EVENTSET:
         MOV      R0,#+63488
         STRH     R0,[SP, #+6]
 // 1246             flg_event[3]=1;
-        LDR.W    R0,??DataTable14_7
+        LDR.W    R0,??DataTable14_5
         MOVS     R1,#+1
         STRB     R1,[R0, #+3]
 // 1247            }
@@ -6349,7 +6305,7 @@ GUI_SYS_EVENTSET:
         MOV      R0,#+63488
         STRH     R0,[SP, #+6]
 // 1253             flg_event[4]=1;          
-        LDR.W    R0,??DataTable14_7
+        LDR.W    R0,??DataTable14_5
         MOVS     R1,#+1
         STRB     R1,[R0, #+4]
 // 1254           }
@@ -6370,7 +6326,7 @@ GUI_SYS_EVENTSET:
         MOV      R0,#+63488
         STRH     R0,[SP, #+6]
 // 1260             flg_event[5]=1;          
-        LDR.W    R0,??DataTable14_7
+        LDR.W    R0,??DataTable14_5
         MOVS     R1,#+1
         STRB     R1,[R0, #+5]
 // 1261           }
@@ -6391,7 +6347,7 @@ GUI_SYS_EVENTSET:
         MOV      R0,#+63488
         STRH     R0,[SP, #+6]
 // 1267             flg_event[6]=1;          
-        LDR.W    R0,??DataTable14_7
+        LDR.W    R0,??DataTable14_5
         MOVS     R1,#+1
         STRB     R1,[R0, #+6]
 // 1268           }
@@ -6412,7 +6368,7 @@ GUI_SYS_EVENTSET:
         MOV      R0,#+63488
         STRH     R0,[SP, #+6]
 // 1274             flg_event[7]=1;          
-        LDR.W    R0,??DataTable14_7
+        LDR.W    R0,??DataTable14_5
         MOVS     R1,#+1
         STRB     R1,[R0, #+7]
 // 1275           }
@@ -6437,7 +6393,7 @@ GUI_SYS_EVENTSET:
         MOV      R0,#+63488
         STRH     R0,[SP, #+6]
 // 1283             flg_event[9]=1;          
-        LDR.W    R0,??DataTable14_7
+        LDR.W    R0,??DataTable14_5
         MOVS     R1,#+1
         STRB     R1,[R0, #+9]
 // 1284           }
@@ -6458,7 +6414,7 @@ GUI_SYS_EVENTSET:
         MOV      R0,#+63488
         STRH     R0,[SP, #+6]
 // 1290             flg_event[10]=1;          
-        LDR.W    R0,??DataTable14_7
+        LDR.W    R0,??DataTable14_5
         MOVS     R1,#+1
         STRB     R1,[R0, #+10]
 // 1291           }
@@ -6595,7 +6551,7 @@ GUI_SYS_EVENTSET:
 ??GUI_SYS_EVENTSET_40:
         CMP      R0,#+11
         BGE.W    ??GUI_SYS_EVENTSET_43
-        LDR.W    R1,??DataTable14_7
+        LDR.W    R1,??DataTable14_5
         LDRB     R1,[R0, R1]
         CMP      R1,#+1
         BNE.N    ??GUI_SYS_EVENTSET_42
@@ -6634,7 +6590,7 @@ GUI_SYS_EVENTSET:
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+28]
-        LDR.W    R1,??DataTable14_7
+        LDR.W    R1,??DataTable14_5
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
         B.N      ??GUI_SYS_EVENTSET_42
@@ -6653,7 +6609,7 @@ GUI_SYS_EVENTSET:
         ADDS     R1,R1,R2, LSL #+16
         CMP      R1,#+6400
         BGT.N    ??GUI_SYS_EVENTSET_55
-        LDR.W    R1,??DataTable14_8
+        LDR.W    R1,??DataTable14_6
         MOV      R2,#+6400
         STRH     R2,[R1, #+0]
         B.N      ??GUI_SYS_EVENTSET_56
@@ -6672,18 +6628,18 @@ GUI_SYS_EVENTSET:
         ADDS     R1,R1,R2, LSL #+16
         CMP      R1,#+12800
         BGT.N    ??GUI_SYS_EVENTSET_57
-        LDR.W    R1,??DataTable14_8
+        LDR.W    R1,??DataTable14_6
         MOV      R2,#+12800
         STRH     R2,[R1, #+0]
         B.N      ??GUI_SYS_EVENTSET_56
 ??GUI_SYS_EVENTSET_57:
-        LDR.W    R1,??DataTable14_8
+        LDR.W    R1,??DataTable14_6
         MOV      R2,#+25600
         STRH     R2,[R1, #+0]
 ??GUI_SYS_EVENTSET_56:
         LDR.W    R1,??DataTable13_1
         ADDS     R1,R1,R0, LSL #+2
-        LDR.W    R2,??DataTable14_8
+        LDR.W    R2,??DataTable14_6
         LDRB     R2,[R2, #+0]
         MOV      R3,#+256
         SDIV     R5,R2,R3
@@ -6691,7 +6647,7 @@ GUI_SYS_EVENTSET:
         STRB     R5,[R1, #+25]
         LDR.W    R1,??DataTable13_1
         ADDS     R1,R1,R0, LSL #+2
-        LDR.W    R2,??DataTable14_8
+        LDR.W    R2,??DataTable14_6
         LDRH     R2,[R2, #+0]
         UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
         LSRS     R2,R2,#+8
@@ -6708,7 +6664,7 @@ GUI_SYS_EVENTSET:
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+28]
-        LDR.W    R1,??DataTable14_7
+        LDR.W    R1,??DataTable14_5
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
         B.N      ??GUI_SYS_EVENTSET_42
@@ -6729,7 +6685,7 @@ GUI_SYS_EVENTSET:
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+28]
-        LDR.W    R1,??DataTable14_7
+        LDR.W    R1,??DataTable14_5
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
         B.N      ??GUI_SYS_EVENTSET_42
@@ -6750,7 +6706,7 @@ GUI_SYS_EVENTSET:
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+28]
-        LDR.W    R1,??DataTable14_7
+        LDR.W    R1,??DataTable14_5
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
         B.N      ??GUI_SYS_EVENTSET_42
@@ -6771,7 +6727,7 @@ GUI_SYS_EVENTSET:
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+28]
-        LDR.W    R1,??DataTable14_7
+        LDR.W    R1,??DataTable14_5
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
         B.N      ??GUI_SYS_EVENTSET_42
@@ -6792,7 +6748,7 @@ GUI_SYS_EVENTSET:
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+28]
-        LDR.W    R1,??DataTable14_7
+        LDR.W    R1,??DataTable14_5
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
         B.N      ??GUI_SYS_EVENTSET_42
@@ -6813,7 +6769,7 @@ GUI_SYS_EVENTSET:
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+28]
-        LDR.W    R1,??DataTable14_7
+        LDR.W    R1,??DataTable14_5
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
         B.N      ??GUI_SYS_EVENTSET_42
@@ -6834,7 +6790,7 @@ GUI_SYS_EVENTSET:
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+28]
-        LDR.W    R1,??DataTable14_7
+        LDR.W    R1,??DataTable14_5
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
 ??GUI_SYS_EVENTSET_51:
@@ -6856,7 +6812,7 @@ GUI_SYS_EVENTSET:
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+28]
-        LDR.W    R1,??DataTable14_7
+        LDR.W    R1,??DataTable14_5
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
         B.N      ??GUI_SYS_EVENTSET_42
@@ -6877,7 +6833,7 @@ GUI_SYS_EVENTSET:
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+28]
-        LDR.W    R1,??DataTable14_7
+        LDR.W    R1,??DataTable14_5
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
         B.N      ??GUI_SYS_EVENTSET_42
@@ -6977,7 +6933,7 @@ GUI_SYS_EVENTSET:
         ADR.N    R0,??DataTable11_6  ;; "0"
         STR      R0,[R4, #+12]
 // 1437     Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,44,&(SysFlashData[25]));
-        LDR.W    R3,??DataTable14_9
+        LDR.W    R3,??DataTable14_7
         MOVS     R2,#+44
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
@@ -7152,7 +7108,7 @@ GUI_EventMonitor:
 // 1486                          505,219,505,265
 // 1487                         };
         ADD      R0,SP,#+128
-        LDR.W    R1,??DataTable14_10
+        LDR.W    R1,??DataTable14_8
         MOVS     R2,#+36
           CFI FunCall __aeabi_memcpy4
         BL       __aeabi_memcpy4
@@ -7412,10 +7368,10 @@ EventSave:
           CFI R5 Frame(CFA, -12)
           CFI R4 Frame(CFA, -16)
           CFI CFA R13+16
-        SUB      SP,SP,#+1032
-          CFI CFA R13+1048
+        SUB      SP,SP,#+40
+          CFI CFA R13+56
 // 1622     if(USB_Flg==1) // ==1 时插入
-        LDR.W    R0,??DataTable14_11
+        LDR.W    R0,??DataTable14_9
         LDRB     R0,[R0, #+0]
         CMP      R0,#+1
         BNE.W    ??EventSave_0
@@ -7454,7 +7410,7 @@ EventSave:
         ADR.N    R0,??DataTable12_7  ;; 0x63, 0x64, 0x00, 0x00
         STR      R0,[R4, #+0]
 // 1638           shell_ptr->ARGV[1]="u:\\event"; 
-        LDR.W    R0,??DataTable14_12
+        LDR.W    R0,??DataTable14_10
         STR      R0,[R4, #+4]
 // 1639           Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
         MOVS     R1,R4
@@ -7463,7 +7419,7 @@ EventSave:
         BL       Shell_cd
 // 1640         
 // 1641           if(year_old!=date_sf.YEAR) // wk --> creata a dir named of year
-        LDR.W    R0,??DataTable14_13
+        LDR.W    R0,??DataTable14_11
         LDRH     R0,[R0, #+0]
         LDRH     R1,[SP, #+0]
         CMP      R0,R1
@@ -7475,10 +7431,10 @@ EventSave:
         LDRH     R0,[SP, #+0]
           CFI FunCall num2string
         BL       num2string
-        LDR.W    R1,??DataTable14_14
+        LDR.W    R1,??DataTable14_12
         STR      R0,[R1, #+0]
 // 1644             year_old=date_sf.YEAR;
-        LDR.W    R0,??DataTable14_13
+        LDR.W    R0,??DataTable14_11
         LDRH     R1,[SP, #+0]
         STRH     R1,[R0, #+0]
 // 1645             
@@ -7486,10 +7442,10 @@ EventSave:
         MOVS     R0,#+2
         STR      R0,[R4, #+32]
 // 1647             shell_ptr->ARGV[0]="mkdir";
-        LDR.W    R0,??DataTable14_15
+        LDR.W    R0,??DataTable14_13
         STR      R0,[R4, #+0]
 // 1648             shell_ptr->ARGV[1]=dir_name; 
-        LDR.W    R0,??DataTable14_14
+        LDR.W    R0,??DataTable14_12
         LDR      R0,[R0, #+0]
         STR      R0,[R4, #+4]
 // 1649             Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
@@ -7507,7 +7463,7 @@ EventSave:
         ADR.N    R0,??DataTable12_7  ;; 0x63, 0x64, 0x00, 0x00
         STR      R0,[R4, #+0]
 // 1654           shell_ptr->ARGV[1]=dir_name; 
-        LDR.W    R0,??DataTable14_14
+        LDR.W    R0,??DataTable14_12
         LDR      R0,[R0, #+0]
         STR      R0,[R4, #+4]
 // 1655           Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
@@ -7516,7 +7472,7 @@ EventSave:
           CFI FunCall Shell_cd
         BL       Shell_cd
 // 1656           if(month_old!=date_sf.MONTH)
-        LDR.N    R0,??DataTable14_16
+        LDR.W    R0,??DataTable14_14
         LDRH     R0,[R0, #+0]
         LDRH     R1,[SP, #+2]
         CMP      R0,R1
@@ -7528,21 +7484,21 @@ EventSave:
         LDRH     R0,[SP, #+0]
           CFI FunCall num2string
         BL       num2string
-        LDR.N    R1,??DataTable14_17
+        LDR.W    R1,??DataTable14_15
         STR      R0,[R1, #+0]
 // 1659             month_old=date_sf.MONTH;
         LDRH     R0,[SP, #+2]
-        LDR.N    R1,??DataTable14_16
+        LDR.W    R1,??DataTable14_14
         STRH     R0,[R1, #+0]
 // 1660             
 // 1661             shell_ptr->ARGC = 2;
         MOVS     R0,#+2
         STR      R0,[R4, #+32]
 // 1662             shell_ptr->ARGV[0]="mkdir";
-        LDR.N    R0,??DataTable14_15
+        LDR.W    R0,??DataTable14_13
         STR      R0,[R4, #+0]
 // 1663             shell_ptr->ARGV[1]=monthDir_name; 
-        LDR.N    R0,??DataTable14_17
+        LDR.W    R0,??DataTable14_15
         LDR      R0,[R0, #+0]
         STR      R0,[R4, #+4]
 // 1664             Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
@@ -7559,7 +7515,7 @@ EventSave:
         ADR.N    R0,??DataTable12_7  ;; 0x63, 0x64, 0x00, 0x00
         STR      R0,[R4, #+0]
 // 1668           shell_ptr->ARGV[1]=monthDir_name; 
-        LDR.N    R0,??DataTable14_17
+        LDR.N    R0,??DataTable14_15
         LDR      R0,[R0, #+0]
         STR      R0,[R4, #+4]
 // 1669           Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
@@ -7569,9 +7525,9 @@ EventSave:
         BL       Shell_cd
 // 1670           
 // 1671           if(file_name=="12345678.csv")
-        LDR.N    R0,??DataTable14_18
+        LDR.N    R0,??DataTable14_16
         LDR      R0,[R0, #+0]
-        LDR.N    R1,??DataTable14_19
+        LDR.N    R1,??DataTable14_17
         CMP      R0,R1
         BNE.N    ??EventSave_3
 // 1672           {
@@ -7580,7 +7536,7 @@ EventSave:
         MOVS     R2,#+1
         MOVS     R1,#+8
         LDRH     R0,[SP, #+4]
-        LDR.N    R3,??DataTable14_20  ;; 0xf4240
+        LDR.N    R3,??DataTable14_18  ;; 0xf4240
         LDRH     R5,[SP, #+6]
         MOVW     R6,#+10000
         MULS     R5,R6,R5
@@ -7592,7 +7548,7 @@ EventSave:
         UXTAH    R0,R0,R3
           CFI FunCall num2string
         BL       num2string
-        LDR.N    R1,??DataTable14_18
+        LDR.N    R1,??DataTable14_16
         STR      R0,[R1, #+0]
         B.N      ??EventSave_4
 // 1675           }
@@ -7603,10 +7559,10 @@ EventSave:
         MOVS     R0,#+2
         STR      R0,[R4, #+32]
 // 1679             shell_ptr->ARGV[0]="df_s";
-        LDR.N    R0,??DataTable14_21
+        LDR.N    R0,??DataTable14_19
         STR      R0,[R4, #+0]
 // 1680             shell_ptr->ARGV[1]=file_name;   //wk --> 注意：查找的文件名暂时必须要是大写
-        LDR.N    R0,??DataTable14_18
+        LDR.N    R0,??DataTable14_16
         LDR      R0,[R0, #+0]
         STR      R0,[R4, #+4]
 // 1681             Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
@@ -7626,7 +7582,7 @@ EventSave:
         MOVS     R2,#+1
         MOVS     R1,#+8
         LDRH     R0,[SP, #+4]
-        LDR.N    R3,??DataTable14_20  ;; 0xf4240
+        LDR.N    R3,??DataTable14_18  ;; 0xf4240
         LDRH     R5,[SP, #+6]
         MOVW     R6,#+10000
         MULS     R5,R6,R5
@@ -7638,7 +7594,7 @@ EventSave:
         UXTAH    R0,R0,R3
           CFI FunCall num2string
         BL       num2string
-        LDR.N    R1,??DataTable14_18
+        LDR.N    R1,??DataTable14_16
         STR      R0,[R1, #+0]
 // 1687             }
 // 1688           }
@@ -7648,17 +7604,17 @@ EventSave:
         MOVS     R0,#+4
         STR      R0,[R4, #+32]
 // 1691           shell_ptr->ARGV[0]="write";
-        LDR.N    R0,??DataTable14_22
+        LDR.N    R0,??DataTable14_20
         STR      R0,[R4, #+0]
 // 1692           shell_ptr->ARGV[1]=file_name;
-        LDR.N    R0,??DataTable14_18
+        LDR.N    R0,??DataTable14_16
         LDR      R0,[R0, #+0]
         STR      R0,[R4, #+4]
 // 1693           shell_ptr->ARGV[2]="current";
-        LDR.N    R0,??DataTable14_23
+        LDR.N    R0,??DataTable14_21
         STR      R0,[R4, #+8]
 // 1694           shell_ptr->ARGV[3]="0";
-        ADR.N    R0,??DataTable14_3  ;; "0"
+        ADR.N    R0,??DataTable14_1  ;; "0"
         STR      R0,[R4, #+12]
 // 1695           Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,7,&date_sf);
         ADD      R3,SP,#+0
@@ -7668,20 +7624,21 @@ EventSave:
           CFI FunCall Shell_write_binary
         BL       Shell_write_binary
 // 1696           
-// 1697           uchar test[1000]={0,1,2,3,4,5,6,7,8,9,10};
+// 1697           uchar test[]={0,1,2,3,4,5,6,7,8,9,10};
         ADD      R0,SP,#+28
-        LDR.N    R1,??DataTable14_24
-        MOV      R2,#+1000
-          CFI FunCall __aeabi_memcpy4
-        BL       __aeabi_memcpy4
+        LDR.N    R1,??DataTable14_22
+        LDM      R1!,{R2,R3,R5}
+        STM      R0!,{R2,R3,R5}
+        SUBS     R1,R1,#+12
+        SUBS     R0,R0,#+12
 // 1698     //      shell_ptr->ARGC=4;
 // 1699     //      shell_ptr->ARGV[0]="write";
 // 1700     //      shell_ptr->ARGV[1]=file_name;
 // 1701     //      shell_ptr->ARGV[2]="current";
 // 1702     //      shell_ptr->ARGV[3]="0";
-// 1703           Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,1000,test);
+// 1703           Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,100,test);
         ADD      R3,SP,#+28
-        MOV      R2,#+1000
+        MOVS     R2,#+100
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_write_binary
@@ -7697,13 +7654,13 @@ EventSave:
 // 1708     {
 // 1709       printf("\nATTENTION:USB is DETACHED\n");
 ??EventSave_0:
-        LDR.N    R0,??DataTable14_25
+        LDR.N    R0,??DataTable14_23
           CFI FunCall _io_printf
         BL       _io_printf
 // 1710     }
 // 1711 }
 ??EventSave_5:
-        ADD      SP,SP,#+1032
+        ADD      SP,SP,#+40
           CFI CFA R13+16
         POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock13
@@ -7756,6 +7713,12 @@ EventSave:
 ??DataTable12_7:
         DC8      0x63, 0x64, 0x00, 0x00
 
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable12_8:
+        DC32     SysEventOldIndex
+
         SECTION `.data`:DATA:REORDER:NOROOT(2)
 ??file_name:
         DATA
@@ -7796,11 +7759,15 @@ PowerSave:
           CFI R5 Frame(CFA, -12)
           CFI R4 Frame(CFA, -16)
           CFI CFA R13+16
-        SUB      SP,SP,#+40
-          CFI CFA R13+56
-// 1720   if(USB_Flg==1)
-        LDR.N    R0,??DataTable14_11
+        SUB      SP,SP,#+128
+          CFI CFA R13+144
+// 1720   if(USB_Flg==1&& SysFlashDataT[6]==1)
+        LDR.N    R0,??DataTable14_9
         LDRB     R0,[R0, #+0]
+        CMP      R0,#+1
+        BNE.W    ??PowerSave_0
+        LDR.N    R0,??DataTable13_1
+        LDRB     R0,[R0, #+6]
         CMP      R0,#+1
         BNE.W    ??PowerSave_0
 // 1721   {
@@ -7837,10 +7804,10 @@ PowerSave:
         MOVS     R0,#+2
         STR      R0,[R4, #+32]
 // 1737       shell_ptr->ARGV[0]="cd";
-        ADR.N    R0,??DataTable14_6  ;; 0x63, 0x64, 0x00, 0x00
+        ADR.N    R0,??DataTable14_4  ;; 0x63, 0x64, 0x00, 0x00
         STR      R0,[R4, #+0]
 // 1738       shell_ptr->ARGV[1]="u:\\power"; 
-        LDR.N    R0,??DataTable14_26
+        LDR.N    R0,??DataTable14_24
         STR      R0,[R4, #+4]
 // 1739       Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
         MOVS     R1,R4
@@ -7849,7 +7816,7 @@ PowerSave:
         BL       Shell_cd
 // 1740       
 // 1741       if(year_old!=date_sf.YEAR) // wk --> creata a dir named of year
-        LDR.N    R0,??DataTable14_27
+        LDR.N    R0,??DataTable14_25
         LDRH     R0,[R0, #+0]
         LDRH     R1,[SP, #+0]
         CMP      R0,R1
@@ -7861,19 +7828,19 @@ PowerSave:
         LDRH     R0,[SP, #+0]
           CFI FunCall num2string
         BL       num2string
-        LDR.N    R1,??DataTable14_28
+        LDR.N    R1,??DataTable14_26
         STR      R0,[R1, #+0]
 // 1744 //        dir_name=num2string_s((uint_32)date_sf.YEAR,4);
 // 1745 //        dir_name="2013";
 // 1746         year_old=date_sf.YEAR;
-        LDR.N    R0,??DataTable14_27
+        LDR.N    R0,??DataTable14_25
         LDRH     R1,[SP, #+0]
         STRH     R1,[R0, #+0]
 // 1747         
 // 1748 //        shell_ptr->ARGC = 2;
 // 1749 //        shell_ptr->ARGV[0]="mkdir";
 // 1750         shell_ptr->ARGV[1]=dir_name; 
-        LDR.N    R0,??DataTable14_28
+        LDR.N    R0,??DataTable14_26
         LDR      R0,[R0, #+0]
         STR      R0,[R4, #+4]
 // 1751         Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
@@ -7882,12 +7849,12 @@ PowerSave:
           CFI FunCall Shell_mkdir
         BL       Shell_mkdir
 // 1752       }
-// 1753       
+// 1753       /* wk @130407 --> 注意： 这里可以添加年份文件夹查找的，确定文件夹已经建立在打开 */
 // 1754 //      shell_ptr->ARGC = 2;  //WK --> 进入 dir_name 下面
 // 1755 //      shell_ptr->ARGV[0]="cd";
 // 1756       shell_ptr->ARGV[1]=dir_name; 
 ??PowerSave_1:
-        LDR.N    R0,??DataTable14_28
+        LDR.N    R0,??DataTable14_26
         LDR      R0,[R0, #+0]
         STR      R0,[R4, #+4]
 // 1757       Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
@@ -7897,9 +7864,9 @@ PowerSave:
         BL       Shell_cd
 // 1758       
 // 1759       if(file_name=="123456.csv")
-        LDR.N    R0,??DataTable14_29
+        LDR.N    R0,??DataTable14_27
         LDR      R0,[R0, #+0]
-        LDR.N    R1,??DataTable14_30
+        LDR.N    R1,??DataTable14_28
         CMP      R0,R1
         BNE.N    ??PowerSave_2
 // 1760       {
@@ -7916,7 +7883,7 @@ PowerSave:
         UXTAH    R0,R0,R3
           CFI FunCall num2string
         BL       num2string
-        LDR.N    R1,??DataTable14_29
+        LDR.N    R1,??DataTable14_27
         STR      R0,[R1, #+0]
         B.N      ??PowerSave_3
 // 1762       }
@@ -7926,7 +7893,7 @@ PowerSave:
 // 1766 //        shell_ptr->ARGV[0]="df_s";
 // 1767         shell_ptr->ARGV[1]=file_name;   //wk --> 注意：查找的文件名暂时必须要是大写
 ??PowerSave_2:
-        LDR.N    R0,??DataTable14_29
+        LDR.N    R0,??DataTable14_27
         LDR      R0,[R0, #+0]
         STR      R0,[R4, #+4]
 // 1768         Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
@@ -7954,7 +7921,7 @@ PowerSave:
         UXTAH    R0,R0,R3
           CFI FunCall num2string
         BL       num2string
-        LDR.N    R1,??DataTable14_29
+        LDR.N    R1,??DataTable14_27
         STR      R0,[R1, #+0]
 // 1773         }
 // 1774       }
@@ -7964,17 +7931,17 @@ PowerSave:
         MOVS     R0,#+4
         STR      R0,[R4, #+32]
 // 1777       shell_ptr->ARGV[0]="write";
-        LDR.N    R0,??DataTable14_22
+        LDR.N    R0,??DataTable14_20
         STR      R0,[R4, #+0]
 // 1778       shell_ptr->ARGV[1]=file_name;
-        LDR.N    R0,??DataTable14_29
+        LDR.N    R0,??DataTable14_27
         LDR      R0,[R0, #+0]
         STR      R0,[R4, #+4]
 // 1779       shell_ptr->ARGV[2]="current";
-        LDR.N    R0,??DataTable14_23
+        LDR.N    R0,??DataTable14_21
         STR      R0,[R4, #+8]
 // 1780       shell_ptr->ARGV[3]="0";
-        ADR.N    R0,??DataTable14_3  ;; "0"
+        ADR.N    R0,??DataTable14_1  ;; "0"
         STR      R0,[R4, #+12]
 // 1781       Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,7,&date_sf);
         ADD      R3,SP,#+0
@@ -7984,44 +7951,69 @@ PowerSave:
           CFI FunCall Shell_write_binary
         BL       Shell_write_binary
 // 1782       
-// 1783       uchar test[]={0,1,2,3,4,5,6,7,8,9,10};
+// 1783       uchar test[100]={0,1,2,3,4,5,6,7,8,9,10};
         ADD      R0,SP,#+28
-        LDR.N    R1,??DataTable14_31
-        LDM      R1!,{R2,R3,R5}
-        STM      R0!,{R2,R3,R5}
-        SUBS     R1,R1,#+12
-        SUBS     R0,R0,#+12
+        LDR.N    R1,??DataTable14_29
+        MOVS     R2,#+100
+          CFI FunCall __aeabi_memcpy4
+        BL       __aeabi_memcpy4
 // 1784 //      shell_ptr->ARGC=4;
 // 1785 //      shell_ptr->ARGV[0]="write";
 // 1786 //      shell_ptr->ARGV[1]=file_name;
 // 1787 //      shell_ptr->ARGV[2]="current";
 // 1788 //      shell_ptr->ARGV[3]="0";
-// 1789       Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,100,test);
+// 1789       for(uchar i=0;i<20;i++)
+        MOVS     R5,#+0
+        B.N      ??PowerSave_4
+// 1790       Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,100,test);
+??PowerSave_5:
         ADD      R3,SP,#+28
         MOVS     R2,#+100
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_write_binary
         BL       Shell_write_binary
-// 1790 
-// 1791      _mem_free(shell_ptr);  // wk @130403 --> important
+        ADDS     R5,R5,#+1
+??PowerSave_4:
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        CMP      R5,#+20
+        BCC.N    ??PowerSave_5
+// 1791 
+// 1792      _mem_free(shell_ptr);  // wk @130403 --> important
         MOVS     R0,R4
           CFI FunCall _lwmem_free
         BL       _lwmem_free
-        B.N      ??PowerSave_4
-// 1792   }
-// 1793   else
-// 1794   {
-// 1795     printf("\nATTENTION:USB is DETACHED\n");
+        B.N      ??PowerSave_6
+// 1793   }
+// 1794   else if(USB_Flg==0)
 ??PowerSave_0:
-        LDR.N    R0,??DataTable14_25
+        LDR.N    R0,??DataTable14_9
+        LDRB     R0,[R0, #+0]
+        CMP      R0,#+0
+        BNE.N    ??PowerSave_7
+// 1795   {
+// 1796     printf("\nATTENTION:USB is DETACHED!\n");
+        LDR.N    R0,??DataTable14_30
           CFI FunCall _io_printf
         BL       _io_printf
-// 1796   }
-// 1797      
-// 1798 }
-??PowerSave_4:
-        ADD      SP,SP,#+40
+        B.N      ??PowerSave_6
+// 1797   }
+// 1798   else if(SysFlashDataT[6]==0)
+??PowerSave_7:
+        LDR.N    R0,??DataTable13_1
+        LDRB     R0,[R0, #+6]
+        CMP      R0,#+0
+        BNE.N    ??PowerSave_6
+// 1799   {
+// 1800     printf("\nATTENTION:USB Switch is CLOSED!\n");
+        LDR.N    R0,??DataTable14_31
+          CFI FunCall _io_printf
+        BL       _io_printf
+// 1801   }
+// 1802      
+// 1803 }
+??PowerSave_6:
+        ADD      SP,SP,#+128
           CFI CFA R13+16
         POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock14
@@ -8042,7 +8034,13 @@ PowerSave:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable13_2:
-        DC32     SysEventOldIndex
+        DC32     0x41200000
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable13_3:
+        DC32     0xc2400000
 
         SECTION `.data`:DATA:REORDER:NOROOT(2)
 ??file_name_1:
@@ -8057,24 +8055,24 @@ PowerSave:
         SECTION `.bss`:DATA:REORDER:NOROOT(1)
 ??year_old_1:
         DS8 2
-// 1799 
-// 1800 /*******************************************************************************
-// 1801 ** Function Name	：num2string
-// 1802 ** Input		： type =0 文件夹，=1 .CSV文件
-// 1803 ** Return		：
-// 1804 ** Author		：
-// 1805 ** Version	：
-// 1806 ** Date		：
-// 1807 ** Dessription	： 将 32 位整数转换成字符串
-// 1808 ** Reverse	：
-// 1809 *******************************************************************************/
+// 1804 
+// 1805 /*******************************************************************************
+// 1806 ** Function Name	：num2string
+// 1807 ** Input		： type =0 文件夹，=1 .CSV文件
+// 1808 ** Return		：
+// 1809 ** Author		：
+// 1810 ** Version	：
+// 1811 ** Date		：
+// 1812 ** Dessription	： 将 32 位整数转换成字符串
+// 1813 ** Reverse	：
+// 1814 *******************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock15 Using cfiCommon0
           CFI Function num2string
         THUMB
-// 1810 char_ptr num2string(int_32 num,uchar len,uchar type) // wk --> len <= 13-4-1=8
-// 1811 {
+// 1815 char_ptr num2string(int_32 num,uchar len,uchar type) // wk --> len <= 13-4-1=8
+// 1816 {
 num2string:
         PUSH     {R4-R8,LR}
           CFI R14 Frame(CFA, -4)
@@ -8089,19 +8087,19 @@ num2string:
         MOV      R8,R0
         MOVS     R4,R1
         MOVS     R7,R2
-// 1812   char_ptr name;
-// 1813   name = _mem_alloc_zero( len+5 );
+// 1817   char_ptr name;
+// 1818   name = _mem_alloc_zero( len+5 );
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         ADDS     R0,R4,#+5
           CFI FunCall _lwmem_alloc_zero
         BL       _lwmem_alloc_zero
         MOVS     R5,R0
-// 1814   uchar sep_data[9];uint_32 temp;
-// 1815   for(int i=0;i<len;i++)
+// 1819   uchar sep_data[9];uint_32 temp;
+// 1820   for(int i=0;i<len;i++)
         MOVS     R6,#+0
         B.N      ??num2string_0
-// 1816   {
-// 1817     temp=(uint_32)pow(10,i);
+// 1821   {
+// 1822     temp=(uint_32)pow(10,i);
 ??num2string_1:
         MOVS     R0,R6
           CFI FunCall __aeabi_i2d
@@ -8114,25 +8112,25 @@ num2string:
         BL       pow
           CFI FunCall __aeabi_d2uiz
         BL       __aeabi_d2uiz
-// 1818     sep_data[i]=(num/temp)%10;
+// 1823     sep_data[i]=(num/temp)%10;
         UDIV     R0,R8,R0
         MOVS     R1,#+10
         UDIV     R2,R0,R1
         MLS      R0,R1,R2,R0
         ADD      R1,SP,#+0
         STRB     R0,[R6, R1]
-// 1819   }
+// 1824   }
         ADDS     R6,R6,#+1
 ??num2string_0:
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         CMP      R6,R4
         BLT.N    ??num2string_1
-// 1820   
-// 1821   for(int i=0;i<len;i++)
+// 1825   
+// 1826   for(int i=0;i<len;i++)
         MOVS     R0,#+0
         B.N      ??num2string_2
-// 1822   {
-// 1823     *(name+i)=(uchar)(0x30+sep_data[len-1-i]);
+// 1827   {
+// 1828     *(name+i)=(uchar)(0x30+sep_data[len-1-i]);
 ??num2string_3:
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         SUBS     R1,R4,#+1
@@ -8141,251 +8139,251 @@ num2string:
         LDRB     R1,[R1, R2]
         ADDS     R1,R1,#+48
         STRB     R1,[R0, R5]
-// 1824   }
+// 1829   }
         ADDS     R0,R0,#+1
 ??num2string_2:
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         CMP      R0,R4
         BLT.N    ??num2string_3
-// 1825   if(type==0)
+// 1830   if(type==0)
         UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
         CMP      R7,#+0
         BNE.N    ??num2string_4
-// 1826   {
-// 1827     *(name+len)='\0';
+// 1831   {
+// 1832     *(name+len)='\0';
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         MOVS     R0,#+0
         STRB     R0,[R4, R5]
         B.N      ??num2string_5
-// 1828   }
-// 1829   else
-// 1830   {
-// 1831     *(name+len)=0x2e; // .
+// 1833   }
+// 1834   else
+// 1835   {
+// 1836     *(name+len)=0x2e; // .
 ??num2string_4:
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         MOVS     R0,#+46
         STRB     R0,[R4, R5]
-// 1832     *(name+len+1)=0x43; // C
+// 1837     *(name+len+1)=0x43; // C
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         ADDS     R0,R4,R5
         MOVS     R1,#+67
         STRB     R1,[R0, #+1]
-// 1833     *(name+len+2)=0x53; // S
+// 1838     *(name+len+2)=0x53; // S
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         ADDS     R0,R4,R5
         MOVS     R1,#+83
         STRB     R1,[R0, #+2]
-// 1834     *(name+len+3)=0x56; // V
+// 1839     *(name+len+3)=0x56; // V
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         ADDS     R0,R4,R5
         MOVS     R1,#+86
         STRB     R1,[R0, #+3]
-// 1835     *(name+len+4)='\0';
+// 1840     *(name+len+4)='\0';
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         ADDS     R0,R4,R5
         MOVS     R1,#+0
         STRB     R1,[R0, #+4]
-// 1836   }
-// 1837   return name;
+// 1841   }
+// 1842   return name;
 ??num2string_5:
         MOVS     R0,R5
         ADD      SP,SP,#+16
           CFI CFA R13+24
         POP      {R4-R8,PC}       ;; return
           CFI EndBlock cfiBlock15
-// 1838 }
+// 1843 }
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable14:
-        DC32     0x41200000
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable14_1:
-        DC32     0xc2400000
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable14_2:
         DC32     0x3dcccccd
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_3:
+??DataTable14_1:
         DC8      "0",0x0,0x0
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_4:
+??DataTable14_2:
         DC32     0x42c80000
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_5:
+??DataTable14_3:
         DC32     `?<Constant {20996, 0, 0, 65535, 0}>`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_6:
+??DataTable14_4:
         DC8      0x63, 0x64, 0x00, 0x00
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_7:
+??DataTable14_5:
         DC32     ??flg_event
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_8:
+??DataTable14_6:
         DC32     DotWave
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_9:
+??DataTable14_7:
         DC32     SysFlashData+0x19
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_10:
+??DataTable14_8:
         DC32     `?<Constant {181, 127, 181, 174, 181, 219, 181,`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_11:
+??DataTable14_9:
         DC32     USB_Flg
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_12:
+??DataTable14_10:
         DC32     `?<Constant "u:\\\\event">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_13:
+??DataTable14_11:
         DC32     ??year_old
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_14:
+??DataTable14_12:
         DC32     ??dir_name
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_15:
+??DataTable14_13:
         DC32     `?<Constant "mkdir">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_16:
+??DataTable14_14:
         DC32     ??month_old
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_17:
+??DataTable14_15:
         DC32     ??monthDir_name
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_18:
+??DataTable14_16:
         DC32     ??file_name
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_19:
+??DataTable14_17:
         DC32     `?<Constant "12345678.csv">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_20:
+??DataTable14_18:
         DC32     0xf4240
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_21:
+??DataTable14_19:
         DC32     `?<Constant "df_s">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_22:
+??DataTable14_20:
         DC32     `?<Constant "write">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_23:
+??DataTable14_21:
         DC32     `?<Constant "current">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_24:
+??DataTable14_22:
         DC32     `?<Constant {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}>`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_25:
+??DataTable14_23:
         DC32     `?<Constant "\\nATTENTION:USB is DET...">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_26:
+??DataTable14_24:
         DC32     `?<Constant "u:\\\\power">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_27:
+??DataTable14_25:
         DC32     ??year_old_1
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_28:
+??DataTable14_26:
         DC32     ??dir_name_1
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_29:
+??DataTable14_27:
         DC32     ??file_name_1
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_30:
+??DataTable14_28:
         DC32     `?<Constant "123456.csv">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable14_31:
+??DataTable14_29:
         DC32     `?<Constant {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}>_1`
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable14_30:
+        DC32     `?<Constant "\\nATTENTION:USB is DET...">_1`
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable14_31:
+        DC32     `?<Constant "\\nATTENTION:USB Switch...">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -8408,11 +8406,11 @@ num2string:
 // 
 //    645 bytes in section .bss
 //     52 bytes in section .data
-//  6 548 bytes in section .rodata
-// 11 754 bytes in section .text
+//  5 716 bytes in section .rodata
+// 11 810 bytes in section .text
 // 
-// 11 754 bytes of CODE  memory
-//  6 548 bytes of CONST memory
+// 11 810 bytes of CODE  memory
+//  5 716 bytes of CONST memory
 //    697 bytes of DATA  memory
 //
 //Errors: none

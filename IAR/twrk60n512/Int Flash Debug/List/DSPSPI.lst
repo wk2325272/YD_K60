@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM     07/Apr/2013  19:59:15 #
+# IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM     08/Apr/2013  20:23:43 #
 # Copyright 1999-2011 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -117,458 +117,480 @@ E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\DSPSPI.c
      32          static uchar count=0; // 用于数据头检测
    \                     count:
    \   00000000                      DS8 1
-     33          
-     34          //volatile U16 Time_save=0;  //备份事件参数
-     35          //volatile U8 testflgg=0;   //MCU发送数据个数
-     36           
+
+   \                                 In section .bss, align 1
+     33          U8 SPI_Send=0; // wk @130406 --> K60是否给DSP发送数据的标志
+   \                     SPI_Send:
+   \   00000000                      DS8 1
+     34          
+     35          //volatile U16 Time_save=0;  //备份事件参数
+     36          //volatile U8 testflgg=0;   //MCU发送数据个数
+     37           
 
    \                                 In section .bss, align 4
-     37          MQX_FILE_PTR spifd_2; //,ptbfd_10 // spifd_2 --> spi2设备的句柄  ptbfd_10 --> PTB10 设备的句柄
+     38          MQX_FILE_PTR spifd_2; //,ptbfd_10 // spifd_2 --> spi2设备的句柄  ptbfd_10 --> PTB10 设备的句柄
    \                     spifd_2:
    \   00000000                      DS8 4
-     38          // @20130312 --> wk
-     39          //SPI_READ_WRITE_STRUCT  spi_rw;  // --> IOCTL 操作 SPI 时使用的结构体
-     40          //SPI_READ_WRITE_STRUCT *spi_rw_ptr = &spi_rw; 
-     41          //U8 *BufRxchar_ptr = BufRxchar;
-     42          //U8 *PowRxchar_ptr = PowRxchar;
-     43          
-     44           // wk @130403 --> uncomment
-     45          //GPIO_PIN_STRUCT pins_int[] = {    /* PTB10 定义结构体 */  // 定义 PTB10 上升沿中断
-     46          //            BSP_PTB10 | GPIO_PIN_IRQ_FALLING,
-     47          //            GPIO_LIST_END
-     48          //            };
-     49          
-     50          /* wk --> 初始化与 DSP 通信使用的 SPI2 */
+     39          // @20130312 --> wk
+     40          //SPI_READ_WRITE_STRUCT  spi_rw;  // --> IOCTL 操作 SPI 时使用的结构体
+     41          //SPI_READ_WRITE_STRUCT *spi_rw_ptr = &spi_rw; 
+     42          //U8 *BufRxchar_ptr = BufRxchar;
+     43          //U8 *PowRxchar_ptr = PowRxchar;
+     44          
+     45           // wk @130403 --> uncomment
+     46          //GPIO_PIN_STRUCT pins_int[] = {    /* PTB10 定义结构体 */  // 定义 PTB10 上升沿中断
+     47          //            BSP_PTB10 | GPIO_PIN_IRQ_FALLING,
+     48          //            GPIO_LIST_END
+     49          //            };
+     50          
+     51          /* wk --> 初始化与 DSP 通信使用的 SPI2 */
 
    \                                 In section .text, align 2, keep-with-next
-     51          void spi2_dma_int(void)
-     52          {
+     52          void spi2_dma_int(void)
+     53          {
    \                     spi2_dma_int:
    \   00000000   0xB570             PUSH     {R4-R6,LR}
    \   00000002   0xB082             SUB      SP,SP,#+8
-     53            uint_32                param;
-     54          // @20130312 --> wk
-     55          //  spi_rw.BUFFER_LENGTH = 1; //初始化 spi_rw结构体数据长度
-     56            /**************************** spi2 configure *************************/
-     57          #ifdef _SPIDBG_ 
-     58              printf("\n-------------- Int SPI2 configure --------------\n\n");
-     59          #endif
-     60          //     /* Open the SPI driver */
-     61             spifd_2 = fopen(TEST_CHANNEL_INT2,NULL);
+     54            uint_32                param;
+     55          // @20130312 --> wk
+     56          //  spi_rw.BUFFER_LENGTH = 1; //初始化 spi_rw结构体数据长度
+     57            /**************************** spi2 configure *************************/
+     58          #ifdef _SPIDBG_ 
+     59              printf("\n-------------- Int SPI2 configure --------------\n\n");
+     60          #endif
+     61          //     /* Open the SPI driver */
+     62             spifd_2 = fopen(TEST_CHANNEL_INT2,NULL);
    \   00000004   0x2100             MOVS     R1,#+0
    \   00000006   0x....             LDR.N    R0,??DataTable2_1
    \   00000008   0x.... 0x....      BL       _io_fopen
    \   0000000C   0x....             LDR.N    R1,??DataTable2_2
    \   0000000E   0x6008             STR      R0,[R1, #+0]
-     62               
-     63             if (NULL == spifd_2)
+     63               
+     64             if (NULL == spifd_2)
    \   00000010   0x....             LDR.N    R0,??DataTable2_2
    \   00000012   0x6800             LDR      R0,[R0, #+0]
    \   00000014   0x2800             CMP      R0,#+0
    \   00000016   0xD107             BNE.N    ??spi2_dma_int_0
-     64             {
-     65                printf ("Error opening SPI driver!\n");
+     65             {
+     66                printf ("Error opening SPI driver!\n");
    \   00000018   0x....             LDR.N    R0,??DataTable2_3
    \   0000001A   0x.... 0x....      BL       _io_printf
-     66                _time_delay (200L);
+     67                _time_delay (200L);
    \   0000001E   0x20C8             MOVS     R0,#+200
    \   00000020   0x.... 0x....      BL       _time_delay
-     67                _task_block ();
+     68                _task_block ();
    \   00000024   0x.... 0x....      BL       _task_block
-     68             }
-     69          
-     70             /* Set clock mode */
-     71                param = SPI_CLK_POL_PHA_MODE1;
+     69             }
+     70          
+     71             /* Set clock mode */
+     72                param = SPI_CLK_POL_PHA_MODE1;
    \                     ??spi2_dma_int_0:
    \   00000028   0x2001             MOVS     R0,#+1
    \   0000002A   0x9000             STR      R0,[SP, #+0]
-     72             if (SPI_OK == ioctl (spifd_2, IO_IOCTL_SPI_SET_MODE, &param))
+     73             if (SPI_OK == ioctl (spifd_2, IO_IOCTL_SPI_SET_MODE, &param))
    \   0000002C   0xAA00             ADD      R2,SP,#+0
    \   0000002E   0xF640 0x6104      MOVW     R1,#+3588
    \   00000032   0x....             LDR.N    R0,??DataTable2_2
    \   00000034   0x6800             LDR      R0,[R0, #+0]
    \   00000036   0x.... 0x....      BL       _io_ioctl
    \   0000003A   0x0004             MOVS     R4,R0
-     73             {
-     74          #ifdef _SPIDBG_
-     75                printf ("SPI2 is OK!\n");
-     76          #endif
-     77             } else {
-     78          #ifdef _SPIDBG_
-     79                printf ("ERROR\n");
-     80          #endif
-     81             }
-     82          
-     83             /* Set big endian */
-     84             param = SPI_DEVICE_BIG_ENDIAN;    // wk -->这个设置是针对主机来说的，对于从机时设置都会出错
+     74             {
+     75          #ifdef _SPIDBG_
+     76                printf ("SPI2 is OK!\n");
+     77          #endif
+     78             } else {
+     79          #ifdef _SPIDBG_
+     80                printf ("ERROR\n");
+     81          #endif
+     82             }
+     83          
+     84             /* Set big endian */
+     85             param = SPI_DEVICE_BIG_ENDIAN;    // wk -->这个设置是针对主机来说的，对于从机时设置都会出错
    \   0000003C   0x2001             MOVS     R0,#+1
    \   0000003E   0x9000             STR      R0,[SP, #+0]
-     85          //   printf ("Setting endian to %s ... ", param == SPI_DEVICE_BIG_ENDIAN ? "SPI_DEVICE_BIG_ENDIAN" : "SPI_DEVICE_LITTLE_ENDIAN");
-     86             if (SPI_OK == ioctl (spifd_2, IO_IOCTL_SPI_SET_ENDIAN, &param))
+     86          //   printf ("Setting endian to %s ... ", param == SPI_DEVICE_BIG_ENDIAN ? "SPI_DEVICE_BIG_ENDIAN" : "SPI_DEVICE_LITTLE_ENDIAN");
+     87             if (SPI_OK == ioctl (spifd_2, IO_IOCTL_SPI_SET_ENDIAN, &param))
    \   00000040   0xAA00             ADD      R2,SP,#+0
    \   00000042   0xF640 0x610A      MOVW     R1,#+3594
    \   00000046   0x....             LDR.N    R0,??DataTable2_2
    \   00000048   0x6800             LDR      R0,[R0, #+0]
    \   0000004A   0x.... 0x....      BL       _io_ioctl
    \   0000004E   0x0005             MOVS     R5,R0
-     87             {
-     88          #ifdef _SPIDBG_
-     89                printf ("OK\n");
-     90          #endif   
-     91             } else {
-     92          #ifdef _SPIDBG_     
-     93                printf ("ERROR\n");
-     94          #endif      
-     95             }
-     96                /* Set transfer mode */
-     97             param = SPI_DEVICE_SLAVE_MODE;
+     88             {
+     89          #ifdef _SPIDBG_
+     90                printf ("OK\n");
+     91          #endif   
+     92             } else {
+     93          #ifdef _SPIDBG_     
+     94                printf ("ERROR\n");
+     95          #endif      
+     96             }
+     97                /* Set transfer mode */
+     98             param = SPI_DEVICE_SLAVE_MODE;
    \   00000050   0x2001             MOVS     R0,#+1
    \   00000052   0x9000             STR      R0,[SP, #+0]
-     98          //   printf ("Setting SPI2 transfer mode to %s ... ", device_mode[param]);
-     99             if (SPI_OK == ioctl (spifd_2, IO_IOCTL_SPI_SET_TRANSFER_MODE, &param))
+     99          //   printf ("Setting SPI2 transfer mode to %s ... ", device_mode[param]);
+    100             if (SPI_OK == ioctl (spifd_2, IO_IOCTL_SPI_SET_TRANSFER_MODE, &param))
    \   00000054   0xAA00             ADD      R2,SP,#+0
    \   00000056   0xF640 0x6108      MOVW     R1,#+3592
    \   0000005A   0x....             LDR.N    R0,??DataTable2_2
    \   0000005C   0x6800             LDR      R0,[R0, #+0]
    \   0000005E   0x.... 0x....      BL       _io_ioctl
    \   00000062   0x0006             MOVS     R6,R0
-    100             {
-    101          #ifdef _SPIDBG_      
-    102                printf ("OK\n");
-    103          #endif     
-    104             } else {
-    105          #ifdef _SPIDBG_
-    106                printf ("ERROR\n");
-    107          #endif      
-    108             }
-    109             /* Clear statistics */
-    110          //   printf ("Clearing statistics ... ");
-    111             if (SPI_OK == ioctl (spifd_2, IO_IOCTL_SPI_CLEAR_STATS, NULL))
+    101             {
+    102          #ifdef _SPIDBG_      
+    103                printf ("OK\n");
+    104          #endif     
+    105             } else {
+    106          #ifdef _SPIDBG_
+    107                printf ("ERROR\n");
+    108          #endif      
+    109             }
+    110             /* Clear statistics */
+    111          //   printf ("Clearing statistics ... ");
+    112             if (SPI_OK == ioctl (spifd_2, IO_IOCTL_SPI_CLEAR_STATS, NULL))
    \   00000064   0x2200             MOVS     R2,#+0
    \   00000066   0xF44F 0x6161      MOV      R1,#+3600
    \   0000006A   0x....             LDR.N    R0,??DataTable2_2
    \   0000006C   0x6800             LDR      R0,[R0, #+0]
    \   0000006E   0x.... 0x....      BL       _io_ioctl
-    112             {
-    113           #ifdef _SPIDBG_    
-    114                printf ("OK\n");
-    115           #endif 
-    116             } else {
-    117           #ifdef _SPIDBG_     
-    118                printf ("ERROR\n");
-    119            #endif     
-    120             }
-    121           #ifdef _SPIDBG_  
-    122             printf("\n--------------       End       --------------\n\n");
-    123           #endif  
-    124             /******************************* spi2 conf end ****************************/
-    125          }
+    113             {
+    114           #ifdef _SPIDBG_    
+    115                printf ("OK\n");
+    116           #endif 
+    117             } else {
+    118           #ifdef _SPIDBG_     
+    119                printf ("ERROR\n");
+    120            #endif     
+    121             }
+    122           #ifdef _SPIDBG_  
+    123             printf("\n--------------       End       --------------\n\n");
+    124           #endif  
+    125             /******************************* spi2 conf end ****************************/
+    126          }
    \   00000072   0xBD73             POP      {R0,R1,R4-R6,PC}  ;; return
-    126          
-    127          /* wk --> 初始化 PTB10 用于数据中断接收 */  // wk @130403 --> uncomment
-    128          //inline void ptb_10_int(void)
-    129          //{
-    130          // /* wk --> set gpio of ptb10 in int mode for spi data read */
-    131          //    ptbfd_10 = fopen("gpio:read", (char_ptr) &pins_int );
-    132          //    ioctl(ptbfd_10,GPIO_IOCTL_SET_IRQ_FUNCTION, (pointer)int_callback);
-    133          ///* end */
-    134          //}
-    135          
-    136          /*
-    137          ** 函数名：
-    138          ** 作者：
-    139          ** 说明：在没有使用事件时 SPI 接收数据的外部函数
-    140          */
+    127          
+    128          /* wk --> 初始化 PTB10 用于数据中断接收 */  // wk @130403 --> uncomment
+    129          //inline void ptb_10_int(void)
+    130          //{
+    131          // /* wk --> set gpio of ptb10 in int mode for spi data read */
+    132          //    ptbfd_10 = fopen("gpio:read", (char_ptr) &pins_int );
+    133          //    ioctl(ptbfd_10,GPIO_IOCTL_SET_IRQ_FUNCTION, (pointer)int_callback);
+    134          ///* end */
+    135          //}
+    136          
+    137          /*
+    138          ** 函数名：
+    139          ** 作者：
+    140          ** 说明：在没有使用事件时 SPI 接收数据的外部函数
+    141          ** 测试记录：wk@130408-->数据发送：5个数据头（4个数据头+1个启动信号）+正常数据，注意，这次测试结果表明，数据没有丢失
+    142          */
 
    \                                 In section .text, align 4, keep-with-next
-    141          void DMA_RecData_OK  
-    142          (
-    143            void
-    144          )
-    145          {
+    143          void DMA_RecData_OK  
+    144          (
+    145            void
+    146          )
+    147          {
    \                     DMA_RecData_OK:
    \   00000000   0xB580             PUSH     {R7,LR}
-    146             U8 HeadFlg[4]={0};
-   \   00000002   0xA800             ADD      R0,SP,#+0
-   \   00000004   0x2100             MOVS     R1,#+0
-   \   00000006   0x6001             STR      R1,[R0, #+0]
-    147             
-    148              if(count<4)
-   \   00000008   0x....             LDR.N    R0,??DataTable2_4
-   \   0000000A   0x7800             LDRB     R0,[R0, #+0]
-   \   0000000C   0x2804             CMP      R0,#+4
-   \   0000000E   0xD243             BCS.N    ??DMA_RecData_OK_0
-    149              {
-    150                HeadFlg[count]=BufRxchar[0];
-   \   00000010   0x....             LDR.N    R0,??DataTable2_4
-   \   00000012   0x7800             LDRB     R0,[R0, #+0]
-   \   00000014   0xA900             ADD      R1,SP,#+0
-   \   00000016   0x....             LDR.N    R2,??DataTable2_5
-   \   00000018   0x7812             LDRB     R2,[R2, #+0]
-   \   0000001A   0x5442             STRB     R2,[R0, R1]
-    151                count++;
-   \   0000001C   0x....             LDR.N    R0,??DataTable2_4
-   \   0000001E   0x7800             LDRB     R0,[R0, #+0]
-   \   00000020   0x1C40             ADDS     R0,R0,#+1
-   \   00000022   0x....             LDR.N    R1,??DataTable2_4
-   \   00000024   0x7008             STRB     R0,[R1, #+0]
-    152                if(count==4)
-   \   00000026   0x....             LDR.N    R0,??DataTable2_4
-   \   00000028   0x7800             LDRB     R0,[R0, #+0]
-   \   0000002A   0x2804             CMP      R0,#+4
-   \   0000002C   0xD168             BNE.N    ??DMA_RecData_OK_1
-    153                  if(HeadFlg[0]==0x33 && HeadFlg[1]==0x33 && HeadFlg[2]==0x33 && (HeadFlg[3]== 0x44 ||HeadFlg[3]== 0x55))
-   \   0000002E   0xF89D 0x0000      LDRB     R0,[SP, #+0]
-   \   00000032   0x2833             CMP      R0,#+51
-   \   00000034   0xD120             BNE.N    ??DMA_RecData_OK_2
-   \   00000036   0xF89D 0x0001      LDRB     R0,[SP, #+1]
-   \   0000003A   0x2833             CMP      R0,#+51
-   \   0000003C   0xD11C             BNE.N    ??DMA_RecData_OK_2
-   \   0000003E   0xF89D 0x0002      LDRB     R0,[SP, #+2]
-   \   00000042   0x2833             CMP      R0,#+51
-   \   00000044   0xD118             BNE.N    ??DMA_RecData_OK_2
-   \   00000046   0xF89D 0x0003      LDRB     R0,[SP, #+3]
-   \   0000004A   0x2844             CMP      R0,#+68
-   \   0000004C   0xD003             BEQ.N    ??DMA_RecData_OK_3
-   \   0000004E   0xF89D 0x0003      LDRB     R0,[SP, #+3]
-   \   00000052   0x2855             CMP      R0,#+85
-   \   00000054   0xD110             BNE.N    ??DMA_RecData_OK_2
-    154                  {
-    155                    if(HeadFlg[3]==0x44)
+    148             static U8 HeadFlg[4]={0};
+    149             
+    150              if(count<4)
+   \   00000002   0x....             LDR.N    R0,??DataTable2_4
+   \   00000004   0x7800             LDRB     R0,[R0, #+0]
+   \   00000006   0x2804             CMP      R0,#+4
+   \   00000008   0xD242             BCS.N    ??DMA_RecData_OK_0
+    151              {
+    152                HeadFlg[count]=BufRxchar[0];
+   \   0000000A   0x....             LDR.N    R0,??DataTable2_4
+   \   0000000C   0x7800             LDRB     R0,[R0, #+0]
+   \   0000000E   0x....             LDR.N    R1,??DataTable2_5
+   \   00000010   0x....             LDR.N    R2,??DataTable2_6
+   \   00000012   0x7812             LDRB     R2,[R2, #+0]
+   \   00000014   0x5442             STRB     R2,[R0, R1]
+    153                count++;
+   \   00000016   0x....             LDR.N    R0,??DataTable2_4
+   \   00000018   0x7800             LDRB     R0,[R0, #+0]
+   \   0000001A   0x1C40             ADDS     R0,R0,#+1
+   \   0000001C   0x....             LDR.N    R1,??DataTable2_4
+   \   0000001E   0x7008             STRB     R0,[R1, #+0]
+    154                if(count==4)
+   \   00000020   0x....             LDR.N    R0,??DataTable2_4
+   \   00000022   0x7800             LDRB     R0,[R0, #+0]
+   \   00000024   0x2804             CMP      R0,#+4
+   \   00000026   0xD161             BNE.N    ??DMA_RecData_OK_1
+    155                  if(HeadFlg[0]==0x33 && HeadFlg[1]==0x33 && HeadFlg[2]==0x33 && (HeadFlg[3]== 0x44 ||HeadFlg[3]== 0x55))
+   \   00000028   0x....             LDR.N    R0,??DataTable2_5
+   \   0000002A   0x7800             LDRB     R0,[R0, #+0]
+   \   0000002C   0x2833             CMP      R0,#+51
+   \   0000002E   0xD11F             BNE.N    ??DMA_RecData_OK_2
+   \   00000030   0x....             LDR.N    R0,??DataTable2_5
+   \   00000032   0x7840             LDRB     R0,[R0, #+1]
+   \   00000034   0x2833             CMP      R0,#+51
+   \   00000036   0xD11B             BNE.N    ??DMA_RecData_OK_2
+   \   00000038   0x....             LDR.N    R0,??DataTable2_5
+   \   0000003A   0x7880             LDRB     R0,[R0, #+2]
+   \   0000003C   0x2833             CMP      R0,#+51
+   \   0000003E   0xD117             BNE.N    ??DMA_RecData_OK_2
+   \   00000040   0x....             LDR.N    R0,??DataTable2_5
+   \   00000042   0x78C0             LDRB     R0,[R0, #+3]
+   \   00000044   0x2844             CMP      R0,#+68
+   \   00000046   0xD003             BEQ.N    ??DMA_RecData_OK_3
+   \   00000048   0x....             LDR.N    R0,??DataTable2_5
+   \   0000004A   0x78C0             LDRB     R0,[R0, #+3]
+   \   0000004C   0x2855             CMP      R0,#+85
+   \   0000004E   0xD10F             BNE.N    ??DMA_RecData_OK_2
+    156                  {
+    157                    if(HeadFlg[3]==0x44)
    \                     ??DMA_RecData_OK_3:
-   \   00000056   0xF89D 0x0003      LDRB     R0,[SP, #+3]
-   \   0000005A   0x2844             CMP      R0,#+68
-   \   0000005C   0xD104             BNE.N    ??DMA_RecData_OK_4
-    156                      DataSize= Pow_SIZE+OffSET-2;  // wk @20130325 -->总的数据量=OffSET+Pow_SIZE，其中OffSET是电能质量数据前的一些标志或是预留
-   \   0000005E   0x....             LDR.N    R0,??DataTable2_6
-   \   00000060   0xF640 0x21D5      MOVW     R1,#+2773
-   \   00000064   0x8001             STRH     R1,[R0, #+0]
-   \   00000066   0xE003             B.N      ??DMA_RecData_OK_5
-    157                    else
-    158                      DataSize= Evnt_SIZE + 4; // wk @20130325 -->
+   \   00000050   0x....             LDR.N    R0,??DataTable2_5
+   \   00000052   0x78C0             LDRB     R0,[R0, #+3]
+   \   00000054   0x2844             CMP      R0,#+68
+   \   00000056   0xD103             BNE.N    ??DMA_RecData_OK_4
+    158          //            DataSize= Pow_SIZE+OffSET-2;  // wk @20130325 -->总的数据量=OffSET+Pow_SIZE，其中OffSET是电能质量数据前的一些标志或是预
+    159                      DataSize= 253; // wk @130408 --> test 
+   \   00000058   0x....             LDR.N    R0,??DataTable2_7
+   \   0000005A   0x21FD             MOVS     R1,#+253
+   \   0000005C   0x8001             STRH     R1,[R0, #+0]
+   \   0000005E   0xE003             B.N      ??DMA_RecData_OK_5
+    160                    else
+    161                      DataSize= Evnt_SIZE + 4; // wk @20130325 -->
    \                     ??DMA_RecData_OK_4:
-   \   00000068   0x....             LDR.N    R0,??DataTable2_6
-   \   0000006A   0xF240 0x71DA      MOVW     R1,#+2010
-   \   0000006E   0x8001             STRH     R1,[R0, #+0]
-    159                    
-    160                    count=5; //  wk --> 数据头已经找到 
+   \   00000060   0x....             LDR.N    R0,??DataTable2_7
+   \   00000062   0xF240 0x71DA      MOVW     R1,#+2010
+   \   00000066   0x8001             STRH     R1,[R0, #+0]
+    162                    
+    163                    count=5; //  wk --> 数据头已经找到 
    \                     ??DMA_RecData_OK_5:
-   \   00000070   0x....             LDR.N    R0,??DataTable2_4
-   \   00000072   0x2105             MOVS     R1,#+5
-   \   00000074   0x7001             STRB     R1,[R0, #+0]
-   \   00000076   0xE043             B.N      ??DMA_RecData_OK_1
-    161          //          printf("\n1");
-    162                  }
-    163                  else
-    164                  {
-    165                    HeadFlg[0]=HeadFlg[1];
+   \   00000068   0x....             LDR.N    R0,??DataTable2_4
+   \   0000006A   0x2105             MOVS     R1,#+5
+   \   0000006C   0x7001             STRB     R1,[R0, #+0]
+   \   0000006E   0xE03D             B.N      ??DMA_RecData_OK_1
+    164          //          printf("\n1");
+    165                  }
+    166                  else
+    167                  {
+    168                    HeadFlg[0]=HeadFlg[1];
    \                     ??DMA_RecData_OK_2:
-   \   00000078   0xF89D 0x0001      LDRB     R0,[SP, #+1]
-   \   0000007C   0xF88D 0x0000      STRB     R0,[SP, #+0]
-    166                    HeadFlg[1]=HeadFlg[2];
-   \   00000080   0xF89D 0x0002      LDRB     R0,[SP, #+2]
-   \   00000084   0xF88D 0x0001      STRB     R0,[SP, #+1]
-    167                    HeadFlg[2]=HeadFlg[3];
-   \   00000088   0xF89D 0x0003      LDRB     R0,[SP, #+3]
-   \   0000008C   0xF88D 0x0002      STRB     R0,[SP, #+2]
-    168                    count=3;
-   \   00000090   0x....             LDR.N    R0,??DataTable2_4
-   \   00000092   0x2103             MOVS     R1,#+3
-   \   00000094   0x7001             STRB     R1,[R0, #+0]
-   \   00000096   0xE033             B.N      ??DMA_RecData_OK_1
-    169                  }
-    170               
-    171              }
-    172              else if(count==5)
+   \   00000070   0x....             LDR.N    R0,??DataTable2_5
+   \   00000072   0x7840             LDRB     R0,[R0, #+1]
+   \   00000074   0x....             LDR.N    R1,??DataTable2_5
+   \   00000076   0x7008             STRB     R0,[R1, #+0]
+    169                    HeadFlg[1]=HeadFlg[2];
+   \   00000078   0x....             LDR.N    R0,??DataTable2_5
+   \   0000007A   0x....             LDR.N    R1,??DataTable2_5
+   \   0000007C   0x7889             LDRB     R1,[R1, #+2]
+   \   0000007E   0x7041             STRB     R1,[R0, #+1]
+    170                    HeadFlg[2]=HeadFlg[3];
+   \   00000080   0x....             LDR.N    R0,??DataTable2_5
+   \   00000082   0x....             LDR.N    R1,??DataTable2_5
+   \   00000084   0x78C9             LDRB     R1,[R1, #+3]
+   \   00000086   0x7081             STRB     R1,[R0, #+2]
+    171                    count=3;
+   \   00000088   0x....             LDR.N    R0,??DataTable2_4
+   \   0000008A   0x2103             MOVS     R1,#+3
+   \   0000008C   0x7001             STRB     R1,[R0, #+0]
+   \   0000008E   0xE02D             B.N      ??DMA_RecData_OK_1
+    172                  }
+    173               
+    174              }
+    175              else if(count==5)
    \                     ??DMA_RecData_OK_0:
+   \   00000090   0x....             LDR.N    R0,??DataTable2_4
+   \   00000092   0x7800             LDRB     R0,[R0, #+0]
+   \   00000094   0x2805             CMP      R0,#+5
+   \   00000096   0xD106             BNE.N    ??DMA_RecData_OK_6
+    176              {
+    177                   count=6; // 用一个数据改变 DMA 接收数据的长度，此数据将会被舍弃
    \   00000098   0x....             LDR.N    R0,??DataTable2_4
-   \   0000009A   0x7800             LDRB     R0,[R0, #+0]
-   \   0000009C   0x2805             CMP      R0,#+5
-   \   0000009E   0xD103             BNE.N    ??DMA_RecData_OK_6
-    173              {
-    174                   count=6; // 用一个数据改变 DMA 接收数据的长度，此数据将会被舍弃
-   \   000000A0   0x....             LDR.N    R0,??DataTable2_4
-   \   000000A2   0x2106             MOVS     R1,#+6
-   \   000000A4   0x7001             STRB     R1,[R0, #+0]
-   \   000000A6   0xE02B             B.N      ??DMA_RecData_OK_1
-    175              }
-    176              else
-    177              {
-    178                
-    179                 if(HeadFlg[3]==0x44) // wk @20130325 -->
+   \   0000009A   0x2106             MOVS     R1,#+6
+   \   0000009C   0x7001             STRB     R1,[R0, #+0]
+    178                   
+    179                   SPI_Send=1; // wk @130406 --> K60是否给DSP发送数据的标志
+   \   0000009E   0x....             LDR.N    R0,??DataTable2_8
+   \   000000A0   0x2101             MOVS     R1,#+1
+   \   000000A2   0x7001             STRB     R1,[R0, #+0]
+   \   000000A4   0xE022             B.N      ??DMA_RecData_OK_1
+    180              }
+    181              else
+    182              {
+    183               /* wk @130408 --> test */ 
+    184                for(int i=0;i<260;i++)
    \                     ??DMA_RecData_OK_6:
-   \   000000A8   0xF89D 0x0003      LDRB     R0,[SP, #+3]
-   \   000000AC   0x2844             CMP      R0,#+68
-   \   000000AE   0xD10F             BNE.N    ??DMA_RecData_OK_7
-    180                   for(int i=0;i<Pow_SIZE;i++)
-   \   000000B0   0x2000             MOVS     R0,#+0
+   \   000000A6   0x2000             MOVS     R0,#+0
+   \   000000A8   0xE004             B.N      ??DMA_RecData_OK_7
+    185                 PowRxchar[i] = BufRxchar[i];
    \                     ??DMA_RecData_OK_8:
-   \   000000B2   0xF640 0x2168      MOVW     R1,#+2664
-   \   000000B6   0x4288             CMP      R0,R1
-   \   000000B8   0xDA0D             BGE.N    ??DMA_RecData_OK_9
-    181                   {
-    182                     PowRxchar[i] = BufRxchar[i+OffSET];
-   \   000000BA   0x....             LDR.N    R1,??DataTable2_5
-   \   000000BC   0x1841             ADDS     R1,R0,R1
-   \   000000BE   0xF891 0x106F      LDRB     R1,[R1, #+111]
-   \   000000C2   0x....             LDR.N    R2,??DataTable2_7
-   \   000000C4   0x5481             STRB     R1,[R0, R2]
-    183                     SPIPowerFlg=1;
-   \   000000C6   0x....             LDR.N    R1,??DataTable2_8
-   \   000000C8   0x2201             MOVS     R2,#+1
-   \   000000CA   0x700A             STRB     R2,[R1, #+0]
-    184                   }
-   \   000000CC   0x1C40             ADDS     R0,R0,#+1
-   \   000000CE   0xE7F0             B.N      ??DMA_RecData_OK_8
-    185                 else
-    186                     printf("event\n");  // 事件数据还没有处理
+   \   000000AA   0x....             LDR.N    R1,??DataTable2_9
+   \   000000AC   0x....             LDR.N    R2,??DataTable2_6
+   \   000000AE   0x5C82             LDRB     R2,[R0, R2]
+   \   000000B0   0x5442             STRB     R2,[R0, R1]
+   \   000000B2   0x1C40             ADDS     R0,R0,#+1
    \                     ??DMA_RecData_OK_7:
-   \   000000D0   0x....             LDR.N    R0,??DataTable2_9
-   \   000000D2   0x.... 0x....      BL       _io_printf
-    187                 
-    188                  printf("%x\t%x\n",BufRxchar[0],BufRxchar[1]); // test 
-   \                     ??DMA_RecData_OK_9:
-   \   000000D6   0x....             LDR.N    R0,??DataTable2_5
-   \   000000D8   0x7842             LDRB     R2,[R0, #+1]
-   \   000000DA   0x....             LDR.N    R0,??DataTable2_5
-   \   000000DC   0x7801             LDRB     R1,[R0, #+0]
-   \   000000DE   0x....             LDR.N    R0,??DataTable2_10
-   \   000000E0   0x.... 0x....      BL       _io_printf
-    189          //        printf("\n2");
-    190                  count=0; 
-   \   000000E4   0x....             LDR.N    R0,??DataTable2_4
-   \   000000E6   0x2100             MOVS     R1,#+0
-   \   000000E8   0x7001             STRB     R1,[R0, #+0]
-    191                  DataSize=1;
-   \   000000EA   0x....             LDR.N    R0,??DataTable2_6
-   \   000000EC   0x2101             MOVS     R1,#+1
-   \   000000EE   0x8001             STRH     R1,[R0, #+0]
-    192                  fclose(spifd_2);
-   \   000000F0   0x....             LDR.N    R0,??DataTable2_2
-   \   000000F2   0x6800             LDR      R0,[R0, #+0]
-   \   000000F4   0x.... 0x....      BL       _io_fclose
-    193                  asm("NOP");  
-   \   000000F8   0xBF00             NOP              
-    194                  spi2_dma_int(); // 刷新 DMA 寄存器
-   \   000000FA   0x.... 0x....      BL       spi2_dma_int
-    195                  asm("NOP");   
-   \   000000FE   0xBF00             NOP              
-    196              }
-    197            
-    198          //  if(BufRxchar[0]==0x66 && BufRxchar[1]==0x33 && BufRxchar[2]==0x33 && 
-    199          //     BufRxchar[3]==0x33 && BufRxchar[4]==0x44 && BufRxchar[5]==0x0a&& 
-    200          //     BufRxchar[6]==0x4c)   
-    201          //  { 
-    202          //    for(int i=0 ;i<2635 ;i++)
-    203          //      PowRxchar[i] = BufRxchar[i+7];
-    204          //    SPIPowerFlg=1;
-    205          //    printf("1\n");   // @20130312 --> wk: Test the data is OK ?
-    206          //  }
-    207          //  printf("2\n");  // @20130312 --> wk: Test if enter the func ?
-    208          }
+   \   000000B4   0xF44F 0x7182      MOV      R1,#+260
+   \   000000B8   0x4288             CMP      R0,R1
+   \   000000BA   0xDBF6             BLT.N    ??DMA_RecData_OK_8
+    186                /* wk @130408 --> data trans */ 
+    187          //       if(HeadFlg[3]==0x44) // wk @20130325 -->
+    188          //         for(int i=0;i<Pow_SIZE;i++)
+    189          //         {
+    190          //           PowRxchar[i] = BufRxchar[i+OffSET];
+    191          //           SPIPowerFlg=1;
+    192          //         }
+    193          //       else
+    194          //           printf("event\n");  // 事件数据还没有处理
+    195                 
+    196                  printf("%x\t%x\n",BufRxchar[0],BufRxchar[1]); // test 
+   \   000000BC   0x....             LDR.N    R0,??DataTable2_6
+   \   000000BE   0x7842             LDRB     R2,[R0, #+1]
+   \   000000C0   0x....             LDR.N    R0,??DataTable2_6
+   \   000000C2   0x7801             LDRB     R1,[R0, #+0]
+   \   000000C4   0x....             LDR.N    R0,??DataTable2_10
+   \   000000C6   0x.... 0x....      BL       _io_printf
+    197          //        printf("\n2");
+    198                  count=0; 
+   \   000000CA   0x....             LDR.N    R0,??DataTable2_4
+   \   000000CC   0x2100             MOVS     R1,#+0
+   \   000000CE   0x7001             STRB     R1,[R0, #+0]
+    199                  DataSize=1;
+   \   000000D0   0x....             LDR.N    R0,??DataTable2_7
+   \   000000D2   0x2101             MOVS     R1,#+1
+   \   000000D4   0x8001             STRH     R1,[R0, #+0]
+    200                  SPI_Send=0;
+   \   000000D6   0x....             LDR.N    R0,??DataTable2_8
+   \   000000D8   0x2100             MOVS     R1,#+0
+   \   000000DA   0x7001             STRB     R1,[R0, #+0]
+    201                  fclose(spifd_2);
+   \   000000DC   0x....             LDR.N    R0,??DataTable2_2
+   \   000000DE   0x6800             LDR      R0,[R0, #+0]
+   \   000000E0   0x.... 0x....      BL       _io_fclose
+    202                  asm("NOP");  
+   \   000000E4   0xBF00             NOP              
+    203                  spi2_dma_int(); // 刷新 DMA 寄存器
+   \   000000E6   0x.... 0x....      BL       spi2_dma_int
+    204                  asm("NOP");   
+   \   000000EA   0xBF00             NOP              
+    205              }
+    206            
+    207          //  if(BufRxchar[0]==0x66 && BufRxchar[1]==0x33 && BufRxchar[2]==0x33 && 
+    208          //     BufRxchar[3]==0x33 && BufRxchar[4]==0x44 && BufRxchar[5]==0x0a&& 
+    209          //     BufRxchar[6]==0x4c)   
+    210          //  { 
+    211          //    for(int i=0 ;i<2635 ;i++)
+    212          //      PowRxchar[i] = BufRxchar[i+7];
+    213          //    SPIPowerFlg=1;
+    214          //    printf("1\n");   // @20130312 --> wk: Test the data is OK ?
+    215          //  }
+    216          //  printf("2\n");  // @20130312 --> wk: Test if enter the func ?
+    217          }
    \                     ??DMA_RecData_OK_1:
-   \   00000100   0xBD01             POP      {R0,PC}          ;; return
-    209          
-    210          /*
-    211          ** 函数名：
-    212          ** 作者：
-    213          ** 说明：在使用事件时 SPI 接收数据的外部任务函数
-    214          */
+   \   000000EC   0xBD01             POP      {R0,PC}          ;; return
+
+   \                                 In section .bss, align 4
+   \                     ??HeadFlg:
+   \   00000000                      DS8 4
+    218          
+    219          /*
+    220          ** 函数名：
+    221          ** 作者：
+    222          ** 说明：在使用事件时 SPI 接收数据的外部任务函数
+    223          */
 
    \                                 In section .text, align 2, keep-with-next
-    215          void SPIDMA_Task( uint_32 param)
-    216          {
+    224          void SPIDMA_Task( uint_32 param)
+    225          {
    \                     SPIDMA_Task:
    \   00000000   0xB580             PUSH     {R7,LR}
-    217            pointer  pspidma_event;
-    218          #ifdef _SPIDMADATA_DBUG_
-    219             printf("\n----------SPIDMA_Task----------\n");
+    226            pointer  pspidma_event;
+    227          #ifdef _SPIDMADATA_DBUG_
+    228             printf("\n----------SPIDMA_Task----------\n");
    \   00000002   0x....             LDR.N    R0,??DataTable2_11
    \   00000004   0x.... 0x....      BL       _io_printf
-    220             printf("\n----------             ----------\n");
+    229             printf("\n----------             ----------\n");
    \   00000008   0x....             LDR.N    R0,??DataTable2_12
    \   0000000A   0x.... 0x....      BL       _io_printf
-    221             printf("\n----------             ----------\n");
+    230             printf("\n----------             ----------\n");
    \   0000000E   0x....             LDR.N    R0,??DataTable2_12
    \   00000010   0x.... 0x....      BL       _io_printf
-    222             printf("\n----------     END     ----------\n");
+    231             printf("\n----------     END     ----------\n");
    \   00000014   0x....             LDR.N    R0,??DataTable2_13
    \   00000016   0x.... 0x....      BL       _io_printf
-    223          #endif 
-    224            
-    225          #ifdef _SPIDMADATA_DBUG_
-    226              if(_event_create("spidma_event") != MQX_OK){  // 创建事件
+    232          #endif 
+    233            
+    234          #ifdef _SPIDMADATA_DBUG_
+    235              if(_event_create("spidma_event") != MQX_OK){  // 创建事件
    \   0000001A   0x....             LDR.N    R0,??DataTable2_14
    \   0000001C   0x.... 0x....      BL       _event_create
    \   00000020   0x2800             CMP      R0,#+0
    \   00000022   0xD005             BEQ.N    ??SPIDMA_Task_0
-    227                printf("\n Make spidma event failed");
+    236                printf("\n Make spidma event failed");
    \   00000024   0x....             LDR.N    R0,??DataTable2_15
    \   00000026   0x.... 0x....      BL       _io_printf
-    228                _task_block();
+    237                _task_block();
    \   0000002A   0x.... 0x....      BL       _task_block
    \   0000002E   0xE002             B.N      ??SPIDMA_Task_1
-    229              }
-    230              else
-    231                printf("\n Make spidma event OK");
+    238              }
+    239              else
+    240                printf("\n Make spidma event OK");
    \                     ??SPIDMA_Task_0:
    \   00000030   0x....             LDR.N    R0,??DataTable2_16
    \   00000032   0x.... 0x....      BL       _io_printf
-    232            
-    233            if(_event_open("spidma_event", &pspidma_event) != MQX_OK){
+    241            
+    242            if(_event_open("spidma_event", &pspidma_event) != MQX_OK){
    \                     ??SPIDMA_Task_1:
    \   00000036   0xA900             ADD      R1,SP,#+0
    \   00000038   0x....             LDR.N    R0,??DataTable2_14
    \   0000003A   0x.... 0x....      BL       _event_open
    \   0000003E   0x2800             CMP      R0,#+0
    \   00000040   0xD005             BEQ.N    ??SPIDMA_Task_2
-    234              printf("\nOpen spidma event failed ");
+    243              printf("\nOpen spidma event failed ");
    \   00000042   0x....             LDR.N    R0,??DataTable2_17
    \   00000044   0x.... 0x....      BL       _io_printf
-    235              _task_block();
+    244              _task_block();
    \   00000048   0x.... 0x....      BL       _task_block
    \   0000004C   0xE013             B.N      ??SPIDMA_Task_3
-    236            }  
-    237            else
-    238              printf("\n Open spidma event OK");
+    245            }  
+    246            else
+    247              printf("\n Open spidma event OK");
    \                     ??SPIDMA_Task_2:
    \   0000004E   0x....             LDR.N    R0,??DataTable2_18
    \   00000050   0x.... 0x....      BL       _io_printf
    \   00000054   0xE00F             B.N      ??SPIDMA_Task_3
-    239          #endif
-    240            
-    241          #ifndef _SPIDMADATA_DBUG_
-    242            _event_create("spidma_event");
-    243            _event_open("spidma_event", &pspidma_event);
-    244          #endif
-    245            
-    246            while(TRUE)
-    247            {
-    248              _event_wait_all(pspidma_event,0x02,0); //等待事件发生
-    249              _event_clear(pspidma_event,0x02);  // 清除事件标志
-    250            
-    251              if(BufRxchar[0]==0x66 && BufRxchar[1]==0x33 && BufRxchar[2]==0x33 && 
-    252                 BufRxchar[3]==0x33 && BufRxchar[4]==0x44 && BufRxchar[5]==0x0a&& 
-    253                 BufRxchar[6]==0x4c)
-    254             { 
-    255                for(int i=0 ;i<2635 ;i++)
-    256                  PowRxchar[i] = BufRxchar[i+7];
+    248          #endif
+    249            
+    250          #ifndef _SPIDMADATA_DBUG_
+    251            _event_create("spidma_event");
+    252            _event_open("spidma_event", &pspidma_event);
+    253          #endif
+    254            
+    255            while(TRUE)
+    256            {
+    257              _event_wait_all(pspidma_event,0x02,0); //等待事件发生
+    258              _event_clear(pspidma_event,0x02);  // 清除事件标志
+    259            
+    260              if(BufRxchar[0]==0x66 && BufRxchar[1]==0x33 && BufRxchar[2]==0x33 && 
+    261                 BufRxchar[3]==0x33 && BufRxchar[4]==0x44 && BufRxchar[5]==0x0a&& 
+    262                 BufRxchar[6]==0x4c)
+    263             { 
+    264                for(int i=0 ;i<2635 ;i++)
+    265                  PowRxchar[i] = BufRxchar[i+7];
    \                     ??SPIDMA_Task_4:
-   \   00000056   0x....             LDR.N    R1,??DataTable2_5
+   \   00000056   0x....             LDR.N    R1,??DataTable2_6
    \   00000058   0x1841             ADDS     R1,R0,R1
    \   0000005A   0x79C9             LDRB     R1,[R1, #+7]
-   \   0000005C   0x....             LDR.N    R2,??DataTable2_7
+   \   0000005C   0x....             LDR.N    R2,??DataTable2_9
    \   0000005E   0x5481             STRB     R1,[R0, R2]
    \   00000060   0x1C40             ADDS     R0,R0,#+1
    \                     ??SPIDMA_Task_5:
    \   00000062   0xF640 0x214B      MOVW     R1,#+2635
    \   00000066   0x4288             CMP      R0,R1
    \   00000068   0xDBF5             BLT.N    ??SPIDMA_Task_4
-    257                SPIPowerFlg=1;
-   \   0000006A   0x....             LDR.N    R0,??DataTable2_8
+    266                SPIPowerFlg=1;
+   \   0000006A   0x....             LDR.N    R0,??DataTable2_19
    \   0000006C   0x2101             MOVS     R1,#+1
    \   0000006E   0x7001             STRB     R1,[R0, #+0]
-    258                printf("1\n");  // @20130312 --> wk: Test the data is OK ?
+    267                printf("1\n");  // @20130312 --> wk: Test the data is OK ?
    \   00000070   0x....             ADR.N    R0,??DataTable2  ;; 0x31, 0x0A, 0x00, 0x00
    \   00000072   0x.... 0x....      BL       _io_printf
    \                     ??SPIDMA_Task_3:
@@ -579,42 +601,42 @@ E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\DSPSPI.c
    \   00000080   0x2102             MOVS     R1,#+2
    \   00000082   0x9800             LDR      R0,[SP, #+0]
    \   00000084   0x.... 0x....      BL       _event_clear
-   \   00000088   0x....             LDR.N    R0,??DataTable2_5
+   \   00000088   0x....             LDR.N    R0,??DataTable2_6
    \   0000008A   0x7800             LDRB     R0,[R0, #+0]
    \   0000008C   0x2866             CMP      R0,#+102
    \   0000008E   0xD1F2             BNE.N    ??SPIDMA_Task_3
-   \   00000090   0x....             LDR.N    R0,??DataTable2_5
+   \   00000090   0x....             LDR.N    R0,??DataTable2_6
    \   00000092   0x7840             LDRB     R0,[R0, #+1]
    \   00000094   0x2833             CMP      R0,#+51
    \   00000096   0xD1EE             BNE.N    ??SPIDMA_Task_3
-   \   00000098   0x....             LDR.N    R0,??DataTable2_5
+   \   00000098   0x....             LDR.N    R0,??DataTable2_6
    \   0000009A   0x7880             LDRB     R0,[R0, #+2]
    \   0000009C   0x2833             CMP      R0,#+51
    \   0000009E   0xD1EA             BNE.N    ??SPIDMA_Task_3
-   \   000000A0   0x....             LDR.N    R0,??DataTable2_5
+   \   000000A0   0x....             LDR.N    R0,??DataTable2_6
    \   000000A2   0x78C0             LDRB     R0,[R0, #+3]
    \   000000A4   0x2833             CMP      R0,#+51
    \   000000A6   0xD1E6             BNE.N    ??SPIDMA_Task_3
-   \   000000A8   0x....             LDR.N    R0,??DataTable2_5
+   \   000000A8   0x....             LDR.N    R0,??DataTable2_6
    \   000000AA   0x7900             LDRB     R0,[R0, #+4]
    \   000000AC   0x2844             CMP      R0,#+68
    \   000000AE   0xD1E2             BNE.N    ??SPIDMA_Task_3
-   \   000000B0   0x....             LDR.N    R0,??DataTable2_5
+   \   000000B0   0x....             LDR.N    R0,??DataTable2_6
    \   000000B2   0x7940             LDRB     R0,[R0, #+5]
    \   000000B4   0x280A             CMP      R0,#+10
    \   000000B6   0xD1DE             BNE.N    ??SPIDMA_Task_3
-   \   000000B8   0x....             LDR.N    R0,??DataTable2_5
+   \   000000B8   0x....             LDR.N    R0,??DataTable2_6
    \   000000BA   0x7980             LDRB     R0,[R0, #+6]
    \   000000BC   0x284C             CMP      R0,#+76
    \   000000BE   0xD1DA             BNE.N    ??SPIDMA_Task_3
    \   000000C0   0x2000             MOVS     R0,#+0
    \   000000C2   0xE7CE             B.N      ??SPIDMA_Task_5
-    259            }
-    260            
-    261          //  printf("2\n");   // @20130312 --> wk: Test if enter the func ?
-    262            }
-    263              
-    264          }
+    268            }
+    269            
+    270          //  printf("2\n");   // @20130312 --> wk: Test if enter the func ?
+    271            }
+    272              
+    273          }
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable2:
@@ -639,23 +661,23 @@ E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\DSPSPI.c
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable2_5:
-   \   00000000   0x........         DC32     BufRxchar
+   \   00000000   0x........         DC32     ??HeadFlg
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable2_6:
-   \   00000000   0x........         DC32     DataSize
+   \   00000000   0x........         DC32     BufRxchar
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable2_7:
-   \   00000000   0x........         DC32     PowRxchar
+   \   00000000   0x........         DC32     DataSize
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable2_8:
-   \   00000000   0x........         DC32     SPIPowerFlg
+   \   00000000   0x........         DC32     SPI_Send
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable2_9:
-   \   00000000   0x........         DC32     `?<Constant "event\\n">`
+   \   00000000   0x........         DC32     PowRxchar
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable2_10:
@@ -693,6 +715,10 @@ E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\DSPSPI.c
    \                     ??DataTable2_18:
    \   00000000   0x........         DC32     `?<Constant "\\n Open spidma event OK">`
 
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_19:
+   \   00000000   0x........         DC32     SPIPowerFlg
+
    \                                 In section .rodata, align 4
    \                     `?<Constant "ispi2:">`:
    \   00000000   0x69 0x73          DC8 "ispi2:"
@@ -718,18 +744,6 @@ E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\DSPSPI.c
    \              0x21 0x0A    
    \              0x00         
    \   0000001B   0x00               DC8 0
-
-   \                                 In section .rodata, align 4
-   \   00000000   0x00 0x00          DC8 0, 0, 0, 0
-   \              0x00 0x00    
-
-   \                                 In section .rodata, align 4
-   \                     `?<Constant "event\\n">`:
-   \   00000000   0x65 0x76          DC8 "event\012"
-   \              0x65 0x6E    
-   \              0x74 0x0A    
-   \              0x00         
-   \   00000007   0x00               DC8 0
 
    \                                 In section .rodata, align 4
    \                     `?<Constant "%x\\t%x\\n">`:
@@ -924,10 +938,8 @@ E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\DSPSPI.c
       36  ?<Constant "\n----------     END  ...">
       36  ?<Constant "\n----------SPIDMA_Tas...">
       28  ?<Constant "\nOpen spidma event fa...">
-       8  ?<Constant "event\n">
        8  ?<Constant "ispi2:">
       16  ?<Constant "spidma_event">
-       4  ?<Constant {0}>
        4  ??DataTable2
        4  ??DataTable2_1
        4  ??DataTable2_10
@@ -939,6 +951,7 @@ E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\DSPSPI.c
        4  ??DataTable2_16
        4  ??DataTable2_17
        4  ??DataTable2_18
+       4  ??DataTable2_19
        4  ??DataTable2_2
        4  ??DataTable2_3
        4  ??DataTable2_4
@@ -948,28 +961,30 @@ E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\DSPSPI.c
        4  ??DataTable2_8
        4  ??DataTable2_9
     2900  BufRxchar
-     258  DMA_RecData_OK
+     238  DMA_RecData_OK
        2  DataSize
     2008  EvntRxchar
+       4  HeadFlg
     2664  PowRxchar
      196  SPIDMA_Task
        1  SPIEventFlg
        1  SPIPowerFlg
        1  SPIRxCnt
+       1  SPI_Send
        2  TotalNum
        1  count
      116  spi2_dma_int
        4  spifd_2
 
  
- 7 582 bytes in section .bss
+ 7 587 bytes in section .bss
      2 bytes in section .data
-   288 bytes in section .rodata
-   646 bytes in section .text
+   276 bytes in section .rodata
+   630 bytes in section .text
  
-   646 bytes of CODE  memory
-   288 bytes of CONST memory
- 7 584 bytes of DATA  memory
+   630 bytes of CODE  memory
+   276 bytes of CONST memory
+ 7 589 bytes of DATA  memory
 
 Errors: none
 Warnings: none

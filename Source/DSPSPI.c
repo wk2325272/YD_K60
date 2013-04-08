@@ -30,6 +30,7 @@ U16 TotalNum=0;//需接收数据的长度，作用域在此文件
 
 U16 DataSize = ARRAY_SIZE ;  //wk -->传给 DMA 寄存器的一次服务数据长度
 static uchar count=0; // 用于数据头检测
+U8 SPI_Send=0; // wk @130406 --> K60是否给DSP发送数据的标志
 
 //volatile U16 Time_save=0;  //备份事件参数
 //volatile U8 testflgg=0;   //MCU发送数据个数
@@ -137,13 +138,14 @@ void spi2_dma_int(void)
 ** 函数名：
 ** 作者：
 ** 说明：在没有使用事件时 SPI 接收数据的外部函数
+** 测试记录：wk@130408-->数据发送：5个数据头（4个数据头+1个启动信号）+正常数据，注意，这次测试结果表明，数据没有丢失
 */
 void DMA_RecData_OK  
 (
   void
 )
 {
-   U8 HeadFlg[4]={0};
+   static U8 HeadFlg[4]={0};
    
     if(count<4)
     {
@@ -153,7 +155,8 @@ void DMA_RecData_OK
         if(HeadFlg[0]==0x33 && HeadFlg[1]==0x33 && HeadFlg[2]==0x33 && (HeadFlg[3]== 0x44 ||HeadFlg[3]== 0x55))
         {
           if(HeadFlg[3]==0x44)
-            DataSize= Pow_SIZE+OffSET-2;  // wk @20130325 -->总的数据量=OffSET+Pow_SIZE，其中OffSET是电能质量数据前的一些标志或是预留
+//            DataSize= Pow_SIZE+OffSET-2;  // wk @20130325 -->总的数据量=OffSET+Pow_SIZE，其中OffSET是电能质量数据前的一些标志或是预
+            DataSize= 253; // wk @130408 --> test 
           else
             DataSize= Evnt_SIZE + 4; // wk @20130325 -->
           
@@ -172,23 +175,29 @@ void DMA_RecData_OK
     else if(count==5)
     {
          count=6; // 用一个数据改变 DMA 接收数据的长度，此数据将会被舍弃
+         
+         SPI_Send=1; // wk @130406 --> K60是否给DSP发送数据的标志
     }
     else
     {
-      
-       if(HeadFlg[3]==0x44) // wk @20130325 -->
-         for(int i=0;i<Pow_SIZE;i++)
-         {
-           PowRxchar[i] = BufRxchar[i+OffSET];
-           SPIPowerFlg=1;
-         }
-       else
-           printf("event\n");  // 事件数据还没有处理
+     /* wk @130408 --> test */ 
+      for(int i=0;i<260;i++)
+       PowRxchar[i] = BufRxchar[i];
+      /* wk @130408 --> data trans */ 
+//       if(HeadFlg[3]==0x44) // wk @20130325 -->
+//         for(int i=0;i<Pow_SIZE;i++)
+//         {
+//           PowRxchar[i] = BufRxchar[i+OffSET];
+//           SPIPowerFlg=1;
+//         }
+//       else
+//           printf("event\n");  // 事件数据还没有处理
        
         printf("%x\t%x\n",BufRxchar[0],BufRxchar[1]); // test 
 //        printf("\n2");
         count=0; 
         DataSize=1;
+        SPI_Send=0;
         fclose(spifd_2);
         asm("NOP");  
         spi2_dma_int(); // 刷新 DMA 寄存器

@@ -216,28 +216,11 @@ void USB_task(uint_32 param)
       shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
       _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
       uint_32 file_size;
-      
       uchar status;
-     /* wk @130401 --> 新建 sysset 用于系统变量保存 */
+     
+      /* wk @130401 --> 新建 power/event用于基本电能质量/事件数据保存 */
       shell_ptr->ARGC = 2;
       shell_ptr->ARGV[0]="cd";
-      shell_ptr->ARGV[1]="f:\\"; 
-      Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
-      
-//      shell_ptr->ARGC = 2;
-//      shell_ptr->ARGV[0]="df_s";
-      shell_ptr->ARGV[1]="SYSSET";   //wk --> 注意：查找的文件名暂时必须要是大写
-      status=Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
-      if(status==0)
-      {
-//        shell_ptr->ARGC = 2;
-//        shell_ptr->ARGV[0]="mkdir";
-        shell_ptr->ARGV[1]="SYSSET"; 
-        Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
-      }
-      /* wk @130401 --> 新建 power/event用于基本电能质量/事件数据保存 */
-//      shell_ptr->ARGC = 2;
-//      shell_ptr->ARGV[0]="cd";
       shell_ptr->ARGV[1]="u:\\"; 
       Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
       

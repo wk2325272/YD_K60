@@ -679,7 +679,7 @@ void linemark(U16 Y_COORD, U16 UorI)
 *******************************************************************************/
 void GUI_SYS_PARASET(void)
 {
-    U8 OFF_ON[][4]= {"开启","关闭"},i,temp=0,temp1=0;
+    U8 OFF_ON[][4]= {"关闭","开启"},i,temp=0,temp1=0;
     U16 ParaSetC108[63]= {0},PARA_y=0,string2U16=0;
     static U8 flg_sys[9]={0} ;// wk --设置参数超出了限制标志
     
@@ -1694,13 +1694,13 @@ void EventSave(U8 U_DISK)
           shell_ptr->ARGV[3]="0";
           Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,7,&date_sf);
           
-          uchar test[1000]={0,1,2,3,4,5,6,7,8,9,10};
+          uchar test[]={0,1,2,3,4,5,6,7,8,9,10};
     //      shell_ptr->ARGC=4;
     //      shell_ptr->ARGV[0]="write";
     //      shell_ptr->ARGV[1]=file_name;
     //      shell_ptr->ARGV[2]="current";
     //      shell_ptr->ARGV[3]="0";
-          Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,1000,test);
+          Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,100,test);
     
          _mem_free(shell_ptr);  // wk @130403 --> important
     }
@@ -1717,7 +1717,7 @@ void EventSave(U8 U_DISK)
 *******************************************************************************/
 void PowerSave(void)
 {
-  if(USB_Flg==1)
+  if(USB_Flg==1&& SysFlashDataT[6]==1)
   {
       SHELL_CONTEXT_PTR    shell_ptr;
       shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
@@ -1780,19 +1780,24 @@ void PowerSave(void)
       shell_ptr->ARGV[3]="0";
       Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,7,&date_sf);
       
-      uchar test[]={0,1,2,3,4,5,6,7,8,9,10};
+      uchar test[100]={0,1,2,3,4,5,6,7,8,9,10};
 //      shell_ptr->ARGC=4;
 //      shell_ptr->ARGV[0]="write";
 //      shell_ptr->ARGV[1]=file_name;
 //      shell_ptr->ARGV[2]="current";
 //      shell_ptr->ARGV[3]="0";
+      for(uchar i=0;i<20;i++)
       Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,100,test);
 
      _mem_free(shell_ptr);  // wk @130403 --> important
   }
-  else
+  else if(USB_Flg==0)
   {
-    printf("\nATTENTION:USB is DETACHED\n");
+    printf("\nATTENTION:USB is DETACHED!\n");
+  }
+  else if(SysFlashDataT[6]==0)
+  {
+    printf("\nATTENTION:USB Switch is CLOSED!\n");
   }
      
 }

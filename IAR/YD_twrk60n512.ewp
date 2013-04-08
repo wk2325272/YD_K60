@@ -3694,6 +3694,12 @@
     <name>MQX Libraries</name>
     <file>
       <name>$PROJ_DIR$\..\lib\twrk60n512.iar\bsp\bsp_twrk60n512_130330_no_event_lpt.a</name>
+      <excluded>
+        <configuration>Int Flash Debug</configuration>
+      </excluded>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\lib\twrk60n512.iar\bsp\bsp_twrk60n512_130406_SPI_TX.a</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\lib\twrk60n512.iar\bsp\bsp_twrk60n512_20130103.a</name>

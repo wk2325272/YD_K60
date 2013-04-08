@@ -26,7 +26,7 @@ void PIN2(uint_32 temp)
       _event_wait_all(ppin2_event,0x04,0);
       
       /* wk --> Æô¶¯ Shell */
-      _mqx_uint oldP1=12,oldP2=10,id;
+      _mqx_uint oldP1=12,oldP2=10;uint_32 id;
       static uchar flag=0;
       id=0x10002;
       if( flag == 0 )
