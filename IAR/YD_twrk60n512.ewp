@@ -3921,10 +3921,10 @@
   <group>
     <name>USB_Libs</name>
     <file>
-      <name>$PROJ_DIR$\..\..\..\Freescale MQX 3.8\shell\source\mfs\sh_cd.c</name>
+      <name>E:\Freescale\Freescale MQX 3.8\shell\source\mfs\sh_cd.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\Freescale MQX 3.8\shell\source\mfs\sh_di.c</name>
+      <name>E:\Freescale\Freescale MQX 3.8\shell\source\mfs\sh_di.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\lib\twrk60n512.iar\usb\host\usb_classes.c</name>

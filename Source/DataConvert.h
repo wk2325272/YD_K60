@@ -20,3 +20,5 @@
  void FLTOINT_UI(float DATAIN[],int DATOUT[],U16 FLAGNUM);
  void EVEUISHIFT(U8 DATAIN[],float DATAOUT[]);
  void U16TOFL_UI(U8 DADAIN[],U16 NUM,float DATAOUT[]);
+ void Sig_Fiq(U8 DADAIN[],U8 DATAOUT[],U16 TIMES, U8 NUM);
+// char_ptr num2string(int_32 num,uchar len,uchar type);

@@ -251,12 +251,66 @@ void U16TOFL_UI(U8 DADAIN[],U16 NUM,float DATAOUT[])//NUM为待转换数据个数
                     100为缩小100倍即2位有效数字,1000为不缩小1000倍即1位有效数字
 * 返      回      : 返float DATAOUT[]
 *******************************************************************************/
-void Sig_Fiq(U8 DADAIN[],U8 DATAOUT[],U16 TIMES)
+//void Sig_Fiq(U8 DADAIN[],U8 DATAOUT[],U16 TIMES)
+//{
+//  long temp;
+//  temp=(((long)(DADAIN[0])<<24)+((long)(DADAIN[1])<<16)+((long)(DADAIN[2])<<8)+((long)(DADAIN[3])))/TIMES;
+//  DATAOUT[3]=temp;
+//  DATAOUT[2]=temp>>8;
+//  DATAOUT[1]=temp>>16;
+//  DATAOUT[0]=temp>>24;
+//}
+void Sig_Fiq(U8 DADAIN[],U8 DATAOUT[],U16 TIMES, U8 NUM)
 {
-  long temp;
-  temp=(((long)(DADAIN[0])<<24)+((long)(DADAIN[1])<<16)+((long)(DADAIN[2])<<8)+((long)(DADAIN[3])))/TIMES;
-  DATAOUT[3]=temp;
-  DATAOUT[2]=temp>>8;
-  DATAOUT[1]=temp>>16;
-  DATAOUT[0]=temp>>24;
+    long temp;
+    U8 i,j;
+    for(i=0; i<NUM; i++)
+    {
+        j=4*i;
+        temp=(((long)(DADAIN[j])<<24)+((long)(DADAIN[1+j])<<16)+((long)(DADAIN[2+j])<<8)+((long)(DADAIN[3+j])))/TIMES;
+        DATAOUT[3+j]=temp;
+        DATAOUT[2+j]=temp>>8;
+        DATAOUT[1+j]=temp>>16;
+        DATAOUT[j]=temp>>24;
+    }
 }
+
+/*******************************************************************************
+** Function Name	：num2string
+** Input		： type =0 文件夹，=1 .CSV文件
+** Return		：转好好的字符串指针
+** Author		： wk
+** Version	：
+** Date		：
+** Dessription	： 将 32 位整数转换成字符串
+** Reverse	：
+*******************************************************************************/
+//char_ptr num2string(int_32 num,uchar len,uchar type) // wk --> len <= 13-4-1=8
+//{
+//  char_ptr name;
+//  name = _mem_alloc_zero( len+5 );
+//  uchar sep_data[9];uint_32 temp;
+//  for(int i=0;i<len;i++)
+//  {
+//    temp=(uint_32)pow(10,i);
+//    sep_data[i]=(num/temp)%10;
+//  }
+//  
+//  for(int i=0;i<len;i++)
+//  {
+//    *(name+i)=(uchar)(0x30+sep_data[len-1-i]);
+//  }
+//  if(type==0)
+//  {
+//    *(name+len)='\0';
+//  }
+//  else
+//  {
+//    *(name+len)=0x2e; // .
+//    *(name+len+1)=0x43; // C
+//    *(name+len+2)=0x53; // S
+//    *(name+len+3)=0x56; // V
+//    *(name+len+4)='\0';
+//  }
+//  return name;
+//}

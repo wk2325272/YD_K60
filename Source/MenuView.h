@@ -22,17 +22,28 @@
 #define U_I_DX 6
 #define Cycledot 80 //实时波形的点数
 //与SPI通信相关的宏定义，表示各项数据在SPIRxChar数组中的下标
-#define UI_VIRTUAL_INDEX 0  //电压电流的有效值初始下标
-#define Harmo_INDEX 80      //A相谐波初始下标，A相谐波电流80+200,A相谐波相位80+400
+//#define UI_VIRTUAL_INDEX 0  //电压电流的有效值初始下标
+//#define Harmo_INDEX 80      //A相谐波初始下标，A相谐波电流80+200,A相谐波相位80+400
+#define I_VIRTUAL_INDEX 12  //电流的有效值初始下标
+#define PQS_INDEX 24  //有功无功视在功率的初始下标
+#define PF_INDEX 60   //功率因数初始下标
+#define F_INDEX 72    //频率初始下标
+#define VEC_INDEX 84   //电压相角的初始下标
+#define U_ERR_INDEX 108   //电压偏差，频率偏差，畸变率，闪变的初始下标
+#define UNBLA_INDEX 180   //正序负序零序，三相不平衡度的初始下标
+#define Harmo_INDEX 252      //A相谐波初始下标，A相谐波电流80+200,A相谐波相位80+400
 //B相谐波初始下标680，B相谐波电流680+200,B相谐波相位680+400
 //C相谐波初始下标1280，C相谐波电流1280+200,C相谐波相位1280+400
 #define PQSf_INDEX 1880     //三相有功视在无功-功率因素-频率的初始下标，共15个数据，60个字节
-#define VEC_INDEX 1940   //电压相角的初始下标
+//#define VEC_INDEX 1940   //电压相角的初始下标
 #define Pst_INDEX 1964      //APst-BPst-CPst-APlt-BPlt-CPlt-ε
 #define UNBALANCED_INDEX 1988 //U-电压不平衡度、ABC(幅值相位)零、正、负，εI，ABC零、正、负
 #define WAVEUI_INDEX 2052+112   //采样波形的初始下标
 //使用C108指令显示浮点型数据时的格式控制
+//使用C108指令显示浮点型数据时的格式控制
+#define C108Mode_63 0x6304
 #define C108Mode_64 0x6404
+#define C108Mode_62 0x6204
 #define C108FC_W  0xffff
 #define C108BC_Bk  0x0000
 //触摸屏暂存缓冲区的安排
@@ -105,7 +116,7 @@ MenuV_EXT U8 EventAddr[400];// wk@130405 -->记录事件发生的时间：月、日、时、分、
 
 /*WK @130326 --> 事件限值宏定义 */
 /* wk @130326 --> 扩大了100倍 ：显示时的模式会将数据除100显示*/
-#define NumWave 100*100
+MenuV_EXT U16 NumWave;
 MenuV_EXT U16 DotWave ;
 #define UDeviation 100*7  
 #define FDeviation 2

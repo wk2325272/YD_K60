@@ -1,47 +1,45 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    07/Apr/2013  20:11:12 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    09/Apr/2013  10:15:02 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\D /
-//                    ataConvert.c                                            /
-//    Command line =  E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\D /
-//                    ataConvert.c -D _DEBUG=1 -lC                            /
-//                    "E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\twr /
-//                    k60n512\Int Flash Debug\List\" -lA                      /
-//                    "E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\twr /
-//                    k60n512\Int Flash Debug\List\" --diag_suppress          /
-//                    Pa039,Pa082,Pe186 -o "E:\Freescale\mqx_test\YD_PRJ_NEW_ /
-//                    20130323_git_\IAR\twrk60n512\Int Flash Debug\Obj\"      /
-//                    --no_cse --no_unroll --no_inline --no_code_motion       /
-//                    --no_tbaa --no_clustering --no_scheduling --debug       /
+//    Source file  =  L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\DataCo /
+//                    nvert.c                                                 /
+//    Command line =  L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\DataCo /
+//                    nvert.c -D _DEBUG=1 -lC "L:\git_workspace\YD_PRJ_NEW_20 /
+//                    130323_git_\IAR\twrk60n512\Int Flash Debug\List\" -lA   /
+//                    "L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\twrk60n5 /
+//                    12\Int Flash Debug\List\" --diag_suppress               /
+//                    Pa039,Pa082,Pe186 -o "L:\git_workspace\YD_PRJ_NEW_20130 /
+//                    323_git_\IAR\twrk60n512\Int Flash Debug\Obj\" --no_cse  /
+//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
+//                    --no_clustering --no_scheduling --debug                 /
 //                    --endian=little --cpu=Cortex-M4 -e --fpu=None           /
 //                    --dlib_config "D:\Program Files\IAR Systems\Embedded    /
 //                    Workbench 6.0\arm\INC\c\DLib_Config_Normal.h" -I        /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\l /
-//                    ib\twrk60n512.iar\ -I E:\Freescale\mqx_test\YD_PRJ_NEW_ /
-//                    20130323_git_\IAR\..\lib\twrk60n512.iar\bsp\ -I         /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\l /
-//                    ib\twrk60n512.iar\psp\ -I E:\Freescale\mqx_test\YD_PRJ_ /
-//                    NEW_20130323_git_\IAR\..\lib\twrk60n512.iar\bsp\Generat /
-//                    ed_Code\ -I E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_g /
-//                    it_\IAR\..\lib\twrk60n512.iar\rtcs\ -I                  /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\l /
-//                    ib\twrk60n512.iar\mfs\ -I E:\Freescale\mqx_test\YD_PRJ_ /
-//                    NEW_20130323_git_\IAR\..\lib\twrk60n512.iar\usb\host\   /
-//                    -I E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\. /
-//                    .\lib\twrk60n512.iar\shell\ -I                          /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\l /
-//                    ib\twrk60n512.iar\usb\ -I E:\Freescale\mqx_test\YD_PRJ_ /
-//                    NEW_20130323_git_\IAR\..\ -I                            /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\S /
-//                    ource\Source_MQX\ -I E:\Freescale\mqx_test\YD_PRJ_NEW_2 /
-//                    0130323_git_\IAR\..\Source\ -I "E:\Freescale\Freescale  /
-//                    MQX 3.8\shell\source\include\" -Ol --use_c++_inline     /
-//    List file    =  E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\twrk /
-//                    60n512\Int Flash Debug\List\DataConvert.s               /
+//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\tw /
+//                    rk60n512.iar\ -I L:\git_workspace\YD_PRJ_NEW_20130323_g /
+//                    it_\IAR\..\lib\twrk60n512.iar\bsp\ -I                   /
+//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\tw /
+//                    rk60n512.iar\psp\ -I L:\git_workspace\YD_PRJ_NEW_201303 /
+//                    23_git_\IAR\..\lib\twrk60n512.iar\bsp\Generated_Code\   /
+//                    -I L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib /
+//                    \twrk60n512.iar\rtcs\ -I L:\git_workspace\YD_PRJ_NEW_20 /
+//                    130323_git_\IAR\..\lib\twrk60n512.iar\mfs\ -I           /
+//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\tw /
+//                    rk60n512.iar\usb\host\ -I L:\git_workspace\YD_PRJ_NEW_2 /
+//                    0130323_git_\IAR\..\lib\twrk60n512.iar\shell\ -I        /
+//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\tw /
+//                    rk60n512.iar\usb\ -I L:\git_workspace\YD_PRJ_NEW_201303 /
+//                    23_git_\IAR\..\ -I L:\git_workspace\YD_PRJ_NEW_20130323 /
+//                    _git_\IAR\..\Source\Source_MQX\ -I                      /
+//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\Source /
+//                    \ -I "E:\Freescale\Freescale MQX                        /
+//                    3.8\shell\source\include\" -Ol --use_c++_inline         /
+//    List file    =  L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\twrk60n51 /
+//                    2\Int Flash Debug\List\DataConvert.s                    /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -109,7 +107,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\DataConvert.c
+// L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\DataConvert.c
 //    1 /*******************************************************************************
 //    2 * File Name        : DataConvert.c
 //    3 * Author             : LB&TX
@@ -1068,44 +1066,89 @@ U16TOFL_UI:
 //  251                     100为缩小100倍即2位有效数字,1000为不缩小1000倍即1位有效数字
 //  252 * 返      回      : 返float DATAOUT[]
 //  253 *******************************************************************************/
+//  254 //void Sig_Fiq(U8 DADAIN[],U8 DATAOUT[],U16 TIMES)
+//  255 //{
+//  256 //  long temp;
+//  257 //  temp=(((long)(DADAIN[0])<<24)+((long)(DADAIN[1])<<16)+((long)(DADAIN[2])<<8)+((long)(DADAIN[3])))/TIMES;
+//  258 //  DATAOUT[3]=temp;
+//  259 //  DATAOUT[2]=temp>>8;
+//  260 //  DATAOUT[1]=temp>>16;
+//  261 //  DATAOUT[0]=temp>>24;
+//  262 //}
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock10 Using cfiCommon0
           CFI Function Sig_Fiq
           CFI NoCalls
         THUMB
-//  254 void Sig_Fiq(U8 DADAIN[],U8 DATAOUT[],U16 TIMES)
-//  255 {
+//  263 void Sig_Fiq(U8 DADAIN[],U8 DATAOUT[],U16 TIMES, U8 NUM)
+//  264 {
 Sig_Fiq:
-        PUSH     {R4}
-          CFI R4 Frame(CFA, -4)
-          CFI CFA R13+4
-//  256   long temp;
-//  257   temp=(((long)(DADAIN[0])<<24)+((long)(DADAIN[1])<<16)+((long)(DADAIN[2])<<8)+((long)(DADAIN[3])))/TIMES;
-        LDRB     R3,[R0, #+0]
-        LDRB     R4,[R0, #+1]
-        LSLS     R4,R4,#+16
-        ADDS     R3,R4,R3, LSL #+24
-        LDRB     R4,[R0, #+2]
-        ADDS     R3,R3,R4, LSL #+8
-        LDRB     R0,[R0, #+3]
-        ADDS     R0,R3,R0
+        PUSH     {R4-R7}
+          CFI R7 Frame(CFA, -4)
+          CFI R6 Frame(CFA, -8)
+          CFI R5 Frame(CFA, -12)
+          CFI R4 Frame(CFA, -16)
+          CFI CFA R13+16
+//  265     long temp;
+//  266     U8 i,j;
+//  267     for(i=0; i<NUM; i++)
+        MOVS     R4,#+0
+        B.N      ??Sig_Fiq_0
+//  268     {
+//  269         j=4*i;
+??Sig_Fiq_1:
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        LSLS     R5,R4,#+2
+//  270         temp=(((long)(DADAIN[j])<<24)+((long)(DADAIN[1+j])<<16)+((long)(DADAIN[2+j])<<8)+((long)(DADAIN[3+j])))/TIMES;
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        LDRB     R6,[R5, R0]
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        ADDS     R7,R5,R0
+        LDRB     R7,[R7, #+1]
+        LSLS     R7,R7,#+16
+        ADDS     R6,R7,R6, LSL #+24
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        ADDS     R7,R5,R0
+        LDRB     R7,[R7, #+2]
+        ADDS     R6,R6,R7, LSL #+8
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        ADDS     R7,R5,R0
+        LDRB     R7,[R7, #+3]
+        UXTAB    R6,R6,R7
         UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
-        SDIV     R0,R0,R2
-//  258   DATAOUT[3]=temp;
-        STRB     R0,[R1, #+3]
-//  259   DATAOUT[2]=temp>>8;
-        ASRS     R2,R0,#+8
-        STRB     R2,[R1, #+2]
-//  260   DATAOUT[1]=temp>>16;
-        ASRS     R2,R0,#+16
-        STRB     R2,[R1, #+1]
-//  261   DATAOUT[0]=temp>>24;
-        ASRS     R0,R0,#+24
-        STRB     R0,[R1, #+0]
-//  262 }
-        POP      {R4}
+        SDIV     R6,R6,R2
+//  271         DATAOUT[3+j]=temp;
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        ADDS     R7,R5,R1
+        STRB     R6,[R7, #+3]
+//  272         DATAOUT[2+j]=temp>>8;
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        ADDS     R7,R5,R1
+        ASRS     R12,R6,#+8
+        STRB     R12,[R7, #+2]
+//  273         DATAOUT[1+j]=temp>>16;
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        ADDS     R7,R5,R1
+        ASRS     R12,R6,#+16
+        STRB     R12,[R7, #+1]
+//  274         DATAOUT[j]=temp>>24;
+        UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
+        ASRS     R6,R6,#+24
+        STRB     R6,[R5, R1]
+//  275     }
+        ADDS     R4,R4,#+1
+??Sig_Fiq_0:
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
+        CMP      R4,R3
+        BCC.N    ??Sig_Fiq_1
+//  276 }
+        POP      {R4-R7}
           CFI R4 SameValue
+          CFI R5 SameValue
+          CFI R6 SameValue
+          CFI R7 SameValue
           CFI CFA R13+0
         BX       LR               ;; return
           CFI EndBlock cfiBlock10
@@ -1122,10 +1165,50 @@ Sig_Fiq:
         SECTION_TYPE SHT_PROGBITS, 0
 
         END
+//  277 
+//  278 /*******************************************************************************
+//  279 ** Function Name	：num2string
+//  280 ** Input		： type =0 文件夹，=1 .CSV文件
+//  281 ** Return		：转好好的字符串指针
+//  282 ** Author		： wk
+//  283 ** Version	：
+//  284 ** Date		：
+//  285 ** Dessription	： 将 32 位整数转换成字符串
+//  286 ** Reverse	：
+//  287 *******************************************************************************/
+//  288 //char_ptr num2string(int_32 num,uchar len,uchar type) // wk --> len <= 13-4-1=8
+//  289 //{
+//  290 //  char_ptr name;
+//  291 //  name = _mem_alloc_zero( len+5 );
+//  292 //  uchar sep_data[9];uint_32 temp;
+//  293 //  for(int i=0;i<len;i++)
+//  294 //  {
+//  295 //    temp=(uint_32)pow(10,i);
+//  296 //    sep_data[i]=(num/temp)%10;
+//  297 //  }
+//  298 //  
+//  299 //  for(int i=0;i<len;i++)
+//  300 //  {
+//  301 //    *(name+i)=(uchar)(0x30+sep_data[len-1-i]);
+//  302 //  }
+//  303 //  if(type==0)
+//  304 //  {
+//  305 //    *(name+len)='\0';
+//  306 //  }
+//  307 //  else
+//  308 //  {
+//  309 //    *(name+len)=0x2e; // .
+//  310 //    *(name+len+1)=0x43; // C
+//  311 //    *(name+len+2)=0x53; // S
+//  312 //    *(name+len+3)=0x56; // V
+//  313 //    *(name+len+4)='\0';
+//  314 //  }
+//  315 //  return name;
+//  316 //}
 // 
-// 1 384 bytes in section .text
+// 1 440 bytes in section .text
 // 
-// 1 384 bytes of CODE memory
+// 1 440 bytes of CODE memory
 //
 //Errors: none
 //Warnings: none

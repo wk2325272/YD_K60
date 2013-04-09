@@ -166,7 +166,7 @@ void GUI_VIEW_VECT(void)
     {
         for(U8 i=0; i<3; i++)
         {
-            C108Dat[21*k + 7*i + 0] = 0x3404;         //P  显示数据的模式
+            C108Dat[21*k + 7*i + 0] = 0x3104;         //P  显示数据的模式 // wk @130408--> revrese dot 0x3404
             C108Dat[21*k + 7*i + 1] = 455;            //显示相位的X坐标
             C108Dat[21*k + 7*i + 2] = VEC_ORIG_YCOORD + i*44 + k*158;     //Y坐标
             C108Dat[21*k + 7*i + 3] = 0xffff;         //白色，下为黑色
@@ -193,7 +193,7 @@ void GUI_VIEW_VECT(void)
 *******************************************************************************/
 void GUI_VIEW_ListMeasure()   // wk --> 电能计量参数
 {
-#if 1
+#if 0 // wk @130408--> revrese dot old
 //    U16 C108Data[147]= {0};//21个数据，存放顺序为U-P-Q-f-I-S-PF // wk -->
    /* WK --> */
       U16 C108Data[147]= {0};//21个数据，存放顺序为U-I-P-Q-S-PF-f
@@ -223,47 +223,54 @@ void GUI_VIEW_ListMeasure()   // wk --> 电能计量参数
           }
         }
       }
+#endif
       /* WK --> END */
-//    for(U8 ui=0; ui<2; ui++) //切换UI
-//    {
-//        for(U8 lcv_u=0; lcv_u<3; lcv_u++)//切换ABC
-//        {
-//            C108Data[84*ui+7*lcv_u+0]=C108Mode_64;//显示数据的模式
-//            C108Data[84*ui+7*lcv_u+1]=164+lcv_u*152;//左边列数据的X：79,右边X:434  148
-//            C108Data[84*ui+7*lcv_u+2]=135+ui*45;//Y坐标43
-//            C108Data[84*ui+7*lcv_u+3]=C108FC_W;
-//            C108Data[84*ui+7*lcv_u+4]=C108BC_Bk;
-//            C108Data[84*ui+7*lcv_u+5]=((U16)(PowRxchar[8*ui+16*lcv_u+UI_VIRTUAL_INDEX])<<8)+(U16)(PowRxchar[8*ui+16*lcv_u+UI_VIRTUAL_INDEX+1]);
-//            C108Data[84*ui+7*lcv_u+6]=((U16)(PowRxchar[8*ui+16*lcv_u+UI_VIRTUAL_INDEX+2])<<8)+(U16)(PowRxchar[8*ui+16*lcv_u+UI_VIRTUAL_INDEX+3]);
-//        }
-//    }
-//    for(U8 PQf=0; PQf<3; PQf++)
-//    {
-//        for(U8 lr=0; lr<2; lr++) //控制左右
-//        {
-//            if((PQf==2)&&(lr==1))//f项右边无显示
-//            {
-//                break;
-//            }
-//            for(U8 cnt=0; cnt<3; cnt++) //控制每一块的3个值
-//            {
-//                C108Data[21*PQf+84*lr+7*cnt+21]=C108Mode_64;//显示数据的模式
-//                C108Data[21*PQf+84*lr+7*cnt+22]=164+lr*355;//左边数据X:79,右X:434
-//                C108Data[21*PQf+84*lr+7*cnt+23]=225+cnt*30+PQf*102;//PY坐标145,QY坐标246
-//                C108Data[21*PQf+84*lr+7*cnt+24]=C108FC_W;
-//                C108Data[21*PQf+84*lr+7*cnt+25]=C108BC_Bk;
-//                C108Data[21*PQf+84*lr+7*cnt+26]=((U16)(PowRxchar[4*lr+20*cnt+PQf*8+PQSf_INDEX])<<8)+(U16)(PowRxchar[4*lr+20*cnt+PQf*8+PQSf_INDEX+1]);
-//                C108Data[21*PQf+84*lr+7*cnt+27]=((U16)(PowRxchar[4*lr+20*cnt+PQf*8+PQSf_INDEX+2])<<8)+(U16)(PowRxchar[4*lr+20*cnt+PQf*8+PQSf_INDEX+3]);
-//            }
-//        }
-//    }
+#if 1 // wk @130408--> revrese dot tx
+    U16 C108Data[147]= {0};//21个数据，存放顺序为U-P-Q-f-I-S-PF
+    U8 temp,temp1,DATA_DIS1[84]= {0};
+    Sig_Fiq(PowRxchar,DATA_DIS1,100,3);
+    Sig_Fiq(&PowRxchar[I_VIRTUAL_INDEX],&DATA_DIS1[I_VIRTUAL_INDEX],10,3);
+    Sig_Fiq(&PowRxchar[PQS_INDEX],&DATA_DIS1[PQS_INDEX],100,9);
+    Sig_Fiq(&PowRxchar[PF_INDEX],&DATA_DIS1[PF_INDEX],1,3);
+    Sig_Fiq(&PowRxchar[F_INDEX],&DATA_DIS1[F_INDEX],10,3);
+    for(U8 ui=0; ui<7; ui++) //切换UI
+    {
+        for(U8 lcv_u=0; lcv_u<3; lcv_u++)//切换ABC
+        {
+            temp=21*ui+7*lcv_u;
+            temp1=12*ui+4*lcv_u;
+            if((ui==1)||(ui==6))
+            {
+                C108Data[temp+0]=C108Mode_63;//显示数据的模式
+                C108Data[temp+1]=179+lcv_u*153;//左边列数据的X：79,右边X:434
+            }
+            else if(ui==5)
+            {
+                C108Data[temp+0]=C108Mode_64;//显示数据的模式
+                C108Data[temp+1]=167+lcv_u*153;//左边列数据的X：79,右边X:434
+            }
+            else
+            {
+                C108Data[temp+0]=C108Mode_62;//显示数据的模式
+                C108Data[temp+1]=191+lcv_u*153;//左边列数据的X：79,右边X:434
+            }
+            //C108Data[temp+1]=167+lcv_u*153;//左边列数据的X：79,右边X:434
+            C108Data[temp+2]=135+ui*43;//Y坐标43
+            C108Data[temp+3]=C108FC_W;
+            C108Data[temp+4]=C108BC_Bk;
+            C108Data[temp+5]=((U16)(DATA_DIS1[temp1])<<8)+(U16)(DATA_DIS1[temp1+1]);
+            C108Data[temp+6]=((U16)(DATA_DIS1[temp1+2])<<8)+(U16)(DATA_DIS1[temp1+3]);
+        }
+    }
+#endif
+    
     YADA_C0(DMMPowerInfoAdr,C108Data,84);
     YADA_C108(DMMPowerInfoAdr,12);
     delay_ms(5);
     YADA_C0(DMMPowerInfoAdr+168,&C108Data[84],63);
     YADA_C108(DMMPowerInfoAdr+168,9);
     delay_ms(5);
-#endif 
+ 
 }
 /*******************************************************************************
 * 函  数  名      : GUI_VIEW_ListQuality
@@ -279,7 +286,7 @@ void GUI_VIEW_ListMeasure()   // wk --> 电能计量参数
 *******************************************************************************/
 void GUI_VIEW_ListQuality() // wk --> 电能质量参数
 {
-#if 1 //wk -->
+#if 0 // wk @130408--> revrese dot old
     U8 temp1;
     U16 ListQC108[6*3*7];//24个数据 显示顺序：
     for(int num=0;num<6;num++) //数据类型切换 
@@ -305,49 +312,44 @@ void GUI_VIEW_ListQuality() // wk --> 电能质量参数
     delay_ms(5);
 #endif //wk -->
     
-#if 0 // OLD
-    U16 ListQC108[98];//14个数据,按Pst-Plt-e-THDU-THDI的顺序存放
-    for(U8 lcv_sl=0; lcv_sl<2; lcv_sl++)//先Pst后Plt
+#if 1 // wk @130408--> revrese dot tx
+        U16 ListQC108[126];//14个数据,按Pst-Plt-e-THDU-THDI的顺序存放
+    U8 temp,temp1,DATA_DIS2[72]= {0};
+    Sig_Fiq(&PowRxchar[U_ERR_INDEX],DATA_DIS2,10,6);
+    Sig_Fiq(&PowRxchar[U_ERR_INDEX+24],&DATA_DIS2[24],100,6);
+    Sig_Fiq(&PowRxchar[U_ERR_INDEX+48],&DATA_DIS2[48],10,6);
+    for(U8 lcv_sl=0; lcv_sl<6; lcv_sl++)//先Pst后Plt
     {
         for(U8 lcv_slABC=0; lcv_slABC<3; lcv_slABC++)
         {
-            ListQC108[21*lcv_sl+7*lcv_slABC+0]=C108Mode_64;//显示数据的模式
-            ListQC108[21*lcv_sl+7*lcv_slABC+1]=75;//左边数据X:75
-            ListQC108[21*lcv_sl+7*lcv_slABC+2]=44+lcv_slABC*30+lcv_sl*101;//UY坐标43，IY坐标145
-            ListQC108[21*lcv_sl+7*lcv_slABC+3]=C108FC_W;
-            ListQC108[21*lcv_sl+7*lcv_slABC+4]=C108BC_Bk;
-            ListQC108[21*lcv_sl+7*lcv_slABC+5]=((U16)(PowRxchar[12*lcv_sl+4*lcv_slABC+Pst_INDEX])<<8)+(U16)(PowRxchar[12*lcv_sl+4*lcv_slABC+Pst_INDEX+1]);
-            ListQC108[21*lcv_sl+7*lcv_slABC+6]=((U16)(PowRxchar[12*lcv_sl+4*lcv_slABC+Pst_INDEX+2])<<8)+(U16)(PowRxchar[12*lcv_sl+4*lcv_slABC+Pst_INDEX+3]);
+            temp=21*lcv_sl+7*lcv_slABC;
+            temp1=12*lcv_sl+4*lcv_slABC;
+            if((lcv_sl==2)||(lcv_sl==3))
+            {
+                ListQC108[temp+0]=C108Mode_62;//显示数据的模式
+                ListQC108[temp+1]=191+152*lcv_slABC;//左边数据X:75
+            }
+            else
+            {
+                ListQC108[temp+0]=C108Mode_63;//显示数据的模式
+                ListQC108[temp+1]=179+152*lcv_slABC;//左边数据X:75
+            }
+            // ListQC108[temp+1]=167+152*lcv_slABC;//左边数据X:75
+            ListQC108[temp+2]=143+lcv_sl*41;//UY坐标43，IY坐标145
+            ListQC108[temp+3]=C108FC_W;
+            ListQC108[temp+4]=C108BC_Bk;
+            ListQC108[temp+5]=((U16)(DATA_DIS2[temp1])<<8)+(U16)(DATA_DIS2[temp1+1]);
+            ListQC108[temp+6]=((U16)(DATA_DIS2[temp1+2])<<8)+(U16)(DATA_DIS2[temp1+3]);
         }
     }
-    for(U8 lcv_ubla=0; lcv_ubla<2; lcv_ubla++) //三相不平衡因子
-    {
-        ListQC108[7*lcv_ubla+42]=C108Mode_64;//显示数据的模式
-        ListQC108[7*lcv_ubla+43]=75;//显示左边列数据的X坐标75
-        ListQC108[7*lcv_ubla+44]=247+lcv_ubla*30;//247
-        ListQC108[7*lcv_ubla+45]=C108FC_W;
-        ListQC108[7*lcv_ubla+46]=C108BC_Bk;
-        ListQC108[7*lcv_ubla+47]=((U16)(PowRxchar[76*lcv_ubla+UNBALANCED_INDEX])<<8)+(U16)(PowRxchar[76*lcv_ubla+UNBALANCED_INDEX+1]);
-        ListQC108[7*lcv_ubla+48]=((U16)(PowRxchar[76*lcv_ubla+UNBALANCED_INDEX+2])<<8)+(U16)(PowRxchar[76*lcv_ubla+UNBALANCED_INDEX+3]);
-    }
-    for(U8 ui=0; ui<2; ui++)//先THD-U,后THD-I
-    {
-        for(U8 lcv_THD=0; lcv_THD<3; lcv_THD++)
-        {
-            ListQC108[21*ui+7*lcv_THD+56]=C108Mode_64;//显示数据的模式
-            ListQC108[21*ui+7*lcv_THD+57]=430;//显示右边列数据的X坐标430
-            ListQC108[21*ui+7*lcv_THD+58]=46+lcv_THD*30+ui*100;//UY坐标44，IY坐标146
-            ListQC108[21*ui+7*lcv_THD+59]=C108FC_W;
-            ListQC108[21*ui+7*lcv_THD+60]=C108BC_Bk;
-            ListQC108[21*ui+7*lcv_THD+61]=((U16)(PowRxchar[16*lcv_THD+8*ui+UI_VIRTUAL_INDEX+4])<<8)+(U16)(PowRxchar[16*lcv_THD+8*ui+UI_VIRTUAL_INDEX+5]);
-            ListQC108[21*ui+7*lcv_THD+62]=((U16)(PowRxchar[16*lcv_THD+8*ui+UI_VIRTUAL_INDEX+6])<<8)+(U16)(PowRxchar[16*lcv_THD+8*ui+UI_VIRTUAL_INDEX+7]);
-        }
-    }
+    YADA_C0(ListQualityInfoAdr,ListQC108,63);
+    YADA_C108(ListQualityInfoAdr,9);
     delay_ms(5);
-    YADA_C0(ListQualityInfoAdr,ListQC108,98);
-    YADA_C108(ListQualityInfoAdr,14);
+    YADA_C0(ListQualityInfoAdr+126,&ListQC108[63],63);
+    YADA_C108(ListQualityInfoAdr+126,9);
     delay_ms(5);
-#endif  //OLD
+#endif
+    
 }
 
 
@@ -363,7 +365,7 @@ void GUI_VIEW_ListQuality() // wk --> 电能质量参数
 *******************************************************************************/
 void GUI_VIEW_ListQuality2(U8 U_DISK)
 {
-#if 1 // wk --> 
+#if 0 // wk @130408--> revrese dot old
   U16 BlockC108[5*2*7]={0};
   for(int num=0;num<5;num++)
     for(int ui=0;ui<2;ui++)
@@ -381,50 +383,27 @@ void GUI_VIEW_ListQuality2(U8 U_DISK)
   YADA_C0(ListUnblanceAdr, BlockC108,10*7);
   YADA_C108(ListUnblanceAdr,10);
 #endif // wk --> end
-#if 0 //old
-  U8 pBuf1[64]={0},i,j,k,index=0;
-  U16 BlockC108[126]={0},U_CAP=0,S_DAY=0,temp=0;
-#if 0  // wk --> U 盘操作相关 --> 待修改
-  if(U_DISK==1)
-  {
-      CH376ReadBlock( pBuf1 );  /* 如果需要,可以读取数据块CH376_CMD_DATA.DiskMountInq,返回长度 */
-     CH376DiskQuery((PU32)pBuf1);
-     U_CAP=(U16)(*(PU32)pBuf1 / ( 1000000 / DEF_SECTOR_SIZE ) );
-     S_DAY=(U16)(U_CAP/120);
-  }
-#endif
-  for(j=0;j<2;j++)
-    for(i=0;i<3;i++)
-      for(k=0;k<3;k++)
-	{
-          temp=UNBALANCED_INDEX+k+3*i+2*j;
-          index=7*k+21*i+63*j;
-	  BlockC108[index+1]=140+j*313;//X +80*j
-	  BlockC108[index+2]=46+30*k+i*125;//Y坐标
-	  BlockC108[index+3]=0xffff;
-	  BlockC108[index+4]=0x0000;
-          if(k==2&&i==2)
-          {
-           BlockC108[index]=0x6004;//显示数据的模式
-           BlockC108[index+5]=0;
-           if(j==0)
-             BlockC108[index+6]=U_CAP;
-           else
-             BlockC108[index+6]=S_DAY;
-          }
-          else
-          {
-            BlockC108[index]=0x3404;//显示数据的模式
-            BlockC108[index+5]=((U16)(PowRxchar[temp])<<8)+((U16)PowRxchar[temp+1]);
-	    BlockC108[index+6]=((U16)(PowRxchar[temp+2])<<8)+((U16)PowRxchar[temp+3]);
-          }
-	  
+
+#if 1 // wk @130408--> revrese dot tx
+  U8 j,k,index=0,DATA_DIS3[40]= {0};
+    U16 BlockC108[70]= {0},temp=0;
+    Sig_Fiq(&PowRxchar[UNBLA_INDEX],DATA_DIS3,100,10);
+    for(j=0; j<5; j++)
+        for(k=0; k<2; k++)
+        {
+            temp=4*k+8*j;
+            index=7*k+14*j;
+            BlockC108[index]=0x3204;//显示数据的模式
+            BlockC108[index+3]=C108FC_W;
+            BlockC108[index+4]=0x0000;
+            BlockC108[index+1]=241+k*212;//X +80*j
+            BlockC108[index+2]=148+j*47;//Y坐标
+            BlockC108[index+5]=((U16)(DATA_DIS3[temp])<<8)+((U16)DATA_DIS3[temp+1]);
+            BlockC108[index+6]=((U16)(DATA_DIS3[temp+2])<<8)+((U16)DATA_DIS3[temp+3]);
         }
-  YADA_C0(ListUnblanceAdr, BlockC108,63);
-  YADA_C108(ListUnblanceAdr,9);
-  YADA_C0(ListUnblanceAdr+63, &BlockC108[63], 63);
-  YADA_C108(ListUnblanceAdr+63,9); 
-#endif // old
+    YADA_C0(ListUnblanceAdr, BlockC108,70);
+    YADA_C108(ListUnblanceAdr,10);
+#endif
 }
 
 /*******************************************************************************
@@ -445,6 +424,8 @@ void GUI_VIEW_HarmoGraph()
     U16 UHarmoBarXY[104]= {0};//26次谐波，共26*4个点
     U16 IHarmoBarXY[104]= {0}; 
     U8 HarmoInfoZone[][10]= {"第01-26次","第25-50次"};//WK -->
+    U16 temp,temp1;
+    U8 HARM_DIS[8]= {0};
 //    U16 square[16]= {14,42,16,65,91,42,93,65,414,79,416,102,414,264,416,287}; //光标位置
     
     U16 HarmoUI[28]= {0x2004,310,78,0xffff,0x0000,0x0000,HarmoGraphUorder,  //0x03ae 表主体背景色
@@ -453,20 +434,35 @@ void GUI_VIEW_HarmoGraph()
                       0x3304,0x0200,0x0108,0xffff,0x0000
                      };//根据放大倍数控制格式
     /* wk --> 影响返回主界面，原因待进一步分析中。。。--> 已解决 */
-#define wk_tst 1
-#if wk_tst
-    HarmoUI[19]=((U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphUorder-604+Harmo_INDEX])<<8)
-                +(U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphUorder-603+Harmo_INDEX]);
-    HarmoUI[20]=((U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphUorder-602+Harmo_INDEX])<<8)
-                +(U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphUorder-601+Harmo_INDEX]);
-    HarmoUI[26]=((U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphIorder-404+Harmo_INDEX])<<8)
-                +(U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphIorder-403+Harmo_INDEX]);
-    HarmoUI[27]=((U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphIorder-402+Harmo_INDEX])<<8)
-                +(U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphIorder-401+Harmo_INDEX]);
+    // wk @130408--> revrese dot old
+//    HarmoUI[19]=((U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphUorder-604+Harmo_INDEX])<<8)
+//                +(U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphUorder-603+Harmo_INDEX]);
+//    HarmoUI[20]=((U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphUorder-602+Harmo_INDEX])<<8)
+//                +(U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphUorder-601+Harmo_INDEX]);
+//    HarmoUI[26]=((U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphIorder-404+Harmo_INDEX])<<8)
+//                +(U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphIorder-403+Harmo_INDEX]);
+//    HarmoUI[27]=((U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphIorder-402+Harmo_INDEX])<<8)
+//                +(U16)(PowRxchar[600*HarmoGraphPhase+4*HarmoGraphIorder-401+Harmo_INDEX]);
+//    ChartoFloat(&PowRxchar[600*(HarmoGraphPhase-1)+(HarmoGraphRange-1)*96+Harmo_INDEX], Graphfloat,26,1000);//转换电压数据，！放大倍数
+//    ChartoFloat(&PowRxchar[600*(HarmoGraphPhase-1)+(HarmoGraphRange-1)*96+Harmo_INDEX+200], &Graphfloat[26],26,1000);//转换电流数据
+    // wk @130408--> revrese dot tx
+    temp=600*HarmoGraphPhase+4*HarmoGraphUorder+Harmo_INDEX;
+    Sig_Fiq(&PowRxchar[temp-604],HARM_DIS,100,1);
+    Sig_Fiq(&PowRxchar[temp-404],&HARM_DIS[4],10,1);
+    HarmoUI[19]=((U16)(HARM_DIS[0])<<8)
+                +(U16)(HARM_DIS[1]);
+    HarmoUI[20]=((U16)(HARM_DIS[2])<<8)
+                +(U16)(HARM_DIS[3]);
+    HarmoUI[26]=((U16)(HARM_DIS[4])<<8)
+                +(U16)(HARM_DIS[5]);
+    HarmoUI[27]=((U16)(HARM_DIS[6])<<8)
+                +(U16)(HARM_DIS[7]);
+    temp1=600*(HarmoGraphPhase-1)+(HarmoGraphRange-1)*96+Harmo_INDEX;
+    ChartoFloat(&PowRxchar[temp1], Graphfloat,26,10000);//转换电压数据，！放大倍数
+    ChartoFloat(&PowRxchar[temp1+200], &Graphfloat[26],26,10000);//转换电流数据
+    // wk @130408--> revrese dot end
     
-    ChartoFloat(&PowRxchar[600*(HarmoGraphPhase-1)+(HarmoGraphRange-1)*96+Harmo_INDEX], Graphfloat,26,1000);//转换电压数据，！放大倍数
-    ChartoFloat(&PowRxchar[600*(HarmoGraphPhase-1)+(HarmoGraphRange-1)*96+Harmo_INDEX+200], &Graphfloat[26],26,1000);//转换电流数据
-#endif  // wk_tst
+   
     /* wk --> end */
     //电压范围0~300,分三级显示0~3.0,3.0~300
     //循环构建柱状图的数组，每一个数据转换成矩形的（Xe，Ye）（Xs，Ys）
@@ -539,6 +535,7 @@ void GUI_VIEW_HarmoGraph()
 *******************************************************************************/
 void GUI_VIEW_HarmoList()
 {
+#if 0 // wk @130408--> revrese dot old
     U16 HRU16[100]= {0};
     U16 ListC108[182]= {0},IndexInit;
     float Listfloat[50]= {0};
@@ -557,7 +554,7 @@ void GUI_VIEW_HarmoList()
     delay_ms(5);
     if(HarmoListAmporRatio==1)//显示幅值时不需要转换
     {
-        YADA_98(330,41,0x22,0x81,0x02,0xffff,0x0000,HarmoInfo[3],0);
+        YADA_98(330,41,0x22,0x81,0x02,0xffff,0x0000,HarmoInfo[3],0); // wk @130409 -->显示幅值
         IndexInit=(HarmoListPhase-1)*600+(HarmoListUorI-1)*200+(HarmoListRange-1)*96+Harmo_INDEX;
         for(U8 LorR=0; LorR<2; LorR++) //先左边列后右边列
         {
@@ -576,7 +573,7 @@ void GUI_VIEW_HarmoList()
     }
     else//显示含有率
     {
-        YADA_98(330,41,0x22,0x81,0x02,0xffff,0x0000,HarmoInfo[4],0);
+        YADA_98(330,41,0x22,0x81,0x02,0xffff,0x0000,HarmoInfo[4],0); // wk @130409 -->显示含有效
         ChartoFloat(&PowRxchar[(HarmoListPhase-1)*600+(HarmoListUorI-1)*200+Harmo_INDEX], Listfloat,50,1000);
         UIValues2HR(Listfloat,HRU16);//转换50次的值，若每次转换26次，则需记录第一次的值用于算25-50次的含有率
         YADA_40(0xffe0,0x0000);/*黄色前景，黑色背景*/
@@ -595,6 +592,76 @@ void GUI_VIEW_HarmoList()
             }
         }
     }
+#endif
+    
+    U16 HRU16[100]= {0},temp,temp1;
+    U16 ListC108[182]= {0},IndexInit;
+    U8 LIST_DIS[104]= {0};
+    float Listfloat[50]= {0};
+    U8 HarmoInfoZone[][10]= {"第1-26次","第25-50次","幅 值","含有率","U","I"};
+    
+    YADA_98(58,42,0x22,0x81,0x02,0xffe0,0x0000,HarmoInfo[HarmoListPhase-1],0);//显示相信息A、B、C.
+    delay_us(5);
+    YADA_98(205,42,0x22,0x81,0x02,0xffe0,0x0000,HarmoInfoZone[3+HarmoListUorI],1);
+    delay_us(5);
+    YADA_98(496,41,0x22,0x81,0x02,0xffe0,0x0000,HarmoInfoZone[HarmoListRange-1],0);
+    delay_us(5);
+    YADA_98(330,41,0x22,0x81,0x02,0xffe0,0x0000,HarmoInfoZone[1+HarmoListAmporRatio],6);
+    if(HarmoListAmporRatio==1)//显示幅值时不需要转换
+    {
+        IndexInit=(HarmoListPhase-1)*600+(HarmoListUorI-1)*200+(HarmoListRange-1)*96+Harmo_INDEX;
+        if(HarmoListUorI==1)
+        {
+            Sig_Fiq(&PowRxchar[IndexInit],LIST_DIS,100,26);
+        }
+        else
+        {
+            Sig_Fiq(&PowRxchar[IndexInit],LIST_DIS,10,26);
+        }
+        for(U8 LorR=0; LorR<2; LorR++) //先左边列后右边列
+        {
+            for(U8 i=0; i<13; i++)
+            {
+                temp=7*i+91*LorR;
+                temp1=8*i+LorR*4;
+                if(HarmoListUorI==1)
+                {
+                    ListC108[temp]=0x3204;//显示数据的模式
+                }
+                else
+                {
+                    ListC108[temp]=0x3304;//显示数据的模式
+                }
+                ListC108[temp+1]=100+338*LorR;//显示左边列谐波数据的X为82,右边列谐波数据X为438
+                ListC108[temp+2]=77+28*i;//Y坐标
+                ListC108[temp+3]=C108FC_W;
+                ListC108[temp+4]=0x0000;
+                ListC108[temp+5]=((U16)(LIST_DIS[temp1])<<8)+((U16)LIST_DIS[temp1+1]);
+                ListC108[temp+6]=((U16)(LIST_DIS[temp1+2])<<8)+((U16)LIST_DIS[temp1+3]);;
+            }
+        }
+    }
+    else//显示含有率
+    {
+        ChartoFloat(&PowRxchar[(HarmoListPhase-1)*600+(HarmoListUorI-1)*200+Harmo_INDEX], Listfloat,50,100);
+        UIValues2HR(Listfloat,HRU16);//转换50次的值，若每次转换26次，则需记录第一次的值用于算25-50次的含有率
+        YADA_40(0xffe0,0x0000);/*黄色前景，黑色背景*/
+        for(U8 LorR=0; LorR<2; LorR++)//先左边列后右边列
+        {
+            for(U8 i=0; i<13; i++)
+            {
+                temp=7*i+91*LorR;
+                ListC108[temp]=0x4204;//显示数据的模式，注意从显示4位小数切换到2位小数时，必须刷新页面
+                ListC108[temp+1]=100+338*LorR;//显示左边列谐波数据的X为82,右边列谐波数据X为438
+                ListC108[temp+2]=77+28*i;//Y坐标
+                ListC108[temp+3]=C108FC_W;
+                ListC108[temp+4]=0x0000;
+                ListC108[temp+5]=*(HRU16+i*4+LorR*2+(HarmoListRange-1)*48);
+                ListC108[temp+6]=*(HRU16+i*4+LorR*2+(HarmoListRange-1)*48+1);
+            }
+        }
+    }
+    
     delay_ms(5);
     YADA_C0(HarmoListInfoAdr,ListC108,91);
     YADA_C108(HarmoListInfoAdr,13);
@@ -638,9 +705,13 @@ void linemark(U16 Y_COORD, U16 UorI)
     for(k=0; k<3; k++)
     {
       if(UorI)
-        Sig_Fiq(&PowRxchar[UI_VIRTUAL_INDEX+8+16*k],&VI_DIS[4*k],10);   //数据显示为要求的有效数字
+         // wk @130408--> revrese dot tx
+//        Sig_Fiq(&PowRxchar[UI_VIRTUAL_INDEX+8+16*k],&VI_DIS[4*k],10);   //数据显示为要求的有效数字
+       Sig_Fiq(PowRxchar,VI_DIS,100,3);
       else
-        Sig_Fiq(&PowRxchar[UI_VIRTUAL_INDEX+16*k],&VI_DIS[4*k],100);
+         // wk @130408--> revrese dot tx
+//        Sig_Fiq(&PowRxchar[UI_VIRTUAL_INDEX+16*k],&VI_DIS[4*k],100);
+       Sig_Fiq(&PowRxchar[I_VIRTUAL_INDEX],VI_DIS,10,3);
     }
     for(k=0; k<3; k++)
     {
@@ -1142,18 +1213,10 @@ void GUI_SYS_EVENTSET(void)
         
         for(k=0; k<11; k++)//在第一次时全部显示，以后每次数据更改时只修改相应的项
         {
-            temp=7*k;
-            ParaSetC108[temp + 0] = 0x5204;         //P  显示数据的模式
+            temp=7*k;               // old --> 0x5204
+            ParaSetC108[temp + 0] = 0x3204;         //P  显示数据的模式
             ParaSetC108[temp + 1] = SysEventXY[2*k];            //显示相位的X坐标
             ParaSetC108[temp + 2] = SysEventXY[2*k + 1];     //Y坐标
-//            if(SysFlashDataT[EVESEND_FLAG+k]==0)
-//            {
-//              ParaSetC108[temp + 3] = 0xffff;         //白色，下为黑色
-//            }
-//            else
-//            {
-//              ParaSetC108[temp + 3] = 0xffe0;         //白色，下为黑色
-//            }
             ParaSetC108[temp + 3] = 0xffff;         //白色，下为黑色
             ParaSetC108[temp + 4] = 0x0000;
             ParaSetC108[temp + 5] =(U16) (SysFlashDataT[3+4*k+EVESET_INDEX]<<8)+(U16)(SysFlashDataT[2+4*k+EVESET_INDEX]);
@@ -1206,7 +1269,7 @@ void GUI_SYS_EVENTSET(void)
         SysFlashDataT[temp+2+EVESET_INDEX]=(U8)(Float2L>>16);
         SysFlashDataT[temp+3+EVESET_INDEX]=(U8)(Float2L>>24);
         
-        U16 OneC108[7]= {0x5204,SysEventXY[2*SysSet.EvntIndex],SysEventXY[2*SysSet.EvntIndex + 1],0xffff,0x0000};
+        U16 OneC108[7]= {0x3204,SysEventXY[2*SysSet.EvntIndex],SysEventXY[2*SysSet.EvntIndex + 1],0xffff,0x0000};
         if(SysFlashDataT[EVESEND_FLAG])
         {
           OneC108[3]=0xffe0;
@@ -1218,7 +1281,9 @@ void GUI_SYS_EVENTSET(void)
         switch(SysSet.EvntIndex)
         {
         case 0:
-          if((OneC108[6]+(OneC108[5]<<16))>NumWave)
+          if(((OneC108[6]+((U32)OneC108[5]<<16))!=400)|| ((OneC108[6]+((U32)OneC108[5]<<16))!=600)||
+                    ((OneC108[6]+((U32)OneC108[5]<<16))!=800)|| ((OneC108[6]+((U32)OneC108[5]<<16))!=1000)||
+                    ((OneC108[6]+((U32)OneC108[5]<<16))!=1200))
            { 
             OneC108[3]=0xf800;
             flg_event[0]=1;
@@ -1305,6 +1370,26 @@ void GUI_SYS_EVENTSET(void)
         switch(i)
         {
           case 0:
+            if( (SysFlashDataT[4*i+EVESET_INDEX+0]+((U32)SysFlashDataT[4*i+EVESET_INDEX+1]<<8)+((U32)SysFlashDataT[4*i+EVESET_INDEX+2]<<16))<=400)
+            {
+                NumWave=400;
+            }
+            else if((SysFlashDataT[4*i+EVESET_INDEX]+((U32)SysFlashDataT[4*i+EVESET_INDEX+1]<<8)+((U32)SysFlashDataT[4*i+EVESET_INDEX+2]<<16))<=600)
+            {
+                NumWave=600;
+            }
+            else if((SysFlashDataT[4*i+EVESET_INDEX]+((U32)SysFlashDataT[4*i+EVESET_INDEX+1]<<8)+((U32)SysFlashDataT[4*i+EVESET_INDEX+2]<<16))<=800)
+            {
+                NumWave=800;
+            }
+            else if((SysFlashDataT[4*i+EVESET_INDEX]+((U32)SysFlashDataT[4*i+EVESET_INDEX+1]<<8)+((U32)SysFlashDataT[4*i+EVESET_INDEX+2]<<16))<=1000)
+            {
+                NumWave=1000;
+            }
+            else
+            {
+                NumWave=1200;
+            }
            SysFlashDataT[4*i+25]=(U8)(NumWave)%256;
            SysFlashDataT[4*i+26]=(U8)((NumWave)>>8)%256;
            SysFlashDataT[4*i+27]=(U8)((NumWave)>>16)%256;
@@ -1446,7 +1531,7 @@ void GUI_SYS_EVENTSET(void)
     for(k=0; k<11; k++)
         {
             temp=7*k;
-            ParaSetC108[temp + 0] = 0x5204;         //P  显示数据的模式
+            ParaSetC108[temp + 0] = 0x3204;         //P  显示数据的模式
             ParaSetC108[temp + 1] = SysEventXY[2*k];            //显示相位的X坐标
             ParaSetC108[temp + 2] = SysEventXY[2*k + 1];     //Y坐标
             ParaSetC108[temp + 3] = 0xffc1;         //白色，下为黑色
@@ -1472,6 +1557,35 @@ void GUI_SYS_EVENTSET(void)
     else
       _mem_free(shell_ptr); 
     
+}
+
+/*******************************************************************************
+* 函  数  名      : GUI_INIT_SET
+* 描      述      : 恢复出厂设置，确认后系统各设置参数恢复最初状态。
+* 输      入      : 无
+* 返      回      : 无
+*******************************************************************************/
+void GUI_INIT_SET(void)
+{
+    U8 PBUF[]= {"恢复出厂设置成功！"};
+//    if(InitAck)
+//    {
+//        memset(SysFlashData,0,99);//SysFlashData[0~85]赋初值0
+//        Init_Sys_Set();
+//        memset(NBlock,0,200);//NBlock[0~199]赋初值0
+//        memset(NPage,0,115);//NPage[0~199]赋初值0
+//        Write_Flash(SysFlashData,99,SysSetAddr);  //系统设置字节写入芯片flash
+//        delay_us(10);
+//        Write_Flash(NPage,115,NFPAddr);   //nandflash的页面值字节写入芯片flash
+//        delay_us(10);
+//        Write_WFlash(NBlock,64,NFBAddr);//nandflash的block值分两次字写入芯片flash
+//        delay_us(10);
+//        Write_WFlash(&NBlock[64],36,NFBAddr+128);
+//        delay_us(10);
+//        YADA_98(200, 211, 0x22, 0x81, 0x02, 0xffe0, 0x0000, PBUF, 0);
+//        InitAck=0;
+//    }
+// if(InitNoAck)
 }
 
 /*******************************************************************************
@@ -1611,6 +1725,40 @@ void GUI_EventMonitor(U8 U_DISK)
 //  }
 //    
 //}
+/*******************************************************************************
+* 函  数  名      : GUI_STATUS
+* 描      述      : 工作状态的显示，如U盘存储，IP地址，版本号等。
+* 输      入      : U8 U_DISK，U盘的标志。
+* 返      回      : 无
+*******************************************************************************/
+void GUI_STATUS(U8 U_DISK)
+{
+  // wk @130409 --> 内容待完善
+//    U16 StatusC108[21]= {0},U_DISC[3]= {0};
+//    U8 temp=0,pBuf1[64]= {0},pBuf2[64]= {0};
+//    if(U_DISK==1)
+//    {
+//        CH376ReadBlock( pBuf1 );  //如果需要,可以读取数据块CH376_CMD_DATA.DiskMountInq,返回长度
+//        CH376DiskCapacity((PU32)pBuf2);//为读取U盘总容量函数。
+//        CH376DiskQuery((PU32)pBuf1);  //读取U盘剩余容量函数。
+//        U_DISC[0]=(U16)(*(PU32)pBuf2 / ( 1000000 / DEF_SECTOR_SIZE ) );
+//        U_DISC[1]=(U16)(*(PU32)pBuf1 / ( 1000000 / DEF_SECTOR_SIZE ) );
+//        U_DISC[2]=(U16)(U_DISC[1]/120);
+//    }
+//    for(U8 i=0; i<3; i++)
+//    {
+//        temp=7*i;
+//        StatusC108[temp]=0x6004;//显示数据的模式
+//        StatusC108[temp+1]=480;//显示左边列谐波数据的X为82,右边列谐波数据X为438
+//        StatusC108[temp+2]=94+37*i;//Y坐标
+//        StatusC108[temp+3]=C108FC_W;
+//        StatusC108[temp+4]=0x0000;
+//        StatusC108[temp+5]=0;
+//        StatusC108[temp+6]=U_DISC[i];
+//    }
+//    YADA_C0(StatusAddr,StatusC108,21);
+//    YADA_C108(StatusAddr,3);
+}
 /*******************************************************************************
 * 函  数  名      : EventSave
 * 描      述      : 事件存储
