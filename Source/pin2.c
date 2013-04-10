@@ -7,12 +7,7 @@
                         通过按键 1 中断中的事件与此任务进行通信
 *******************************************************************************/
 
-#include <mqx.h>
-#include <bsp.h> 
-#include <fio.h>
-#include <string.h>
-
-#include "System.h"
+#include "includes.h"
 
 void PIN2(uint_32 temp)
 {

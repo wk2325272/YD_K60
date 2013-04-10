@@ -11,9 +11,9 @@
 
 void FTP_task( uint_32 temp)
 {
-   _ip_address       enet_ipaddr = ENET_IPADDR;
-   _ip_address       enet_ipmask = ENET_IPMASK;
-   uint_32           enet_device = 0;
+//   _ip_address       enet_ipaddr = ENET_IPADDR;
+//   _ip_address       enet_ipmask = ENET_IPMASK;
+//   uint_32           enet_device = 0;
    _enet_address     address;
    _enet_handle      ehandle;
    _rtcs_if_handle   ihandle;

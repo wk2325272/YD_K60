@@ -8,13 +8,41 @@
                      switch部分分支可调整为Dis_PicID=Touch_key+X
 *******************************************************************************/
 #define    LCDUart_GLOBALS
-#include "LCDUart.h"
-#include "LCDDriver.h"
+
+#include "includes.h"
 
 #define _LCDUart_DBUG_   //wk --> 测试：是否需要输出调试信息
 
 extern uchar read_buffer[8];
 extern U8 EVEnum_old;  // --> MenuView.c
+/* wk @130409 --> 变量定义 */
+volatile U8 DisTimeOnce;
+volatile U8 MenuSwFlg;//页面切换标志，默认值为0
+volatile U8 Dis_PicID;
+volatile U8 ViewKeyFlg;
+volatile U8 SysSetKeyFlg;
+volatile U8 EventKeyFlg;
+volatile U8 HarmoGraphPhase;//用于选择显示相，默认值1
+volatile U8 HarmoGraphRange;//用于选择显示谐波范围，默认值为1,对应1~26次，2对应25~50
+volatile U8 HarmoGraphUorder;//默认值1，用于控制谐波电压具体次数的数值显示,
+volatile U8 HarmoGraphIorder;//默认值1，用于控制谐波电流具体次数的数值显示，
+volatile U8 HarmoListShift;//默认值0，谐波列表显示中的功能右移键
+volatile U8 HarmoListPhase;//默认值1，
+volatile U8 HarmoListUorI;//默认值1，
+volatile U8 HarmoListRange;//默认值1，
+volatile U8 HarmoListAmporRatio;////默认值1，谐波列表显示中显示幅值澹(1)或者含有率(2)的选择
+volatile U8 VIEWHoldFlg;//保持键默认为0，键按下时值变为1，再次按下时值变为0；
+volatile U8 EVEpage;//事件的页面键，上翻下翻
+volatile U8 EVEline;//事件的上下移按键，确定事件的行即第几个事件。
+volatile U8 EVEfunflg;//事件的上下移按键功能标志。
+volatile U8 OtherSetIndex;//初值为0，仅在此C文件中使用
+volatile U8 TimeSetIndex;//初值为6，仅在此C文件中使用
+//volatile U8 RemovDevFlg;
+//volatile U8 SoundOffOn;
+//volatile U8 BlightOffOn;
+//volatile struct SS SysSet;//在LCDUART.c中赋值，在MenuView.c中使用
+volatile SysStr SysSet; //在LCDUART.c中赋值，在MenuView.c中使用
+
 /* Uart initialization for send data*/
 /* 
 ** 函数名： 
@@ -25,7 +53,7 @@ extern U8 EVEnum_old;  // --> MenuView.c
 void UartTouch_init()
 {
    MQX_FILE_PTR uart_touch = NULL;  // wk --> 20130107
-   ISR_UART_STRUCT uart_isr;
+//   ISR_UART_STRUCT uart_isr;
    
    uart_touch  = fopen( "ittyb:", NULL );  // 液晶使用的是串口 ttyb
 //   uart_touch  = fopen( "ittye:", NULL );  // wk --> test event of uart
@@ -50,7 +78,6 @@ void new_uart_isr(pointer user_uart_ptr)
    sci_ptr=(UART_MemMapPtr)UART4_BASE_PTR;  //wk
    volatile int_32                        c;
    
-  
 #if 1 // wk --> data rec
  static   uchar  i=0,flag=0;
    if (sci_ptr->S1 & UART_S1_RDRF_MASK) {

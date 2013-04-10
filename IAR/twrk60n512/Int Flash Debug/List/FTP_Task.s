@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    09/Apr/2013  10:07:07 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    10/Apr/2013  18:05:45 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -150,18 +150,13 @@
 //   12 void FTP_task( uint_32 temp)
 //   13 {
 FTP_task:
-        PUSH     {R0-R6,LR}
+        PUSH     {R0-R4,LR}
           CFI R14 Frame(CFA, -4)
-          CFI R6 Frame(CFA, -8)
-          CFI R5 Frame(CFA, -12)
-          CFI R4 Frame(CFA, -16)
-          CFI CFA R13+32
-//   14    _ip_address       enet_ipaddr = ENET_IPADDR;
-        LDR.N    R4,??FTP_task_0  ;; 0x317b48f8
-//   15    _ip_address       enet_ipmask = ENET_IPMASK;
-        MVNS     R5,#+255
-//   16    uint_32           enet_device = 0;
-        MOVS     R6,#+0
+          CFI R4 Frame(CFA, -8)
+          CFI CFA R13+24
+//   14 //   _ip_address       enet_ipaddr = ENET_IPADDR;
+//   15 //   _ip_address       enet_ipmask = ENET_IPMASK;
+//   16 //   uint_32           enet_device = 0;
 //   17    _enet_address     address;
 //   18    _enet_handle      ehandle;
 //   19    _rtcs_if_handle   ihandle;
@@ -169,19 +164,19 @@ FTP_task:
 //   21   
 //   22 #ifdef _FTP_DBUG_
 //   23    printf("\n----------   FTP_Task  ----------\n");
-        LDR.N    R0,??FTP_task_0+0x4
+        LDR.N    R0,??FTP_task_0
           CFI FunCall _io_printf
         BL       _io_printf
 //   24    printf("\n----------             ----------\n");
-        LDR.N    R0,??FTP_task_0+0x8
+        LDR.N    R0,??FTP_task_0+0x4
           CFI FunCall _io_printf
         BL       _io_printf
 //   25    printf("\n----------             ----------\n");
-        LDR.N    R0,??FTP_task_0+0x8
+        LDR.N    R0,??FTP_task_0+0x4
           CFI FunCall _io_printf
         BL       _io_printf
 //   26    printf("\n----------      END    ----------\n");
-        LDR.N    R0,??FTP_task_0+0xC
+        LDR.N    R0,??FTP_task_0+0x8
           CFI FunCall _io_printf
         BL       _io_printf
 //   27 #endif    
@@ -191,44 +186,44 @@ FTP_task:
 //   31     _RTCS_mem_pool = _mem_create_pool((pointer)DEMO_RTCS_POOL_ADDR, DEMO_RTCS_POOL_SIZE);
 //   32 #endif
 //   33     printf("\n welecome2 ~! \n");///////////////////////dx
-        LDR.N    R0,??FTP_task_0+0x10
+        LDR.N    R0,??FTP_task_0+0xC
           CFI FunCall _io_printf
         BL       _io_printf
 //   34    /* runtime RTCS configuration */
 //   35    _RTCSPCB_init = 4;
-        LDR.N    R0,??FTP_task_0+0x14
+        LDR.N    R0,??FTP_task_0+0x10
         MOVS     R1,#+4
         STR      R1,[R0, #+0]
 //   36    _RTCSPCB_grow = 2;
-        LDR.N    R0,??FTP_task_0+0x18
+        LDR.N    R0,??FTP_task_0+0x14
         MOVS     R1,#+2
         STR      R1,[R0, #+0]
 //   37    _RTCSPCB_max = 20;
-        LDR.N    R0,??FTP_task_0+0x1C
+        LDR.N    R0,??FTP_task_0+0x18
         MOVS     R1,#+20
         STR      R1,[R0, #+0]
 //   38    _RTCS_msgpool_init = 4;
-        LDR.N    R0,??FTP_task_0+0x20
+        LDR.N    R0,??FTP_task_0+0x1C
         MOVS     R1,#+4
         STR      R1,[R0, #+0]
 //   39    _RTCS_msgpool_grow = 2;
-        LDR.N    R0,??FTP_task_0+0x24
+        LDR.N    R0,??FTP_task_0+0x20
         MOVS     R1,#+2
         STR      R1,[R0, #+0]
 //   40    _RTCS_msgpool_max  = 20;
-        LDR.N    R0,??FTP_task_0+0x28
+        LDR.N    R0,??FTP_task_0+0x24
         MOVS     R1,#+20
         STR      R1,[R0, #+0]
 //   41    _RTCS_socket_part_init = 4;
-        LDR.N    R0,??FTP_task_0+0x2C
+        LDR.N    R0,??FTP_task_0+0x28
         MOVS     R1,#+4
         STR      R1,[R0, #+0]
 //   42    _RTCS_socket_part_grow = 2;
-        LDR.N    R0,??FTP_task_0+0x30
+        LDR.N    R0,??FTP_task_0+0x2C
         MOVS     R1,#+2
         STR      R1,[R0, #+0]
 //   43    _RTCS_socket_part_max  = 20;
-        LDR.N    R0,??FTP_task_0+0x34
+        LDR.N    R0,??FTP_task_0+0x30
         MOVS     R1,#+20
         STR      R1,[R0, #+0]
 //   44 
@@ -240,7 +235,7 @@ FTP_task:
 //   46                          
 //   47    ENET_get_mac_address(BSP_DEFAULT_ENET_DEVICE,ENET_IPADDR,address);
         ADD      R2,SP,#+8
-        LDR.N    R1,??FTP_task_0  ;; 0x317b48f8
+        LDR.N    R1,??FTP_task_0+0x34  ;; 0x317b48f8
         MOVS     R0,#+0
           CFI FunCall ENET_get_mac_address
         BL       ENET_get_mac_address
@@ -263,7 +258,7 @@ FTP_task:
         MOVS     R4,R0
 //   51    error = RTCS_if_bind(ihandle, ENET_IPADDR, ENET_IPMASK);
         MVNS     R2,#+255
-        LDR.N    R1,??FTP_task_0  ;; 0x317b48f8
+        LDR.N    R1,??FTP_task_0+0x34  ;; 0x317b48f8
         LDR      R0,[SP, #+0]
           CFI FunCall RTCS_if_bind
         BL       RTCS_if_bind
@@ -285,11 +280,10 @@ FTP_task:
 //   56    }
 //   57 }
 ??FTP_task_1:
-        POP      {R0-R6,PC}       ;; return
+        POP      {R0-R4,PC}       ;; return
         Nop      
         DATA
 ??FTP_task_0:
-        DC32     0x317b48f8
         DC32     `?<Constant "\\n----------   FTP_Tas...">`
         DC32     `?<Constant "\\n----------          ...">`
         DC32     `?<Constant "\\n----------      END ...">`
@@ -303,6 +297,7 @@ FTP_task:
         DC32     _RTCS_socket_part_init
         DC32     _RTCS_socket_part_grow
         DC32     _RTCS_socket_part_max
+        DC32     0x317b48f8
         DC32     RTCS_IF_ENET
         DC32     `?<Constant "FTP_server">`
           CFI EndBlock cfiBlock0
@@ -595,11 +590,11 @@ FTPd_commands:
 // 
 //   4 bytes in section .data
 // 628 bytes in section .rodata
-// 244 bytes in section .text
+// 236 bytes in section .text
 // 
-// 244 bytes of CODE  memory
+// 236 bytes of CODE  memory
 // 628 bytes of CONST memory
 //   4 bytes of DATA  memory
 //
 //Errors: none
-//Warnings: 5
+//Warnings: 2

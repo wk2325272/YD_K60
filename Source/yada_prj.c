@@ -1,18 +1,11 @@
-
-#include <mqx.h>
-#include <bsp.h> 
-#include <fio.h>
-#include <string.h>
-#include "shell.h" // shell function
-#include "sh_prv.h"// shell function
-#include <mfs.h>  // wk @130330 --> test mfs func
-
-#include "System.h"
-/* application *.h */
-#include "MenuView.h"
-#include "LCDDriver.h"
-#include "LCDUart.h"
-#include "DSPSPI.h" 
+/*******************************************************************************
+* File Name       	 : 
+* Author             	 : 
+* Version            	 : 
+* Date               	 :
+* Description     	 :
+*******************************************************************************/
+#include "includes.h"
 
 #if ! BSPCFG_ENABLE_IO_SUBSYSTEM
 #error This application requires BSPCFG_ENABLE_IO_SUBSYSTEM defined non-zero in user_config.h. Please recompile BSP with this option.
@@ -26,12 +19,10 @@
 volatile U8 RefreshFlg; // 页面刷新标志
 U8 U_FLAG = 0;
 uchar read_buffer[8]={0x12,0x23};  // wk @130403 --> uncomment
-//static U8 File_flg; // 第一次启动时建立文件夹标志
 U8 SavePowerFlg; // WK @130401 --> 电能质量数据存储标志 1时存储
 
 extern void YaDa(uint_32);
 extern void MainLoop();
-
 extern void USB_task(uint_32 param);
 //extern void sdcard_task(uint_32 param);
 extern void FTP_task(uint_32 param);
@@ -42,7 +33,6 @@ extern void sdcard_task(uint_32 temp);
 extern void PIN2(uint_32 temp);
 extern void mem_flash_app(uint_32 temp);
 extern void tcp_socket_task( uint_32 val);
-//void LCDTouchSel(uint_32 param);
 
 void flg_int();
 
@@ -139,31 +129,29 @@ void YaDa
   
   RefreshFlg = 0; //页面无刷新 
     
-      SHELL_CONTEXT_PTR    shell_ptr;
-      shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
-      _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
-      uint_32 file_size;   
-      uchar status;
-     /* wk @130401 --> 在 flash中 新建 sysset 用于系统变量保存 */
-      shell_ptr->ARGC = 2;
-      shell_ptr->ARGV[0]="cd";
-      shell_ptr->ARGV[1]="f:\\"; 
-      Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
-      
+    SHELL_CONTEXT_PTR    shell_ptr;
+    shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
+    _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
+    uint_32 file_size;  uchar status;
+   /* wk @130401 --> 在 flash中 新建 sysset 用于系统变量保存 */
+    shell_ptr->ARGC = 2;
+    shell_ptr->ARGV[0]="cd";
+    shell_ptr->ARGV[1]="f:\\"; 
+    Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+    
 //      shell_ptr->ARGC = 2;
 //      shell_ptr->ARGV[0]="df_s";
-      shell_ptr->ARGV[1]="SYSSET";   //wk --> 注意：查找的文件名暂时必须要是大写
-      status=Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
-      if(status==0)
-      {
+    shell_ptr->ARGV[1]="SYSSET";   //wk --> 注意：查找的文件名暂时必须要是大写
+    status=Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
+    if(status==0)
+    {
 //        shell_ptr->ARGC = 2;
 //        shell_ptr->ARGV[0]="mkdir";
-        shell_ptr->ARGV[1]="SYSSET"; 
-        Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
-      }
-    _mem_free(shell_ptr);
+      shell_ptr->ARGV[1]="SYSSET"; 
+      Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
+    }
+  _mem_free(shell_ptr);
     
-  /* Test end */
   /* button1 into interrupt for shell or maingui task change */
    GPIO_PIN_STRUCT pins_int[] = {
             BSP_BUTTON1 | GPIO_PIN_IRQ_RISING ,
@@ -171,8 +159,8 @@ void YaDa
         };
     MQX_FILE_PTR port_file4;        
          /* 这是按键1 上升沿中断*/
-         port_file4 = fopen("gpio:read", (char_ptr) &pins_int );
-         ioctl(port_file4, GPIO_IOCTL_SET_IRQ_FUNCTION, (pointer)int_callback);        
+   port_file4 = fopen("gpio:read", (char_ptr) &pins_int );
+   ioctl(port_file4, GPIO_IOCTL_SET_IRQ_FUNCTION, (pointer)int_callback);        
   /* end */
   /* wk @130330 -->timer of lpt */
    _lpt_install (0,3 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO, 11, timer_isr, TRUE);//2 * 1000000  --> 2秒     
@@ -279,7 +267,6 @@ void MainLoop()
     switch (Dis_PicID)
     {
       case MenuViewWavVolCur:
-       
       GUI_VIEW_UI();
       break;
     case MenuViewWavVol:
@@ -359,6 +346,5 @@ void flg_int()   // wk --> 一些标志的初始化
     EVEline=0;
     EVEfunflg=0;
     
-//    File_flg=0;// wk -->
     SavePowerFlg =0;
 }

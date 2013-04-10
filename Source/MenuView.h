@@ -1,12 +1,9 @@
 //数据显示时使用到LCD的暂存缓冲区间为0x0000-0x0AF7
-#ifdef      MenuV_GLOBALS
-#define MenuV_EXT
-#else
-#define MenuV_EXT   extern
-#endif
+#ifndef MENUV_H
+#define MENUV_H
 
-#include "System.h" // define for U8……
 //#include "includes.h"
+#include "System.h"
 
 #define UIS_SIZE 240               //发送的波形采样数据总数
 #define size_UI 100               //波形采样数据各相总数
@@ -71,53 +68,8 @@
 //#define EventMonLAddr 0x0B51    //事件监测左地址10
 //#define EventMonRAddr 0x0B97    //事件监测右地址4（BB3）
 #define Evetime 0x0B9d
-MenuV_EXT void GUI_VIEW_UI(void);
-MenuV_EXT void GUI_VIEW_U(void);
-MenuV_EXT void GUI_VIEW_I(void);
-MenuV_EXT void GUI_VIEW_VECT(void);
-MenuV_EXT void GUI_VIEW_ListMeasure();
-MenuV_EXT void GUI_VIEW_ListQuality();
-MenuV_EXT void GUI_VIEW_ListQuality2(U8 U_DISK);
-MenuV_EXT void GUI_VIEW_HarmoGraph();
-MenuV_EXT void GUI_VIEW_HarmoList();
-MenuV_EXT void linemark(U16 Y_COORD, U16 U_I);
-MenuV_EXT void mainloop(void);
-MenuV_EXT void GUI_SYS_PARASET(void);
-MenuV_EXT void GUI_SYS_EVENTSET(void); 
-MenuV_EXT void GUI_EventMonitor(U8 U_DISK);
-MenuV_EXT void GUI_EventList(void);
-MenuV_EXT void GUI_EventWave(U8 U_DISK);
-MenuV_EXT void EventSave(U8 U_DISK);
-MenuV_EXT void PowerSave(void);
-
-//Flash相关
-MenuV_EXT char *NFPAddr;//(char*)0x1800
-MenuV_EXT int *NFBAddr;//(char*)0x1880
-MenuV_EXT char *SysSetAddr;//系统设置芯片内部flash入口地址定义
-
-
-MenuV_EXT U8 SysFlashDataT[84];   //系统设置的数据的临时参数
-MenuV_EXT U8 SysFlashData[84];   //wk @130326 -->写入Flash的系统设置参数
-//MenuV_EXT U8 NPage[115]; //写入芯片flash有关的数组。NPage[0~99]为事件nandflash的页值，NPage[100]为事件总次数，NPage[101~114]为各类事件次数
-//MenuV_EXT U16 NBlock[100]; //写入芯片flash有关的数组。nandflash的block数
-MenuV_EXT U8 EventNum[18]; // wk @130405 --> 9次事件发生次数保存，每个事件占2字节，能记录65535次
-MenuV_EXT U8 EventAddr[400];// wk@130405 -->记录事件发生的时间：月、日、时、分、秒，每个占4字节
-
-//MenuV_EXT void Write_Flash(U8 DataIn[],U8 Num,char* Flash_ptr);
-//MenuV_EXT void Write_WFlash(U16 DataIn[],U8 Num,int* Flash_ptr);
-#define EVENTLEN 2880
-#define EVEUILEN (160*2)
-// REVERSE BY WK @2013-03-13
-//#define EVESET_INDEX 29
-#define EVESET_INDEX 25
-
-//#define EVESEND_FLAG 85
-#define EVESEND_FLAG 70
-
 /*WK @130326 --> 事件限值宏定义 */
 /* wk @130326 --> 扩大了100倍 ：显示时的模式会将数据除100显示*/
-MenuV_EXT U16 NumWave;
-MenuV_EXT U16 DotWave ;
 #define UDeviation 100*7  
 #define FDeviation 2
 #define USurge 100*2
@@ -128,5 +80,46 @@ MenuV_EXT U16 DotWave ;
 #define UHarmonic 100*4 
 #define IHarmonic 100*2
 
-MenuV_EXT U8 USB_Flg; // wk @130407 --> USB 是否插入标志
+#define EVENTLEN 2880
+#define EVEUILEN (160*2)
+// REVERSE BY WK @2013-03-13
+//#define EVESET_INDEX 29
+#define EVESET_INDEX 25
+
+//#define EVESEND_FLAG 85
+#define EVESEND_FLAG 70
+
+
+extern U8 SysFlashDataT[84];   //系统设置的数据的临时参数
+extern U8 SysFlashData[84];   //wk @130326 -->写入Flash的系统设置参数
+//MenuV_EXT U8 NPage[115]; //写入芯片flash有关的数组。NPage[0~99]为事件nandflash的页值，NPage[100]为事件总次数，NPage[101~114]为各类事件次数
+//MenuV_EXT U16 NBlock[100]; //写入芯片flash有关的数组。nandflash的block数
+extern U8 EventNum[18]; // wk @130405 --> 9次事件发生次数保存，每个事件占2字节，能记录65535次
+extern U8 EventAddr[400];// wk@130405 -->记录事件发生的时间：月、日、时、分、秒，每个占4字节
+extern U8 USB_Flg; // wk @130407 --> USB 是否插入标志
+
+void GUI_VIEW_UI(void);
+void GUI_VIEW_U(void);
+void GUI_VIEW_I(void);
+void GUI_VIEW_VECT(void);
+void GUI_VIEW_ListMeasure();
+void GUI_VIEW_ListQuality();
+void GUI_VIEW_ListQuality2(U8 U_DISK);
+void GUI_VIEW_HarmoGraph();
+void GUI_VIEW_HarmoList();
+void linemark(U16 Y_COORD, U16 U_I);
+void mainloop(void);
+void GUI_SYS_PARASET(void);
+void GUI_SYS_EVENTSET(void); 
+void GUI_EventMonitor(U8 U_DISK);
+void GUI_EventList(void);
+void GUI_EventWave(U8 U_DISK);
+void EventSave(U8 U_DISK);
+void PowerSave(void);
+
+#endif
+
+
+
+
 

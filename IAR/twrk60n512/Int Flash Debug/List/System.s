@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    09/Apr/2013  09:03:00 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    10/Apr/2013  18:31:01 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -47,6 +47,7 @@
         NAME System
 
         RTMODEL "__SystemLibrary", "DLib"
+        RTMODEL "__dlib_full_locale_support", "0"
         AAPCS BASE,INTERWORK
         PRESERVE8
         REQUIRE8
@@ -91,21 +92,22 @@
 //    5 * Date                :
 //    6 * Description        : —” ±≥Ã–Ú
 //    7 *******************************************************************************/
-//    8 #include "System.h"
-//    9  
-//   10 // Defined for Delay_ms_Common()
-//   11 #define MCU_BUS_CLOCK 96000000L
-//   12 #define MCU_BUS_CYCLES_100US (MCU_BUS_CLOCK / 10000)
+//    8 
+//    9 #include "includes.h"
+//   10 
+//   11 // Defined for Delay_ms_Common()
+//   12 #define MCU_BUS_CLOCK 96000000L
+//   13 #define MCU_BUS_CYCLES_100US (MCU_BUS_CLOCK / 10000)
 
         SECTION `.text`:CODE:NOROOT(2)
           CFI Block cfiBlock0 Using cfiCommon0
           CFI Function Cpu_Delay100US
           CFI NoCalls
         THUMB
-//   13 static void Cpu_Delay100US(U16 us100)
-//   14 {
-//   15   unsigned int i;
-//   16   while((us100--)){
+//   14 static void Cpu_Delay100US(U16 us100)
+//   15 {
+//   16   unsigned int i;
+//   17   while((us100--)){
 Cpu_Delay100US:
 ??Cpu_Delay100US_0:
         MOVS     R1,R0
@@ -113,35 +115,35 @@ Cpu_Delay100US:
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         CMP      R1,#+0
         BEQ.N    ??Cpu_Delay100US_1
-//   17     for(i=0; i < (MCU_BUS_CYCLES_100US/10); i++)
+//   18     for(i=0; i < (MCU_BUS_CYCLES_100US/10); i++)
         MOVS     R1,#+0
 ??Cpu_Delay100US_2:
         MOV      R2,#+960
         CMP      R1,R2
         BCS.N    ??Cpu_Delay100US_0
-//   18     {// 10 cycles delay
-//   19       asm("NOP");
-        NOP              
+//   19     {// 10 cycles delay
 //   20       asm("NOP");
         NOP              
 //   21       asm("NOP");
         NOP              
-//   22     }
+//   22       asm("NOP");
+        NOP              
+//   23     }
         ADDS     R1,R1,#+1
         B.N      ??Cpu_Delay100US_2
-//   23   }
-//   24 }
+//   24   }
+//   25 }
 ??Cpu_Delay100US_1:
         BX       LR               ;; return
           CFI EndBlock cfiBlock0
-//   25 
+//   26 
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock1 Using cfiCommon0
           CFI Function delay_ms
         THUMB
-//   26 void delay_ms(U16 period)   //delay routine (milliseconds)
-//   27 {
+//   27 void delay_ms(U16 period)   //delay routine (milliseconds)
+//   28 {
 delay_ms:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
@@ -149,35 +151,35 @@ delay_ms:
           CFI CFA R13+8
         MOVS     R4,R0
         B.N      ??delay_ms_0
-//   28   
-//   29   while (period != 0)
-//   30   {
-//   31     Cpu_Delay100US (10);          
+//   29   
+//   30   while (period != 0)
+//   31   {
+//   32     Cpu_Delay100US (10);          
 ??delay_ms_1:
         MOVS     R0,#+10
           CFI FunCall Cpu_Delay100US
         BL       Cpu_Delay100US
-//   32     period--;    
+//   33     period--;    
         SUBS     R4,R4,#+1
-//   33   }  
+//   34   }  
 ??delay_ms_0:
         UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
         CMP      R4,#+0
         BNE.N    ??delay_ms_1
-//   34 }
+//   35 }
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock1
-//   35 
 //   36 
+//   37 
 
         SECTION `.text`:CODE:NOROOT(2)
           CFI Block cfiBlock2 Using cfiCommon0
           CFI Function delay_us
           CFI NoCalls
         THUMB
-//   37 void delay_us(U16 uscnt)
-//   38 {
-//   39   while(uscnt--)
+//   38 void delay_us(U16 uscnt)
+//   39 {
+//   40   while(uscnt--)
 delay_us:
 ??delay_us_0:
         MOVS     R1,R0
@@ -185,21 +187,21 @@ delay_us:
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         CMP      R1,#+0
         BEQ.N    ??delay_us_1
-//   40   {
-//   41     for(U16 i=0;i<24;i++)  //  1*10ns+ uscnt* (22*(4+x*nop) * 10ns)= 1us 
+//   41   {
+//   42     for(U16 i=0;i<24;i++)  //  1*10ns+ uscnt* (22*(4+x*nop) * 10ns)= 1us 
         MOVS     R1,#+0
 ??delay_us_2:
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         CMP      R1,#+24
         BCS.N    ??delay_us_0
-//   42     {
-//   43       asm("NOP");
+//   43     {
+//   44       asm("NOP");
         NOP              
-//   44     }
+//   45     }
         ADDS     R1,R1,#+1
         B.N      ??delay_us_2
-//   45   }
-//   46 }
+//   46   }
+//   47 }
 ??delay_us_1:
         BX       LR               ;; return
           CFI EndBlock cfiBlock2
@@ -208,6 +210,12 @@ delay_us:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
         DC32 0
+
+        SECTION __DLIB_PERTHREAD:DATA:REORDER:NOROOT(0)
+        SECTION_TYPE SHT_PROGBITS, 0
+
+        SECTION __DLIB_PERTHREAD_init:DATA:REORDER:NOROOT(0)
+        SECTION_TYPE SHT_PROGBITS, 0
 
         END
 // 

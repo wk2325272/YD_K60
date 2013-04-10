@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    09/Apr/2013  09:02:56 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    10/Apr/2013  18:30:58 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -47,6 +47,7 @@
         NAME LCDDriver
 
         RTMODEL "__SystemLibrary", "DLib"
+        RTMODEL "__dlib_full_locale_support", "0"
         AAPCS BASE,INTERWORK
         PRESERVE8
         REQUIRE8
@@ -179,70 +180,71 @@
 //   14 ** Description:  430  --> k60 
 //   15 ** 
 //   16 **************************************************/
-//   17 #include "LCDDriver.h"
-//   18 
+//   17 
+//   18 #include "includes.h"
+//   19 
 
         SECTION `.bss`:DATA:REORDER:NOROOT(2)
-//   19 MQX_FILE_PTR uart_lcd = NULL;
+//   20 MQX_FILE_PTR uart_lcd = NULL;
 uart_lcd:
         DS8 4
-//   20 
-//   21 /* Uart initialization for send data*/
+//   21 
+//   22 /* Uart initialization for send data*/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock0 Using cfiCommon0
           CFI Function UartLCD_init
         THUMB
-//   22 void UartLCD_init()
-//   23 {
+//   23 void UartLCD_init()
+//   24 {
 UartLCD_init:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//   24   uart_lcd  = fopen( "ttyb:", NULL );
+//   25   uart_lcd  = fopen( "ttyb:", NULL );
         MOVS     R1,#+0
         LDR.W    R0,??DataTable2
           CFI FunCall _io_fopen
         BL       _io_fopen
         LDR.W    R1,??DataTable2_1
         STR      R0,[R1, #+0]
-//   25      if( uart_lcd == NULL )
+//   26   if( uart_lcd == NULL )
         LDR.W    R0,??DataTable2_1
         LDR      R0,[R0, #+0]
         CMP      R0,#+0
         BNE.N    ??UartLCD_init_0
-//   26    {
-//   27       /* device could not be opened */
-//   28       _task_block();
+//   27    {
+//   28       /* device could not be opened */
+//   29       _task_block();
           CFI FunCall _task_block
         BL       _task_block
-//   29    }
-//   30 //   else 
-//   31 //     printf("open ttya OK!\n");
-//   32 }
+//   30    }
+//   31 //   else 
+//   32 //     printf("open ttya OK!\n");
+//   33 }
 ??UartLCD_init_0:
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock0
-//   33 
+//   34 
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock1 Using cfiCommon0
           CFI Function send_byte
         THUMB
-//   34 void send_byte(U8 i)
-//   35 {
+//   35 void send_byte(U8 i)
+//   36 {
 send_byte:
         PUSH     {R0,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//   36     write(uart_lcd, &i, 1);
+//   37     write(uart_lcd, &i, 1);
         MOVS     R2,#+1
         ADD      R1,SP,#+0
         LDR.W    R0,??DataTable2_1
         LDR      R0,[R0, #+0]
           CFI FunCall _io_write
         BL       _io_write
-//   37 }
+//   38 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock1
 
@@ -250,22 +252,22 @@ send_byte:
           CFI Block cfiBlock2 Using cfiCommon0
           CFI Function send_word
         THUMB
-//   38 void send_word(U16 i)
-//   39 {
+//   39 void send_word(U16 i)
+//   40 {
 send_word:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
         MOVS     R4,R0
-//   40     send_byte(i/256);
+//   41     send_byte(i/256);
         UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
         MOV      R0,#+256
         SDIV     R0,R4,R0
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//   41     send_byte(i%256);
+//   42     send_byte(i%256);
         UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
         MOV      R1,#+256
         SDIV     R0,R4,R1
@@ -273,7 +275,7 @@ send_word:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//   42 }
+//   43 }
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock2
 
@@ -281,24 +283,24 @@ send_word:
           CFI Block cfiBlock3 Using cfiCommon0
           CFI Function send_xy
         THUMB
-//   43 void send_xy(U16 x,U16 y)//发送两个16位的数据
-//   44 {
+//   44 void send_xy(U16 x,U16 y)//发送两个16位的数据
+//   45 {
 send_xy:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
         MOVS     R4,R1
-//   45     send_word(x);
+//   46     send_word(x);
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_word
         BL       send_word
-//   46     send_word(y);
+//   47     send_word(y);
         MOVS     R0,R4
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_word
         BL       send_word
-//   47 }
+//   48 }
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock3
 
@@ -306,8 +308,8 @@ send_xy:
           CFI Block cfiBlock4 Using cfiCommon0
           CFI Function send_area
         THUMB
-//   48 void send_area(U16 xs,U16 ys,U16 xe,U16 ye)
-//   49 {
+//   49 void send_area(U16 xs,U16 ys,U16 xe,U16 ye)
+//   50 {
 send_area:
         PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
@@ -318,26 +320,26 @@ send_area:
         MOVS     R4,R1
         MOVS     R5,R2
         MOVS     R6,R3
-//   50     send_word(xs);
+//   51     send_word(xs);
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_word
         BL       send_word
-//   51     send_word(ys);
+//   52     send_word(ys);
         MOVS     R0,R4
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_word
         BL       send_word
-//   52     send_word(xe);
+//   53     send_word(xe);
         MOVS     R0,R5
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_word
         BL       send_word
-//   53     send_word(ye);
+//   54     send_word(ye);
         MOVS     R0,R6
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_word
         BL       send_word
-//   54 }
+//   55 }
         POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock4
 
@@ -345,8 +347,8 @@ send_area:
           CFI Block cfiBlock5 Using cfiCommon0
           CFI Function send_U8str
         THUMB
-//   55 void send_U8str(U8 *p,U8 size)  //串口发送一串数据 (U8)
-//   56 {
+//   56 void send_U8str(U8 *p,U8 size)  //串口发送一串数据 (U8)
+//   57 {
 send_U8str:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -355,47 +357,47 @@ send_U8str:
           CFI CFA R13+16
         MOVS     R4,R0
         MOVS     R5,R1
-//   57     U8 i=size;
-//   58     if(i==0)
+//   58     U8 i=size;
+//   59     if(i==0)
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         CMP      R5,#+0
         BNE.N    ??send_U8str_0
-//   59     {
-//   60         while(*p!='\0')
+//   60     {
+//   61         while(*p!='\0')
 ??send_U8str_1:
         LDRB     R0,[R4, #+0]
         CMP      R0,#+0
         BEQ.N    ??send_U8str_2
-//   61         {
-//   62             send_byte(*p);
+//   62         {
+//   63             send_byte(*p);
         LDRB     R0,[R4, #+0]
           CFI FunCall send_byte
         BL       send_byte
-//   63             p++;
+//   64             p++;
         ADDS     R4,R4,#+1
         B.N      ??send_U8str_1
-//   64         }
-//   65     }
-//   66     else
-//   67     {
-//   68         while(i)
-//   69         {
-//   70             send_byte(*p);           //此发送字节而非字
+//   65         }
+//   66     }
+//   67     else
+//   68     {
+//   69         while(i)
+//   70         {
+//   71             send_byte(*p);           //此发送字节而非字
 ??send_U8str_3:
         LDRB     R0,[R4, #+0]
           CFI FunCall send_byte
         BL       send_byte
-//   71             p++;
+//   72             p++;
         ADDS     R4,R4,#+1
-//   72             i--;
+//   73             i--;
         SUBS     R5,R5,#+1
-//   73         }
+//   74         }
 ??send_U8str_0:
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         CMP      R5,#+0
         BNE.N    ??send_U8str_3
-//   74     }
-//   75 }
+//   75     }
+//   76 }
 ??send_U8str_2:
         POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock5
@@ -404,8 +406,8 @@ send_U8str:
           CFI Block cfiBlock6 Using cfiCommon0
           CFI Function send_U16str
         THUMB
-//   76 void send_U16str(U16 *q,U8 size)  //串口发送一串数据 (U16)size为0则发送整个字符串
-//   77 {
+//   77 void send_U16str(U16 *q,U8 size)  //串口发送一串数据 (U16)size为0则发送整个字符串
+//   78 {
 send_U16str:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -414,47 +416,47 @@ send_U16str:
           CFI CFA R13+16
         MOVS     R4,R0
         MOVS     R5,R1
-//   78     U8 i=size;
-//   79     if(i==0)
+//   79     U8 i=size;
+//   80     if(i==0)
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         CMP      R5,#+0
         BNE.N    ??send_U16str_0
-//   80     {
-//   81         while(*q!='\0')
+//   81     {
+//   82         while(*q!='\0')
 ??send_U16str_1:
         LDRH     R0,[R4, #+0]
         CMP      R0,#+0
         BEQ.N    ??send_U16str_2
-//   82         {
-//   83             send_word(*q);
+//   83         {
+//   84             send_word(*q);
         LDRH     R0,[R4, #+0]
           CFI FunCall send_word
         BL       send_word
-//   84             q++;
+//   85             q++;
         ADDS     R4,R4,#+2
         B.N      ??send_U16str_1
-//   85         }
-//   86     }
-//   87     else
-//   88     {
-//   89         while(i)
-//   90         {
-//   91             send_word(*q);
+//   86         }
+//   87     }
+//   88     else
+//   89     {
+//   90         while(i)
+//   91         {
+//   92             send_word(*q);
 ??send_U16str_3:
         LDRH     R0,[R4, #+0]
           CFI FunCall send_word
         BL       send_word
-//   92             q++;
+//   93             q++;
         ADDS     R4,R4,#+2
-//   93             i--;
+//   94             i--;
         SUBS     R5,R5,#+1
-//   94         }
+//   95         }
 ??send_U16str_0:
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         CMP      R5,#+0
         BNE.N    ??send_U16str_3
-//   95     }
-//   96 }
+//   96     }
+//   97 }
 ??send_U16str_2:
         POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock6
@@ -463,44 +465,44 @@ send_U16str:
           CFI Block cfiBlock7 Using cfiCommon0
           CFI Function send_end
         THUMB
-//   97 void send_end()
-//   98 {
+//   98 void send_end()
+//   99 {
 send_end:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//   99 //    send_xy(0xcc33,0xc33c);
-//  100      send_word(0xcc33);
+//  100 //    send_xy(0xcc33,0xc33c);
+//  101      send_word(0xcc33);
         MOVW     R0,#+52275
           CFI FunCall send_word
         BL       send_word
-//  101      send_word(0xc33c); 
+//  102      send_word(0xc33c); 
         MOVW     R0,#+49980
           CFI FunCall send_word
         BL       send_word
-//  102 }
+//  103 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock7
-//  103 
+//  104 
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock8 Using cfiCommon0
           CFI Function YADA_00
         THUMB
-//  104 void YADA_00 (void)
-//  105 {
+//  105 void YADA_00 (void)
+//  106 {
 YADA_00:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  106     send_word(0xaa00);
+//  107     send_word(0xaa00);
         MOV      R0,#+43520
           CFI FunCall send_word
         BL       send_word
-//  107     send_end();
+//  108     send_end();
           CFI FunCall send_end
         BL       send_end
-//  108 }
+//  109 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock8
 
@@ -508,8 +510,8 @@ YADA_00:
           CFI Block cfiBlock9 Using cfiCommon0
           CFI Function YADA_40
         THUMB
-//  109 void YADA_40 (U16 FrontC,U16 BackC)
-//  110 {
+//  110 void YADA_40 (U16 FrontC,U16 BackC)
+//  111 {
 YADA_40:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -518,21 +520,21 @@ YADA_40:
           CFI CFA R13+16
         MOVS     R4,R0
         MOVS     R5,R1
-//  111     send_word(0xaa40);
+//  112     send_word(0xaa40);
         MOVW     R0,#+43584
           CFI FunCall send_word
         BL       send_word
-//  112     send_xy(FrontC,BackC);
+//  113     send_xy(FrontC,BackC);
         MOVS     R1,R5
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOVS     R0,R4
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_xy
         BL       send_xy
-//  113     send_end();
+//  114     send_end();
           CFI FunCall send_end
         BL       send_end
-//  114 }
+//  115 }
         POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock9
 
@@ -540,8 +542,8 @@ YADA_40:
           CFI Block cfiBlock10 Using cfiCommon0
           CFI Function YADA_41
         THUMB
-//  115 void YADA_41 (U8 D_X,U8 D_Y)
-//  116 {
+//  116 void YADA_41 (U8 D_X,U8 D_Y)
+//  117 {
 YADA_41:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -550,24 +552,24 @@ YADA_41:
           CFI CFA R13+16
         MOVS     R4,R0
         MOVS     R5,R1
-//  117     send_word(0xaa41);
+//  118     send_word(0xaa41);
         MOVW     R0,#+43585
           CFI FunCall send_word
         BL       send_word
-//  118     send_byte(D_X);
+//  119     send_byte(D_X);
         MOVS     R0,R4
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  119     send_byte(D_Y);
+//  120     send_byte(D_Y);
         MOVS     R0,R5
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  120     send_end();
+//  121     send_end();
           CFI FunCall send_end
         BL       send_end
-//  121 }
+//  122 }
         POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock10
 
@@ -575,8 +577,8 @@ YADA_41:
           CFI Block cfiBlock11 Using cfiCommon0
           CFI Function YADA_42
         THUMB
-//  122 void YADA_42 (U16 X,U16 Y)
-//  123 {
+//  123 void YADA_42 (U16 X,U16 Y)
+//  124 {
 YADA_42:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -585,21 +587,21 @@ YADA_42:
           CFI CFA R13+16
         MOVS     R4,R0
         MOVS     R5,R1
-//  124     send_word(0xaa42);
+//  125     send_word(0xaa42);
         MOVW     R0,#+43586
           CFI FunCall send_word
         BL       send_word
-//  125     send_xy(X,Y);
+//  126     send_xy(X,Y);
         MOVS     R1,R5
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOVS     R0,R4
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_xy
         BL       send_xy
-//  126     send_end();
+//  127     send_end();
           CFI FunCall send_end
         BL       send_end
-//  127 }
+//  128 }
         POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock11
 
@@ -607,8 +609,8 @@ YADA_42:
           CFI Block cfiBlock12 Using cfiCommon0
           CFI Function YADA_43
         THUMB
-//  128 void YADA_43 (U16 X,U16 Y)
-//  129 {
+//  129 void YADA_43 (U16 X,U16 Y)
+//  130 {
 YADA_43:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -617,21 +619,21 @@ YADA_43:
           CFI CFA R13+16
         MOVS     R4,R0
         MOVS     R5,R1
-//  130     send_word(0xaa43);
+//  131     send_word(0xaa43);
         MOVW     R0,#+43587
           CFI FunCall send_word
         BL       send_word
-//  131     send_xy(X,Y);
+//  132     send_xy(X,Y);
         MOVS     R1,R5
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOVS     R0,R4
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_xy
         BL       send_xy
-//  132     send_end();
+//  133     send_end();
           CFI FunCall send_end
         BL       send_end
-//  133 }
+//  134 }
         POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock12
 
@@ -639,8 +641,8 @@ YADA_43:
           CFI Block cfiBlock13 Using cfiCommon0
           CFI Function YADA_44
         THUMB
-//  134 void YADA_44 (U8 EN,U16 X,U16 Y,U8 Width,U8 Height)
-//  135 {
+//  135 void YADA_44 (U8 EN,U16 X,U16 Y,U8 Width,U8 Height)
+//  136 {
 YADA_44:
         PUSH     {R4-R8,LR}
           CFI R14 Frame(CFA, -4)
@@ -655,36 +657,36 @@ YADA_44:
         MOVS     R7,R2
         MOV      R8,R3
         LDR      R4,[SP, #+24]
-//  136     send_word(0xaa44);
+//  137     send_word(0xaa44);
         MOVW     R0,#+43588
           CFI FunCall send_word
         BL       send_word
-//  137     send_byte(EN);
+//  138     send_byte(EN);
         MOVS     R0,R5
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  138     send_xy(X,Y);
+//  139     send_xy(X,Y);
         MOVS     R1,R7
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOVS     R0,R6
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_xy
         BL       send_xy
-//  139     send_byte(Width);
+//  140     send_byte(Width);
         MOV      R0,R8
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  140     send_byte(Height);
+//  141     send_byte(Height);
         MOVS     R0,R4
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  141     send_end();
+//  142     send_end();
           CFI FunCall send_end
         BL       send_end
-//  142 }
+//  143 }
         POP      {R4-R8,PC}       ;; return
           CFI EndBlock cfiBlock13
 
@@ -692,8 +694,8 @@ YADA_44:
           CFI Block cfiBlock14 Using cfiCommon0
           CFI Function prints
         THUMB
-//  143 void prints(U8 cmd,U16 x,U16 y,U8 *s,U8 size)//显示文本，字符串以0x00结束，cmd可为53/54/55/6E/6F
-//  144 {
+//  144 void prints(U8 cmd,U16 x,U16 y,U8 *s,U8 size)//显示文本，字符串以0x00结束，cmd可为53/54/55/6E/6F
+//  145 {
 prints:
         PUSH     {R4-R8,LR}
           CFI R14 Frame(CFA, -4)
@@ -708,32 +710,32 @@ prints:
         MOVS     R7,R2
         MOV      R8,R3
         LDR      R4,[SP, #+24]
-//  145     send_byte(0xAA);
+//  146     send_byte(0xAA);
         MOVS     R0,#+170
           CFI FunCall send_byte
         BL       send_byte
-//  146     send_byte(cmd);
+//  147     send_byte(cmd);
         MOVS     R0,R5
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  147     send_xy(x,y);
+//  148     send_xy(x,y);
         MOVS     R1,R7
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOVS     R0,R6
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_xy
         BL       send_xy
-//  148     send_U8str(s,size);
+//  149     send_U8str(s,size);
         MOVS     R1,R4
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOV      R0,R8
           CFI FunCall send_U8str
         BL       send_U8str
-//  149     send_end();
+//  150     send_end();
           CFI FunCall send_end
         BL       send_end
-//  150 }
+//  151 }
         POP      {R4-R8,PC}       ;; return
           CFI EndBlock cfiBlock14
 
@@ -741,13 +743,13 @@ prints:
           CFI Block cfiBlock15 Using cfiCommon0
           CFI Function YADA_53
         THUMB
-//  151 void YADA_53 (U16 X,U16 Y,U8 *P,U8 Size)
-//  152 {
+//  152 void YADA_53 (U16 X,U16 Y,U8 *P,U8 Size)
+//  153 {
 YADA_53:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  153     prints(0x53,X,Y,P,Size);
+//  154     prints(0x53,X,Y,P,Size);
         UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
         STR      R3,[SP, #+0]
         MOVS     R3,R2
@@ -758,7 +760,7 @@ YADA_53:
         MOVS     R0,#+83
           CFI FunCall prints
         BL       prints
-//  154 }
+//  155 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock15
 
@@ -766,13 +768,13 @@ YADA_53:
           CFI Block cfiBlock16 Using cfiCommon0
           CFI Function YADA_54
         THUMB
-//  155 void YADA_54 (U16 X,U16 Y,U8 *P,U8 Size)
-//  156 {
+//  156 void YADA_54 (U16 X,U16 Y,U8 *P,U8 Size)
+//  157 {
 YADA_54:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  157     prints(0x54,X,Y,P,Size);
+//  158     prints(0x54,X,Y,P,Size);
         UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
         STR      R3,[SP, #+0]
         MOVS     R3,R2
@@ -783,7 +785,7 @@ YADA_54:
         MOVS     R0,#+84
           CFI FunCall prints
         BL       prints
-//  158 }
+//  159 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock16
 
@@ -791,13 +793,13 @@ YADA_54:
           CFI Block cfiBlock17 Using cfiCommon0
           CFI Function YADA_55
         THUMB
-//  159 void YADA_55 (U16 X,U16 Y,U8 *P,U8 Size)
-//  160 {
+//  160 void YADA_55 (U16 X,U16 Y,U8 *P,U8 Size)
+//  161 {
 YADA_55:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  161     prints(0x55,X,Y,P,Size);
+//  162     prints(0x55,X,Y,P,Size);
         UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
         STR      R3,[SP, #+0]
         MOVS     R3,R2
@@ -808,7 +810,7 @@ YADA_55:
         MOVS     R0,#+85
           CFI FunCall prints
         BL       prints
-//  162 }
+//  163 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock17
 
@@ -816,13 +818,13 @@ YADA_55:
           CFI Block cfiBlock18 Using cfiCommon0
           CFI Function YADA_6E
         THUMB
-//  163 void YADA_6E (U16 X,U16 Y,U8 *P,U8 Size)
-//  164 {
+//  164 void YADA_6E (U16 X,U16 Y,U8 *P,U8 Size)
+//  165 {
 YADA_6E:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  165     prints(0x6E,X,Y,P,Size);
+//  166     prints(0x6E,X,Y,P,Size);
         UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
         STR      R3,[SP, #+0]
         MOVS     R3,R2
@@ -833,7 +835,7 @@ YADA_6E:
         MOVS     R0,#+110
           CFI FunCall prints
         BL       prints
-//  166 }
+//  167 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock18
 
@@ -841,13 +843,13 @@ YADA_6E:
           CFI Block cfiBlock19 Using cfiCommon0
           CFI Function YADA_6F
         THUMB
-//  167 void YADA_6F (U16 X,U16 Y,U8 *P,U8 Size)
-//  168 {
+//  168 void YADA_6F (U16 X,U16 Y,U8 *P,U8 Size)
+//  169 {
 YADA_6F:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  169     prints(0x6F,X,Y,P,Size);
+//  170     prints(0x6F,X,Y,P,Size);
         UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
         STR      R3,[SP, #+0]
         MOVS     R3,R2
@@ -858,7 +860,7 @@ YADA_6F:
         MOVS     R0,#+111
           CFI FunCall prints
         BL       prints
-//  170 }
+//  171 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock19
 
@@ -866,8 +868,8 @@ YADA_6F:
           CFI Block cfiBlock20 Using cfiCommon0
           CFI Function YADA_98
         THUMB
-//  171 void YADA_98 (U16 X,U16 Y,U8 Lib_ID,U8 C_Mode,U8 C_Dots,U16 FrontC,U16 BackC,U8 *P,U8 Size)
-//  172 {
+//  172 void YADA_98 (U16 X,U16 Y,U8 Lib_ID,U8 C_Mode,U8 C_Dots,U16 FrontC,U16 BackC,U8 *P,U8 Size)
+//  173 {
 YADA_98:
         PUSH     {R0,R4-R11,LR}
           CFI R14 Frame(CFA, -4)
@@ -888,48 +890,48 @@ YADA_98:
         LDR      R5,[SP, #+48]
         LDR      R11,[SP, #+52]
         LDR      R4,[SP, #+56]
-//  173     send_word(0xAA98);
+//  174     send_word(0xAA98);
         MOVW     R0,#+43672
           CFI FunCall send_word
         BL       send_word
-//  174     send_xy(X,Y);
+//  175     send_xy(X,Y);
         MOV      R1,R8
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         LDRH     R0,[SP, #+0]
           CFI FunCall send_xy
         BL       send_xy
-//  175     send_byte(Lib_ID);
+//  176     send_byte(Lib_ID);
         MOV      R0,R9
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  176     send_byte(C_Mode);
+//  177     send_byte(C_Mode);
         MOV      R0,R10
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  177     send_byte(C_Dots);
+//  178     send_byte(C_Dots);
         MOVS     R0,R7
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  178     send_xy(FrontC,BackC);
+//  179     send_xy(FrontC,BackC);
         MOVS     R1,R5
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOVS     R0,R6
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_xy
         BL       send_xy
-//  179     send_U8str(P,Size);
+//  180     send_U8str(P,Size);
         MOVS     R1,R4
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOV      R0,R11
           CFI FunCall send_U8str
         BL       send_U8str
-//  180     send_end();
+//  181     send_end();
           CFI FunCall send_end
         BL       send_end
-//  181 }
+//  182 }
         POP      {R0,R4-R11,PC}   ;; return
           CFI EndBlock cfiBlock20
 
@@ -937,8 +939,8 @@ YADA_98:
           CFI Block cfiBlock21 Using cfiCommon0
           CFI Function YADA_45
         THUMB
-//  182 void YADA_45(U16 *P,U8 Flag)
-//  183 {
+//  183 void YADA_45(U16 *P,U8 Flag)
+//  184 {
 YADA_45:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -947,35 +949,35 @@ YADA_45:
           CFI CFA R13+16
         MOVS     R4,R0
         MOVS     R5,R1
-//  184     send_word(0xAA45);
+//  185     send_word(0xAA45);
         MOVW     R0,#+43589
           CFI FunCall send_word
         BL       send_word
-//  185     if(Flag==0)//关闭文本框限制
+//  186     if(Flag==0)//关闭文本框限制
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         CMP      R5,#+0
         BNE.N    ??YADA_45_0
-//  186     {
-//  187         send_byte(0x00);
+//  187     {
+//  188         send_byte(0x00);
         MOVS     R0,#+0
           CFI FunCall send_byte
         BL       send_byte
         B.N      ??YADA_45_1
-//  188     }
-//  189     else
-//  190     {
-//  191         send_U16str(P,0);
+//  189     }
+//  190     else
+//  191     {
+//  192         send_U16str(P,0);
 ??YADA_45_0:
         MOVS     R1,#+0
         MOVS     R0,R4
           CFI FunCall send_U16str
         BL       send_U16str
-//  192     }
-//  193     send_end();
+//  193     }
+//  194     send_end();
 ??YADA_45_1:
           CFI FunCall send_end
         BL       send_end
-//  194 }
+//  195 }
         POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock21
 
@@ -983,8 +985,8 @@ YADA_45:
           CFI Block cfiBlock22 Using cfiCommon0
           CFI Function YADA_50
         THUMB
-//  195 void YADA_50 (U16 *P,U8 Size)//背景色显示点，相当于将点擦除
-//  196 {
+//  196 void YADA_50 (U16 *P,U8 Size)//背景色显示点，相当于将点擦除
+//  197 {
 YADA_50:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -993,20 +995,20 @@ YADA_50:
           CFI CFA R13+16
         MOVS     R4,R0
         MOVS     R5,R1
-//  197     send_word(0xAA50);
+//  198     send_word(0xAA50);
         MOVW     R0,#+43600
           CFI FunCall send_word
         BL       send_word
-//  198     send_U16str(P,Size);
+//  199     send_U16str(P,Size);
         MOVS     R1,R5
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOVS     R0,R4
           CFI FunCall send_U16str
         BL       send_U16str
-//  199     send_end();
+//  200     send_end();
           CFI FunCall send_end
         BL       send_end
-//  200 }
+//  201 }
         POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock22
 
@@ -1014,8 +1016,8 @@ YADA_50:
           CFI Block cfiBlock23 Using cfiCommon0
           CFI Function YADA_51
         THUMB
-//  201 void YADA_51 (U16 *P,U8 Size)//前景色显示点
-//  202 {
+//  202 void YADA_51 (U16 *P,U8 Size)//前景色显示点
+//  203 {
 YADA_51:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -1024,20 +1026,20 @@ YADA_51:
           CFI CFA R13+16
         MOVS     R4,R0
         MOVS     R5,R1
-//  203     send_word(0xAA51);
+//  204     send_word(0xAA51);
         MOVW     R0,#+43601
           CFI FunCall send_word
         BL       send_word
-//  204     send_U16str(P,Size);
+//  205     send_U16str(P,Size);
         MOVS     R1,R5
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOVS     R0,R4
           CFI FunCall send_U16str
         BL       send_U16str
-//  205     send_end();
+//  206     send_end();
           CFI FunCall send_end
         BL       send_end
-//  206 }
+//  207 }
         POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock23
 
@@ -1045,8 +1047,8 @@ YADA_51:
           CFI Block cfiBlock24 Using cfiCommon0
           CFI Function YADA_74
         THUMB
-//  207 void YADA_74 (U16 X,U16 YS,U16 YE,U16 BC,U16 *P,U8 Size)
-//  208 {
+//  208 void YADA_74 (U16 X,U16 YS,U16 YE,U16 BC,U16 *P,U8 Size)
+//  209 {
 YADA_74:
         PUSH     {R3-R9,LR}
           CFI R14 Frame(CFA, -4)
@@ -1063,11 +1065,11 @@ YADA_74:
         MOV      R8,R3
         LDR      R9,[SP, #+32]
         LDR      R4,[SP, #+36]
-//  209     send_word(0xAA74);
+//  210     send_word(0xAA74);
         MOVW     R0,#+43636
           CFI FunCall send_word
         BL       send_word
-//  210     send_area(X,YS,YE,BC);
+//  211     send_area(X,YS,YE,BC);
         MOV      R3,R8
         UXTH     R3,R3            ;; ZeroExt  R3,R3,#+16,#+16
         MOVS     R2,R7
@@ -1078,16 +1080,16 @@ YADA_74:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_area
         BL       send_area
-//  211     send_U16str(P,Size);
+//  212     send_U16str(P,Size);
         MOVS     R1,R4
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOV      R0,R9
           CFI FunCall send_U16str
         BL       send_U16str
-//  212     send_end();
+//  213     send_end();
           CFI FunCall send_end
         BL       send_end
-//  213 }
+//  214 }
         POP      {R0,R4-R9,PC}    ;; return
           CFI EndBlock cfiBlock24
 
@@ -1095,8 +1097,8 @@ YADA_74:
           CFI Block cfiBlock25 Using cfiCommon0
           CFI Function YADA_56
         THUMB
-//  214 void YADA_56 (U16 *P,U8 Size)
-//  215 {
+//  215 void YADA_56 (U16 *P,U8 Size)
+//  216 {
 YADA_56:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -1105,20 +1107,20 @@ YADA_56:
           CFI CFA R13+16
         MOVS     R4,R0
         MOVS     R5,R1
-//  216     send_word(0xaa56);
+//  217     send_word(0xaa56);
         MOVW     R0,#+43606
           CFI FunCall send_word
         BL       send_word
-//  217     send_U16str(P,Size);
+//  218     send_U16str(P,Size);
         MOVS     R1,R5
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOVS     R0,R4
           CFI FunCall send_U16str
         BL       send_U16str
-//  218     send_end();
+//  219     send_end();
           CFI FunCall send_end
         BL       send_end
-//  219 }
+//  220 }
         POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock25
 
@@ -1126,8 +1128,8 @@ YADA_56:
           CFI Block cfiBlock26 Using cfiCommon0
           CFI Function YADA_5D
         THUMB
-//  220 void YADA_5D (U16 *P,U8 Size)
-//  221 {
+//  221 void YADA_5D (U16 *P,U8 Size)
+//  222 {
 YADA_5D:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -1136,20 +1138,20 @@ YADA_5D:
           CFI CFA R13+16
         MOVS     R4,R0
         MOVS     R5,R1
-//  222     send_word(0xaa5D);
+//  223     send_word(0xaa5D);
         MOVW     R0,#+43613
           CFI FunCall send_word
         BL       send_word
-//  223     send_U16str(P,Size);
+//  224     send_U16str(P,Size);
         MOVS     R1,R5
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOVS     R0,R4
           CFI FunCall send_U16str
         BL       send_U16str
-//  224     send_end();
+//  225     send_end();
           CFI FunCall send_end
         BL       send_end
-//  225 }
+//  226 }
         POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock26
 
@@ -1157,8 +1159,8 @@ YADA_5D:
           CFI Block cfiBlock27 Using cfiCommon0
           CFI Function YADA_75
         THUMB
-//  226 void YADA_75 (U16 X,U16 Y,U8 H_Max,U8 *P,U8 Size)
-//  227 {
+//  227 void YADA_75 (U16 X,U16 Y,U8 H_Max,U8 *P,U8 Size)
+//  228 {
 YADA_75:
         PUSH     {R4-R8,LR}
           CFI R14 Frame(CFA, -4)
@@ -1173,32 +1175,32 @@ YADA_75:
         MOVS     R7,R2
         MOV      R8,R3
         LDR      R4,[SP, #+24]
-//  228     send_word(0xaa75);
+//  229     send_word(0xaa75);
         MOVW     R0,#+43637
           CFI FunCall send_word
         BL       send_word
-//  229     send_xy(X,Y);
+//  230     send_xy(X,Y);
         MOVS     R1,R6
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOVS     R0,R5
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_xy
         BL       send_xy
-//  230     send_byte(H_Max);
+//  231     send_byte(H_Max);
         MOVS     R0,R7
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  231     send_U8str(P,Size);
+//  232     send_U8str(P,Size);
         MOVS     R1,R4
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOV      R0,R8
           CFI FunCall send_U8str
         BL       send_U8str
-//  232     send_end();
+//  233     send_end();
           CFI FunCall send_end
         BL       send_end
-//  233 }
+//  234 }
         POP      {R4-R8,PC}       ;; return
           CFI EndBlock cfiBlock27
 
@@ -1206,8 +1208,8 @@ YADA_75:
           CFI Block cfiBlock28 Using cfiCommon0
           CFI Function YADA_76
         THUMB
-//  234 void YADA_76 (U16 X,U8 X_Dis,U16 *P,U8 Size)
-//  235 {
+//  235 void YADA_76 (U16 X,U8 X_Dis,U16 *P,U8 Size)
+//  236 {
 YADA_76:
         PUSH     {R3-R7,LR}
           CFI R14 Frame(CFA, -4)
@@ -1220,30 +1222,30 @@ YADA_76:
         MOVS     R5,R1
         MOVS     R6,R2
         MOVS     R7,R3
-//  236     send_word(0xaa76);
+//  237     send_word(0xaa76);
         MOVW     R0,#+43638
           CFI FunCall send_word
         BL       send_word
-//  237     send_word(X);
+//  238     send_word(X);
         MOVS     R0,R4
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_word
         BL       send_word
-//  238     send_byte(X_Dis);
+//  239     send_byte(X_Dis);
         MOVS     R0,R5
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  239     send_U16str(P,Size);
+//  240     send_U16str(P,Size);
         MOVS     R1,R7
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOVS     R0,R6
           CFI FunCall send_U16str
         BL       send_U16str
-//  240     send_end();
+//  241     send_end();
           CFI FunCall send_end
         BL       send_end
-//  241 }
+//  242 }
         POP      {R0,R4-R7,PC}    ;; return
           CFI EndBlock cfiBlock28
 
@@ -1251,8 +1253,8 @@ YADA_76:
           CFI Block cfiBlock29 Using cfiCommon0
           CFI Function YADA_78
         THUMB
-//  242 void YADA_78 (U16 X,U16 Y,U8 *P,U8 Size)
-//  243 {
+//  243 void YADA_78 (U16 X,U16 Y,U8 *P,U8 Size)
+//  244 {
 YADA_78:
         PUSH     {R3-R7,LR}
           CFI R14 Frame(CFA, -4)
@@ -1265,27 +1267,27 @@ YADA_78:
         MOVS     R5,R1
         MOVS     R6,R2
         MOVS     R7,R3
-//  244     send_word(0xaa78);
+//  245     send_word(0xaa78);
         MOVW     R0,#+43640
           CFI FunCall send_word
         BL       send_word
-//  245     send_xy(X,Y);
+//  246     send_xy(X,Y);
         MOVS     R1,R5
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOVS     R0,R4
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_xy
         BL       send_xy
-//  246     send_U8str(P,Size);
+//  247     send_U8str(P,Size);
         MOVS     R1,R7
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOVS     R0,R6
           CFI FunCall send_U8str
         BL       send_U8str
-//  247     send_end();
+//  248     send_end();
           CFI FunCall send_end
         BL       send_end
-//  248 }
+//  249 }
         POP      {R0,R4-R7,PC}    ;; return
           CFI EndBlock cfiBlock29
 
@@ -1293,8 +1295,8 @@ YADA_78:
           CFI Block cfiBlock30 Using cfiCommon0
           CFI Function YADA_57
         THUMB
-//  249 void YADA_57 (ARC *P,U8 Size)
-//  250 {
+//  250 void YADA_57 (ARC *P,U8 Size)
+//  251 {
 YADA_57:
         PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
@@ -1304,70 +1306,70 @@ YADA_57:
           CFI CFA R13+16
         MOVS     R4,R0
         MOVS     R5,R1
-//  251     send_word(0xaa57);
+//  252     send_word(0xaa57);
         MOVW     R0,#+43607
           CFI FunCall send_word
         BL       send_word
-//  252     if(Size==0)
+//  253     if(Size==0)
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         CMP      R5,#+0
         BNE.N    ??YADA_57_0
-//  253     {
-//  254         U16 i=sizeof(P);
+//  254     {
+//  255         U16 i=sizeof(P);
         MOVS     R5,#+4
-//  255         U16 j;
-//  256         for(j=0; j<i; j++)
+//  256         U16 j;
+//  257         for(j=0; j<i; j++)
         MOVS     R6,#+0
 ??YADA_57_1:
         UXTH     R6,R6            ;; ZeroExt  R6,R6,#+16,#+16
         UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
         CMP      R6,R5
         BCS.N    ??YADA_57_2
-//  257         {
-//  258             send_byte(P->style);
+//  258         {
+//  259             send_byte(P->style);
         LDRB     R0,[R4, #+0]
           CFI FunCall send_byte
         BL       send_byte
-//  259             send_xy(P->X_0,P->Y_0);
+//  260             send_xy(P->X_0,P->Y_0);
         LDRH     R1,[R4, #+4]
         LDRH     R0,[R4, #+2]
           CFI FunCall send_xy
         BL       send_xy
-//  260             send_byte(P->R_0);
+//  261             send_byte(P->R_0);
         LDRB     R0,[R4, #+6]
           CFI FunCall send_byte
         BL       send_byte
-//  261             P++;
+//  262             P++;
         ADDS     R4,R4,#+8
-//  262         }
+//  263         }
         ADDS     R6,R6,#+1
         B.N      ??YADA_57_1
-//  263     }
-//  264     else
-//  265     {
-//  266         U16 k;
-//  267         for(k=0; k<Size; k++)
+//  264     }
+//  265     else
+//  266     {
+//  267         U16 k;
+//  268         for(k=0; k<Size; k++)
 ??YADA_57_0:
         MOVS     R6,#+0
         B.N      ??YADA_57_3
-//  268         {
-//  269             send_byte(P->style);
+//  269         {
+//  270             send_byte(P->style);
 ??YADA_57_4:
         LDRB     R0,[R4, #+0]
           CFI FunCall send_byte
         BL       send_byte
-//  270             send_xy(P->X_0,P->Y_0);
+//  271             send_xy(P->X_0,P->Y_0);
         LDRH     R1,[R4, #+4]
         LDRH     R0,[R4, #+2]
           CFI FunCall send_xy
         BL       send_xy
-//  271             send_byte(P->R_0);
+//  272             send_byte(P->R_0);
         LDRB     R0,[R4, #+6]
           CFI FunCall send_byte
         BL       send_byte
-//  272             P++;
+//  273             P++;
         ADDS     R4,R4,#+8
-//  273         }
+//  274         }
         ADDS     R6,R6,#+1
 ??YADA_57_3:
         MOVS     R0,R5
@@ -1376,12 +1378,12 @@ YADA_57:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         CMP      R6,R0
         BCC.N    ??YADA_57_4
-//  274     }
-//  275     send_end();
+//  275     }
+//  276     send_end();
 ??YADA_57_2:
           CFI FunCall send_end
         BL       send_end
-//  276 }
+//  277 }
         POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock30
 
@@ -1389,8 +1391,8 @@ YADA_57:
           CFI Block cfiBlock31 Using cfiCommon0
           CFI Function YADA_5704
         THUMB
-//  277 void YADA_5704 (U16 X,U16 Y,U16 R,U16 AS,U16 AE)
-//  278 {
+//  278 void YADA_5704 (U16 X,U16 Y,U16 R,U16 AS,U16 AE)
+//  279 {
 YADA_5704:
         PUSH     {R4-R8,LR}
           CFI R14 Frame(CFA, -4)
@@ -1405,17 +1407,17 @@ YADA_5704:
         MOVS     R7,R2
         MOV      R8,R3
         LDR      R4,[SP, #+24]
-//  279     send_byte(0xaa);
+//  280     send_byte(0xaa);
         MOVS     R0,#+170
           CFI FunCall send_byte
         BL       send_byte
-//  280     send_xy(0x5704,X);
+//  281     send_xy(0x5704,X);
         MOVS     R1,R5
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOVW     R0,#+22276
           CFI FunCall send_xy
         BL       send_xy
-//  281     send_area(Y,R,AS,AE);
+//  282     send_area(Y,R,AS,AE);
         MOVS     R3,R4
         UXTH     R3,R3            ;; ZeroExt  R3,R3,#+16,#+16
         MOV      R2,R8
@@ -1426,20 +1428,20 @@ YADA_5704:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_area
         BL       send_area
-//  282     send_end();
+//  283     send_end();
           CFI FunCall send_end
         BL       send_end
-//  283 }
+//  284 }
         POP      {R4-R8,PC}       ;; return
           CFI EndBlock cfiBlock31
-//  284 /*59 -前景色显示1像素线宽的1个或多个矩形外框*/
+//  285 /*59 -前景色显示1像素线宽的1个或多个矩形外框*/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock32 Using cfiCommon0
           CFI Function YADA_59
         THUMB
-//  285 void YADA_59 (U16 *P,U8 Size)
-//  286 {
+//  286 void YADA_59 (U16 *P,U8 Size)
+//  287 {
 YADA_59:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -1448,30 +1450,30 @@ YADA_59:
           CFI CFA R13+16
         MOVS     R4,R0
         MOVS     R5,R1
-//  287     send_word(0xaa59);
+//  288     send_word(0xaa59);
         MOVW     R0,#+43609
           CFI FunCall send_word
         BL       send_word
-//  288     send_U16str(P,Size);
+//  289     send_U16str(P,Size);
         MOVS     R1,R5
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOVS     R0,R4
           CFI FunCall send_U16str
         BL       send_U16str
-//  289     send_end();
+//  290     send_end();
           CFI FunCall send_end
         BL       send_end
-//  290 }
+//  291 }
         POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock32
-//  291 /*69 -背景色显示1像素线宽的1个或多个矩形外框*/
+//  292 /*69 -背景色显示1像素线宽的1个或多个矩形外框*/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock33 Using cfiCommon0
           CFI Function YADA_69
         THUMB
-//  292 void YADA_69 (U16 *P,U8 Size)
-//  293 {
+//  293 void YADA_69 (U16 *P,U8 Size)
+//  294 {
 YADA_69:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -1480,20 +1482,20 @@ YADA_69:
           CFI CFA R13+16
         MOVS     R4,R0
         MOVS     R5,R1
-//  294     send_word(0xaa69);
+//  295     send_word(0xaa69);
         MOVW     R0,#+43625
           CFI FunCall send_word
         BL       send_word
-//  295     send_U16str(P,Size);
+//  296     send_U16str(P,Size);
         MOVS     R1,R5
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOVS     R0,R4
           CFI FunCall send_U16str
         BL       send_U16str
-//  296     send_end();
+//  297     send_end();
           CFI FunCall send_end
         BL       send_end
-//  297 }
+//  298 }
         POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock33
 
@@ -1501,8 +1503,8 @@ YADA_69:
           CFI Block cfiBlock34 Using cfiCommon0
           CFI Function YADA_64
         THUMB
-//  298 void YADA_64 (U16 X,U16 Y,U16 Color)
-//  299 {
+//  299 void YADA_64 (U16 X,U16 Y,U16 Color)
+//  300 {
 YADA_64:
         PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
@@ -1513,26 +1515,26 @@ YADA_64:
         MOVS     R4,R0
         MOVS     R5,R1
         MOVS     R6,R2
-//  300     send_word(0xaa64);
+//  301     send_word(0xaa64);
         MOVW     R0,#+43620
           CFI FunCall send_word
         BL       send_word
-//  301     send_xy(X,Y);
+//  302     send_xy(X,Y);
         MOVS     R1,R5
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOVS     R0,R4
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_xy
         BL       send_xy
-//  302     send_word(Color);
+//  303     send_word(Color);
         MOVS     R0,R6
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_word
         BL       send_word
-//  303     send_end();
+//  304     send_end();
           CFI FunCall send_end
         BL       send_end
-//  304 }
+//  305 }
         POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock34
 
@@ -1540,30 +1542,30 @@ YADA_64:
           CFI Block cfiBlock35 Using cfiCommon0
           CFI Function YADA_52
         THUMB
-//  305 void YADA_52 (void)
-//  306 {
+//  306 void YADA_52 (void)
+//  307 {
 YADA_52:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  307     send_word(0xaa52);
+//  308     send_word(0xaa52);
         MOVW     R0,#+43602
           CFI FunCall send_word
         BL       send_word
-//  308     send_end();
+//  309     send_end();
           CFI FunCall send_end
         BL       send_end
-//  309 }
+//  310 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock35
-//  310 /*5A -背景色填充1个或多个矩形区域*/
+//  311 /*5A -背景色填充1个或多个矩形区域*/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock36 Using cfiCommon0
           CFI Function YADA_5A
         THUMB
-//  311 void YADA_5A (U16 *P,U8 Size)
-//  312 {
+//  312 void YADA_5A (U16 *P,U8 Size)
+//  313 {
 YADA_5A:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -1572,30 +1574,30 @@ YADA_5A:
           CFI CFA R13+16
         MOVS     R4,R0
         MOVS     R5,R1
-//  313     send_word(0xaa5A);
+//  314     send_word(0xaa5A);
         MOVW     R0,#+43610
           CFI FunCall send_word
         BL       send_word
-//  314     send_U16str(P,Size);
+//  315     send_U16str(P,Size);
         MOVS     R1,R5
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOVS     R0,R4
           CFI FunCall send_U16str
         BL       send_U16str
-//  315     send_end();
+//  316     send_end();
           CFI FunCall send_end
         BL       send_end
-//  316 }
+//  317 }
         POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock36
-//  317 /*5B -前景色填充1个或多个矩形区域*/
+//  318 /*5B -前景色填充1个或多个矩形区域*/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock37 Using cfiCommon0
           CFI Function YADA_5B
         THUMB
-//  318 void YADA_5B (U16 *P,U8 Size)
-//  319 {
+//  319 void YADA_5B (U16 *P,U8 Size)
+//  320 {
 YADA_5B:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -1604,30 +1606,30 @@ YADA_5B:
           CFI CFA R13+16
         MOVS     R4,R0
         MOVS     R5,R1
-//  320     send_word(0xaa5B);
+//  321     send_word(0xaa5B);
         MOVW     R0,#+43611
           CFI FunCall send_word
         BL       send_word
-//  321     send_U16str(P,Size);
+//  322     send_U16str(P,Size);
         MOVS     R1,R5
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOVS     R0,R4
           CFI FunCall send_U16str
         BL       send_U16str
-//  322     send_end();
+//  323     send_end();
           CFI FunCall send_end
         BL       send_end
-//  323 }
+//  324 }
         POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock37
-//  324 /*5C -反色填充1个或多个矩形区域*/
+//  325 /*5C -反色填充1个或多个矩形区域*/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock38 Using cfiCommon0
           CFI Function YADA_5C
         THUMB
-//  325 void YADA_5C (U16 *P,U8 Size)
-//  326 {
+//  326 void YADA_5C (U16 *P,U8 Size)
+//  327 {
 YADA_5C:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -1636,20 +1638,20 @@ YADA_5C:
           CFI CFA R13+16
         MOVS     R4,R0
         MOVS     R5,R1
-//  327     send_word(0xaa5C);
+//  328     send_word(0xaa5C);
         MOVW     R0,#+43612
           CFI FunCall send_word
         BL       send_word
-//  328     send_U16str(P,Size);
+//  329     send_U16str(P,Size);
         MOVS     R1,R5
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOVS     R0,R4
           CFI FunCall send_U16str
         BL       send_U16str
-//  329     send_end();
+//  330     send_end();
           CFI FunCall send_end
         BL       send_end
-//  330 }
+//  331 }
         POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock38
 
@@ -1657,8 +1659,8 @@ YADA_5C:
           CFI Block cfiBlock39 Using cfiCommon0
           CFI Function shift
         THUMB
-//  331 void shift (U8 cmd,U16 *p,U8 c_Dots,U8 size)
-//  332 {
+//  332 void shift (U8 cmd,U16 *p,U8 c_Dots,U8 size)
+//  333 {
 shift:
         PUSH     {R3-R7,LR}
           CFI R14 Frame(CFA, -4)
@@ -1671,30 +1673,30 @@ shift:
         MOVS     R5,R1
         MOVS     R6,R2
         MOVS     R7,R3
-//  333     send_byte(0xAA);
+//  334     send_byte(0xAA);
         MOVS     R0,#+170
           CFI FunCall send_byte
         BL       send_byte
-//  334     send_byte(cmd);
+//  335     send_byte(cmd);
         MOVS     R0,R4
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  335     send_U16str(p,size);
+//  336     send_U16str(p,size);
         MOVS     R1,R7
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOVS     R0,R5
           CFI FunCall send_U16str
         BL       send_U16str
-//  336     send_byte(c_Dots);
+//  337     send_byte(c_Dots);
         MOVS     R0,R6
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  337     send_end();
+//  338     send_end();
           CFI FunCall send_end
         BL       send_end
-//  338 }
+//  339 }
         POP      {R0,R4-R7,PC}    ;; return
           CFI EndBlock cfiBlock39
 
@@ -1702,13 +1704,13 @@ shift:
           CFI Block cfiBlock40 Using cfiCommon0
           CFI Function YADA_60
         THUMB
-//  339 void YADA_60 (U16 *P,U8 C_Dots,U8 Size)
-//  340 {
+//  340 void YADA_60 (U16 *P,U8 C_Dots,U8 Size)
+//  341 {
 YADA_60:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  341     shift(0x60,P,C_Dots,Size);
+//  342     shift(0x60,P,C_Dots,Size);
         MOVS     R3,R2
         UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
         MOVS     R2,R1
@@ -1717,7 +1719,7 @@ YADA_60:
         MOVS     R0,#+96
           CFI FunCall shift
         BL       shift
-//  342 }
+//  343 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock40
 
@@ -1725,13 +1727,13 @@ YADA_60:
           CFI Block cfiBlock41 Using cfiCommon0
           CFI Function YADA_61
         THUMB
-//  343 void YADA_61 (U16 *P,U8 C_Dots,U8 Size)
-//  344 {
+//  344 void YADA_61 (U16 *P,U8 C_Dots,U8 Size)
+//  345 {
 YADA_61:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  345     shift(0x61,P,C_Dots,Size);
+//  346     shift(0x61,P,C_Dots,Size);
         MOVS     R3,R2
         UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
         MOVS     R2,R1
@@ -1740,7 +1742,7 @@ YADA_61:
         MOVS     R0,#+97
           CFI FunCall shift
         BL       shift
-//  346 }
+//  347 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock41
 
@@ -1748,13 +1750,13 @@ YADA_61:
           CFI Block cfiBlock42 Using cfiCommon0
           CFI Function YADA_62
         THUMB
-//  347 void YADA_62 (U16 *P,U8 C_Dots,U8 Size)
-//  348 {
+//  348 void YADA_62 (U16 *P,U8 C_Dots,U8 Size)
+//  349 {
 YADA_62:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  349     shift(0x62,P,C_Dots,Size);
+//  350     shift(0x62,P,C_Dots,Size);
         MOVS     R3,R2
         UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
         MOVS     R2,R1
@@ -1763,7 +1765,7 @@ YADA_62:
         MOVS     R0,#+98
           CFI FunCall shift
         BL       shift
-//  350 }
+//  351 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock42
 
@@ -1771,13 +1773,13 @@ YADA_62:
           CFI Block cfiBlock43 Using cfiCommon0
           CFI Function YADA_63
         THUMB
-//  351 void YADA_63 (U16 *P,U8 C_Dots,U8 Size)
-//  352 {
+//  352 void YADA_63 (U16 *P,U8 C_Dots,U8 Size)
+//  353 {
 YADA_63:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  353     shift(0x63,P,C_Dots,Size);
+//  354     shift(0x63,P,C_Dots,Size);
         MOVS     R3,R2
         UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
         MOVS     R2,R1
@@ -1786,37 +1788,37 @@ YADA_63:
         MOVS     R0,#+99
           CFI FunCall shift
         BL       shift
-//  354 }
+//  355 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock43
-//  355 
-//  356 /*显示一副全图像 */
+//  356 
+//  357 /*显示一副全图像 */
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock44 Using cfiCommon0
           CFI Function YADA_70
         THUMB
-//  357 void YADA_70(U16 ID) 
-//  358 {
+//  358 void YADA_70(U16 ID) 
+//  359 {
 YADA_70:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
         MOVS     R4,R0
-//  359     send_word(0xaa70);
+//  360     send_word(0xaa70);
         MOVW     R0,#+43632
           CFI FunCall send_word
         BL       send_word
-//  360     send_word(ID);
+//  361     send_word(ID);
         MOVS     R0,R4
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_word
         BL       send_word
-//  361     send_end();
+//  362     send_end();
           CFI FunCall send_end
         BL       send_end
-//  362 }
+//  363 }
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock44
 
@@ -1824,38 +1826,38 @@ YADA_70:
           CFI Block cfiBlock45 Using cfiCommon0
           CFI Function YADA_7B
         THUMB
-//  363 void YADA_7B (U16 ID)
-//  364 {
+//  364 void YADA_7B (U16 ID)
+//  365 {
 YADA_7B:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
         MOVS     R4,R0
-//  365     send_word(0xaa7B);
+//  366     send_word(0xaa7B);
         MOVW     R0,#+43643
           CFI FunCall send_word
         BL       send_word
-//  366     send_word(ID);
+//  367     send_word(ID);
         MOVS     R0,R4
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_word
         BL       send_word
-//  367     send_end();
+//  368     send_end();
           CFI FunCall send_end
         BL       send_end
-//  368 }
+//  369 }
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock45
-//  369 
-//  370 /* 从指定图片剪切图标粘贴到当前显示页 */
+//  370 
+//  371 /* 从指定图片剪切图标粘贴到当前显示页 */
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock46 Using cfiCommon0
           CFI Function YADA_71
         THUMB
-//  371 void YADA_71 (U16 ID,U16 XS,U16 YS,U16 XE,U16 YE,U16 X,U16 Y)
-//  372 {
+//  372 void YADA_71 (U16 ID,U16 XS,U16 YS,U16 XE,U16 YE,U16 X,U16 Y)
+//  373 {
 YADA_71:
         PUSH     {R4-R10,LR}
           CFI R14 Frame(CFA, -4)
@@ -1874,16 +1876,16 @@ YADA_71:
         LDR      R6,[SP, #+32]
         LDR      R5,[SP, #+36]
         LDR      R4,[SP, #+40]
-//  373     send_word(0xaa71);
+//  374     send_word(0xaa71);
         MOVW     R0,#+43633
           CFI FunCall send_word
         BL       send_word
-//  374     send_word(ID);
+//  375     send_word(ID);
         MOVS     R0,R7
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_word
         BL       send_word
-//  375     send_area(XS,YS,XE,YE);
+//  376     send_area(XS,YS,XE,YE);
         MOVS     R3,R6
         UXTH     R3,R3            ;; ZeroExt  R3,R3,#+16,#+16
         MOV      R2,R10
@@ -1894,17 +1896,17 @@ YADA_71:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_area
         BL       send_area
-//  376     send_xy(X,Y);
+//  377     send_xy(X,Y);
         MOVS     R1,R4
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOVS     R0,R5
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_xy
         BL       send_xy
-//  377     send_end();
+//  378     send_end();
           CFI FunCall send_end
         BL       send_end
-//  378 }
+//  379 }
         POP      {R4-R10,PC}      ;; return
           CFI EndBlock cfiBlock46
 
@@ -1912,8 +1914,8 @@ YADA_71:
           CFI Block cfiBlock47 Using cfiCommon0
           CFI Function YADA_9C
         THUMB
-//  379 void YADA_9C (U16 ID,U16 XS,U16 YS,U16 XE,U16 YE,U16 X,U16 Y)
-//  380 {
+//  380 void YADA_9C (U16 ID,U16 XS,U16 YS,U16 XE,U16 YE,U16 X,U16 Y)
+//  381 {
 YADA_9C:
         PUSH     {R4-R10,LR}
           CFI R14 Frame(CFA, -4)
@@ -1932,16 +1934,16 @@ YADA_9C:
         LDR      R6,[SP, #+32]
         LDR      R5,[SP, #+36]
         LDR      R4,[SP, #+40]
-//  381     send_word(0xaa9C);
+//  382     send_word(0xaa9C);
         MOVW     R0,#+43676
           CFI FunCall send_word
         BL       send_word
-//  382     send_word(ID);
+//  383     send_word(ID);
         MOVS     R0,R7
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_word
         BL       send_word
-//  383     send_area(XS,YS,XE,YE);
+//  384     send_area(XS,YS,XE,YE);
         MOVS     R3,R6
         UXTH     R3,R3            ;; ZeroExt  R3,R3,#+16,#+16
         MOV      R2,R10
@@ -1952,17 +1954,17 @@ YADA_9C:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_area
         BL       send_area
-//  384     send_xy(X,Y);
+//  385     send_xy(X,Y);
         MOVS     R1,R4
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOVS     R0,R5
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_xy
         BL       send_xy
-//  385     send_end();
+//  386     send_end();
           CFI FunCall send_end
         BL       send_end
-//  386 }
+//  387 }
         POP      {R4-R10,PC}      ;; return
           CFI EndBlock cfiBlock47
 
@@ -1970,8 +1972,8 @@ YADA_9C:
           CFI Block cfiBlock48 Using cfiCommon0
           CFI Function YADA_9D
         THUMB
-//  387 void YADA_9D (U16 ID,U16 XS,U16 YS,U16 XE,U16 YE,U16 X,U16 Y)
-//  388 {
+//  388 void YADA_9D (U16 ID,U16 XS,U16 YS,U16 XE,U16 YE,U16 X,U16 Y)
+//  389 {
 YADA_9D:
         PUSH     {R4-R10,LR}
           CFI R14 Frame(CFA, -4)
@@ -1990,16 +1992,16 @@ YADA_9D:
         LDR      R6,[SP, #+32]
         LDR      R5,[SP, #+36]
         LDR      R4,[SP, #+40]
-//  389     send_word(0xaa9D);
+//  390     send_word(0xaa9D);
         MOVW     R0,#+43677
           CFI FunCall send_word
         BL       send_word
-//  390     send_word(ID);
+//  391     send_word(ID);
         MOVS     R0,R7
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_word
         BL       send_word
-//  391     send_area(XS,YS,XE,YE);
+//  392     send_area(XS,YS,XE,YE);
         MOVS     R3,R6
         UXTH     R3,R3            ;; ZeroExt  R3,R3,#+16,#+16
         MOV      R2,R10
@@ -2010,17 +2012,17 @@ YADA_9D:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_area
         BL       send_area
-//  392     send_xy(X,Y);
+//  393     send_xy(X,Y);
         MOVS     R1,R4
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOVS     R0,R5
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_xy
         BL       send_xy
-//  393     send_end();
+//  394     send_end();
           CFI FunCall send_end
         BL       send_end
-//  394 }
+//  395 }
         POP      {R4-R10,PC}      ;; return
           CFI EndBlock cfiBlock48
 
@@ -2028,27 +2030,27 @@ YADA_9D:
           CFI Block cfiBlock49 Using cfiCommon0
           CFI Function YADA_E2
         THUMB
-//  395 void YADA_E2 (U16 ID)
-//  396 {
+//  396 void YADA_E2 (U16 ID)
+//  397 {
 YADA_E2:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
         MOVS     R4,R0
-//  397     send_word(0xaaE2);
+//  398     send_word(0xaaE2);
         MOVW     R0,#+43746
           CFI FunCall send_word
         BL       send_word
-//  398     send_word(ID);
+//  399     send_word(ID);
         MOVS     R0,R4
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_word
         BL       send_word
-//  399     send_end();
+//  400     send_end();
           CFI FunCall send_end
         BL       send_end
-//  400 }
+//  401 }
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock49
 
@@ -2056,8 +2058,8 @@ YADA_E2:
           CFI Block cfiBlock50 Using cfiCommon0
           CFI Function YADA_99
         THUMB
-//  401 void YADA_99 (U16 *P,U8 Size)
-//  402 {
+//  402 void YADA_99 (U16 *P,U8 Size)
+//  403 {
 YADA_99:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -2066,20 +2068,20 @@ YADA_99:
           CFI CFA R13+16
         MOVS     R4,R0
         MOVS     R5,R1
-//  403     send_word(0xaa99);
+//  404     send_word(0xaa99);
         MOVW     R0,#+43673
           CFI FunCall send_word
         BL       send_word
-//  404     send_U16str(P,Size);
+//  405     send_U16str(P,Size);
         MOVS     R1,R5
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOVS     R0,R4
           CFI FunCall send_U16str
         BL       send_U16str
-//  405     send_end();
+//  406     send_end();
           CFI FunCall send_end
         BL       send_end
-//  406 }
+//  407 }
         POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock50
 
@@ -2087,20 +2089,20 @@ YADA_99:
           CFI Block cfiBlock51 Using cfiCommon0
           CFI Function YADA_D0
         THUMB
-//  407 void YADA_D0 (void)
-//  408 {
+//  408 void YADA_D0 (void)
+//  409 {
 YADA_D0:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  409     send_word(0xaad0);
+//  410     send_word(0xaad0);
         MOVW     R0,#+43728
           CFI FunCall send_word
         BL       send_word
-//  410     send_end();
+//  411     send_end();
           CFI FunCall send_end
         BL       send_end
-//  411 }
+//  412 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock51
 
@@ -2108,8 +2110,8 @@ YADA_D0:
           CFI Block cfiBlock52 Using cfiCommon0
           CFI Function YADA_C0
         THUMB
-//  412 void YADA_C0 (U16 Addr,U16 *P,U8 Size)
-//  413 {
+//  413 void YADA_C0 (U16 Addr,U16 *P,U8 Size)
+//  414 {
 YADA_C0:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -2118,22 +2120,22 @@ YADA_C0:
           CFI CFA R13+16
         MOVS     R4,R1
         MOVS     R5,R2
-//  414     send_xy(0xAAC0,Addr);
+//  415     send_xy(0xAAC0,Addr);
         MOVS     R1,R0
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOVW     R0,#+43712
           CFI FunCall send_xy
         BL       send_xy
-//  415     send_U16str(P,Size);
+//  416     send_U16str(P,Size);
         MOVS     R1,R5
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOVS     R0,R4
           CFI FunCall send_U16str
         BL       send_U16str
-//  416     send_end();
+//  417     send_end();
           CFI FunCall send_end
         BL       send_end
-//  417 }
+//  418 }
         POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock52
 
@@ -2141,8 +2143,8 @@ YADA_C0:
           CFI Block cfiBlock53 Using cfiCommon0
           CFI Function YADA_C2
         THUMB
-//  418 void YADA_C2 (U16 Addr,U16 Data_Length)
-//  419 {
+//  419 void YADA_C2 (U16 Addr,U16 Data_Length)
+//  420 {
 YADA_C2:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -2151,21 +2153,21 @@ YADA_C2:
           CFI CFA R13+16
         MOVS     R4,R0
         MOVS     R5,R1
-//  420     send_word(0xAAC2);
+//  421     send_word(0xAAC2);
         MOVW     R0,#+43714
           CFI FunCall send_word
         BL       send_word
-//  421     send_xy(Addr,Data_Length);
+//  422     send_xy(Addr,Data_Length);
         MOVS     R1,R5
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOVS     R0,R4
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_xy
         BL       send_xy
-//  422     send_end();
+//  423     send_end();
           CFI FunCall send_end
         BL       send_end
-//  423 }
+//  424 }
         POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock53
 
@@ -2173,8 +2175,8 @@ YADA_C2:
           CFI Block cfiBlock54 Using cfiCommon0
           CFI Function YADA_C101
         THUMB
-//  424 void YADA_C101 (U16 Addr,U16 Pixel_Number)
-//  425 {
+//  425 void YADA_C101 (U16 Addr,U16 Pixel_Number)
+//  426 {
 YADA_C101:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -2183,25 +2185,25 @@ YADA_C101:
           CFI CFA R13+16
         MOVS     R4,R0
         MOVS     R5,R1
-//  426     send_byte(0xAA);
+//  427     send_byte(0xAA);
         MOVS     R0,#+170
           CFI FunCall send_byte
         BL       send_byte
-//  427     send_word(0xC101);
+//  428     send_word(0xC101);
         MOVW     R0,#+49409
           CFI FunCall send_word
         BL       send_word
-//  428     send_xy(Addr,Pixel_Number);
+//  429     send_xy(Addr,Pixel_Number);
         MOVS     R1,R5
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOVS     R0,R4
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_xy
         BL       send_xy
-//  429     send_end();
+//  430     send_end();
           CFI FunCall send_end
         BL       send_end
-//  430 }
+//  431 }
         POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock54
 
@@ -2209,8 +2211,8 @@ YADA_C101:
           CFI Block cfiBlock55 Using cfiCommon0
           CFI Function YADA_C102
         THUMB
-//  431 void YADA_C102 (U16 Addr,U16 Line_Number)
-//  432 {
+//  432 void YADA_C102 (U16 Addr,U16 Line_Number)
+//  433 {
 YADA_C102:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -2219,25 +2221,25 @@ YADA_C102:
           CFI CFA R13+16
         MOVS     R4,R0
         MOVS     R5,R1
-//  433     send_byte(0xAA);
+//  434     send_byte(0xAA);
         MOVS     R0,#+170
           CFI FunCall send_byte
         BL       send_byte
-//  434     send_word(0xC102);
+//  435     send_word(0xC102);
         MOVW     R0,#+49410
           CFI FunCall send_word
         BL       send_word
-//  435     send_xy(Addr,Line_Number);
+//  436     send_xy(Addr,Line_Number);
         MOVS     R1,R5
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOVS     R0,R4
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_xy
         BL       send_xy
-//  436     send_end();
+//  437     send_end();
           CFI FunCall send_end
         BL       send_end
-//  437 }
+//  438 }
         POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock55
 
@@ -2245,8 +2247,8 @@ YADA_C102:
           CFI Block cfiBlock56 Using cfiCommon0
           CFI Function YADA_C103
         THUMB
-//  438 void YADA_C103 (U16 Addr,U16 X,U16 Y,U16 Line_Number,U8 D_X,U8 Dis_X,U8 K_y,U16 Color)
-//  439 {
+//  439 void YADA_C103 (U16 Addr,U16 X,U16 Y,U16 Line_Number,U8 D_X,U8 Dis_X,U8 K_y,U16 Color)
+//  440 {
 YADA_C103:
         PUSH     {R3-R11,LR}
           CFI R14 Frame(CFA, -4)
@@ -2267,63 +2269,63 @@ YADA_C103:
         LDR      R6,[SP, #+44]
         LDR      R5,[SP, #+48]
         LDR      R4,[SP, #+52]
-//  440     send_byte(0xAA);
+//  441     send_byte(0xAA);
         MOVS     R0,#+170
           CFI FunCall send_byte
         BL       send_byte
-//  441     send_word(0xC103);
+//  442     send_word(0xC103);
         MOVW     R0,#+49411
           CFI FunCall send_word
         BL       send_word
-//  442     send_xy(Addr,X);
+//  443     send_xy(Addr,X);
         MOV      R1,R9
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOV      R0,R8
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_xy
         BL       send_xy
-//  443     send_xy(Y,Line_Number);
+//  444     send_xy(Y,Line_Number);
         MOV      R1,R11
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOV      R0,R10
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_xy
         BL       send_xy
-//  444     send_byte(D_X);
+//  445     send_byte(D_X);
         MOVS     R0,R7
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  445     send_byte(Dis_X);
+//  446     send_byte(Dis_X);
         MOVS     R0,R6
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  446     send_byte(K_y);
+//  447     send_byte(K_y);
         MOVS     R0,R5
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  447     send_word(Color);
+//  448     send_word(Color);
         MOVS     R0,R4
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_word
         BL       send_word
-//  448     send_end();
+//  449     send_end();
           CFI FunCall send_end
         BL       send_end
-//  449 }
+//  450 }
         POP      {R0,R4-R11,PC}   ;; return
           CFI EndBlock cfiBlock56
-//  450 
-//  451  /* 使用暂存缓冲区的数据点高速无闪烁连线（示波器） */
+//  451 
+//  452  /* 使用暂存缓冲区的数据点高速无闪烁连线（示波器） */
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock57 Using cfiCommon0
           CFI Function YADA_C104
         THUMB
-//  452 void YADA_C104 (U16 Addr1,U16 X,U16 Y,U16 Line_Number,U8 Dis_X,U16 Color1,U16 Addr0,U16 Color0)
-//  453 {
+//  453 void YADA_C104 (U16 Addr1,U16 X,U16 Y,U16 Line_Number,U8 Dis_X,U16 Color1,U16 Addr0,U16 Color0)
+//  454 {
 YADA_C104:
         PUSH     {R3-R11,LR}
           CFI R14 Frame(CFA, -4)
@@ -2344,53 +2346,53 @@ YADA_C104:
         LDR      R6,[SP, #+44]
         LDR      R5,[SP, #+48]
         LDR      R4,[SP, #+52]
-//  454     send_byte(0xAA);
+//  455     send_byte(0xAA);
         MOVS     R0,#+170
           CFI FunCall send_byte
         BL       send_byte
-//  455     send_word(0xC104);
+//  456     send_word(0xC104);
         MOVW     R0,#+49412
           CFI FunCall send_word
         BL       send_word
-//  456     send_xy(Addr1,X);
+//  457     send_xy(Addr1,X);
         MOV      R1,R9
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOV      R0,R8
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_xy
         BL       send_xy
-//  457     send_xy(Y,Line_Number);
+//  458     send_xy(Y,Line_Number);
         MOV      R1,R11
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOV      R0,R10
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_xy
         BL       send_xy
-//  458     send_byte(0x01);//自动固定写01
+//  459     send_byte(0x01);//自动固定写01
         MOVS     R0,#+1
           CFI FunCall send_byte
         BL       send_byte
-//  459     send_byte(Dis_X);
+//  460     send_byte(Dis_X);
         MOVS     R0,R7
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  460     send_word(Color1);
+//  461     send_word(Color1);
         MOVS     R0,R6
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_word
         BL       send_word
-//  461     send_xy(Addr0,Color0);
+//  462     send_xy(Addr0,Color0);
         MOVS     R1,R4
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOVS     R0,R5
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_xy
         BL       send_xy
-//  462     send_end();
+//  463     send_end();
           CFI FunCall send_end
         BL       send_end
-//  463 }
+//  464 }
         POP      {R0,R4-R11,PC}   ;; return
           CFI EndBlock cfiBlock57
 
@@ -2398,8 +2400,8 @@ YADA_C104:
           CFI Block cfiBlock58 Using cfiCommon0
           CFI Function YADA_C105
         THUMB
-//  464 void YADA_C105 (U16 Addr,U16 X,U16 Y,U16 Line_Number,U8 D_X,U8 Dis_X,U8 M_y,U8 D_y,U16 Color)
-//  465 {
+//  465 void YADA_C105 (U16 Addr,U16 X,U16 Y,U16 Line_Number,U8 D_X,U8 Dis_X,U8 M_y,U8 D_y,U16 Color)
+//  466 {
 YADA_C105:
         PUSH     {R0,R4-R11,LR}
           CFI R14 Frame(CFA, -4)
@@ -2420,56 +2422,56 @@ YADA_C105:
         LDR      R6,[SP, #+48]
         LDR      R5,[SP, #+52]
         LDR      R4,[SP, #+56]
-//  466     send_byte(0xAA);
+//  467     send_byte(0xAA);
         MOVS     R0,#+170
           CFI FunCall send_byte
         BL       send_byte
-//  467     send_word(0xC105);
+//  468     send_word(0xC105);
         MOVW     R0,#+49413
           CFI FunCall send_word
         BL       send_word
-//  468     send_xy(Addr,X);
+//  469     send_xy(Addr,X);
         MOV      R1,R9
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         LDRH     R0,[SP, #+0]
           CFI FunCall send_xy
         BL       send_xy
-//  469     send_xy(Y,Line_Number);
+//  470     send_xy(Y,Line_Number);
         MOV      R1,R11
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOV      R0,R10
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_xy
         BL       send_xy
-//  470     send_byte(D_X);
+//  471     send_byte(D_X);
         MOV      R0,R8
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  471     send_byte(Dis_X);
+//  472     send_byte(Dis_X);
         MOVS     R0,R7
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  472     send_byte(M_y);
+//  473     send_byte(M_y);
         MOVS     R0,R6
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  473     send_byte(D_y);
+//  474     send_byte(D_y);
         MOVS     R0,R5
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  474     send_word(Color);
+//  475     send_word(Color);
         MOVS     R0,R4
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_word
         BL       send_word
-//  475     send_end();
+//  476     send_end();
           CFI FunCall send_end
         BL       send_end
-//  476 }
+//  477 }
         POP      {R0,R4-R11,PC}   ;; return
           CFI EndBlock cfiBlock58
 
@@ -2477,8 +2479,8 @@ YADA_C105:
           CFI Block cfiBlock59 Using cfiCommon0
           CFI Function YADA_C106
         THUMB
-//  477 void YADA_C106 (U16 Addr,U16 X,U16 Y,U16 Line_Number,U8 D_X,U8 Dis_X,U8 M_y,U8 D_y,U16 Color,U16 Ymin,U16 Ymax)
-//  478 {
+//  478 void YADA_C106 (U16 Addr,U16 X,U16 Y,U16 Line_Number,U8 D_X,U8 Dis_X,U8 M_y,U8 D_y,U16 Color,U16 Ymin,U16 Ymax)
+//  479 {
 YADA_C106:
         PUSH     {R0-R2,R4-R11,LR}
           CFI R14 Frame(CFA, -4)
@@ -2499,61 +2501,61 @@ YADA_C106:
         LDR      R6,[SP, #+64]
         LDR      R5,[SP, #+68]
         LDR      R4,[SP, #+72]
-//  479     send_byte(0xAA);
+//  480     send_byte(0xAA);
         MOVS     R0,#+170
           CFI FunCall send_byte
         BL       send_byte
-//  480     send_word(0xC106);
+//  481     send_word(0xC106);
         MOVW     R0,#+49414
           CFI FunCall send_word
         BL       send_word
-//  481     send_xy(Addr,X);
+//  482     send_xy(Addr,X);
         LDRH     R1,[SP, #+4]
         LDRH     R0,[SP, #+0]
           CFI FunCall send_xy
         BL       send_xy
-//  482     send_xy(Y,Line_Number);
+//  483     send_xy(Y,Line_Number);
         MOV      R1,R11
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         LDRH     R0,[SP, #+8]
           CFI FunCall send_xy
         BL       send_xy
-//  483     send_byte(D_X);
+//  484     send_byte(D_X);
         MOV      R0,R10
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  484     send_byte(Dis_X);
+//  485     send_byte(Dis_X);
         MOV      R0,R9
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  485     send_byte(M_y);
+//  486     send_byte(M_y);
         MOV      R0,R8
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  486     send_byte(D_y);
+//  487     send_byte(D_y);
         MOVS     R0,R7
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  487     send_word(Color);
+//  488     send_word(Color);
         MOVS     R0,R6
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_word
         BL       send_word
-//  488     send_xy(Ymin,Ymax);
+//  489     send_xy(Ymin,Ymax);
         MOVS     R1,R4
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOVS     R0,R5
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_xy
         BL       send_xy
-//  489     send_end();
+//  490     send_end();
           CFI FunCall send_end
         BL       send_end
-//  490 }
+//  491 }
         POP      {R0-R2,R4-R11,PC}  ;; return
           CFI EndBlock cfiBlock59
 
@@ -2561,8 +2563,8 @@ YADA_C106:
           CFI Block cfiBlock60 Using cfiCommon0
           CFI Function YADA_C10700
         THUMB
-//  491 void YADA_C10700 (U16 Addr,U16 X_Len,U16 Y_Len)
-//  492 {
+//  492 void YADA_C10700 (U16 Addr,U16 X_Len,U16 Y_Len)
+//  493 {
 YADA_C10700:
         PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
@@ -2573,27 +2575,27 @@ YADA_C10700:
         MOVS     R4,R0
         MOVS     R5,R1
         MOVS     R6,R2
-//  493     send_xy(0xAAC1,0X0700);
+//  494     send_xy(0xAAC1,0X0700);
         MOV      R1,#+1792
         MOVW     R0,#+43713
           CFI FunCall send_xy
         BL       send_xy
-//  494     send_xy(Addr,X_Len);
+//  495     send_xy(Addr,X_Len);
         MOVS     R1,R5
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOVS     R0,R4
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_xy
         BL       send_xy
-//  495     send_word(Y_Len);
+//  496     send_word(Y_Len);
         MOVS     R0,R6
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_word
         BL       send_word
-//  496     send_end();
+//  497     send_end();
           CFI FunCall send_end
         BL       send_end
-//  497 }
+//  498 }
         POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock60
 
@@ -2601,8 +2603,8 @@ YADA_C10700:
           CFI Block cfiBlock61 Using cfiCommon0
           CFI Function YADA_C10701
         THUMB
-//  498 void YADA_C10701 (U16 Addr,U16 X_Len,U16 Y_Len,U16 X,U16 Y,U16 Color,U8 MODE,U16 *P,U8 Size)
-//  499 {
+//  499 void YADA_C10701 (U16 Addr,U16 X_Len,U16 Y_Len,U16 X,U16 Y,U16 Color,U8 MODE,U16 *P,U8 Size)
+//  500 {
 YADA_C10701:
         PUSH     {R0,R4-R11,LR}
           CFI R14 Frame(CFA, -4)
@@ -2623,12 +2625,12 @@ YADA_C10701:
         LDR      R5,[SP, #+48]
         LDR      R11,[SP, #+52]
         LDR      R4,[SP, #+56]
-//  500     send_xy(0xAAC1,0X0701);
+//  501     send_xy(0xAAC1,0X0701);
         MOVW     R1,#+1793
         MOVW     R0,#+43713
           CFI FunCall send_xy
         BL       send_xy
-//  501     send_area(Addr,X_Len,Y_Len,X);
+//  502     send_area(Addr,X_Len,Y_Len,X);
         MOV      R3,R10
         UXTH     R3,R3            ;; ZeroExt  R3,R3,#+16,#+16
         MOV      R2,R9
@@ -2638,28 +2640,28 @@ YADA_C10701:
         LDRH     R0,[SP, #+0]
           CFI FunCall send_area
         BL       send_area
-//  502     send_xy(Y,Color);
+//  503     send_xy(Y,Color);
         MOVS     R1,R6
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOVS     R0,R7
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_xy
         BL       send_xy
-//  503     send_byte(MODE);
+//  504     send_byte(MODE);
         MOVS     R0,R5
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  504     send_U16str(P,Size);
+//  505     send_U16str(P,Size);
         MOVS     R1,R4
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOV      R0,R11
           CFI FunCall send_U16str
         BL       send_U16str
-//  505     send_end();
+//  506     send_end();
           CFI FunCall send_end
         BL       send_end
-//  506 }
+//  507 }
         POP      {R0,R4-R11,PC}   ;; return
           CFI EndBlock cfiBlock61
 
@@ -2667,8 +2669,8 @@ YADA_C10701:
           CFI Block cfiBlock62 Using cfiCommon0
           CFI Function YADA_C10702
         THUMB
-//  507 void YADA_C10702 (U16 Addr,U16 X_Len,U16 Y_Len,U16 X,U16 Y,U16 Color)
-//  508 {
+//  508 void YADA_C10702 (U16 Addr,U16 X_Len,U16 Y_Len,U16 X,U16 Y,U16 Color)
+//  509 {
 YADA_C10702:
         PUSH     {R3-R9,LR}
           CFI R14 Frame(CFA, -4)
@@ -2685,12 +2687,12 @@ YADA_C10702:
         MOV      R9,R3
         LDR      R5,[SP, #+32]
         LDR      R4,[SP, #+36]
-//  509     send_xy(0xAAC1,0X0702);
+//  510     send_xy(0xAAC1,0X0702);
         MOVW     R1,#+1794
         MOVW     R0,#+43713
           CFI FunCall send_xy
         BL       send_xy
-//  510     send_area(Addr,X_Len,Y_Len,X);
+//  511     send_area(Addr,X_Len,Y_Len,X);
         MOV      R3,R9
         UXTH     R3,R3            ;; ZeroExt  R3,R3,#+16,#+16
         MOV      R2,R8
@@ -2701,17 +2703,17 @@ YADA_C10702:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_area
         BL       send_area
-//  511     send_xy(Y,Color);
+//  512     send_xy(Y,Color);
         MOVS     R1,R4
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOVS     R0,R5
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_xy
         BL       send_xy
-//  512     send_end();
+//  513     send_end();
           CFI FunCall send_end
         BL       send_end
-//  513 }
+//  514 }
         POP      {R0,R4-R9,PC}    ;; return
           CFI EndBlock cfiBlock62
 
@@ -2719,8 +2721,8 @@ YADA_C10702:
           CFI Block cfiBlock63 Using cfiCommon0
           CFI Function YADA_C108
         THUMB
-//  514 void YADA_C108 (U16 Addr,U8 Parameter_N)
-//  515 {
+//  515 void YADA_C108 (U16 Addr,U8 Parameter_N)
+//  516 {
 YADA_C108:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -2729,28 +2731,28 @@ YADA_C108:
           CFI CFA R13+16
         MOVS     R4,R0
         MOVS     R5,R1
-//  516     send_byte(0xAA);
+//  517     send_byte(0xAA);
         MOVS     R0,#+170
           CFI FunCall send_byte
         BL       send_byte
-//  517     send_word(0xC108);
+//  518     send_word(0xC108);
         MOVW     R0,#+49416
           CFI FunCall send_word
         BL       send_word
-//  518     send_word(Addr);
+//  519     send_word(Addr);
         MOVS     R0,R4
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_word
         BL       send_word
-//  519     send_byte(Parameter_N);
+//  520     send_byte(Parameter_N);
         MOVS     R0,R5
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  520     send_end();
+//  521     send_end();
           CFI FunCall send_end
         BL       send_end
-//  521 }
+//  522 }
         POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock63
 
@@ -2758,8 +2760,8 @@ YADA_C108:
           CFI Block cfiBlock64 Using cfiCommon0
           CFI Function YADA_C110
         THUMB
-//  522 void YADA_C110 (U16 Addr,U8 Frame_Number)
-//  523 {
+//  523 void YADA_C110 (U16 Addr,U8 Frame_Number)
+//  524 {
 YADA_C110:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -2768,28 +2770,28 @@ YADA_C110:
           CFI CFA R13+16
         MOVS     R4,R0
         MOVS     R5,R1
-//  524     send_byte(0xAA);
+//  525     send_byte(0xAA);
         MOVS     R0,#+170
           CFI FunCall send_byte
         BL       send_byte
-//  525     send_word(0xC110);
+//  526     send_word(0xC110);
         MOVW     R0,#+49424
           CFI FunCall send_word
         BL       send_word
-//  526     send_word(Addr);
+//  527     send_word(Addr);
         MOVS     R0,R4
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_word
         BL       send_word
-//  527     send_byte(Frame_Number);
+//  528     send_byte(Frame_Number);
         MOVS     R0,R5
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  528     send_end();
+//  529     send_end();
           CFI FunCall send_end
         BL       send_end
-//  529 }
+//  530 }
         POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock64
 
@@ -2797,8 +2799,8 @@ YADA_C110:
           CFI Block cfiBlock65 Using cfiCommon0
           CFI Function YADA_90_RANDOM
         THUMB
-//  530 void YADA_90_RANDOM (U16 Addr,U8 *P,U8 Size)
-//  531 {
+//  531 void YADA_90_RANDOM (U16 Addr,U8 *P,U8 Size)
+//  532 {
 YADA_90_RANDOM:
         PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
@@ -2809,28 +2811,28 @@ YADA_90_RANDOM:
         MOVS     R4,R0
         MOVS     R5,R1
         MOVS     R6,R2
-//  532     send_area(0xAA90,0x55aa,0x5aa5,0x01de);
+//  533     send_area(0xAA90,0x55aa,0x5aa5,0x01de);
         MOV      R3,#+478
         MOVW     R2,#+23205
         MOVW     R1,#+21930
         MOVW     R0,#+43664
           CFI FunCall send_area
         BL       send_area
-//  533     send_word(Addr);
+//  534     send_word(Addr);
         MOVS     R0,R4
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_word
         BL       send_word
-//  534     send_U8str(P,Size);
+//  535     send_U8str(P,Size);
         MOVS     R1,R6
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOVS     R0,R5
           CFI FunCall send_U8str
         BL       send_U8str
-//  535     send_end();
+//  536     send_end();
           CFI FunCall send_end
         BL       send_end
-//  536 }
+//  537 }
         POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock65
 
@@ -2838,8 +2840,8 @@ YADA_90_RANDOM:
           CFI Block cfiBlock66 Using cfiCommon0
           CFI Function YADA_90_ORDER
         THUMB
-//  537 void YADA_90_ORDER (U32 Addr,U8 *P,U8 Size)
-//  538 {
+//  538 void YADA_90_ORDER (U32 Addr,U8 *P,U8 Size)
+//  539 {
 YADA_90_ORDER:
         PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
@@ -2850,37 +2852,37 @@ YADA_90_ORDER:
         MOVS     R4,R0
         MOVS     R5,R1
         MOVS     R6,R2
-//  539     send_xy(0xaa90,0x55aa);
+//  540     send_xy(0xaa90,0x55aa);
         MOVW     R1,#+21930
         MOVW     R0,#+43664
           CFI FunCall send_xy
         BL       send_xy
-//  540     send_word(0x5aa5);
+//  541     send_word(0x5aa5);
         MOVW     R0,#+23205
           CFI FunCall send_word
         BL       send_word
-//  541     send_word(Addr/65536);
+//  542     send_word(Addr/65536);
         LSRS     R0,R4,#+16
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_word
         BL       send_word
-//  542     send_word(Addr%65536);
+//  543     send_word(Addr%65536);
         MOVS     R1,#+65536
         UDIV     R0,R4,R1
         MLS      R0,R0,R1,R4
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_word
         BL       send_word
-//  543     send_U8str(P,Size);
+//  544     send_U8str(P,Size);
         MOVS     R1,R6
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         MOVS     R0,R5
           CFI FunCall send_U8str
         BL       send_U8str
-//  544     send_end();
+//  545     send_end();
           CFI FunCall send_end
         BL       send_end
-//  545 }
+//  546 }
         POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock66
 
@@ -2888,13 +2890,13 @@ YADA_90_ORDER:
           CFI Block cfiBlock67 Using cfiCommon0
           CFI Function YADA_91
         THUMB
-//  546 void YADA_91 (U32 Addr,U16 Length)
-//  547 {
+//  547 void YADA_91 (U32 Addr,U16 Length)
+//  548 {
 YADA_91:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  548     send_area(0xaa91,Addr/65536,Addr%65536,Length);
+//  549     send_area(0xaa91,Addr/65536,Addr%65536,Length);
         MOVS     R3,R1
         UXTH     R3,R3            ;; ZeroExt  R3,R3,#+16,#+16
         MOVS     R1,#+65536
@@ -2906,10 +2908,10 @@ YADA_91:
         MOVW     R0,#+43665
           CFI FunCall send_area
         BL       send_area
-//  549     send_end();
+//  550     send_end();
           CFI FunCall send_end
         BL       send_end
-//  550 }
+//  551 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock67
 
@@ -2917,24 +2919,24 @@ YADA_91:
           CFI Block cfiBlock68 Using cfiCommon0
           CFI Function YADA_9B00
         THUMB
-//  551 void YADA_9B00 (void)
-//  552 {
+//  552 void YADA_9B00 (void)
+//  553 {
 YADA_9B00:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  553     send_word(0xaa9B);
+//  554     send_word(0xaa9B);
         MOVW     R0,#+43675
           CFI FunCall send_word
         BL       send_word
-//  554     send_byte(0x00);
+//  555     send_byte(0x00);
         MOVS     R0,#+0
           CFI FunCall send_byte
         BL       send_byte
-//  555     send_end();
+//  556     send_end();
           CFI FunCall send_end
         BL       send_end
-//  556 }
+//  557 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock68
 
@@ -2942,8 +2944,8 @@ YADA_9B00:
           CFI Block cfiBlock69 Using cfiCommon0
           CFI Function YADA_9BFF
         THUMB
-//  557 void YADA_9BFF (U8 RTC_Mode,U8 Text_Mode,U16 Color,U16 X,U16 Y)
-//  558 {
+//  558 void YADA_9BFF (U8 RTC_Mode,U8 Text_Mode,U16 Color,U16 X,U16 Y)
+//  559 {
 YADA_9BFF:
         PUSH     {R4-R8,LR}
           CFI R14 Frame(CFA, -4)
@@ -2958,40 +2960,40 @@ YADA_9BFF:
         MOVS     R7,R2
         MOV      R8,R3
         LDR      R4,[SP, #+24]
-//  559     send_word(0xaa9B);
+//  560     send_word(0xaa9B);
         MOVW     R0,#+43675
           CFI FunCall send_word
         BL       send_word
-//  560     send_byte(0xFF);
+//  561     send_byte(0xFF);
         MOVS     R0,#+255
           CFI FunCall send_byte
         BL       send_byte
-//  561     send_byte(RTC_Mode);
+//  562     send_byte(RTC_Mode);
         MOVS     R0,R5
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  562     send_byte(Text_Mode);
+//  563     send_byte(Text_Mode);
         MOVS     R0,R6
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  563     send_word(Color);
+//  564     send_word(Color);
         MOVS     R0,R7
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_word
         BL       send_word
-//  564     send_xy(X,Y);
+//  565     send_xy(X,Y);
         MOVS     R1,R4
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         MOV      R0,R8
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall send_xy
         BL       send_xy
-//  565     send_end();
+//  566     send_end();
           CFI FunCall send_end
         BL       send_end
-//  566 }
+//  567 }
         POP      {R4-R8,PC}       ;; return
           CFI EndBlock cfiBlock69
 
@@ -2999,24 +3001,24 @@ YADA_9BFF:
           CFI Block cfiBlock70 Using cfiCommon0
           CFI Function YADA_9B5A
         THUMB
-//  567 void YADA_9B5A (void)
-//  568 {
+//  568 void YADA_9B5A (void)
+//  569 {
 YADA_9B5A:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  569     send_word(0xaa9B);
+//  570     send_word(0xaa9B);
         MOVW     R0,#+43675
           CFI FunCall send_word
         BL       send_word
-//  570     send_byte(0x5a);
+//  571     send_byte(0x5a);
         MOVS     R0,#+90
           CFI FunCall send_byte
         BL       send_byte
-//  571     send_end();
+//  572     send_end();
           CFI FunCall send_end
         BL       send_end
-//  572 }
+//  573 }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock70
 
@@ -3024,8 +3026,8 @@ YADA_9B5A:
           CFI Block cfiBlock71 Using cfiCommon0
           CFI Function YADA_E7
         THUMB
-//  573 void YADA_E7(U8 YY,U8 MM,U8 DD,U8 HH,U8 M,U8 SS)
-//  574 {
+//  574 void YADA_E7(U8 YY,U8 MM,U8 DD,U8 HH,U8 M,U8 SS)
+//  575 {
 YADA_E7:
         PUSH     {R3-R9,LR}
           CFI R14 Frame(CFA, -4)
@@ -3042,49 +3044,49 @@ YADA_E7:
         MOV      R9,R3
         LDR      R5,[SP, #+32]
         LDR      R4,[SP, #+36]
-//  575     send_xy(0xaae7,0x55aa);
+//  576     send_xy(0xaae7,0x55aa);
         MOVW     R1,#+21930
         MOVW     R0,#+43751
           CFI FunCall send_xy
         BL       send_xy
-//  576     send_word(0x5aa5);
+//  577     send_word(0x5aa5);
         MOVW     R0,#+23205
           CFI FunCall send_word
         BL       send_word
-//  577     send_byte(YY);
+//  578     send_byte(YY);
         MOVS     R0,R6
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  578     send_byte(MM);
+//  579     send_byte(MM);
         MOVS     R0,R7
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  579     send_byte(DD);
+//  580     send_byte(DD);
         MOV      R0,R8
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  580     send_byte(HH);
+//  581     send_byte(HH);
         MOV      R0,R9
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  581     send_byte(M);
+//  582     send_byte(M);
         MOVS     R0,R5
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  582     send_byte(SS);
+//  583     send_byte(SS);
         MOVS     R0,R4
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  583     send_end();
+//  584     send_end();
           CFI FunCall send_end
         BL       send_end
-//  584 }
+//  585 }
         POP      {R0,R4-R9,PC}    ;; return
           CFI EndBlock cfiBlock71
 
@@ -3092,8 +3094,8 @@ YADA_E7:
           CFI Block cfiBlock72 Using cfiCommon0
           CFI Function YADA_5E
         THUMB
-//  585 void YADA_5E(U8 V_ON,U8 V_OFF,U8 ON_TIME)
-//  586 {
+//  586 void YADA_5E(U8 V_ON,U8 V_OFF,U8 ON_TIME)
+//  587 {
 YADA_5E:
         PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
@@ -3106,46 +3108,46 @@ YADA_5E:
         MOVS     R4,R0
         MOVS     R5,R1
         MOVS     R6,R2
-//  587     U8 dat[4]= {0x55,0xaa,0x5a,0xa5};
+//  588     U8 dat[4]= {0x55,0xaa,0x5a,0xa5};
         ADD      R0,SP,#+0
         LDR.N    R1,??DataTable2_2
         LDR      R2,[R1, #0]
         STR      R2,[R0, #+0]
-//  588     send_word(0xaa5E);
+//  589     send_word(0xaa5E);
         MOVW     R0,#+43614
           CFI FunCall send_word
         BL       send_word
-//  589     if(V_ON!=0xFF)
+//  590     if(V_ON!=0xFF)
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         CMP      R4,#+255
         BEQ.N    ??YADA_5E_0
-//  590     {
-//  591         send_U8str(dat,4);
+//  591     {
+//  592         send_U8str(dat,4);
         MOVS     R1,#+4
         ADD      R0,SP,#+0
           CFI FunCall send_U8str
         BL       send_U8str
-//  592         send_byte(V_ON);
+//  593         send_byte(V_ON);
         MOVS     R0,R4
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  593         send_byte(V_OFF);
+//  594         send_byte(V_OFF);
         MOVS     R0,R5
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  594         send_byte(ON_TIME);
+//  595         send_byte(ON_TIME);
         MOVS     R0,R6
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  595     }
-//  596     send_end();
+//  596     }
+//  597     send_end();
 ??YADA_5E_0:
           CFI FunCall send_end
         BL       send_end
-//  597 }
+//  598 }
         POP      {R0,R1,R4-R6,PC}  ;; return
           CFI EndBlock cfiBlock72
 
@@ -3171,34 +3173,34 @@ YADA_5E:
           CFI Block cfiBlock73 Using cfiCommon0
           CFI Function YADA_5F
         THUMB
-//  598 void YADA_5F(U8 PWM_T)
-//  599 {
+//  599 void YADA_5F(U8 PWM_T)
+//  600 {
 YADA_5F:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
         MOVS     R4,R0
-//  600     send_word(0xaa5F);
+//  601     send_word(0xaa5F);
         MOVW     R0,#+43615
           CFI FunCall send_word
         BL       send_word
-//  601     if(PWM_T!=0xFF)
+//  602     if(PWM_T!=0xFF)
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         CMP      R4,#+255
         BEQ.N    ??YADA_5F_0
-//  602     {
-//  603         send_byte(PWM_T);
+//  603     {
+//  604         send_byte(PWM_T);
         MOVS     R0,R4
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  604     }
-//  605     send_end();
+//  605     }
+//  606     send_end();
 ??YADA_5F_0:
           CFI FunCall send_end
         BL       send_end
-//  606 }
+//  607 }
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock73
 
@@ -3206,8 +3208,8 @@ YADA_5F:
           CFI Block cfiBlock74 Using cfiCommon0
           CFI Function YADA_E0
         THUMB
-//  607 void YADA_E0 (U8 TFT_ID,U8 Bode_Set,U8 Para1)
-//  608 {
+//  608 void YADA_E0 (U8 TFT_ID,U8 Bode_Set,U8 Para1)
+//  609 {
 YADA_E0:
         PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
@@ -3218,65 +3220,65 @@ YADA_E0:
         MOVS     R4,R0
         MOVS     R5,R1
         MOVS     R6,R2
-//  609     send_xy(0xaae0,0x55aa);
+//  610     send_xy(0xaae0,0x55aa);
         MOVW     R1,#+21930
         MOVW     R0,#+43744
           CFI FunCall send_xy
         BL       send_xy
-//  610     send_word(0x5aa5);
+//  611     send_word(0x5aa5);
         MOVW     R0,#+23205
           CFI FunCall send_word
         BL       send_word
-//  611     send_byte(TFT_ID);
+//  612     send_byte(TFT_ID);
         MOVS     R0,R4
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  612     send_byte(Bode_Set);
+//  613     send_byte(Bode_Set);
         MOVS     R0,R5
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  613     send_byte(Para1);
+//  614     send_byte(Para1);
         MOVS     R0,R6
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
           CFI FunCall send_byte
         BL       send_byte
-//  614     send_end();
+//  615     send_end();
           CFI FunCall send_end
         BL       send_end
-//  615 }
+//  616 }
         POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock74
-//  616 
-//  617 /* add --> wk */
+//  617 
+//  618 /* add --> wk */
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock75 Using cfiCommon0
           CFI Function YADA_E4
         THUMB
-//  618  void YADA_E4()  // 触摸屏校准
-//  619  {
+//  619  void YADA_E4()  // 触摸屏校准
+//  620  {
 YADA_E4:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  620    send_word(0xaaE4);
+//  621    send_word(0xaaE4);
         MOVW     R0,#+43748
           CFI FunCall send_word
         BL       send_word
-//  621    send_word(0x55aa);
+//  622    send_word(0x55aa);
         MOVW     R0,#+21930
           CFI FunCall send_word
         BL       send_word
-//  622    send_word(0x5aa5);
+//  623    send_word(0x5aa5);
         MOVW     R0,#+23205
           CFI FunCall send_word
         BL       send_word
-//  623    send_end();
+//  624    send_end();
           CFI FunCall send_end
         BL       send_end
-//  624  }
+//  625  }
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock75
 

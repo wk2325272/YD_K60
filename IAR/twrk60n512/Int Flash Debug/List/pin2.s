@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    09/Apr/2013  09:03:02 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    10/Apr/2013  18:31:02 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -46,6 +46,7 @@
         NAME pin2
 
         RTMODEL "__SystemLibrary", "DLib"
+        RTMODEL "__dlib_full_locale_support", "0"
         AAPCS BASE,INTERWORK
         PRESERVE8
         REQUIRE8
@@ -98,20 +99,15 @@
 //    7                         通过按键 1 中断中的事件与此任务进行通信
 //    8 *******************************************************************************/
 //    9 
-//   10 #include <mqx.h>
-//   11 #include <bsp.h> 
-//   12 #include <fio.h>
-//   13 #include <string.h>
-//   14 
-//   15 #include "System.h"
-//   16 
+//   10 #include "includes.h"
+//   11 
 
         SECTION `.text`:CODE:NOROOT(2)
           CFI Block cfiBlock0 Using cfiCommon0
           CFI Function PIN2
         THUMB
-//   17 void PIN2(uint_32 temp)
-//   18 {
+//   12 void PIN2(uint_32 temp)
+//   13 {
 PIN2:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
@@ -119,70 +115,70 @@ PIN2:
           CFI CFA R13+8
         SUB      SP,SP,#+16
           CFI CFA R13+24
-//   19   pointer ppin2_event;
-//   20   
-//   21    _event_create_auto_clear("pin2_event");
+//   14   pointer ppin2_event;
+//   15   
+//   16    _event_create_auto_clear("pin2_event");
         LDR.N    R0,??PIN2_0
           CFI FunCall _event_create_auto_clear
         BL       _event_create_auto_clear
-//   22    _event_open("pin2_event", &ppin2_event);
+//   17    _event_open("pin2_event", &ppin2_event);
         ADD      R1,SP,#+8
         LDR.N    R0,??PIN2_0
           CFI FunCall _event_open
         BL       _event_open
         B.N      ??PIN2_1
-//   23    
-//   24    while(TRUE)
-//   25    {
-//   26       _event_wait_all(ppin2_event,0x04,0);
-//   27       
-//   28       /* wk --> 启动 Shell */
-//   29       _mqx_uint oldP1=12,oldP2=10;uint_32 id;
-//   30       static uchar flag=0;
-//   31       id=0x10002;
-//   32       if( flag == 0 )
-//   33       {
-//   34         _task_set_priority(id+1,10,&oldP1);  // 切换SHELL任务的优先级为 10
-//   35         flag=1;
-//   36         printf("flag=%d\n",flag);
-//   37       }
-//   38       else if(flag == 1)
+//   18    
+//   19    while(TRUE)
+//   20    {
+//   21       _event_wait_all(ppin2_event,0x04,0);
+//   22       
+//   23       /* wk --> 启动 Shell */
+//   24       _mqx_uint oldP1=12,oldP2=10;uint_32 id;
+//   25       static uchar flag=0;
+//   26       id=0x10002;
+//   27       if( flag == 0 )
+//   28       {
+//   29         _task_set_priority(id+1,10,&oldP1);  // 切换SHELL任务的优先级为 10
+//   30         flag=1;
+//   31         printf("flag=%d\n",flag);
+//   32       }
+//   33       else if(flag == 1)
 ??PIN2_2:
         LDR.N    R0,??PIN2_0+0x4
         LDRB     R0,[R0, #+0]
         CMP      R0,#+1
         BNE.N    ??PIN2_3
-//   39       {
-//   40 //        _task_abort(0x10005);  // wk --> 销毁任务。 这里不能销毁，因为后面还学要在启动任务
-//   41        /*
-//   42         ** wk --> 将任务挂起。
-//   43         ** 注意：必须将任务挂起才能改变任务的优先级
-//   44         */
-//   45         _taskq_suspend_task(id+1,NULL);  // 将任务挂起
+//   34       {
+//   35 //        _task_abort(0x10005);  // wk --> 销毁任务。 这里不能销毁，因为后面还学要在启动任务
+//   36        /*
+//   37         ** wk --> 将任务挂起。
+//   38         ** 注意：必须将任务挂起才能改变任务的优先级
+//   39         */
+//   40         _taskq_suspend_task(id+1,NULL);  // 将任务挂起
         MOVS     R1,#+0
         ADDS     R0,R4,#+1
           CFI FunCall _taskq_suspend_task
         BL       _taskq_suspend_task
-//   46        
-//   47         _task_set_priority(id+1,12,&oldP2); // 将SHELL的任务的优先级降到 12
+//   41        
+//   42         _task_set_priority(id+1,12,&oldP2); // 将SHELL的任务的优先级降到 12
         ADD      R2,SP,#+0
         MOVS     R1,#+12
         ADDS     R0,R4,#+1
           CFI FunCall _task_set_priority
         BL       _task_set_priority
-//   48         flag=0;
+//   43         flag=0;
         LDR.N    R0,??PIN2_0+0x4
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
-//   49         printf("flag=%d\n",flag);
+//   44         printf("flag=%d\n",flag);
         LDR.N    R0,??PIN2_0+0x4
         LDRB     R1,[R0, #+0]
         LDR.N    R0,??PIN2_0+0x8
           CFI FunCall _io_printf
         BL       _io_printf
-//   50       }
-//   51       
-//   52       printf("id=%d\n",id);
+//   45       }
+//   46       
+//   47       printf("id=%d\n",id);
 ??PIN2_3:
         MOVS     R1,R4
         LDR.N    R0,??PIN2_0+0xC
@@ -226,9 +222,9 @@ PIN2:
         DC32     `?<Constant "id=%d\\n">`
         DC32     0x10002
           CFI EndBlock cfiBlock0
-//   53      /* test end */
-//   54    }
-//   55 }
+//   48      /* test end */
+//   49    }
+//   50 }
 
         SECTION `.bss`:DATA:REORDER:NOROOT(0)
 ??flag:
@@ -274,4 +270,4 @@ PIN2:
 //   1 byte  of DATA  memory
 //
 //Errors: none
-//Warnings: 3
+//Warnings: none

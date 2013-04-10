@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM     09/Apr/2013  09:02:56 #
+# IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM     10/Apr/2013  18:30:58 #
 # Copyright 1999-2011 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -57,207 +57,195 @@ L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\LCDUart.c
       8                               switch部分分支可调整为Dis_PicID=Touch_key+X
       9          *******************************************************************************/
      10          #define    LCDUart_GLOBALS
-     11          #include "LCDUart.h"
-
-   \                                 In section .bss, align 1
-   \   __absolute unsigned char volatile DisTimeOnce
-   \                     DisTimeOnce:
-   \   00000000                      DS8 1
-
-   \                                 In section .bss, align 1
-   \   __absolute unsigned char volatile MenuSwFlg
-   \                     MenuSwFlg:
-   \   00000000                      DS8 1
-
-   \                                 In section .bss, align 1
-   \   __absolute unsigned char volatile Dis_PicID
-   \                     Dis_PicID:
-   \   00000000                      DS8 1
-
-   \                                 In section .bss, align 1
-   \   __absolute unsigned char volatile ViewKeyFlg
-   \                     ViewKeyFlg:
-   \   00000000                      DS8 1
-
-   \                                 In section .bss, align 1
-   \   __absolute unsigned char volatile SysSetKeyFlg
-   \                     SysSetKeyFlg:
-   \   00000000                      DS8 1
-
-   \                                 In section .bss, align 1
-   \   __absolute unsigned char volatile EventKeyFlg
-   \                     EventKeyFlg:
-   \   00000000                      DS8 1
-
-   \                                 In section .bss, align 1
-   \   __absolute unsigned char volatile HarmoGraphPhase
-   \                     HarmoGraphPhase:
-   \   00000000                      DS8 1
-
-   \                                 In section .bss, align 1
-   \   __absolute unsigned char volatile HarmoGraphRange
-   \                     HarmoGraphRange:
-   \   00000000                      DS8 1
-
-   \                                 In section .bss, align 1
-   \   __absolute unsigned char volatile HarmoGraphUorder
-   \                     HarmoGraphUorder:
-   \   00000000                      DS8 1
-
-   \                                 In section .bss, align 1
-   \   __absolute unsigned char volatile HarmoGraphIorder
-   \                     HarmoGraphIorder:
-   \   00000000                      DS8 1
-
-   \                                 In section .bss, align 1
-   \   __absolute unsigned char volatile HarmoListShift
-   \                     HarmoListShift:
-   \   00000000                      DS8 1
-
-   \                                 In section .bss, align 1
-   \   __absolute unsigned char volatile HarmoListPhase
-   \                     HarmoListPhase:
-   \   00000000                      DS8 1
-
-   \                                 In section .bss, align 1
-   \   __absolute unsigned char volatile HarmoListUorI
-   \                     HarmoListUorI:
-   \   00000000                      DS8 1
-
-   \                                 In section .bss, align 1
-   \   __absolute unsigned char volatile HarmoListRange
-   \                     HarmoListRange:
-   \   00000000                      DS8 1
-
-   \                                 In section .bss, align 1
-   \   __absolute unsigned char volatile HarmoListAmporRatio
-   \                     HarmoListAmporRatio:
-   \   00000000                      DS8 1
-
-   \                                 In section .bss, align 1
-   \   __absolute unsigned char volatile VIEWHoldFlg
-   \                     VIEWHoldFlg:
-   \   00000000                      DS8 1
-
-   \                                 In section .bss, align 1
-   \   __absolute unsigned char volatile EVEpage
-   \                     EVEpage:
-   \   00000000                      DS8 1
-
-   \                                 In section .bss, align 1
-   \   __absolute unsigned char volatile EVEline
-   \                     EVEline:
-   \   00000000                      DS8 1
-
-   \                                 In section .bss, align 1
-   \   __absolute unsigned char volatile EVEfunflg
-   \                     EVEfunflg:
-   \   00000000                      DS8 1
-
-   \                                 In section .bss, align 4
-   \   __absolute struct SS volatile SysSet
-   \                     SysSet:
-   \   00000000                      DS8 20
-
-   \                                 In section .bss, align 1
-   \   __absolute unsigned char volatile OtherSetIndex
-   \                     OtherSetIndex:
-   \   00000000                      DS8 1
-
-   \                                 In section .bss, align 1
-   \   __absolute unsigned char volatile TimeSetIndex
-   \                     TimeSetIndex:
-   \   00000000                      DS8 1
-
-   \                                 In section .bss, align 1
-   \   __absolute unsigned char volatile RemovDevFlg
-   \                     RemovDevFlg:
-   \   00000000                      DS8 1
-
-   \                                 In section .bss, align 1
-   \   __absolute unsigned char volatile SoundOffOn
-   \                     SoundOffOn:
-   \   00000000                      DS8 1
-
-   \                                 In section .bss, align 1
-   \   __absolute unsigned char volatile BlightOffOn
-   \                     BlightOffOn:
-   \   00000000                      DS8 1
-     12          #include "LCDDriver.h"
+     11          
+     12          #include "includes.h"
      13          
      14          #define _LCDUart_DBUG_   //wk --> 测试：是否需要输出调试信息
      15          
      16          extern uchar read_buffer[8];
      17          extern U8 EVEnum_old;  // --> MenuView.c
-     18          /* Uart initialization for send data*/
-     19          /* 
-     20          ** 函数名： 
-     21          ** 作者：
-     22          ** 入口参数：
-     23          ** 函数说明：串口初始化，中断模式为了接收触摸屏数据
-     24          */
+     18          /* wk @130409 --> 变量定义 */
+
+   \                                 In section .bss, align 1
+     19          volatile U8 DisTimeOnce;
+   \                     DisTimeOnce:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 1
+     20          volatile U8 MenuSwFlg;//页面切换标志，默认值为0
+   \                     MenuSwFlg:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 1
+     21          volatile U8 Dis_PicID;
+   \                     Dis_PicID:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 1
+     22          volatile U8 ViewKeyFlg;
+   \                     ViewKeyFlg:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 1
+     23          volatile U8 SysSetKeyFlg;
+   \                     SysSetKeyFlg:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 1
+     24          volatile U8 EventKeyFlg;
+   \                     EventKeyFlg:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 1
+     25          volatile U8 HarmoGraphPhase;//用于选择显示相，默认值1
+   \                     HarmoGraphPhase:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 1
+     26          volatile U8 HarmoGraphRange;//用于选择显示谐波范围，默认值为1,对应1~26次，2对应25~50
+   \                     HarmoGraphRange:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 1
+     27          volatile U8 HarmoGraphUorder;//默认值1，用于控制谐波电压具体次数的数值显示,
+   \                     HarmoGraphUorder:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 1
+     28          volatile U8 HarmoGraphIorder;//默认值1，用于控制谐波电流具体次数的数值显示，
+   \                     HarmoGraphIorder:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 1
+     29          volatile U8 HarmoListShift;//默认值0，谐波列表显示中的功能右移键
+   \                     HarmoListShift:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 1
+     30          volatile U8 HarmoListPhase;//默认值1，
+   \                     HarmoListPhase:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 1
+     31          volatile U8 HarmoListUorI;//默认值1，
+   \                     HarmoListUorI:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 1
+     32          volatile U8 HarmoListRange;//默认值1，
+   \                     HarmoListRange:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 1
+     33          volatile U8 HarmoListAmporRatio;////默认值1，谐波列表显示中显示幅值澹(1)或者含有率(2)的选择
+   \                     HarmoListAmporRatio:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 1
+     34          volatile U8 VIEWHoldFlg;//保持键默认为0，键按下时值变为1，再次按下时值变为0；
+   \                     VIEWHoldFlg:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 1
+     35          volatile U8 EVEpage;//事件的页面键，上翻下翻
+   \                     EVEpage:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 1
+     36          volatile U8 EVEline;//事件的上下移按键，确定事件的行即第几个事件。
+   \                     EVEline:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 1
+     37          volatile U8 EVEfunflg;//事件的上下移按键功能标志。
+   \                     EVEfunflg:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 1
+     38          volatile U8 OtherSetIndex;//初值为0，仅在此C文件中使用
+   \                     OtherSetIndex:
+   \   00000000                      DS8 1
+
+   \                                 In section .bss, align 1
+     39          volatile U8 TimeSetIndex;//初值为6，仅在此C文件中使用
+   \                     TimeSetIndex:
+   \   00000000                      DS8 1
+     40          //volatile U8 RemovDevFlg;
+     41          //volatile U8 SoundOffOn;
+     42          //volatile U8 BlightOffOn;
+     43          //volatile struct SS SysSet;//在LCDUART.c中赋值，在MenuView.c中使用
+
+   \                                 In section .bss, align 4
+     44          volatile SysStr SysSet; //在LCDUART.c中赋值，在MenuView.c中使用
+   \                     SysSet:
+   \   00000000                      DS8 20
+     45          
+     46          /* Uart initialization for send data*/
+     47          /* 
+     48          ** 函数名： 
+     49          ** 作者：
+     50          ** 入口参数：
+     51          ** 函数说明：串口初始化，中断模式为了接收触摸屏数据
+     52          */
 
    \                                 In section .text, align 2, keep-with-next
-     25          void UartTouch_init()
-     26          {
+     53          void UartTouch_init()
+     54          {
    \                     UartTouch_init:
    \   00000000   0xB510             PUSH     {R4,LR}
-     27             MQX_FILE_PTR uart_touch = NULL;  // wk --> 20130107
+     55             MQX_FILE_PTR uart_touch = NULL;  // wk --> 20130107
    \   00000002   0x2400             MOVS     R4,#+0
-     28             ISR_UART_STRUCT uart_isr;
-                                    ^
-Warning[Pe177]: variable "uart_isr" was declared but never referenced
-     29             
-     30             uart_touch  = fopen( "ittyb:", NULL );  // 液晶使用的是串口 ttyb
+     56          //   ISR_UART_STRUCT uart_isr;
+     57             
+     58             uart_touch  = fopen( "ittyb:", NULL );  // 液晶使用的是串口 ttyb
    \   00000004   0x2100             MOVS     R1,#+0
    \   00000006   0x.... 0x....      LDR.W    R0,??DataTable5
    \   0000000A   0x.... 0x....      BL       _io_fopen
    \   0000000E   0x0004             MOVS     R4,R0
-     31          //   uart_touch  = fopen( "ittye:", NULL );  // wk --> test event of uart
-     32               if( uart_touch == NULL )
+     59          //   uart_touch  = fopen( "ittye:", NULL );  // wk --> test event of uart
+     60               if( uart_touch == NULL )
    \   00000010   0x2C00             CMP      R4,#+0
    \   00000012   0xD101             BNE.N    ??UartTouch_init_0
-     33             {
-     34                /* device could not be opened */
-     35                _task_block();
+     61             {
+     62                /* device could not be opened */
+     63                _task_block();
    \   00000014   0x.... 0x....      BL       _task_block
-     36             }
-     37          //   _int_install_isr(BSP_UART_INTERRUPT_VECTOR, new_uart_isr,
-     38          //                    &uart_isr);  
-     39          }
+     64             }
+     65          //   _int_install_isr(BSP_UART_INTERRUPT_VECTOR, new_uart_isr,
+     66          //                    &uart_isr);  
+     67          }
    \                     ??UartTouch_init_0:
    \   00000018   0xBD10             POP      {R4,PC}          ;; return
-     40          
-     41          /* 
-     42          ** 函数名： 
-     43          ** 作者：
-     44          ** 入口参数：
-     45          ** 函数说明：串口中断服务程序
-     46          */
+     68          
+     69          /* 
+     70          ** 函数名： 
+     71          ** 作者：
+     72          ** 入口参数：
+     73          ** 函数说明：串口中断服务程序
+     74          */
 
    \                                 In section .text, align 2, keep-with-next
-     47          void new_uart_isr(pointer user_uart_ptr)
-     48          {
+     75          void new_uart_isr(pointer user_uart_ptr)
+     76          {
    \                     new_uart_isr:
    \   00000000   0xB500             PUSH     {LR}
    \   00000002   0xB083             SUB      SP,SP,#+12
-     49             UART_MemMapPtr     sci_ptr; 
-     50             sci_ptr=(UART_MemMapPtr)UART4_BASE_PTR;  //wk
+     77             UART_MemMapPtr     sci_ptr; 
+     78             sci_ptr=(UART_MemMapPtr)UART4_BASE_PTR;  //wk
    \   00000004   0x.... 0x....      LDR.W    R0,??DataTable5_1  ;; 0x400ea000
-     51             volatile int_32                        c;
-     52             
-     53            
-     54          #if 1 // wk --> data rec
-     55           static   uchar  i=0,flag=0;
-     56             if (sci_ptr->S1 & UART_S1_RDRF_MASK) {
+     79             volatile int_32                        c;
+     80             
+     81          #if 1 // wk --> data rec
+     82           static   uchar  i=0,flag=0;
+     83             if (sci_ptr->S1 & UART_S1_RDRF_MASK) {
    \   00000008   0x7901             LDRB     R1,[R0, #+4]
    \   0000000A   0x0689             LSLS     R1,R1,#+26
    \   0000000C   0xD51B             BPL.N    ??new_uart_isr_0
-     57                c = sci_ptr->D;
+     84                c = sci_ptr->D;
    \   0000000E   0x79C0             LDRB     R0,[R0, #+7]
    \   00000010   0x9000             STR      R0,[SP, #+0]
-     58                
-     59                if(c == 0xaa || flag==1)  //第一个数据是 0xaa 开始标志才开始接收
+     85                
+     86                if(c == 0xaa || flag==1)  //第一个数据是 0xaa 开始标志才开始接收
    \   00000012   0x9800             LDR      R0,[SP, #+0]
    \   00000014   0x28AA             CMP      R0,#+170
    \   00000016   0xD004             BEQ.N    ??new_uart_isr_1
@@ -265,8 +253,8 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   0000001C   0x7800             LDRB     R0,[R0, #+0]
    \   0000001E   0x2801             CMP      R0,#+1
    \   00000020   0xD111             BNE.N    ??new_uart_isr_0
-     60                {
-     61                    read_buffer[i++]= c ;
+     87                {
+     88                    read_buffer[i++]= c ;
    \                     ??new_uart_isr_1:
    \   00000022   0x.... 0x....      LDR.W    R0,??DataTable5_3
    \   00000026   0x7800             LDRB     R0,[R0, #+0]
@@ -278,57 +266,57 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   00000036   0x1C40             ADDS     R0,R0,#+1
    \   00000038   0x.... 0x....      LDR.W    R1,??DataTable5_3
    \   0000003C   0x7008             STRB     R0,[R1, #+0]
-     62                    flag=1;
+     89                    flag=1;
    \   0000003E   0x.... 0x....      LDR.W    R0,??DataTable5_2
    \   00000042   0x2101             MOVS     R1,#+1
    \   00000044   0x7001             STRB     R1,[R0, #+0]
-     63                }   
-     64             }
-     65          #endif  // wk --< data rec
-     66             
-     67              if(i == 8) 
+     90                }   
+     91             }
+     92          #endif  // wk --< data rec
+     93             
+     94              if(i == 8) 
    \                     ??new_uart_isr_0:
    \   00000046   0x.... 0x....      LDR.W    R0,??DataTable5_3
    \   0000004A   0x7800             LDRB     R0,[R0, #+0]
    \   0000004C   0x2808             CMP      R0,#+8
    \   0000004E   0xD110             BNE.N    ??new_uart_isr_2
-     68              {
-     69                i=0;flag=0;     
+     95              {
+     96                i=0;flag=0;     
    \   00000050   0x.... 0x....      LDR.W    R0,??DataTable5_3
    \   00000054   0x2100             MOVS     R1,#+0
    \   00000056   0x7001             STRB     R1,[R0, #+0]
    \   00000058   0x.... 0x....      LDR.W    R0,??DataTable5_2
    \   0000005C   0x2100             MOVS     R1,#+0
    \   0000005E   0x7001             STRB     R1,[R0, #+0]
-     70                pointer puart_event;
-     71                
-     72          #ifdef _UART_DBUG_        //设置事件
-     73                if(_event_open("uart_event",&puart_event) != MQX_OK)
-     74                {
-     75                  printf("\n Open event failed of serl_int_kuart.c");
-     76                }
-     77                else 
-     78                  printf("\n Open event OK of serl_int_kuart.c");
-     79                
-     80                if (_event_set(puart_event,0x01) != MQX_OK) {
-     81                   printf("\n Set Event failed of serl_int_kuart.c");
-     82                }  
-     83                else
-     84                   printf("\n Set Event OK of serl_int_kuart.c");
-     85          #endif
-     86                
-     87          #ifndef _UART_DBUG_
-     88                _event_open("uart_event",&puart_event);
+     97                pointer puart_event;
+     98                
+     99          #ifdef _UART_DBUG_        //设置事件
+    100                if(_event_open("uart_event",&puart_event) != MQX_OK)
+    101                {
+    102                  printf("\n Open event failed of serl_int_kuart.c");
+    103                }
+    104                else 
+    105                  printf("\n Open event OK of serl_int_kuart.c");
+    106                
+    107                if (_event_set(puart_event,0x01) != MQX_OK) {
+    108                   printf("\n Set Event failed of serl_int_kuart.c");
+    109                }  
+    110                else
+    111                   printf("\n Set Event OK of serl_int_kuart.c");
+    112          #endif
+    113                
+    114          #ifndef _UART_DBUG_
+    115                _event_open("uart_event",&puart_event);
    \   00000060   0xA901             ADD      R1,SP,#+4
    \   00000062   0x.... 0x....      LDR.W    R0,??DataTable5_5
    \   00000066   0x.... 0x....      BL       _event_open
-     89                _event_set(puart_event,0x01);  // 设置事件
+    116                _event_set(puart_event,0x01);  // 设置事件
    \   0000006A   0x2101             MOVS     R1,#+1
    \   0000006C   0x9801             LDR      R0,[SP, #+4]
    \   0000006E   0x.... 0x....      BL       _event_set
-     90          #endif
-     91              }
-     92          }
+    117          #endif
+    118              }
+    119          }
    \                     ??new_uart_isr_2:
    \   00000072   0xBD07             POP      {R0-R2,PC}       ;; return
 
@@ -339,134 +327,134 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \                                 In section .bss, align 1
    \                     ??flag:
    \   00000000                      DS8 1
-     93          
-     94          /* 
-     95          ** 函数名： 
-     96          ** 作者：
-     97          ** 入口参数：
-     98          ** 函数说明：触摸屏任务
-     99          */
+    120          
+    121          /* 
+    122          ** 函数名： 
+    123          ** 作者：
+    124          ** 入口参数：
+    125          ** 函数说明：触摸屏任务
+    126          */
 
    \                                 In section .text, align 2, keep-with-next
-    100          void LCDTouchSel_Task(uint_32 param)
-    101          {
+    127          void LCDTouchSel_Task(uint_32 param)
+    128          {
    \                     LCDTouchSel_Task:
    \   00000000   0xB580             PUSH     {R7,LR}
-    102          #define EVENTTEST 1
-    103            
-    104          #if EVENTTEST
-    105            // wk --> event test
-    106            pointer puart_event;
-    107          #ifdef _LCDUart_DBUG_ 
-    108            printf("\n----------LCDTouchSel_Task----------\n");
+    129          #define EVENTTEST 1
+    130            
+    131          #if EVENTTEST
+    132            // wk --> event test
+    133            pointer puart_event;
+    134          #ifdef _LCDUart_DBUG_ 
+    135            printf("\n----------LCDTouchSel_Task----------\n");
    \   00000002   0x.... 0x....      LDR.W    R0,??DataTable5_6
    \   00000006   0x.... 0x....      BL       _io_printf
-    109            printf("\n----------             ----------\n");
+    136            printf("\n----------             ----------\n");
    \   0000000A   0x.... 0x....      LDR.W    R0,??DataTable5_7
    \   0000000E   0x.... 0x....      BL       _io_printf
-    110            printf("\n----------             ----------\n");
+    137            printf("\n----------             ----------\n");
    \   00000012   0x.... 0x....      LDR.W    R0,??DataTable5_7
    \   00000016   0x.... 0x....      BL       _io_printf
-    111            printf("\n----------      END    ----------\n");
+    138            printf("\n----------      END    ----------\n");
    \   0000001A   0x.... 0x....      LDR.W    R0,??DataTable5_8
    \   0000001E   0x.... 0x....      BL       _io_printf
-    112          #endif 
-    113            
-    114            
-    115          #ifdef _LCDUart_DBUG_
-    116          //  if(_event_create("uart_event") != MQX_OK){  // wk --> event of 1
-    117              if(_event_create_auto_clear("uart_event") != MQX_OK){  // wk --> event of 2
+    139          #endif 
+    140            
+    141            
+    142          #ifdef _LCDUart_DBUG_
+    143          //  if(_event_create("uart_event") != MQX_OK){  // wk --> event of 1
+    144              if(_event_create_auto_clear("uart_event") != MQX_OK){  // wk --> event of 2
    \   00000022   0x.... 0x....      LDR.W    R0,??DataTable5_5
    \   00000026   0x.... 0x....      BL       _event_create_auto_clear
    \   0000002A   0x2800             CMP      R0,#+0
    \   0000002C   0xD006             BEQ.N    ??LCDTouchSel_Task_0
-    118              printf("\n Make uart event failed");
+    145              printf("\n Make uart event failed");
    \   0000002E   0x.... 0x....      LDR.W    R0,??DataTable5_9
    \   00000032   0x.... 0x....      BL       _io_printf
-    119              _task_block();
+    146              _task_block();
    \   00000036   0x.... 0x....      BL       _task_block
    \   0000003A   0xE003             B.N      ??LCDTouchSel_Task_1
-    120            }
-    121            else
-    122              printf("\n Make event OK");
+    147            }
+    148            else
+    149              printf("\n Make event OK");
    \                     ??LCDTouchSel_Task_0:
    \   0000003C   0x.... 0x....      LDR.W    R0,??DataTable5_10
    \   00000040   0x.... 0x....      BL       _io_printf
-    123            
-    124            if(_event_open("uart_event", &puart_event) != MQX_OK){
+    150            
+    151            if(_event_open("uart_event", &puart_event) != MQX_OK){
    \                     ??LCDTouchSel_Task_1:
    \   00000044   0xA900             ADD      R1,SP,#+0
    \   00000046   0x.... 0x....      LDR.W    R0,??DataTable5_5
    \   0000004A   0x.... 0x....      BL       _event_open
    \   0000004E   0x2800             CMP      R0,#+0
    \   00000050   0xD006             BEQ.N    ??LCDTouchSel_Task_2
-    125              printf("\nOpen uart event failed ");
+    152              printf("\nOpen uart event failed ");
    \   00000052   0x.... 0x....      LDR.W    R0,??DataTable5_11
    \   00000056   0x.... 0x....      BL       _io_printf
-    126              _task_block();
+    153              _task_block();
    \   0000005A   0x.... 0x....      BL       _task_block
    \   0000005E   0xE00D             B.N      ??LCDTouchSel_Task_3
-    127            }  
-    128            else
-    129              printf("\n Open uart event OK");
+    154            }  
+    155            else
+    156              printf("\n Open uart event OK");
    \                     ??LCDTouchSel_Task_2:
    \   00000060   0x.... 0x....      LDR.W    R0,??DataTable5_12
    \   00000064   0x.... 0x....      BL       _io_printf
    \   00000068   0xE008             B.N      ??LCDTouchSel_Task_3
-    130          #endif  // _LCDUart_DBUG_
-    131            
-    132          #ifndef _LCDUart_DBUG_
-    133            _event_create("uart_event");
-    134            _event_open("uart_event", &puart_event);
-    135          #endif // _LCDUart_DBUG_
-    136            
-    137            while(TRUE)
-    138            {
-    139            _event_wait_all(puart_event,0x01,0);
-    140          //  _event_clear(puart_event,0x01);  // wk --> event of 1
-    141            
-    142            #define tst_flg 0
-    143            
-    144          #if tst_flg // test code  --> tst_flg = 1  // 打印输出接收的触摸屏数据
-    145           static long cs=0,flag = 0;
-    146            if( read_buffer[0]!=0xaa || read_buffer[1]!= 0x78 ||read_buffer[4]!=0xcc
-    147                || read_buffer[5]!= 0x33 ||read_buffer[6]!=0xc3 ||read_buffer[7]!=0x3c)
-    148            {_task_block();
-    149            if(flag ==0 ) 
-    150            {
-    151             printf("cs = %d\n",cs);
-    152             for(uchar i=0;i<8;i++)
-    153            {
-    154              printf("read_buffer[%d] = %x\n",i,read_buffer[i]);
-    155            } 
-    156            }
-    157            flag=1;}
-    158            else if(flag == 0)
-    159            {
-    160            for(uchar i=0;i<8;i++)
-    161            {
-    162              printf("read_buffer[%d] = %x\n",i,read_buffer[i]);
-    163            } 
-    164            printf("\n");
-    165            cs++;
-    166            }
-    167          #endif // end --> tst_flg
+    157          #endif  // _LCDUart_DBUG_
+    158            
+    159          #ifndef _LCDUart_DBUG_
+    160            _event_create("uart_event");
+    161            _event_open("uart_event", &puart_event);
+    162          #endif // _LCDUart_DBUG_
+    163            
+    164            while(TRUE)
+    165            {
+    166            _event_wait_all(puart_event,0x01,0);
+    167          //  _event_clear(puart_event,0x01);  // wk --> event of 1
     168            
-    169          #if !tst_flg  // tst_flg = 0
-    170            if(read_buffer[0] == 0xAA && read_buffer[1] == 0x78)
-    171            {
-    172              if(read_buffer[2] == 0x02)
-    173              {
-    174                ViewKeyFlg=1;
+    169            #define tst_flg 0
+    170            
+    171          #if tst_flg // test code  --> tst_flg = 1  // 打印输出接收的触摸屏数据
+    172           static long cs=0,flag = 0;
+    173            if( read_buffer[0]!=0xaa || read_buffer[1]!= 0x78 ||read_buffer[4]!=0xcc
+    174                || read_buffer[5]!= 0x33 ||read_buffer[6]!=0xc3 ||read_buffer[7]!=0x3c)
+    175            {_task_block();
+    176            if(flag ==0 ) 
+    177            {
+    178             printf("cs = %d\n",cs);
+    179             for(uchar i=0;i<8;i++)
+    180            {
+    181              printf("read_buffer[%d] = %x\n",i,read_buffer[i]);
+    182            } 
+    183            }
+    184            flag=1;}
+    185            else if(flag == 0)
+    186            {
+    187            for(uchar i=0;i<8;i++)
+    188            {
+    189              printf("read_buffer[%d] = %x\n",i,read_buffer[i]);
+    190            } 
+    191            printf("\n");
+    192            cs++;
+    193            }
+    194          #endif // end --> tst_flg
+    195            
+    196          #if !tst_flg  // tst_flg = 0
+    197            if(read_buffer[0] == 0xAA && read_buffer[1] == 0x78)
+    198            {
+    199              if(read_buffer[2] == 0x02)
+    200              {
+    201                ViewKeyFlg=1;
    \                     ??LCDTouchSel_Task_4:
    \   0000006A   0x.... 0x....      LDR.W    R0,??DataTable5_13
    \   0000006E   0x2101             MOVS     R1,#+1
    \   00000070   0x7001             STRB     R1,[R0, #+0]
-    175                LCDUartView(read_buffer[3]);   //数据显示按键跳转函数。
+    202                LCDUartView(read_buffer[3]);   //数据显示按键跳转函数。
    \   00000072   0x.... 0x....      LDR.W    R0,??DataTable5_4
    \   00000076   0x78C0             LDRB     R0,[R0, #+3]
    \   00000078   0x.... 0x....      BL       LCDUartView
-    176              }
+    203              }
    \                     ??LCDTouchSel_Task_3:
    \   0000007C   0x2200             MOVS     R2,#+0
    \   0000007E   0x2101             MOVS     R1,#+1
@@ -484,132 +472,132 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   0000009E   0x7880             LDRB     R0,[R0, #+2]
    \   000000A0   0x2802             CMP      R0,#+2
    \   000000A2   0xD0E2             BEQ.N    ??LCDTouchSel_Task_4
-    177              else if(read_buffer[2] == 0x01)
+    204              else if(read_buffer[2] == 0x01)
    \   000000A4   0x.... 0x....      LDR.W    R0,??DataTable5_4
    \   000000A8   0x7880             LDRB     R0,[R0, #+2]
    \   000000AA   0x2801             CMP      R0,#+1
    \   000000AC   0xD109             BNE.N    ??LCDTouchSel_Task_5
-    178              {
-    179                SysSetKeyFlg=1;
+    205              {
+    206                SysSetKeyFlg=1;
    \   000000AE   0x.... 0x....      LDR.W    R0,??DataTable5_14
    \   000000B2   0x2101             MOVS     R1,#+1
    \   000000B4   0x7001             STRB     R1,[R0, #+0]
-    180                LCDUartSET(read_buffer[3]);   //设置显示按键跳转函数
+    207                LCDUartSET(read_buffer[3]);   //设置显示按键跳转函数
    \   000000B6   0x.... 0x....      LDR.W    R0,??DataTable5_4
    \   000000BA   0x78C0             LDRB     R0,[R0, #+3]
    \   000000BC   0x.... 0x....      BL       LCDUartSET
    \   000000C0   0xE7DC             B.N      ??LCDTouchSel_Task_3
-    181              }
-    182              else if(read_buffer[2] == 0x04)
+    208              }
+    209              else if(read_buffer[2] == 0x04)
    \                     ??LCDTouchSel_Task_5:
    \   000000C2   0x.... 0x....      LDR.W    R0,??DataTable5_4
    \   000000C6   0x7880             LDRB     R0,[R0, #+2]
    \   000000C8   0x2804             CMP      R0,#+4
    \   000000CA   0xD1D7             BNE.N    ??LCDTouchSel_Task_3
-    183              {
-    184                EventKeyFlg=1;
+    210              {
+    211                EventKeyFlg=1;
    \   000000CC   0x.... 0x....      LDR.W    R0,??DataTable5_15
    \   000000D0   0x2101             MOVS     R1,#+1
    \   000000D2   0x7001             STRB     R1,[R0, #+0]
-    185                LCDUartEVENT(read_buffer[3]);   //事件显示按键跳转函数。
+    212                LCDUartEVENT(read_buffer[3]);   //事件显示按键跳转函数。
    \   000000D4   0x.... 0x....      LDR.W    R0,??DataTable5_4
    \   000000D8   0x78C0             LDRB     R0,[R0, #+3]
    \   000000DA   0x.... 0x....      BL       LCDUartEVENT
    \   000000DE   0xE7CD             B.N      ??LCDTouchSel_Task_3
-    186              }
-    187            }
-    188          #endif  // end --> !tst_flg
-    189            }
-    190            // wk --> event test end
-    191          #endif //EVENTTEST  
-    192            
-    193          #if !EVENTTEST        
-    194          #define tst_flg 0
-    195          #if tst_flg // test code  --> tst_flg = 1  // 打印输出接收的触摸屏数据
-    196           static long cs=0,flag = 0;
-    197            if( read_buffer[0]!=0xaa || read_buffer[1]!= 0x78 ||read_buffer[4]!=0xcc
-    198                || read_buffer[5]!= 0x33 ||read_buffer[6]!=0xc3 ||read_buffer[7]!=0x3c)
-    199            {_task_block();
-    200            if(flag ==0 ) 
-    201            {
-    202             printf("cs = %d\n",cs);
-    203             for(uchar i=0;i<8;i++)
-    204            {
-    205              printf("read_buffer[%d] = %x\n",i,read_buffer[i]);
-    206            } 
-    207            }
-    208            flag=1;}
-    209            else if(flag == 0)
-    210            {
-    211            for(uchar i=0;i<8;i++)
-    212            {
-    213              printf("read_buffer[%d] = %x\n",i,read_buffer[i]);
-    214            } 
-    215            printf("\n");
-    216            cs++;
-    217            }
-    218          #endif // end --> tst_flg
+    213              }
+    214            }
+    215          #endif  // end --> !tst_flg
+    216            }
+    217            // wk --> event test end
+    218          #endif //EVENTTEST  
     219            
-    220          #if !tst_flg  // tst_flg = 0
-    221            if(read_buffer[0] == 0xAA && read_buffer[1] == 0x78)
-    222            {
-    223              if(read_buffer[2] == 0x02)
-    224              {
-    225                ViewKeyFlg=1;
-    226                LCDUartView(read_buffer[3]);   //数据显示按键跳转函数。
-    227              }
-    228              else if(read_buffer[2] == 0x01)
-    229              {
-    230                SysSetKeyFlg=1;
-    231                LCDUartSET(read_buffer[3]);   //设置显示按键跳转函数
-    232              }
-    233              else if(read_buffer[2] == 0x04)
-    234              {
-    235                EventKeyFlg=1;
-    236                LCDUartEVENT(read_buffer[3]);   //事件显示按键跳转函数。
-    237              }
-    238            }
-    239          #endif  // end --> !tst_flg
-    240          #endif // !EVENTTEST
-    241          }
-    242          
-    243          
-    244          /*******************************************************************************
-    245          * 函  数  名      : LCDUartView
-    246          * 描      述      : LCDUart触摸屏中断数据显示按键判断
-    247          * 输      入      : Touch_key.
-    248          * 返      回      : 无.
-    249          *******************************************************************************/
+    220          #if !EVENTTEST        
+    221          #define tst_flg 0
+    222          #if tst_flg // test code  --> tst_flg = 1  // 打印输出接收的触摸屏数据
+    223           static long cs=0,flag = 0;
+    224            if( read_buffer[0]!=0xaa || read_buffer[1]!= 0x78 ||read_buffer[4]!=0xcc
+    225                || read_buffer[5]!= 0x33 ||read_buffer[6]!=0xc3 ||read_buffer[7]!=0x3c)
+    226            {_task_block();
+    227            if(flag ==0 ) 
+    228            {
+    229             printf("cs = %d\n",cs);
+    230             for(uchar i=0;i<8;i++)
+    231            {
+    232              printf("read_buffer[%d] = %x\n",i,read_buffer[i]);
+    233            } 
+    234            }
+    235            flag=1;}
+    236            else if(flag == 0)
+    237            {
+    238            for(uchar i=0;i<8;i++)
+    239            {
+    240              printf("read_buffer[%d] = %x\n",i,read_buffer[i]);
+    241            } 
+    242            printf("\n");
+    243            cs++;
+    244            }
+    245          #endif // end --> tst_flg
+    246            
+    247          #if !tst_flg  // tst_flg = 0
+    248            if(read_buffer[0] == 0xAA && read_buffer[1] == 0x78)
+    249            {
+    250              if(read_buffer[2] == 0x02)
+    251              {
+    252                ViewKeyFlg=1;
+    253                LCDUartView(read_buffer[3]);   //数据显示按键跳转函数。
+    254              }
+    255              else if(read_buffer[2] == 0x01)
+    256              {
+    257                SysSetKeyFlg=1;
+    258                LCDUartSET(read_buffer[3]);   //设置显示按键跳转函数
+    259              }
+    260              else if(read_buffer[2] == 0x04)
+    261              {
+    262                EventKeyFlg=1;
+    263                LCDUartEVENT(read_buffer[3]);   //事件显示按键跳转函数。
+    264              }
+    265            }
+    266          #endif  // end --> !tst_flg
+    267          #endif // !EVENTTEST
+    268          }
+    269          
+    270          
+    271          /*******************************************************************************
+    272          * 函  数  名      : LCDUartView
+    273          * 描      述      : LCDUart触摸屏中断数据显示按键判断
+    274          * 输      入      : Touch_key.
+    275          * 返      回      : 无.
+    276          *******************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    250          void LCDUartView(U8 Touch_key)   // wk --> 数据显示 按键跳转函数。
-    251          {
+    277          void LCDUartView(U8 Touch_key)   // wk --> 数据显示 按键跳转函数。
+    278          {
    \                     LCDUartView:
    \   00000000   0xB500             PUSH     {LR}
    \   00000002   0xB085             SUB      SP,SP,#+20
-    252              if(Touch_key<9|| Touch_key==255)  //  wk --> 内部页面切换或者是返回首页
+    279              if(Touch_key<9|| Touch_key==255)  //  wk --> 内部页面切换或者是返回首页
    \   00000004   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
    \   00000006   0x2809             CMP      R0,#+9
    \   00000008   0xD302             BCC.N    ??LCDUartView_0
    \   0000000A   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
    \   0000000C   0x28FF             CMP      R0,#+255
    \   0000000E   0xD10B             BNE.N    ??LCDUartView_1
-    253              {
-    254                  MenuSwFlg=1; //  wk -->页面切换标志 
+    280              {
+    281                  MenuSwFlg=1; //  wk -->页面切换标志 
    \                     ??LCDUartView_0:
    \   00000010   0x.... 0x....      LDR.W    R1,??DataTable5_16
    \   00000014   0x2201             MOVS     R2,#+1
    \   00000016   0x700A             STRB     R2,[R1, #+0]
-    255                  DisTimeOnce=1; //页面切换后完全显示时间
+    282                  DisTimeOnce=1; //页面切换后完全显示时间
    \   00000018   0x.... 0x....      LDR.W    R1,??DataTable5_17
    \   0000001C   0x2201             MOVS     R2,#+1
    \   0000001E   0x700A             STRB     R2,[R1, #+0]
-    256                  VIEWHoldFlg=0; //防止页面切换后，保持功能仍存在但不显示保持标志
+    283                  VIEWHoldFlg=0; //防止页面切换后，保持功能仍存在但不显示保持标志
    \   00000020   0x.... 0x....      LDR.W    R1,??DataTable5_18
    \   00000024   0x2200             MOVS     R2,#+0
    \   00000026   0x700A             STRB     R2,[R1, #+0]
-    257              }
-    258              switch(Touch_key)//可调整为Dis_PicID=Touch_key+X
+    284              }
+    285              switch(Touch_key)//可调整为Dis_PicID=Touch_key+X
    \                     ??LCDUartView_1:
    \   00000028   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
    \   0000002A   0x2800             CMP      R0,#+0
@@ -657,91 +645,91 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   00000090   0x28FF             CMP      R0,#+255
    \   00000092   0xF000 0x818E      BEQ.W    ??LCDUartView_23
    \   00000096   0xE191             B.N      ??LCDUartView_24
-    259              {
-    260              case 0:
-    261                  Dis_PicID=MenuViewWavVolCur;  // wk --> 电压电流波形显示
+    286              {
+    287              case 0:
+    288                  Dis_PicID=MenuViewWavVolCur;  // wk --> 电压电流波形显示
    \                     ??LCDUartView_2:
    \   00000098   0x.... 0x....      LDR.W    R0,??DataTable5_19
    \   0000009C   0x2114             MOVS     R1,#+20
    \   0000009E   0x7001             STRB     R1,[R0, #+0]
-    262                  break;
+    289                  break;
    \   000000A0   0xE18C             B.N      ??LCDUartView_25
-    263              case 1:
-    264                  Dis_PicID=MenuViewWavVol; //  wk --> 电压波形显示
+    290              case 1:
+    291                  Dis_PicID=MenuViewWavVol; //  wk --> 电压波形显示
    \                     ??LCDUartView_3:
    \   000000A2   0x.... 0x....      LDR.W    R0,??DataTable5_19
    \   000000A6   0x2115             MOVS     R1,#+21
    \   000000A8   0x7001             STRB     R1,[R0, #+0]
-    265                  break;
+    292                  break;
    \   000000AA   0xE187             B.N      ??LCDUartView_25
-    266              case 2:
-    267                  Dis_PicID=MenuViewWavCur;  // wk --> 电流波形显示
+    293              case 2:
+    294                  Dis_PicID=MenuViewWavCur;  // wk --> 电流波形显示
    \                     ??LCDUartView_4:
    \   000000AC   0x.... 0x....      LDR.W    R0,??DataTable5_19
    \   000000B0   0x2116             MOVS     R1,#+22
    \   000000B2   0x7001             STRB     R1,[R0, #+0]
-    268                  break;
+    295                  break;
    \   000000B4   0xE182             B.N      ??LCDUartView_25
-    269              case 3:
-    270                  Dis_PicID=MenuViewVector;  // wk --> 矢量图显示
+    296              case 3:
+    297                  Dis_PicID=MenuViewVector;  // wk --> 矢量图显示
    \                     ??LCDUartView_5:
    \   000000B6   0x.... 0x....      LDR.W    R0,??DataTable5_19
    \   000000BA   0x2117             MOVS     R1,#+23
    \   000000BC   0x7001             STRB     R1,[R0, #+0]
-    271                  break;
+    298                  break;
    \   000000BE   0xE17D             B.N      ??LCDUartView_25
-    272              case 4:
-    273                  Dis_PicID=MenuViewListMeasure;  // wk --> 电能计量参数
+    299              case 4:
+    300                  Dis_PicID=MenuViewListMeasure;  // wk --> 电能计量参数
    \                     ??LCDUartView_6:
    \   000000C0   0x.... 0x....      LDR.W    R0,??DataTable5_19
    \   000000C4   0x2118             MOVS     R1,#+24
    \   000000C6   0x7001             STRB     R1,[R0, #+0]
-    274                  break;
+    301                  break;
    \   000000C8   0xE178             B.N      ??LCDUartView_25
-    275              case 5:
-    276                  Dis_PicID=MenuViewListQuality1;  // wk --> 电能质量参数 1
+    302              case 5:
+    303                  Dis_PicID=MenuViewListQuality1;  // wk --> 电能质量参数 1
    \                     ??LCDUartView_7:
    \   000000CA   0x.... 0x....      LDR.W    R0,??DataTable5_19
    \   000000CE   0x2119             MOVS     R1,#+25
    \   000000D0   0x7001             STRB     R1,[R0, #+0]
-    277                  break;
+    304                  break;
    \   000000D2   0xE173             B.N      ??LCDUartView_25
-    278              case 6:
-    279                  Dis_PicID=MenuViewHarmoGraph1;  // wk --> 谐波柱状图
+    305              case 6:
+    306                  Dis_PicID=MenuViewHarmoGraph1;  // wk --> 谐波柱状图
    \                     ??LCDUartView_8:
    \   000000D4   0x.... 0x....      LDR.W    R0,??DataTable5_19
    \   000000D8   0x211B             MOVS     R1,#+27
    \   000000DA   0x7001             STRB     R1,[R0, #+0]
-    280                  break;
+    307                  break;
    \   000000DC   0xE16E             B.N      ??LCDUartView_25
-    281              case 7:
-    282                  Dis_PicID=MenuViewHarmoList1; // wk --> 谐波列表显示
+    308              case 7:
+    309                  Dis_PicID=MenuViewHarmoList1; // wk --> 谐波列表显示
    \                     ??LCDUartView_9:
    \   000000DE   0x.... 0x....      LDR.W    R0,??DataTable5_19
    \   000000E2   0x211C             MOVS     R1,#+28
    \   000000E4   0x7001             STRB     R1,[R0, #+0]
-    283                  break;
+    310                  break;
    \   000000E6   0xE169             B.N      ??LCDUartView_25
-    284              case 8:
-    285                  Dis_PicID=MenuViewListQuality2; // wk --> 电能质量参数 2
+    311              case 8:
+    312                  Dis_PicID=MenuViewListQuality2; // wk --> 电能质量参数 2
    \                     ??LCDUartView_10:
    \   000000E8   0x.... 0x....      LDR.W    R0,??DataTable5_19
    \   000000EC   0x211A             MOVS     R1,#+26
    \   000000EE   0x7001             STRB     R1,[R0, #+0]
-    286                  break;
+    313                  break;
    \   000000F0   0xE164             B.N      ??LCDUartView_25
-    287              case 9:
-    288                  Dis_PicID=MenuViewWorkState; // wk -- > 工作状态
+    314              case 9:
+    315                  Dis_PicID=MenuViewWorkState; // wk -- > 工作状态
    \                     ??LCDUartView_11:
    \   000000F2   0x.... 0x....      LDR.W    R0,??DataTable5_19
    \   000000F6   0x211E             MOVS     R1,#+30
    \   000000F8   0x7001             STRB     R1,[R0, #+0]
-    289                  break;
+    316                  break;
    \   000000FA   0xE15F             B.N      ??LCDUartView_25
-    290                  
-    291             /* WK --> 数据显示谐波柱状图按键  */  
-    292              case 0x60: // wk --> 相位选择
-    293                HarmoGraphPhase<3 ? (++HarmoGraphPhase): (HarmoGraphPhase=1);  
+    317                  
+    318             /* WK --> 数据显示谐波柱状图按键  */  
+    319              case 0x60: // wk --> 相位选择
+    320                HarmoGraphPhase<3 ? (++HarmoGraphPhase): (HarmoGraphPhase=1);  
    \                     ??LCDUartView_12:
    \   000000FC   0x.... 0x....      LDR.W    R0,??DataTable5_20
    \   00000100   0x7800             LDRB     R0,[R0, #+0]
@@ -759,11 +747,11 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   0000011A   0x.... 0x....      LDR.W    R1,??DataTable5_20
    \   0000011E   0x7008             STRB     R0,[R1, #+0]
    \   00000120   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    294                break;
+    321                break;
    \                     ??LCDUartView_27:
    \   00000122   0xE14B             B.N      ??LCDUartView_25
-    295              case 0x61: // wk --> 谐波选择
-    296                HarmoGraphRange==1 ? (HarmoGraphRange=2):(HarmoGraphRange=1); //WK --> 谐波在区间1-25和26-50之间切换
+    322              case 0x61: // wk --> 谐波选择
+    323                HarmoGraphRange==1 ? (HarmoGraphRange=2):(HarmoGraphRange=1); //WK --> 谐波在区间1-25和26-50之间切换
    \                     ??LCDUartView_13:
    \   00000124   0x.... 0x....      LDR.W    R0,??DataTable5_21
    \   00000128   0x7800             LDRB     R0,[R0, #+0]
@@ -779,8 +767,8 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   0000013C   0x.... 0x....      LDR.W    R1,??DataTable5_21
    \   00000140   0x7008             STRB     R0,[R1, #+0]
    \   00000142   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    297                /* WK --> 在区间切换时，谐波次数相应切换*/
-    298                HarmoGraphRange==1 ? (HarmoGraphUorder=1):(HarmoGraphUorder=25);  
+    324                /* WK --> 在区间切换时，谐波次数相应切换*/
+    325                HarmoGraphRange==1 ? (HarmoGraphUorder=1):(HarmoGraphUorder=25);  
    \                     ??LCDUartView_29:
    \   00000144   0x.... 0x....      LDR.W    R0,??DataTable5_21
    \   00000148   0x7800             LDRB     R0,[R0, #+0]
@@ -796,7 +784,7 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   0000015C   0x.... 0x....      LDR.W    R1,??DataTable5_22
    \   00000160   0x7008             STRB     R0,[R1, #+0]
    \   00000162   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    299                HarmoGraphRange==1 ? (HarmoGraphIorder=1):(HarmoGraphIorder=25);
+    326                HarmoGraphRange==1 ? (HarmoGraphIorder=1):(HarmoGraphIorder=25);
    \                     ??LCDUartView_31:
    \   00000164   0x.... 0x....      LDR.W    R0,??DataTable5_21
    \   00000168   0x7800             LDRB     R0,[R0, #+0]
@@ -812,194 +800,194 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   0000017C   0x.... 0x....      LDR.W    R1,??DataTable5_23
    \   00000180   0x7008             STRB     R0,[R1, #+0]
    \   00000182   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    300                break;
+    327                break;
    \                     ??LCDUartView_33:
    \   00000184   0xE11A             B.N      ??LCDUartView_25
-    301              case 0x62: // wk --> 电压谐波次数功能 + 键
-    302                HarmoGraphUorder++;
+    328              case 0x62: // wk --> 电压谐波次数功能 + 键
+    329                HarmoGraphUorder++;
    \                     ??LCDUartView_14:
    \   00000186   0x.... 0x....      LDR.W    R0,??DataTable5_22
    \   0000018A   0x7800             LDRB     R0,[R0, #+0]
    \   0000018C   0x1C40             ADDS     R0,R0,#+1
    \   0000018E   0x.... 0x....      LDR.W    R1,??DataTable5_22
    \   00000192   0x7008             STRB     R0,[R1, #+0]
-    303                      if (HarmoGraphRange==1)  //WK --> 谐波在 1-25区间
+    330                      if (HarmoGraphRange==1)  //WK --> 谐波在 1-25区间
    \   00000194   0x.... 0x....      LDR.W    R0,??DataTable5_21
    \   00000198   0x7800             LDRB     R0,[R0, #+0]
    \   0000019A   0x2801             CMP      R0,#+1
    \   0000019C   0xD109             BNE.N    ??LCDUartView_34
-    304                      {
-    305                          if(HarmoGraphUorder==27)
+    331                      {
+    332                          if(HarmoGraphUorder==27)
    \   0000019E   0x.... 0x....      LDR.W    R0,??DataTable5_22
    \   000001A2   0x7800             LDRB     R0,[R0, #+0]
    \   000001A4   0x281B             CMP      R0,#+27
    \   000001A6   0xD10D             BNE.N    ??LCDUartView_35
-    306                          {
-    307                              HarmoGraphUorder=1;
+    333                          {
+    334                              HarmoGraphUorder=1;
    \   000001A8   0x.... 0x....      LDR.W    R0,??DataTable5_22
    \   000001AC   0x2101             MOVS     R1,#+1
    \   000001AE   0x7001             STRB     R1,[R0, #+0]
    \   000001B0   0xE008             B.N      ??LCDUartView_35
-    308                          }
-    309                      }
-    310                      else   //WK --> 谐波在 26-50 区间
-    311                      {
-    312                          if(HarmoGraphUorder==51)
+    335                          }
+    336                      }
+    337                      else   //WK --> 谐波在 26-50 区间
+    338                      {
+    339                          if(HarmoGraphUorder==51)
    \                     ??LCDUartView_34:
    \   000001B2   0x.... 0x....      LDR.W    R0,??DataTable5_22
    \   000001B6   0x7800             LDRB     R0,[R0, #+0]
    \   000001B8   0x2833             CMP      R0,#+51
    \   000001BA   0xD103             BNE.N    ??LCDUartView_35
-    313                          {
-    314                              HarmoGraphUorder=25;
+    340                          {
+    341                              HarmoGraphUorder=25;
    \   000001BC   0x.... 0x....      LDR.W    R0,??DataTable5_22
    \   000001C0   0x2119             MOVS     R1,#+25
    \   000001C2   0x7001             STRB     R1,[R0, #+0]
-    315                          }
-    316                      }
-    317                break;
+    342                          }
+    343                      }
+    344                break;
    \                     ??LCDUartView_35:
    \   000001C4   0xE0FA             B.N      ??LCDUartView_25
-    318              case 0x63: //wk -- > 电压谐波次数功能 - 键
-    319                HarmoGraphUorder--;
+    345              case 0x63: //wk -- > 电压谐波次数功能 - 键
+    346                HarmoGraphUorder--;
    \                     ??LCDUartView_15:
    \   000001C6   0x.... 0x....      LDR.W    R0,??DataTable5_22
    \   000001CA   0x7800             LDRB     R0,[R0, #+0]
    \   000001CC   0x1E40             SUBS     R0,R0,#+1
    \   000001CE   0x.... 0x....      LDR.W    R1,??DataTable5_22
    \   000001D2   0x7008             STRB     R0,[R1, #+0]
-    320                      if (HarmoGraphRange==1)
+    347                      if (HarmoGraphRange==1)
    \   000001D4   0x.... 0x....      LDR.W    R0,??DataTable5_21
    \   000001D8   0x7800             LDRB     R0,[R0, #+0]
    \   000001DA   0x2801             CMP      R0,#+1
    \   000001DC   0xD109             BNE.N    ??LCDUartView_36
-    321                      {
-    322                          if(HarmoGraphUorder==0)
+    348                      {
+    349                          if(HarmoGraphUorder==0)
    \   000001DE   0x.... 0x....      LDR.W    R0,??DataTable5_22
    \   000001E2   0x7800             LDRB     R0,[R0, #+0]
    \   000001E4   0x2800             CMP      R0,#+0
    \   000001E6   0xD10D             BNE.N    ??LCDUartView_37
-    323                          {
-    324                              HarmoGraphUorder=26;
+    350                          {
+    351                              HarmoGraphUorder=26;
    \   000001E8   0x.... 0x....      LDR.W    R0,??DataTable5_22
    \   000001EC   0x211A             MOVS     R1,#+26
    \   000001EE   0x7001             STRB     R1,[R0, #+0]
    \   000001F0   0xE008             B.N      ??LCDUartView_37
-    325                          }
-    326                      }
-    327                      else
-    328                      {
-    329                          if(HarmoGraphUorder==24)
+    352                          }
+    353                      }
+    354                      else
+    355                      {
+    356                          if(HarmoGraphUorder==24)
    \                     ??LCDUartView_36:
    \   000001F2   0x.... 0x....      LDR.W    R0,??DataTable5_22
    \   000001F6   0x7800             LDRB     R0,[R0, #+0]
    \   000001F8   0x2818             CMP      R0,#+24
    \   000001FA   0xD103             BNE.N    ??LCDUartView_37
-    330                          {
-    331                              HarmoGraphUorder=50;
+    357                          {
+    358                              HarmoGraphUorder=50;
    \   000001FC   0x.... 0x....      LDR.W    R0,??DataTable5_22
    \   00000200   0x2132             MOVS     R1,#+50
    \   00000202   0x7001             STRB     R1,[R0, #+0]
-    332                          }
-    333                      }
-    334                break;
+    359                          }
+    360                      }
+    361                break;
    \                     ??LCDUartView_37:
    \   00000204   0xE0DA             B.N      ??LCDUartView_25
-    335              case 0x64: // wk --> 电流谐波次数功能 + 键
-    336                HarmoGraphIorder++;
+    362              case 0x64: // wk --> 电流谐波次数功能 + 键
+    363                HarmoGraphIorder++;
    \                     ??LCDUartView_16:
    \   00000206   0x.... 0x....      LDR.W    R0,??DataTable5_23
    \   0000020A   0x7800             LDRB     R0,[R0, #+0]
    \   0000020C   0x1C40             ADDS     R0,R0,#+1
    \   0000020E   0x.... 0x....      LDR.W    R1,??DataTable5_23
    \   00000212   0x7008             STRB     R0,[R1, #+0]
-    337                      if (HarmoGraphRange==1)
+    364                      if (HarmoGraphRange==1)
    \   00000214   0x.... 0x....      LDR.W    R0,??DataTable5_21
    \   00000218   0x7800             LDRB     R0,[R0, #+0]
    \   0000021A   0x2801             CMP      R0,#+1
    \   0000021C   0xD109             BNE.N    ??LCDUartView_38
-    338                      {
-    339                          if(HarmoGraphIorder==27)
+    365                      {
+    366                          if(HarmoGraphIorder==27)
    \   0000021E   0x.... 0x....      LDR.W    R0,??DataTable5_23
    \   00000222   0x7800             LDRB     R0,[R0, #+0]
    \   00000224   0x281B             CMP      R0,#+27
    \   00000226   0xD10D             BNE.N    ??LCDUartView_39
-    340                          {
-    341                              HarmoGraphIorder=1;
+    367                          {
+    368                              HarmoGraphIorder=1;
    \   00000228   0x.... 0x....      LDR.W    R0,??DataTable5_23
    \   0000022C   0x2101             MOVS     R1,#+1
    \   0000022E   0x7001             STRB     R1,[R0, #+0]
    \   00000230   0xE008             B.N      ??LCDUartView_39
-    342                          }
-    343                      }
-    344                      else
-    345                      {
-    346                          if(HarmoGraphIorder==51)
+    369                          }
+    370                      }
+    371                      else
+    372                      {
+    373                          if(HarmoGraphIorder==51)
    \                     ??LCDUartView_38:
    \   00000232   0x.... 0x....      LDR.W    R0,??DataTable5_23
    \   00000236   0x7800             LDRB     R0,[R0, #+0]
    \   00000238   0x2833             CMP      R0,#+51
    \   0000023A   0xD103             BNE.N    ??LCDUartView_39
-    347                          {
-    348                              HarmoGraphIorder=25;
+    374                          {
+    375                              HarmoGraphIorder=25;
    \   0000023C   0x.... 0x....      LDR.W    R0,??DataTable5_23
    \   00000240   0x2119             MOVS     R1,#+25
    \   00000242   0x7001             STRB     R1,[R0, #+0]
-    349                          }
-    350                      }
-    351                break;
+    376                          }
+    377                      }
+    378                break;
    \                     ??LCDUartView_39:
    \   00000244   0xE0BA             B.N      ??LCDUartView_25
-    352              case 0x65: // wk --> 电流谐波次数功能 - 键
-    353                HarmoGraphIorder--;
+    379              case 0x65: // wk --> 电流谐波次数功能 - 键
+    380                HarmoGraphIorder--;
    \                     ??LCDUartView_17:
    \   00000246   0x.... 0x....      LDR.W    R0,??DataTable5_23
    \   0000024A   0x7800             LDRB     R0,[R0, #+0]
    \   0000024C   0x1E40             SUBS     R0,R0,#+1
    \   0000024E   0x.... 0x....      LDR.W    R1,??DataTable5_23
    \   00000252   0x7008             STRB     R0,[R1, #+0]
-    354                      if (HarmoGraphRange==1)
+    381                      if (HarmoGraphRange==1)
    \   00000254   0x.... 0x....      LDR.W    R0,??DataTable5_21
    \   00000258   0x7800             LDRB     R0,[R0, #+0]
    \   0000025A   0x2801             CMP      R0,#+1
    \   0000025C   0xD109             BNE.N    ??LCDUartView_40
-    355                      {
-    356                          if(!HarmoGraphIorder)
+    382                      {
+    383                          if(!HarmoGraphIorder)
    \   0000025E   0x.... 0x....      LDR.W    R0,??DataTable5_23
    \   00000262   0x7800             LDRB     R0,[R0, #+0]
    \   00000264   0x2800             CMP      R0,#+0
    \   00000266   0xD10D             BNE.N    ??LCDUartView_41
-    357                          {
-    358                              HarmoGraphIorder=26;
+    384                          {
+    385                              HarmoGraphIorder=26;
    \   00000268   0x.... 0x....      LDR.W    R0,??DataTable5_23
    \   0000026C   0x211A             MOVS     R1,#+26
    \   0000026E   0x7001             STRB     R1,[R0, #+0]
    \   00000270   0xE008             B.N      ??LCDUartView_41
-    359                          }
-    360                      }
-    361                      else
-    362                      {
-    363                          if(HarmoGraphIorder==24)
+    386                          }
+    387                      }
+    388                      else
+    389                      {
+    390                          if(HarmoGraphIorder==24)
    \                     ??LCDUartView_40:
    \   00000272   0x.... 0x....      LDR.W    R0,??DataTable5_23
    \   00000276   0x7800             LDRB     R0,[R0, #+0]
    \   00000278   0x2818             CMP      R0,#+24
    \   0000027A   0xD103             BNE.N    ??LCDUartView_41
-    364                          {
-    365                              HarmoGraphIorder=50;
+    391                          {
+    392                              HarmoGraphIorder=50;
    \   0000027C   0x.... 0x....      LDR.W    R0,??DataTable5_23
    \   00000280   0x2132             MOVS     R1,#+50
    \   00000282   0x7001             STRB     R1,[R0, #+0]
-    366                          }
-    367                      }
-    368                break;
+    393                          }
+    394                      }
+    395                break;
    \                     ??LCDUartView_41:
    \   00000284   0xE09A             B.N      ??LCDUartView_25
-    369                /* wk --> 谐波柱状图 END */
-    370                
-    371              /* WK --> 数据显示谐波柱状图按键  */ 
-    372              case 0x70:  // WK --> U/I
-    373                (HarmoListUorI==1) ? (HarmoListUorI=2):(HarmoListUorI=1); // 1--> U 2-->I
+    396                /* wk --> 谐波柱状图 END */
+    397                
+    398              /* WK --> 数据显示谐波柱状图按键  */ 
+    399              case 0x70:  // WK --> U/I
+    400                (HarmoListUorI==1) ? (HarmoListUorI=2):(HarmoListUorI=1); // 1--> U 2-->I
    \                     ??LCDUartView_18:
    \   00000286   0x.... 0x....      LDR.W    R0,??DataTable5_24
    \   0000028A   0x7800             LDRB     R0,[R0, #+0]
@@ -1015,11 +1003,11 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   0000029E   0x.... 0x....      LDR.W    R1,??DataTable5_24
    \   000002A2   0x7008             STRB     R0,[R1, #+0]
    \   000002A4   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    374                break;
+    401                break;
    \                     ??LCDUartView_43:
    \   000002A6   0xE089             B.N      ??LCDUartView_25
-    375              case 0x71:  // WK --> 类型  1:幅值澹  2:含有率
-    376                (HarmoListAmporRatio==1)?(HarmoListAmporRatio=2):(HarmoListAmporRatio=1);
+    402              case 0x71:  // WK --> 类型  1:幅值澹  2:含有率
+    403                (HarmoListAmporRatio==1)?(HarmoListAmporRatio=2):(HarmoListAmporRatio=1);
    \                     ??LCDUartView_19:
    \   000002A8   0x.... 0x....      LDR.W    R0,??DataTable5_25
    \   000002AC   0x7800             LDRB     R0,[R0, #+0]
@@ -1035,11 +1023,11 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   000002C0   0x.... 0x....      LDR.W    R1,??DataTable5_25
    \   000002C4   0x7008             STRB     R0,[R1, #+0]
    \   000002C6   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    377                break;
+    404                break;
    \                     ??LCDUartView_45:
    \   000002C8   0xE078             B.N      ??LCDUartView_25
-    378              case 0x72:  // WK --> 区间   1:1-26   2:25-50
-    379                (HarmoListRange==1)? (HarmoListRange=2):(HarmoListRange=1); 
+    405              case 0x72:  // WK --> 区间   1:1-26   2:25-50
+    406                (HarmoListRange==1)? (HarmoListRange=2):(HarmoListRange=1); 
    \                     ??LCDUartView_20:
    \   000002CA   0x.... 0x....      LDR.W    R0,??DataTable5_26
    \   000002CE   0x7800             LDRB     R0,[R0, #+0]
@@ -1055,12 +1043,12 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   000002E2   0x.... 0x....      LDR.W    R1,??DataTable5_26
    \   000002E6   0x7008             STRB     R0,[R1, #+0]
    \   000002E8   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    380                 MenuSwFlg=1; // 两页之间切换
+    407                 MenuSwFlg=1; // 两页之间切换
    \                     ??LCDUartView_47:
    \   000002EA   0x.... 0x....      LDR.W    R0,??DataTable5_16
    \   000002EE   0x2101             MOVS     R1,#+1
    \   000002F0   0x7001             STRB     R1,[R0, #+0]
-    381                (Dis_PicID==MenuViewHarmoList1)?(Dis_PicID=MenuViewHarmoList2):(Dis_PicID=MenuViewHarmoList1);
+    408                (Dis_PicID==MenuViewHarmoList1)?(Dis_PicID=MenuViewHarmoList2):(Dis_PicID=MenuViewHarmoList1);
    \   000002F2   0x.... 0x....      LDR.W    R0,??DataTable5_19
    \   000002F6   0x7800             LDRB     R0,[R0, #+0]
    \   000002F8   0x281C             CMP      R0,#+28
@@ -1075,11 +1063,11 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   0000030A   0x.... 0x....      LDR.W    R1,??DataTable5_19
    \   0000030E   0x7008             STRB     R0,[R1, #+0]
    \   00000310   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    382                break;
+    409                break;
    \                     ??LCDUartView_49:
    \   00000312   0xE053             B.N      ??LCDUartView_25
-    383              case 0x73: // WK --> 相选
-    384                 HarmoListPhase<3 ? (++HarmoListPhase): (HarmoListPhase=1);
+    410              case 0x73: // WK --> 相选
+    411                 HarmoListPhase<3 ? (++HarmoListPhase): (HarmoListPhase=1);
    \                     ??LCDUartView_21:
    \   00000314   0x.... 0x....      LDR.W    R0,??DataTable5_27
    \   00000318   0x7800             LDRB     R0,[R0, #+0]
@@ -1097,28 +1085,28 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   00000332   0x.... 0x....      LDR.W    R1,??DataTable5_27
    \   00000336   0x7008             STRB     R0,[R1, #+0]
    \   00000338   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    385                break;
+    412                break;
    \                     ??LCDUartView_51:
    \   0000033A   0xE03F             B.N      ??LCDUartView_25
-    386              /* WK --> 数据显示谐波柱状图按键  END*/ 
-    387                  
-    388              case 254:       // wk --> hold 按键
-    389                  if (VIEWHoldFlg==0)
+    413              /* WK --> 数据显示谐波柱状图按键  END*/ 
+    414                  
+    415              case 254:       // wk --> hold 按键
+    416                  if (VIEWHoldFlg==0)
    \                     ??LCDUartView_22:
    \   0000033C   0x.... 0x....      LDR.W    R0,??DataTable5_18
    \   00000340   0x7800             LDRB     R0,[R0, #+0]
    \   00000342   0x2800             CMP      R0,#+0
    \   00000344   0xD11B             BNE.N    ??LCDUartView_52
-    390                  {
-    391                      VIEWHoldFlg=1;
+    417                  {
+    418                      VIEWHoldFlg=1;
    \   00000346   0x.... 0x....      LDR.W    R0,??DataTable5_18
    \   0000034A   0x2101             MOVS     R1,#+1
    \   0000034C   0x7001             STRB     R1,[R0, #+0]
-    392                      ViewKeyFlg=0;
+    419                      ViewKeyFlg=0;
    \   0000034E   0x.... 0x....      LDR.W    R0,??DataTable5_13
    \   00000352   0x2100             MOVS     R1,#+0
    \   00000354   0x7001             STRB     R1,[R0, #+0]
-    393                      YADA_98(510,453,0x22,0x81,0x02,0xf800,0x0000,"√",0);
+    420                      YADA_98(510,453,0x22,0x81,0x02,0xf800,0x0000,"√",0);
    \   00000356   0x2000             MOVS     R0,#+0
    \   00000358   0x9004             STR      R0,[SP, #+16]
    \   0000035A   0x....             ADR.N    R0,??DataTable3  ;; 0xA1, 0xCC, 0x00, 0x00
@@ -1135,15 +1123,15 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   00000374   0xF44F 0x70FF      MOV      R0,#+510
    \   00000378   0x.... 0x....      BL       YADA_98
    \   0000037C   0xE018             B.N      ??LCDUartView_53
-    394                  }
-    395                  else
-    396                  {
-    397                      VIEWHoldFlg=0;
+    421                  }
+    422                  else
+    423                  {
+    424                      VIEWHoldFlg=0;
    \                     ??LCDUartView_52:
    \   0000037E   0x.... 0x....      LDR.W    R0,??DataTable5_18
    \   00000382   0x2100             MOVS     R1,#+0
    \   00000384   0x7001             STRB     R1,[R0, #+0]
-    398                      YADA_71(Dis_PicID,510,453,532,475,510,453);
+    425                      YADA_71(Dis_PicID,510,453,532,475,510,453);
    \   00000386   0xF240 0x10C5      MOVW     R0,#+453
    \   0000038A   0x9002             STR      R0,[SP, #+8]
    \   0000038C   0xF44F 0x70FF      MOV      R0,#+510
@@ -1157,41 +1145,41 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   000003A8   0x7800             LDRB     R0,[R0, #+0]
    \   000003AA   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
    \   000003AC   0x.... 0x....      BL       YADA_71
-    399                  }
-    400                  break;
+    426                  }
+    427                  break;
    \                     ??LCDUartView_53:
    \   000003B0   0xE004             B.N      ??LCDUartView_25
-    401              case 255:
-    402                  Dis_PicID=MenuTop;
+    428              case 255:
+    429                  Dis_PicID=MenuTop;
    \                     ??LCDUartView_23:
    \   000003B2   0x.... 0x....      LDR.W    R0,??DataTable5_19
    \   000003B6   0x2100             MOVS     R1,#+0
    \   000003B8   0x7001             STRB     R1,[R0, #+0]
-    403                  break;
+    430                  break;
    \   000003BA   0xE7FF             B.N      ??LCDUartView_25
-    404              default:
-    405                  break;
-    406              }
-    407          }
+    431              default:
+    432                  break;
+    433              }
+    434          }
    \                     ??LCDUartView_24:
    \                     ??LCDUartView_25:
    \   000003BC   0xB005             ADD      SP,SP,#+20
    \   000003BE   0xBD00             POP      {PC}             ;; return
-    408          /*******************************************************************************
-    409          * 函  数  名      : LCDUartSET
-    410          * 描      述      : LCDUart触摸屏中断系统设置按键判断
-    411          * 输      入      : Touch_key.
-    412          * 返      回      : 无.
-    413          *
-    414          * 修       改     : WK
-    415          * 时       间     : 2013-03-13
-    416          * 描       述     : 基于2013-03-08界面 -->保存键 、恢复出厂设置   还没有完成
-    417          *******************************************************************************/
+    435          /*******************************************************************************
+    436          * 函  数  名      : LCDUartSET
+    437          * 描      述      : LCDUart触摸屏中断系统设置按键判断
+    438          * 输      入      : Touch_key.
+    439          * 返      回      : 无.
+    440          *
+    441          * 修       改     : WK
+    442          * 时       间     : 2013-03-13
+    443          * 描       述     : 基于2013-03-08界面 -->保存键 、恢复出厂设置   还没有完成
+    444          *******************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    418          void LCDUartSET(U8 Touch_key)   // wk --> 系统设置 键号跳转函数
-    419          {
-    420              if(Touch_key<2||Touch_key==255)
+    445          void LCDUartSET(U8 Touch_key)   // wk --> 系统设置 键号跳转函数
+    446          {
+    447              if(Touch_key<2||Touch_key==255)
    \                     LCDUartSET:
    \   00000000   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
    \   00000002   0x2802             CMP      R0,#+2
@@ -1199,19 +1187,19 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   00000006   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
    \   00000008   0x28FF             CMP      R0,#+255
    \   0000000A   0xD107             BNE.N    ??LCDUartSET_1
-    421              {
-    422                  MenuSwFlg=1;//切换页面
+    448              {
+    449                  MenuSwFlg=1;//切换页面
    \                     ??LCDUartSET_0:
    \   0000000C   0x.... 0x....      LDR.W    R1,??DataTable5_16
    \   00000010   0x2201             MOVS     R2,#+1
    \   00000012   0x700A             STRB     R2,[R1, #+0]
-    423                  DisTimeOnce=1;//页面切换后完全显示时间
+    450                  DisTimeOnce=1;//页面切换后完全显示时间
    \   00000014   0x.... 0x....      LDR.W    R1,??DataTable5_17
    \   00000018   0x2201             MOVS     R2,#+1
    \   0000001A   0x700A             STRB     R2,[R1, #+0]
-    424                   //系统设置按键均使发送完成标志清零
-    425              }         
-    426              switch(Touch_key)
+    451                   //系统设置按键均使发送完成标志清零
+    452              }         
+    453              switch(Touch_key)
    \                     ??LCDUartSET_1:
    \   0000001C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
    \   0000001E   0x0001             MOVS     R1,R0
@@ -1260,78 +1248,78 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   00000096   0x29FF             CMP      R1,#+255
    \   00000098   0xF000 0x8186      BEQ.W    ??LCDUartSET_22
    \   0000009C   0xE188             B.N      ??LCDUartSET_23
-    427              {
-    428              case 0: //系参设置//对SwFlg、FuncFlg、DataFlg、SaveFlg、ParaIndex、DataCnt赋初值
-    429                  // VIEWHoldFlg=0;
-    430                  Dis_PicID=MenuParaSET;
+    454              {
+    455              case 0: //系参设置//对SwFlg、FuncFlg、DataFlg、SaveFlg、ParaIndex、DataCnt赋初值
+    456                  // VIEWHoldFlg=0;
+    457                  Dis_PicID=MenuParaSET;
    \                     ??LCDUartSET_2:
    \   0000009E   0x.... 0x....      LDR.W    R0,??DataTable5_19
    \   000000A2   0x210A             MOVS     R1,#+10
    \   000000A4   0x7001             STRB     R1,[R0, #+0]
-    431                  OtherSetIndex=0; // WK --> ?
+    458                  OtherSetIndex=0; // WK --> ?
    \   000000A6   0x.... 0x....      LDR.W    R0,??DataTable5_28
    \   000000AA   0x2100             MOVS     R1,#+0
    \   000000AC   0x7001             STRB     R1,[R0, #+0]
-    432                  TimeSetIndex=9;  // WK --> ?
+    459                  TimeSetIndex=9;  // WK --> ?
    \   000000AE   0x.... 0x....      LDR.W    R0,??DataTable5_29
    \   000000B2   0x2109             MOVS     R1,#+9
    \   000000B4   0x7001             STRB     R1,[R0, #+0]
-    433                  SysSet.SwFlg=1;
+    460                  SysSet.SwFlg=1;
    \   000000B6   0x.... 0x....      LDR.W    R0,??DataTable5_30
    \   000000BA   0x2101             MOVS     R1,#+1
    \   000000BC   0x7001             STRB     R1,[R0, #+0]
-    434                  SysSet.ParaIndex=0;
+    461                  SysSet.ParaIndex=0;
    \   000000BE   0x.... 0x....      LDR.W    R0,??DataTable5_30
    \   000000C2   0x2100             MOVS     R1,#+0
    \   000000C4   0x7101             STRB     R1,[R0, #+4]
-    435                  SysSet.DataCnt=0;
+    462                  SysSet.DataCnt=0;
    \   000000C6   0x.... 0x....      LDR.W    R0,??DataTable5_30
    \   000000CA   0x2100             MOVS     R1,#+0
    \   000000CC   0x7181             STRB     R1,[R0, #+6]
-    436                  break;
+    463                  break;
    \   000000CE   0xE1B2             B.N      ??LCDUartSET_24
-    437              case 1:                       /*事件设置*/
-    438                  //VIEWHoldFlg=0;
-    439                  Dis_PicID=MenuEventSET;
+    464              case 1:                       /*事件设置*/
+    465                  //VIEWHoldFlg=0;
+    466                  Dis_PicID=MenuEventSET;
    \                     ??LCDUartSET_3:
    \   000000D0   0x.... 0x....      LDR.W    R0,??DataTable5_19
    \   000000D4   0x210B             MOVS     R1,#+11
    \   000000D6   0x7001             STRB     R1,[R0, #+0]
-    440                  SysSet.SwFlg=1;
+    467                  SysSet.SwFlg=1;
    \   000000D8   0x.... 0x....      LDR.W    R0,??DataTable5_30
    \   000000DC   0x2101             MOVS     R1,#+1
    \   000000DE   0x7001             STRB     R1,[R0, #+0]
-    441                  SysSet.EvntIndex=0;
+    468                  SysSet.EvntIndex=0;
    \   000000E0   0x.... 0x....      LDR.W    R0,??DataTable5_30
    \   000000E4   0x2100             MOVS     R1,#+0
    \   000000E6   0x7141             STRB     R1,[R0, #+5]
-    442                  SysSet.DataCnt=0; 
+    469                  SysSet.DataCnt=0; 
    \   000000E8   0x.... 0x....      LDR.W    R0,??DataTable5_30
    \   000000EC   0x2100             MOVS     R1,#+0
    \   000000EE   0x7181             STRB     R1,[R0, #+6]
-    443                  break;
+    470                  break;
    \   000000F0   0xE1A1             B.N      ??LCDUartSET_24
-    444              case 18:   // wk --> 恢复出厂设置
-    445                // WK --> 待补充
-    446                  break;
+    471              case 18:   // wk --> 恢复出厂设置
+    472                // WK --> 待补充
+    473                  break;
    \                     ??LCDUartSET_6:
    \   000000F2   0xE1A0             B.N      ??LCDUartSET_24
-    447                  /**********************************************************************
-    448                  ** WK --> 系统参数设置界面按键  
-    449                  **********************************************************************/
-    450              case 16:                       /*系统参数右移切换键*/
-    451                  OtherSetIndex++ ;
+    474                  /**********************************************************************
+    475                  ** WK --> 系统参数设置界面按键  
+    476                  **********************************************************************/
+    477              case 16:                       /*系统参数右移切换键*/
+    478                  OtherSetIndex++ ;
    \                     ??LCDUartSET_4:
    \   000000F4   0x.... 0x....      LDR.W    R0,??DataTable5_28
    \   000000F8   0x7800             LDRB     R0,[R0, #+0]
    \   000000FA   0x1C40             ADDS     R0,R0,#+1
    \   000000FC   0x.... 0x....      LDR.W    R1,??DataTable5_28
    \   00000100   0x7008             STRB     R0,[R1, #+0]
-    452                  SysSet.FuncFlg=1;  // WK --> 有光标移动
+    479                  SysSet.FuncFlg=1;  // WK --> 有光标移动
    \   00000102   0x.... 0x....      LDR.W    R0,??DataTable5_30
    \   00000106   0x2101             MOVS     R1,#+1
    \   00000108   0x7041             STRB     R1,[R0, #+1]
-    453                  if(OtherSetIndex==9||TimeSetIndex!=9)//从时间项切换回其余项时，光标需回到第一项
+    480                  if(OtherSetIndex==9||TimeSetIndex!=9)//从时间项切换回其余项时，光标需回到第一项
    \   0000010A   0x.... 0x....      LDR.W    R0,??DataTable5_28
    \   0000010E   0x7800             LDRB     R0,[R0, #+0]
    \   00000110   0x2809             CMP      R0,#+9
@@ -1340,33 +1328,33 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   00000118   0x7800             LDRB     R0,[R0, #+0]
    \   0000011A   0x2809             CMP      R0,#+9
    \   0000011C   0xD007             BEQ.N    ??LCDUartSET_26
-    454                  {
-    455                      OtherSetIndex=0;
+    481                  {
+    482                      OtherSetIndex=0;
    \                     ??LCDUartSET_25:
    \   0000011E   0x.... 0x....      LDR.W    R0,??DataTable5_28
    \   00000122   0x2100             MOVS     R1,#+0
    \   00000124   0x7001             STRB     R1,[R0, #+0]
-    456                      TimeSetIndex=9;  //实际只需在TimeSetIndex!=6时将其值置为6
+    483                      TimeSetIndex=9;  //实际只需在TimeSetIndex!=6时将其值置为6
    \   00000126   0x.... 0x....      LDR.W    R0,??DataTable5_29
    \   0000012A   0x2109             MOVS     R1,#+9
    \   0000012C   0x7001             STRB     R1,[R0, #+0]
-    457                  }
-    458                  SysSet.ParaIndex=OtherSetIndex;
+    484                  }
+    485                  SysSet.ParaIndex=OtherSetIndex;
    \                     ??LCDUartSET_26:
    \   0000012E   0x.... 0x....      LDR.W    R0,??DataTable5_30
    \   00000132   0x.... 0x....      LDR.W    R1,??DataTable5_28
    \   00000136   0x7809             LDRB     R1,[R1, #+0]
    \   00000138   0x7101             STRB     R1,[R0, #+4]
-    459                 
-    460                  break;
+    486                 
+    487                  break;
    \   0000013A   0xE17C             B.N      ??LCDUartSET_24
-    461              case 17:
-    462                  SysSet.FuncFlg=1;
+    488              case 17:
+    489                  SysSet.FuncFlg=1;
    \                     ??LCDUartSET_5:
    \   0000013C   0x.... 0x....      LDR.W    R0,??DataTable5_30
    \   00000140   0x2101             MOVS     R1,#+1
    \   00000142   0x7041             STRB     R1,[R0, #+1]
-    463                  if(OtherSetIndex==0||TimeSetIndex!=9)//从时间项切换回其余项时，光标需回到第五项
+    490                  if(OtherSetIndex==0||TimeSetIndex!=9)//从时间项切换回其余项时，光标需回到第五项
    \   00000144   0x.... 0x....      LDR.W    R0,??DataTable5_28
    \   00000148   0x7800             LDRB     R0,[R0, #+0]
    \   0000014A   0x2800             CMP      R0,#+0
@@ -1375,43 +1363,43 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   00000152   0x7800             LDRB     R0,[R0, #+0]
    \   00000154   0x2809             CMP      R0,#+9
    \   00000156   0xD007             BEQ.N    ??LCDUartSET_28
-    464                  {
-    465                      OtherSetIndex=9;
+    491                  {
+    492                      OtherSetIndex=9;
    \                     ??LCDUartSET_27:
    \   00000158   0x.... 0x....      LDR.W    R0,??DataTable5_28
    \   0000015C   0x2109             MOVS     R1,#+9
    \   0000015E   0x7001             STRB     R1,[R0, #+0]
-    466                      TimeSetIndex=9;
+    493                      TimeSetIndex=9;
    \   00000160   0x.... 0x....      LDR.W    R0,??DataTable5_29
    \   00000164   0x2109             MOVS     R1,#+9
    \   00000166   0x7001             STRB     R1,[R0, #+0]
-    467                  }
-    468                  OtherSetIndex-- ;
+    494                  }
+    495                  OtherSetIndex-- ;
    \                     ??LCDUartSET_28:
    \   00000168   0x.... 0x....      LDR.W    R0,??DataTable5_28
    \   0000016C   0x7800             LDRB     R0,[R0, #+0]
    \   0000016E   0x1E40             SUBS     R0,R0,#+1
    \   00000170   0x.... 0x....      LDR.W    R1,??DataTable5_28
    \   00000174   0x7008             STRB     R0,[R1, #+0]
-    469                  SysSet.ParaIndex=OtherSetIndex;
+    496                  SysSet.ParaIndex=OtherSetIndex;
    \   00000176   0x.... 0x....      LDR.W    R0,??DataTable5_30
    \   0000017A   0x.... 0x....      LDR.W    R1,??DataTable5_28
    \   0000017E   0x7809             LDRB     R1,[R1, #+0]
    \   00000180   0x7101             STRB     R1,[R0, #+4]
-    470                  
-    471                  break;
+    497                  
+    498                  break;
    \   00000182   0xE158             B.N      ??LCDUartSET_24
-    472               case 19:
-    473                 SysSet.SaveFlg=1;      // WK --> 具体实现带研究
+    499               case 19:
+    500                 SysSet.SaveFlg=1;      // WK --> 具体实现带研究
    \                     ??LCDUartSET_7:
    \   00000184   0x.... 0x....      LDR.W    R0,??DataTable5_30
    \   00000188   0x2101             MOVS     R1,#+1
    \   0000018A   0x70C1             STRB     R1,[R0, #+3]
-    474                 break;
+    501                 break;
    \   0000018C   0xE153             B.N      ??LCDUartSET_24
-    475               
-    476              case 0x60:  // WK --> TCP/IP开关      0 关闭  1 开启
-    477                SysSet.SwitchSet[0]==0?(SysSet.SwitchSet[0]=1):(SysSet.SwitchSet[0]=0);
+    502               
+    503              case 0x60:  // WK --> TCP/IP开关      0 关闭  1 开启
+    504                SysSet.SwitchSet[0]==0?(SysSet.SwitchSet[0]=1):(SysSet.SwitchSet[0]=0);
    \                     ??LCDUartSET_15:
    \   0000018E   0x.... 0x....      LDR.W    R0,??DataTable5_30
    \   00000192   0x7B00             LDRB     R0,[R0, #+12]
@@ -1427,15 +1415,15 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   000001A6   0x.... 0x....      LDR.W    R1,??DataTable5_30
    \   000001AA   0x7308             STRB     R0,[R1, #+12]
    \   000001AC   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    478                SysSet.SwitchSet[7]=1;
+    505                SysSet.SwitchSet[7]=1;
    \                     ??LCDUartSET_30:
    \   000001AE   0x.... 0x....      LDR.W    R0,??DataTable5_30
    \   000001B2   0x2101             MOVS     R1,#+1
    \   000001B4   0x74C1             STRB     R1,[R0, #+19]
-    479                break;
+    506                break;
    \   000001B6   0xE13E             B.N      ??LCDUartSET_24
-    480              case 0x61:  // WK --> 485上行
-    481                SysSet.SwitchSet[1]==0?(SysSet.SwitchSet[1]=1):(SysSet.SwitchSet[1]=0);
+    507              case 0x61:  // WK --> 485上行
+    508                SysSet.SwitchSet[1]==0?(SysSet.SwitchSet[1]=1):(SysSet.SwitchSet[1]=0);
    \                     ??LCDUartSET_16:
    \   000001B8   0x.... 0x....      LDR.W    R0,??DataTable5_30
    \   000001BC   0x7B40             LDRB     R0,[R0, #+13]
@@ -1451,15 +1439,15 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   000001D0   0x.... 0x....      LDR.W    R1,??DataTable5_30
    \   000001D4   0x7348             STRB     R0,[R1, #+13]
    \   000001D6   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    482                SysSet.SwitchSet[7]=1;
+    509                SysSet.SwitchSet[7]=1;
    \                     ??LCDUartSET_32:
    \   000001D8   0x.... 0x....      LDR.W    R0,??DataTable5_30
    \   000001DC   0x2101             MOVS     R1,#+1
    \   000001DE   0x74C1             STRB     R1,[R0, #+19]
-    483                break;
+    510                break;
    \   000001E0   0xE129             B.N      ??LCDUartSET_24
-    484              case 0x62:  // WK --> 485下行
-    485                SysSet.SwitchSet[2]==0?(SysSet.SwitchSet[2]=1):(SysSet.SwitchSet[2]=0);
+    511              case 0x62:  // WK --> 485下行
+    512                SysSet.SwitchSet[2]==0?(SysSet.SwitchSet[2]=1):(SysSet.SwitchSet[2]=0);
    \                     ??LCDUartSET_17:
    \   000001E2   0x.... 0x....      LDR.W    R0,??DataTable5_30
    \   000001E6   0x7B80             LDRB     R0,[R0, #+14]
@@ -1475,15 +1463,15 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   000001FA   0x.... 0x....      LDR.W    R1,??DataTable5_30
    \   000001FE   0x7388             STRB     R0,[R1, #+14]
    \   00000200   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    486                SysSet.SwitchSet[7]=1;
+    513                SysSet.SwitchSet[7]=1;
    \                     ??LCDUartSET_34:
    \   00000202   0x.... 0x....      LDR.W    R0,??DataTable5_30
    \   00000206   0x2101             MOVS     R1,#+1
    \   00000208   0x74C1             STRB     R1,[R0, #+19]
-    487                break;
+    514                break;
    \   0000020A   0xE114             B.N      ??LCDUartSET_24
-    488              case 0x63:  // WK --> GPS对时
-    489                SysSet.SwitchSet[3]==0?(SysSet.SwitchSet[3]=1):(SysSet.SwitchSet[3]=0);
+    515              case 0x63:  // WK --> GPS对时
+    516                SysSet.SwitchSet[3]==0?(SysSet.SwitchSet[3]=1):(SysSet.SwitchSet[3]=0);
    \                     ??LCDUartSET_18:
    \   0000020C   0x.... 0x....      LDR.W    R0,??DataTable5_30
    \   00000210   0x7BC0             LDRB     R0,[R0, #+15]
@@ -1499,15 +1487,15 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   00000224   0x.... 0x....      LDR.W    R1,??DataTable5_30
    \   00000228   0x73C8             STRB     R0,[R1, #+15]
    \   0000022A   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    490                SysSet.SwitchSet[7]=1;
+    517                SysSet.SwitchSet[7]=1;
    \                     ??LCDUartSET_36:
    \   0000022C   0x.... 0x....      LDR.W    R0,??DataTable5_30
    \   00000230   0x2101             MOVS     R1,#+1
    \   00000232   0x74C1             STRB     R1,[R0, #+19]
-    491                break;
+    518                break;
    \   00000234   0xE0FF             B.N      ??LCDUartSET_24
-    492              case 0x64:  // WK --> 声音设置
-    493                SysSet.SwitchSet[4]==0?(SysSet.SwitchSet[4]=1):(SysSet.SwitchSet[4]=0);
+    519              case 0x64:  // WK --> 声音设置
+    520                SysSet.SwitchSet[4]==0?(SysSet.SwitchSet[4]=1):(SysSet.SwitchSet[4]=0);
    \                     ??LCDUartSET_19:
    \   00000236   0x.... 0x....      LDR.W    R0,??DataTable5_30
    \   0000023A   0x7C00             LDRB     R0,[R0, #+16]
@@ -1523,15 +1511,15 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   0000024E   0x.... 0x....      LDR.W    R1,??DataTable5_30
    \   00000252   0x7408             STRB     R0,[R1, #+16]
    \   00000254   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    494                SysSet.SwitchSet[7]=1;
+    521                SysSet.SwitchSet[7]=1;
    \                     ??LCDUartSET_38:
    \   00000256   0x.... 0x....      LDR.W    R0,??DataTable5_30
    \   0000025A   0x2101             MOVS     R1,#+1
    \   0000025C   0x74C1             STRB     R1,[R0, #+19]
-    495                break;
+    522                break;
    \   0000025E   0xE0EA             B.N      ??LCDUartSET_24
-    496              case 0x65:  // WK --> 背光设置
-    497                SysSet.SwitchSet[5]==0?(SysSet.SwitchSet[5]=1):(SysSet.SwitchSet[5]=0);
+    523              case 0x65:  // WK --> 背光设置
+    524                SysSet.SwitchSet[5]==0?(SysSet.SwitchSet[5]=1):(SysSet.SwitchSet[5]=0);
    \                     ??LCDUartSET_20:
    \   00000260   0x.... 0x....      LDR.W    R0,??DataTable5_30
    \   00000264   0x7C40             LDRB     R0,[R0, #+17]
@@ -1547,15 +1535,15 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   00000278   0x.... 0x....      LDR.W    R1,??DataTable5_30
    \   0000027C   0x7448             STRB     R0,[R1, #+17]
    \   0000027E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    498                SysSet.SwitchSet[7]=1;
+    525                SysSet.SwitchSet[7]=1;
    \                     ??LCDUartSET_40:
    \   00000280   0x.... 0x....      LDR.W    R0,??DataTable5_30
    \   00000284   0x2101             MOVS     R1,#+1
    \   00000286   0x74C1             STRB     R1,[R0, #+19]
-    499                break;
+    526                break;
    \   00000288   0xE0D5             B.N      ??LCDUartSET_24
-    500              case 0x66:  // WK --> 移动存储
-    501                SysSet.SwitchSet[6]==0?(SysSet.SwitchSet[6]=1):(SysSet.SwitchSet[6]=0);
+    527              case 0x66:  // WK --> 移动存储
+    528                SysSet.SwitchSet[6]==0?(SysSet.SwitchSet[6]=1):(SysSet.SwitchSet[6]=0);
    \                     ??LCDUartSET_21:
    \   0000028A   0x.... 0x....      LDR.W    R0,??DataTable5_30
    \   0000028E   0x7C80             LDRB     R0,[R0, #+18]
@@ -1571,31 +1559,31 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   000002A2   0x.... 0x....      LDR.W    R1,??DataTable5_30
    \   000002A6   0x7488             STRB     R0,[R1, #+18]
    \   000002A8   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    502                SysSet.SwitchSet[7]=1;
+    529                SysSet.SwitchSet[7]=1;
    \                     ??LCDUartSET_42:
    \   000002AA   0x.... 0x....      LDR.W    R0,??DataTable5_30
    \   000002AE   0x2101             MOVS     R1,#+1
    \   000002B0   0x74C1             STRB     R1,[R0, #+19]
-    503                break;        
+    530                break;        
    \   000002B2   0xE0C0             B.N      ??LCDUartSET_24
-    504               /******************************** end *********************************/
-    505                 
-    506               /**********************************************************************
-    507                ** WK --> 系统事件设置界面按键  
-    508                **********************************************************************/  
-    509              case 64:               // WK --> 事件设置下移       
-    510                  // WK --> 待补充  
-    511                  SysSet.FuncFlg=1;
+    531               /******************************** end *********************************/
+    532                 
+    533               /**********************************************************************
+    534                ** WK --> 系统事件设置界面按键  
+    535                **********************************************************************/  
+    536              case 64:               // WK --> 事件设置下移       
+    537                  // WK --> 待补充  
+    538                  SysSet.FuncFlg=1;
    \                     ??LCDUartSET_10:
    \   000002B4   0x....             LDR.N    R0,??DataTable5_30
    \   000002B6   0x2101             MOVS     R1,#+1
    \   000002B8   0x7041             STRB     R1,[R0, #+1]
-    512                  if(SysSet.EvntIndex <7 )
+    539                  if(SysSet.EvntIndex <7 )
    \   000002BA   0x....             LDR.N    R0,??DataTable5_30
    \   000002BC   0x7940             LDRB     R0,[R0, #+5]
    \   000002BE   0x2807             CMP      R0,#+7
    \   000002C0   0xD20F             BCS.N    ??LCDUartSET_43
-    513                    (SysSet.EvntIndex==6)? (SysSet.EvntIndex=0): (++SysSet.EvntIndex);  
+    540                    (SysSet.EvntIndex==6)? (SysSet.EvntIndex=0): (++SysSet.EvntIndex);  
    \   000002C2   0x....             LDR.N    R0,??DataTable5_30
    \   000002C4   0x7940             LDRB     R0,[R0, #+5]
    \   000002C6   0x2806             CMP      R0,#+6
@@ -1613,8 +1601,8 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   000002DC   0x7148             STRB     R0,[R1, #+5]
    \   000002DE   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
    \   000002E0   0xE00E             B.N      ??LCDUartSET_45
-    514                  else
-    515                   (SysSet.EvntIndex==10)? (SysSet.EvntIndex=7):(++SysSet.EvntIndex);
+    541                  else
+    542                   (SysSet.EvntIndex==10)? (SysSet.EvntIndex=7):(++SysSet.EvntIndex);
    \                     ??LCDUartSET_43:
    \   000002E2   0x....             LDR.N    R0,??DataTable5_30
    \   000002E4   0x7940             LDRB     R0,[R0, #+5]
@@ -1632,21 +1620,21 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   000002FA   0x....             LDR.N    R1,??DataTable5_30
    \   000002FC   0x7148             STRB     R0,[R1, #+5]
    \   000002FE   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    516                  break;
+    543                  break;
    \                     ??LCDUartSET_45:
    \   00000300   0xE099             B.N      ??LCDUartSET_24
-    517              case 65:              // WK --> 事件设置上移         
-    518                    SysSet.FuncFlg=1;
+    544              case 65:              // WK --> 事件设置上移         
+    545                    SysSet.FuncFlg=1;
    \                     ??LCDUartSET_11:
    \   00000302   0x....             LDR.N    R0,??DataTable5_30
    \   00000304   0x2101             MOVS     R1,#+1
    \   00000306   0x7041             STRB     R1,[R0, #+1]
-    519                    if(SysSet.EvntIndex <7 )
+    546                    if(SysSet.EvntIndex <7 )
    \   00000308   0x....             LDR.N    R0,??DataTable5_30
    \   0000030A   0x7940             LDRB     R0,[R0, #+5]
    \   0000030C   0x2807             CMP      R0,#+7
    \   0000030E   0xD20F             BCS.N    ??LCDUartSET_47
-    520                      (SysSet.EvntIndex==0)? (SysSet.EvntIndex=6):(--SysSet.EvntIndex);      
+    547                      (SysSet.EvntIndex==0)? (SysSet.EvntIndex=6):(--SysSet.EvntIndex);      
    \   00000310   0x....             LDR.N    R0,??DataTable5_30
    \   00000312   0x7940             LDRB     R0,[R0, #+5]
    \   00000314   0x2800             CMP      R0,#+0
@@ -1664,8 +1652,8 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   0000032A   0x7148             STRB     R0,[R1, #+5]
    \   0000032C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
    \   0000032E   0xE00E             B.N      ??LCDUartSET_49
-    521                    else
-    522                      (SysSet.EvntIndex==10)?(SysSet.EvntIndex=7):(--SysSet.EvntIndex);   
+    548                    else
+    549                      (SysSet.EvntIndex==10)?(SysSet.EvntIndex=7):(--SysSet.EvntIndex);   
    \                     ??LCDUartSET_47:
    \   00000330   0x....             LDR.N    R0,??DataTable5_30
    \   00000332   0x7940             LDRB     R0,[R0, #+5]
@@ -1683,16 +1671,16 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   00000348   0x....             LDR.N    R1,??DataTable5_30
    \   0000034A   0x7148             STRB     R0,[R1, #+5]
    \   0000034C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    523                  break;
+    550                  break;
    \                     ??LCDUartSET_49:
    \   0000034E   0xE072             B.N      ??LCDUartSET_24
-    524              case 66:             // WK --> 事件设置右移         
-    525                  SysSet.FuncFlg=1;
+    551              case 66:             // WK --> 事件设置右移         
+    552                  SysSet.FuncFlg=1;
    \                     ??LCDUartSET_12:
    \   00000350   0x....             LDR.N    R0,??DataTable5_30
    \   00000352   0x2101             MOVS     R1,#+1
    \   00000354   0x7041             STRB     R1,[R0, #+1]
-    526                  (SysSet.EvntIndex < 7) ? (SysSet.EvntIndex=7 ) : (SysSet.EvntIndex=0);
+    553                  (SysSet.EvntIndex < 7) ? (SysSet.EvntIndex=7 ) : (SysSet.EvntIndex=0);
    \   00000356   0x....             LDR.N    R0,??DataTable5_30
    \   00000358   0x7940             LDRB     R0,[R0, #+5]
    \   0000035A   0x2807             CMP      R0,#+7
@@ -1707,32 +1695,32 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   0000036A   0x....             LDR.N    R1,??DataTable5_30
    \   0000036C   0x7148             STRB     R0,[R1, #+5]
    \   0000036E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    527                  break;     
+    554                  break;     
    \                     ??LCDUartSET_52:
    \   00000370   0xE061             B.N      ??LCDUartSET_24
-    528              case 67:                       /*保存键*/
-    529                  SysSet.SaveFlg=1;      // WK --> 具体实现带研究
+    555              case 67:                       /*保存键*/
+    556                  SysSet.SaveFlg=1;      // WK --> 具体实现带研究
    \                     ??LCDUartSET_13:
    \   00000372   0x....             LDR.N    R0,??DataTable5_30
    \   00000374   0x2101             MOVS     R1,#+1
    \   00000376   0x70C1             STRB     R1,[R0, #+3]
-    530                  break;
+    557                  break;
    \   00000378   0xE05D             B.N      ??LCDUartSET_24
-    531               /************************************* end******************************/
-    532                  
-    533              case 24:
-    534                  break;               /*参数设置已去除小数点键*/
+    558               /************************************* end******************************/
+    559                  
+    560              case 24:
+    561                  break;               /*参数设置已去除小数点键*/
    \                     ??LCDUartSET_8:
    \   0000037A   0xE05C             B.N      ??LCDUartSET_24
-    535              case 72:                  /*事件设置小数点键*/
-    536                  if(SysSet.DataCnt)
+    562              case 72:                  /*事件设置小数点键*/
+    563                  if(SysSet.DataCnt)
    \                     ??LCDUartSET_14:
    \   0000037C   0x....             LDR.N    R0,??DataTable5_30
    \   0000037E   0x7980             LDRB     R0,[R0, #+6]
    \   00000380   0x2800             CMP      R0,#+0
    \   00000382   0xD009             BEQ.N    ??LCDUartSET_53
-    537                  {
-    538                      SysSet.Data[SysSet.DataCnt++]='.';
+    564                  {
+    565                      SysSet.Data[SysSet.DataCnt++]='.';
    \   00000384   0x....             LDR.N    R0,??DataTable5_30
    \   00000386   0x7980             LDRB     R0,[R0, #+6]
    \   00000388   0x....             LDR.N    R1,??DataTable5_30
@@ -1743,45 +1731,45 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   00000392   0x1840             ADDS     R0,R0,R1
    \   00000394   0x212E             MOVS     R1,#+46
    \   00000396   0x71C1             STRB     R1,[R0, #+7]
-    539                  }
-    540                  break;
+    566                  }
+    567                  break;
    \                     ??LCDUartSET_53:
    \   00000398   0xE04D             B.N      ??LCDUartSET_24
-    541              case 25:                  /*参数设置清除键*/
-    542              case 73:                  /*事件设置清除键*/
-    543                  SysSet.DataFlg=1;
+    568              case 25:                  /*参数设置清除键*/
+    569              case 73:                  /*事件设置清除键*/
+    570                  SysSet.DataFlg=1;
    \                     ??LCDUartSET_9:
    \   0000039A   0x....             LDR.N    R0,??DataTable5_30
    \   0000039C   0x2101             MOVS     R1,#+1
    \   0000039E   0x7081             STRB     R1,[R0, #+2]
-    544                  SysSet.DataCnt=0;
+    571                  SysSet.DataCnt=0;
    \   000003A0   0x....             LDR.N    R0,??DataTable5_30
    \   000003A2   0x2100             MOVS     R1,#+0
    \   000003A4   0x7181             STRB     R1,[R0, #+6]
-    545                  break;
+    572                  break;
    \   000003A6   0xE046             B.N      ??LCDUartSET_24
-    546              case 255:
-    547                  Dis_PicID=MenuTop;   // wk --> 返回主界面
+    573              case 255:
+    574                  Dis_PicID=MenuTop;   // wk --> 返回主界面
    \                     ??LCDUartSET_22:
    \   000003A8   0x....             LDR.N    R0,??DataTable5_19
    \   000003AA   0x2100             MOVS     R1,#+0
    \   000003AC   0x7001             STRB     R1,[R0, #+0]
-    548                  break;
+    575                  break;
    \   000003AE   0xE042             B.N      ??LCDUartSET_24
-    549                  
-    550              default:
-    551                  if(Touch_key>31&&Touch_key<42)//系统参数设置下的小键盘0-9
+    576                  
+    577              default:
+    578                  if(Touch_key>31&&Touch_key<42)//系统参数设置下的小键盘0-9
    \                     ??LCDUartSET_23:
    \   000003B0   0xF1B0 0x0120      SUBS     R1,R0,#+32
    \   000003B4   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
    \   000003B6   0x290A             CMP      R1,#+10
    \   000003B8   0xD223             BCS.N    ??LCDUartSET_54
-    552                  {
-    553                      SysSet.DataFlg=1;
+    579                  {
+    580                      SysSet.DataFlg=1;
    \   000003BA   0x....             LDR.N    R1,??DataTable5_30
    \   000003BC   0x2201             MOVS     R2,#+1
    \   000003BE   0x708A             STRB     R2,[R1, #+2]
-    554                      if(SysSet.DataCnt<(SysSet.ParaIndex<4?(SysSet.ParaIndex==3?4:5):2))  // wk --> 最多输入 5 位数
+    581                      if(SysSet.DataCnt<(SysSet.ParaIndex<4?(SysSet.ParaIndex==3?4:5):2))  // wk --> 最多输入 5 位数
    \   000003C0   0x....             LDR.N    R1,??DataTable5_30
    \   000003C2   0x7989             LDRB     R1,[R1, #+6]
    \   000003C4   0x....             LDR.N    R2,??DataTable5_30
@@ -1803,8 +1791,8 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   000003DE   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
    \   000003E0   0x4291             CMP      R1,R2
    \   000003E2   0xDA0B             BGE.N    ??LCDUartSET_58
-    555                      {
-    556                          SysSet.Data[SysSet.DataCnt++]=Touch_key+16;
+    582                      {
+    583                          SysSet.Data[SysSet.DataCnt++]=Touch_key+16;
    \   000003E4   0x....             LDR.N    R1,??DataTable5_30
    \   000003E6   0x7989             LDRB     R1,[R1, #+6]
    \   000003E8   0x....             LDR.N    R2,??DataTable5_30
@@ -1816,34 +1804,34 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   000003F4   0xF110 0x0210      ADDS     R2,R0,#+16
    \   000003F8   0x71CA             STRB     R2,[R1, #+7]
    \   000003FA   0xE002             B.N      ??LCDUartSET_54
-    557                      }
-    558                      else
-    559                      {
-    560                          SysSet.DataCnt=0;    //相当于清除键
+    584                      }
+    585                      else
+    586                      {
+    587                          SysSet.DataCnt=0;    //相当于清除键
    \                     ??LCDUartSET_58:
    \   000003FC   0x....             LDR.N    R1,??DataTable5_30
    \   000003FE   0x2200             MOVS     R2,#+0
    \   00000400   0x718A             STRB     R2,[R1, #+6]
-    561                      }
-    562                  }
-    563                  if(Touch_key>79&&Touch_key<90)//系统事件设置下的小键盘0-9
+    588                      }
+    589                  }
+    590                  if(Touch_key>79&&Touch_key<90)//系统事件设置下的小键盘0-9
    \                     ??LCDUartSET_54:
    \   00000402   0xF1B0 0x0150      SUBS     R1,R0,#+80
    \   00000406   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
    \   00000408   0x290A             CMP      R1,#+10
    \   0000040A   0xD214             BCS.N    ??LCDUartSET_59
-    564                  {
-    565                      SysSet.DataFlg=1;
+    591                  {
+    592                      SysSet.DataFlg=1;
    \   0000040C   0x....             LDR.N    R1,??DataTable5_30
    \   0000040E   0x2201             MOVS     R2,#+1
    \   00000410   0x708A             STRB     R2,[R1, #+2]
-    566                      if(SysSet.DataCnt<5)
+    593                      if(SysSet.DataCnt<5)
    \   00000412   0x....             LDR.N    R1,??DataTable5_30
    \   00000414   0x7989             LDRB     R1,[R1, #+6]
    \   00000416   0x2905             CMP      R1,#+5
    \   00000418   0xD20A             BCS.N    ??LCDUartSET_60
-    567                      {
-    568                          SysSet.Data[SysSet.DataCnt++]=Touch_key-32;
+    594                      {
+    595                          SysSet.Data[SysSet.DataCnt++]=Touch_key-32;
    \   0000041A   0x....             LDR.N    R1,??DataTable5_30
    \   0000041C   0x7989             LDRB     R1,[R1, #+6]
    \   0000041E   0x....             LDR.N    R2,??DataTable5_30
@@ -1855,33 +1843,33 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   0000042A   0x3820             SUBS     R0,R0,#+32
    \   0000042C   0x71C8             STRB     R0,[R1, #+7]
    \   0000042E   0xE002             B.N      ??LCDUartSET_59
-    569                      }
-    570                      else
-    571                      {
-    572                          SysSet.DataCnt=0;    //相当于清除键
+    596                      }
+    597                      else
+    598                      {
+    599                          SysSet.DataCnt=0;    //相当于清除键
    \                     ??LCDUartSET_60:
    \   00000430   0x....             LDR.N    R0,??DataTable5_30
    \   00000432   0x2100             MOVS     R1,#+0
    \   00000434   0x7181             STRB     R1,[R0, #+6]
-    573                      }
-    574                  }
-    575                  break;
-    576              }
-    577          }
+    600                      }
+    601                  }
+    602                  break;
+    603              }
+    604          }
    \                     ??LCDUartSET_59:
    \                     ??LCDUartSET_24:
    \   00000436   0x4770             BX       LR               ;; return
-    578          /*******************************************************************************
-    579          * 函  数  名      : LCDUartEVENT
-    580          * 描      述      : LCDUart触摸屏中断系统设置按键判断
-    581          * 输      入      : Touch_key.
-    582          * 返      回      : 无.
-    583          *******************************************************************************/
+    605          /*******************************************************************************
+    606          * 函  数  名      : LCDUartEVENT
+    607          * 描      述      : LCDUart触摸屏中断系统设置按键判断
+    608          * 输      入      : Touch_key.
+    609          * 返      回      : 无.
+    610          *******************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    584          void LCDUartEVENT(U8 Touch_key)   //事件显示按键跳转函数。
-    585          {
-    586              if(Touch_key<3||Touch_key==255)
+    611          void LCDUartEVENT(U8 Touch_key)   //事件显示按键跳转函数。
+    612          {
+    613              if(Touch_key<3||Touch_key==255)
    \                     LCDUartEVENT:
    \   00000000   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
    \   00000002   0x2803             CMP      R0,#+3
@@ -1889,18 +1877,18 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   00000006   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
    \   00000008   0x28FF             CMP      R0,#+255
    \   0000000A   0xD105             BNE.N    ??LCDUartEVENT_1
-    587              {
-    588                  MenuSwFlg=1;//切换页面
+    614              {
+    615                  MenuSwFlg=1;//切换页面
    \                     ??LCDUartEVENT_0:
    \   0000000C   0x....             LDR.N    R1,??DataTable5_16
    \   0000000E   0x2201             MOVS     R2,#+1
    \   00000010   0x700A             STRB     R2,[R1, #+0]
-    589                  DisTimeOnce=1;//页面切换后完全显示时间
+    616                  DisTimeOnce=1;//页面切换后完全显示时间
    \   00000012   0x....             LDR.N    R1,??DataTable5_17
    \   00000014   0x2201             MOVS     R2,#+1
    \   00000016   0x700A             STRB     R2,[R1, #+0]
-    590              }
-    591              switch(Touch_key)
+    617              }
+    618              switch(Touch_key)
    \                     ??LCDUartEVENT_1:
    \   00000018   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
    \   0000001A   0x2800             CMP      R0,#+0
@@ -1920,161 +1908,161 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
    \   00000036   0x28FF             CMP      R0,#+255
    \   00000038   0xD051             BEQ.N    ??LCDUartEVENT_9
    \   0000003A   0xE054             B.N      ??LCDUartEVENT_10
-    592              {
-    593              case 0:
-    594                  Dis_PicID=MenuEventMON;   //事件监测
+    619              {
+    620              case 0:
+    621                  Dis_PicID=MenuEventMON;   //事件监测
    \                     ??LCDUartEVENT_2:
    \   0000003C   0x....             LDR.N    R0,??DataTable5_19
    \   0000003E   0x2128             MOVS     R1,#+40
    \   00000040   0x7001             STRB     R1,[R0, #+0]
-    595                  break;
+    622                  break;
    \   00000042   0xE050             B.N      ??LCDUartEVENT_11
-    596              case 1:
-    597                  Dis_PicID=MenuEventList;  //事件列表
+    623              case 1:
+    624                  Dis_PicID=MenuEventList;  //事件列表
    \                     ??LCDUartEVENT_3:
    \   00000044   0x....             LDR.N    R0,??DataTable5_19
    \   00000046   0x2129             MOVS     R1,#+41
    \   00000048   0x7001             STRB     R1,[R0, #+0]
-    598                  EVEnum_old=0;
+    625                  EVEnum_old=0;
    \   0000004A   0x....             LDR.N    R0,??DataTable5_31
    \   0000004C   0x2100             MOVS     R1,#+0
    \   0000004E   0x7001             STRB     R1,[R0, #+0]
-    599                  break;
+    626                  break;
    \   00000050   0xE049             B.N      ??LCDUartEVENT_11
-    600              case 2:
-    601                  Dis_PicID= MenuEventWave;  //事件波形
+    627              case 2:
+    628                  Dis_PicID= MenuEventWave;  //事件波形
    \                     ??LCDUartEVENT_4:
    \   00000052   0x....             LDR.N    R0,??DataTable5_19
    \   00000054   0x212A             MOVS     R1,#+42
    \   00000056   0x7001             STRB     R1,[R0, #+0]
-    602                  break;
+    629                  break;
    \   00000058   0xE045             B.N      ??LCDUartEVENT_11
-    603              case 32:            //事件列表中的上翻页
-    604                  if(EVEpage>0)
+    630              case 32:            //事件列表中的上翻页
+    631                  if(EVEpage>0)
    \                     ??LCDUartEVENT_5:
    \   0000005A   0x....             LDR.N    R0,??DataTable5_32
    \   0000005C   0x7800             LDRB     R0,[R0, #+0]
    \   0000005E   0x2801             CMP      R0,#+1
    \   00000060   0xD305             BCC.N    ??LCDUartEVENT_12
-    605                  {
-    606                      EVEpage--;
+    632                  {
+    633                      EVEpage--;
    \   00000062   0x....             LDR.N    R0,??DataTable5_32
    \   00000064   0x7800             LDRB     R0,[R0, #+0]
    \   00000066   0x1E40             SUBS     R0,R0,#+1
    \   00000068   0x....             LDR.N    R1,??DataTable5_32
    \   0000006A   0x7008             STRB     R0,[R1, #+0]
    \   0000006C   0xE002             B.N      ??LCDUartEVENT_13
-    607                  }
-    608                  else
-    609                  {
-    610                      EVEpage=0;
+    634                  }
+    635                  else
+    636                  {
+    637                      EVEpage=0;
    \                     ??LCDUartEVENT_12:
    \   0000006E   0x....             LDR.N    R0,??DataTable5_32
    \   00000070   0x2100             MOVS     R1,#+0
    \   00000072   0x7001             STRB     R1,[R0, #+0]
-    611                  }
-    612                  MenuSwFlg=1;
+    638                  }
+    639                  MenuSwFlg=1;
    \                     ??LCDUartEVENT_13:
    \   00000074   0x....             LDR.N    R0,??DataTable5_16
    \   00000076   0x2101             MOVS     R1,#+1
    \   00000078   0x7001             STRB     R1,[R0, #+0]
-    613                  break;
+    640                  break;
    \   0000007A   0xE034             B.N      ??LCDUartEVENT_11
-    614              case 33:             //事件列表中的下翻页
-    615                  if(EVEpage==8)
+    641              case 33:             //事件列表中的下翻页
+    642                  if(EVEpage==8)
    \                     ??LCDUartEVENT_6:
    \   0000007C   0x....             LDR.N    R0,??DataTable5_32
    \   0000007E   0x7800             LDRB     R0,[R0, #+0]
    \   00000080   0x2808             CMP      R0,#+8
    \   00000082   0xD102             BNE.N    ??LCDUartEVENT_14
-    616                  {
-    617                      EVEpage=0;
+    643                  {
+    644                      EVEpage=0;
    \   00000084   0x....             LDR.N    R0,??DataTable5_32
    \   00000086   0x2100             MOVS     R1,#+0
    \   00000088   0x7001             STRB     R1,[R0, #+0]
-    618                  }
-    619                  EVEpage++;
+    645                  }
+    646                  EVEpage++;
    \                     ??LCDUartEVENT_14:
    \   0000008A   0x....             LDR.N    R0,??DataTable5_32
    \   0000008C   0x7800             LDRB     R0,[R0, #+0]
    \   0000008E   0x1C40             ADDS     R0,R0,#+1
    \   00000090   0x....             LDR.N    R1,??DataTable5_32
    \   00000092   0x7008             STRB     R0,[R1, #+0]
-    620                  MenuSwFlg=1;
+    647                  MenuSwFlg=1;
    \   00000094   0x....             LDR.N    R0,??DataTable5_16
    \   00000096   0x2101             MOVS     R1,#+1
    \   00000098   0x7001             STRB     R1,[R0, #+0]
-    621                  break;
+    648                  break;
    \   0000009A   0xE024             B.N      ??LCDUartEVENT_11
-    622              case 34:             //事件列表中的上移
-    623                  if(EVEline>0)
+    649              case 34:             //事件列表中的上移
+    650                  if(EVEline>0)
    \                     ??LCDUartEVENT_7:
    \   0000009C   0x....             LDR.N    R0,??DataTable5_33
    \   0000009E   0x7800             LDRB     R0,[R0, #+0]
    \   000000A0   0x2801             CMP      R0,#+1
    \   000000A2   0xD305             BCC.N    ??LCDUartEVENT_15
-    624                  {
-    625                      EVEline--;
+    651                  {
+    652                      EVEline--;
    \   000000A4   0x....             LDR.N    R0,??DataTable5_33
    \   000000A6   0x7800             LDRB     R0,[R0, #+0]
    \   000000A8   0x1E40             SUBS     R0,R0,#+1
    \   000000AA   0x....             LDR.N    R1,??DataTable5_33
    \   000000AC   0x7008             STRB     R0,[R1, #+0]
    \   000000AE   0xE002             B.N      ??LCDUartEVENT_16
-    626                  }
-    627                  else
-    628                  {
-    629                      EVEline=0;
+    653                  }
+    654                  else
+    655                  {
+    656                      EVEline=0;
    \                     ??LCDUartEVENT_15:
    \   000000B0   0x....             LDR.N    R0,??DataTable5_33
    \   000000B2   0x2100             MOVS     R1,#+0
    \   000000B4   0x7001             STRB     R1,[R0, #+0]
-    630                  }
-    631                  EVEfunflg=1;
+    657                  }
+    658                  EVEfunflg=1;
    \                     ??LCDUartEVENT_16:
    \   000000B6   0x....             LDR.N    R0,??DataTable5_34
    \   000000B8   0x2101             MOVS     R1,#+1
    \   000000BA   0x7001             STRB     R1,[R0, #+0]
-    632                  break;
+    659                  break;
    \   000000BC   0xE013             B.N      ??LCDUartEVENT_11
-    633              case 35:           //事件列表中的下移
-    634                  if(EVEline==14)
+    660              case 35:           //事件列表中的下移
+    661                  if(EVEline==14)
    \                     ??LCDUartEVENT_8:
    \   000000BE   0x....             LDR.N    R0,??DataTable5_33
    \   000000C0   0x7800             LDRB     R0,[R0, #+0]
    \   000000C2   0x280E             CMP      R0,#+14
    \   000000C4   0xD102             BNE.N    ??LCDUartEVENT_17
-    635                  {
-    636                      EVEline=0;
+    662                  {
+    663                      EVEline=0;
    \   000000C6   0x....             LDR.N    R0,??DataTable5_33
    \   000000C8   0x2100             MOVS     R1,#+0
    \   000000CA   0x7001             STRB     R1,[R0, #+0]
-    637                  }
-    638                  EVEline++;
+    664                  }
+    665                  EVEline++;
    \                     ??LCDUartEVENT_17:
    \   000000CC   0x....             LDR.N    R0,??DataTable5_33
    \   000000CE   0x7800             LDRB     R0,[R0, #+0]
    \   000000D0   0x1C40             ADDS     R0,R0,#+1
    \   000000D2   0x....             LDR.N    R1,??DataTable5_33
    \   000000D4   0x7008             STRB     R0,[R1, #+0]
-    639                  EVEfunflg=1;
+    666                  EVEfunflg=1;
    \   000000D6   0x....             LDR.N    R0,??DataTable5_34
    \   000000D8   0x2101             MOVS     R1,#+1
    \   000000DA   0x7001             STRB     R1,[R0, #+0]
-    640                  break;
+    667                  break;
    \   000000DC   0xE003             B.N      ??LCDUartEVENT_11
-    641              case 255:
-    642                  Dis_PicID=MenuTop;
+    668              case 255:
+    669                  Dis_PicID=MenuTop;
    \                     ??LCDUartEVENT_9:
    \   000000DE   0x....             LDR.N    R0,??DataTable5_19
    \   000000E0   0x2100             MOVS     R1,#+0
    \   000000E2   0x7001             STRB     R1,[R0, #+0]
-    643                  break;
+    670                  break;
    \   000000E4   0xE7FF             B.N      ??LCDUartEVENT_11
-    644              default:
-    645                  break;
-    646              }
-    647          }
+    671              default:
+    672                  break;
+    673              }
+    674          }
    \                     ??LCDUartEVENT_10:
    \                     ??LCDUartEVENT_11:
    \   000000E6   0x4770             BX       LR               ;; return
@@ -2452,7 +2440,6 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
        4  ??DataTable5_7
        4  ??DataTable5_8
        4  ??DataTable5_9
-       1  BlightOffOn
        1  DisTimeOnce
        1  Dis_PicID
        1  EVEfunflg
@@ -2474,8 +2461,6 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
      960  LCDUartView
        1  MenuSwFlg
        1  OtherSetIndex
-       1  RemovDevFlg
-       1  SoundOffOn
       20  SysSet
        1  SysSetKeyFlg
        1  TimeSetIndex
@@ -2487,13 +2472,13 @@ Warning[Pe177]: variable "uart_isr" was declared but never referenced
      116  new_uart_isr
 
  
-    46 bytes in section .bss
+    43 bytes in section .bss
    232 bytes in section .rodata
  2 782 bytes in section .text
  
  2 782 bytes of CODE  memory
    232 bytes of CONST memory
-    46 bytes of DATA  memory
+    43 bytes of DATA  memory
 
 Errors: none
-Warnings: 1
+Warnings: none

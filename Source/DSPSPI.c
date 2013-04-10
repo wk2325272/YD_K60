@@ -7,15 +7,7 @@
                        SPI时钟由主机控制，
                        
 *******************************************************************************/
-#define DSPSPI_GLOBALS
-//#include "includes.h"
-#include <mqx.h>
-#include <bsp.h>
-
-#include "DSPSPI.h"
-#include <string.h>
-#include <spi.h>
-#include "event.h"
+#include "includes.h"
 
 #define _SPIDMADATA_DBUG_  // 是否有 DBUG 输出信息
 
@@ -27,20 +19,17 @@ U8 SPIRxCnt=0;   //SPI接收标志，作用域在此文件
 U16 TotalNum=0;//需接收数据的长度，作用域在此文件
 //U8 DataType=0;//作用域在此文件
 //U8 HeadFlg[4]={0}; // wk @20130325 -->  // wk @130403 --> uncomment
+volatile U8 SPIPowerFlg;//默认值0
+volatile U8 SPIEventFlg;//默认值0
 
 U16 DataSize = ARRAY_SIZE ;  //wk -->传给 DMA 寄存器的一次服务数据长度
-static uchar count=0; // 用于数据头检测
+volatile static uchar count=0; // 用于数据头检测
 U8 SPI_Send=0; // wk @130406 --> K60是否给DSP发送数据的标志
 
 //volatile U16 Time_save=0;  //备份事件参数
 //volatile U8 testflgg=0;   //MCU发送数据个数
- 
-MQX_FILE_PTR spifd_2; //,ptbfd_10 // spifd_2 --> spi2设备的句柄  ptbfd_10 --> PTB10 设备的句柄
-// @20130312 --> wk
-//SPI_READ_WRITE_STRUCT  spi_rw;  // --> IOCTL 操作 SPI 时使用的结构体
-//SPI_READ_WRITE_STRUCT *spi_rw_ptr = &spi_rw; 
-//U8 *BufRxchar_ptr = BufRxchar;
-//U8 *PowRxchar_ptr = PowRxchar;
+
+MQX_FILE_PTR spifd_2; //spifd_2 --> spi2设备的句柄
 
  // wk @130403 --> uncomment
 //GPIO_PIN_STRUCT pins_int[] = {    /* PTB10 定义结构体 */  // 定义 PTB10 上升沿中断

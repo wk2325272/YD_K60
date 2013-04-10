@@ -1,18 +1,11 @@
-/* 头文件根据需要可裁剪 */
-#include <mqx.h>
-#include <bsp.h> 
+#ifndef LCDD_H
+#define LCDD_H
 
-#include "System.h"
+#include "includes.h"
+#include "includes.h"
 
 #define RS232_CHANNEL "ttye:"
-/* define for 430 -> k60 */
-//#define U8 uchar
-//#define U16 uint_16
-//#define U32 unsigned long
 
-
-//#ifndef arc
-//#define arc
 typedef struct
 { 
     U8 style;
@@ -20,10 +13,10 @@ typedef struct
     U16 Y_0;
     U8 R_0;
 } ARC;
-//#endif
+
 
 /* 函数申明 */
-void UartLCD_init();
+ void UartLCD_init();
 
  void send_byte(U8 i);
  void send_word(U16 i);
@@ -104,3 +97,5 @@ void UartLCD_init();
  
 /* wk --> add */
  void YADA_E4();
+
+#endif

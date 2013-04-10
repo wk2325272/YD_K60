@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM     09/Apr/2013  09:03:00 #
+# IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM     10/Apr/2013  18:31:01 #
 # Copyright 1999-2011 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -54,17 +54,18 @@ L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\System.C
       5          * Date                :
       6          * Description        : —” ±≥Ã–Ú
       7          *******************************************************************************/
-      8          #include "System.h"
-      9           
-     10          // Defined for Delay_ms_Common()
-     11          #define MCU_BUS_CLOCK 96000000L
-     12          #define MCU_BUS_CYCLES_100US (MCU_BUS_CLOCK / 10000)
+      8          
+      9          #include "includes.h"
+     10          
+     11          // Defined for Delay_ms_Common()
+     12          #define MCU_BUS_CLOCK 96000000L
+     13          #define MCU_BUS_CYCLES_100US (MCU_BUS_CLOCK / 10000)
 
    \                                 In section .text, align 4, keep-with-next
-     13          static void Cpu_Delay100US(U16 us100)
-     14          {
-     15            unsigned int i;
-     16            while((us100--)){
+     14          static void Cpu_Delay100US(U16 us100)
+     15          {
+     16            unsigned int i;
+     17            while((us100--)){
    \                     Cpu_Delay100US:
    \                     ??Cpu_Delay100US_0:
    \   00000000   0x0001             MOVS     R1,R0
@@ -72,58 +73,58 @@ L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\System.C
    \   00000004   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
    \   00000006   0x2900             CMP      R1,#+0
    \   00000008   0xD009             BEQ.N    ??Cpu_Delay100US_1
-     17              for(i=0; i < (MCU_BUS_CYCLES_100US/10); i++)
+     18              for(i=0; i < (MCU_BUS_CYCLES_100US/10); i++)
    \   0000000A   0x2100             MOVS     R1,#+0
    \                     ??Cpu_Delay100US_2:
    \   0000000C   0xF44F 0x7270      MOV      R2,#+960
    \   00000010   0x4291             CMP      R1,R2
    \   00000012   0xD2F5             BCS.N    ??Cpu_Delay100US_0
-     18              {// 10 cycles delay
-     19                asm("NOP");
-   \   00000014   0xBF00             NOP              
+     19              {// 10 cycles delay
      20                asm("NOP");
-   \   00000016   0xBF00             NOP              
+   \   00000014   0xBF00             NOP              
      21                asm("NOP");
+   \   00000016   0xBF00             NOP              
+     22                asm("NOP");
    \   00000018   0xBF00             NOP              
-     22              }
+     23              }
    \   0000001A   0x1C49             ADDS     R1,R1,#+1
    \   0000001C   0xE7F6             B.N      ??Cpu_Delay100US_2
-     23            }
-     24          }
+     24            }
+     25          }
    \                     ??Cpu_Delay100US_1:
    \   0000001E   0x4770             BX       LR               ;; return
-     25          
+     26          
 
    \                                 In section .text, align 2, keep-with-next
-     26          void delay_ms(U16 period)   //delay routine (milliseconds)
-     27          {
+     27          void delay_ms(U16 period)   //delay routine (milliseconds)
+     28          {
    \                     delay_ms:
    \   00000000   0xB510             PUSH     {R4,LR}
    \   00000002   0x0004             MOVS     R4,R0
    \   00000004   0xE003             B.N      ??delay_ms_0
-     28            
-     29            while (period != 0)
-     30            {
-     31              Cpu_Delay100US (10);          
+     29            
+     30            while (period != 0)
+     31            {
+     32              Cpu_Delay100US (10);          
    \                     ??delay_ms_1:
    \   00000006   0x200A             MOVS     R0,#+10
    \   00000008   0x.... 0x....      BL       Cpu_Delay100US
-     32              period--;    
+     33              period--;    
    \   0000000C   0x1E64             SUBS     R4,R4,#+1
-     33            }  
+     34            }  
    \                     ??delay_ms_0:
    \   0000000E   0xB2A4             UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
    \   00000010   0x2C00             CMP      R4,#+0
    \   00000012   0xD1F8             BNE.N    ??delay_ms_1
-     34          }
+     35          }
    \   00000014   0xBD10             POP      {R4,PC}          ;; return
-     35          
      36          
+     37          
 
    \                                 In section .text, align 4, keep-with-next
-     37          void delay_us(U16 uscnt)
-     38          {
-     39            while(uscnt--)
+     38          void delay_us(U16 uscnt)
+     39          {
+     40            while(uscnt--)
    \                     delay_us:
    \                     ??delay_us_0:
    \   00000000   0x0001             MOVS     R1,R0
@@ -131,21 +132,21 @@ L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\System.C
    \   00000004   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
    \   00000006   0x2900             CMP      R1,#+0
    \   00000008   0xD006             BEQ.N    ??delay_us_1
-     40            {
-     41              for(U16 i=0;i<24;i++)  //  1*10ns+ uscnt* (22*(4+x*nop) * 10ns)= 1us 
+     41            {
+     42              for(U16 i=0;i<24;i++)  //  1*10ns+ uscnt* (22*(4+x*nop) * 10ns)= 1us 
    \   0000000A   0x2100             MOVS     R1,#+0
    \                     ??delay_us_2:
    \   0000000C   0xB289             UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
    \   0000000E   0x2918             CMP      R1,#+24
    \   00000010   0xD2F6             BCS.N    ??delay_us_0
-     42              {
-     43                asm("NOP");
+     43              {
+     44                asm("NOP");
    \   00000012   0xBF00             NOP              
-     44              }
+     45              }
    \   00000014   0x1C49             ADDS     R1,R1,#+1
    \   00000016   0xE7F9             B.N      ??delay_us_2
-     45            }
-     46          }
+     46            }
+     47          }
    \                     ??delay_us_1:
    \   00000018   0x4770             BX       LR               ;; return
 

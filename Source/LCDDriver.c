@@ -14,7 +14,8 @@
 ** Description:  430  --> k60 
 ** 
 **************************************************/
-#include "LCDDriver.h"
+
+#include "includes.h"
 
 MQX_FILE_PTR uart_lcd = NULL;
 
@@ -22,7 +23,7 @@ MQX_FILE_PTR uart_lcd = NULL;
 void UartLCD_init()
 {
   uart_lcd  = fopen( "ttyb:", NULL );
-     if( uart_lcd == NULL )
+  if( uart_lcd == NULL )
    {
       /* device could not be opened */
       _task_block();

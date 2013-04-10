@@ -12,47 +12,24 @@
 ** Description:  430  --> k60 
 ** 
 **************************************************/
-#define   MenuV_GLOBALS
 
-#include "MenuView.h"
-#include "math.h"
-#include "DataConvert.h"
-#include "LCDDriver.h"
-#include "LCDUart.h"
-/* test shell function */
-//#include <ctype.h>
-//#include <string.h>
-//#include <mqx.h>
-//#include <fio.h>
-#include "shell.h"
-#include "sh_prv.h"
-#include <timer.h>
-#include <math.h>
+#include "includes.h"
 
-/* end */
-
-/* REVERSE BY WK TO TEST SysEventSet*/
-//extern U8 PowRxchar[],EvntRxchar[],TEST[20];
-extern U8 PowRxchar[],EvntRxchar[];
-U8 USB_Flg=0;
-//       U8 TEST[20];
-/* END */
-
+/* wk @130409 --> 变量定义 & 申明 */
 //extern volatile U8 EVEnum,send_ok;  // wk @130403 --> uncomment
-//U8 text[][3]= {"Ua","Ub","Uc","Ia","Ib","Ic"}; //0使ASCII字符间的间距缩小
 const U16 COLOR[] = {0xffe0,0x07E0,0xf800,0x0000};
-U8 HarmoInfo[][8]= {"A","B","C","幅 值","含有率"
-//                    "1 - 26","25 - 50","1","2","3","4","5","6","7","8",
-//                    "9","10","11","12","13","14","15","16","17","18","19","20","21",
-//                    "22","23","24","25","26","27","28","29","30","31","32","33","34",
-//                    "35","36","37","38","39","40","41","42","43","44","45","46","47",
-//                    "48","49","50","幅值","含有率"
-                   };
+U8 HarmoInfo[][8]= {"A","B","C","幅 值","含有率"};
 U8 SysParaOldIndex=0,SysEventOldIndex=0,EventOldIndex=0,EVEnum_old;
+U8 SysFlashDataT[84];   //系统设置的数据的临时参数
+U8 SysFlashData[84];   //wk @130326 -->写入Flash的系统设置参数
+U8 EventNum[18];  // wk @130405 --> 9次事件发生次数保存，每个事件占2字节，能记录65535次
+U8 EventAddr[400]; // wk@130405 -->记录事件发生的时间：月、日、时、分、秒，每个占4字节
+U8 USB_Flg=0;  // wk @130407 --> USB 是否插入标志
+
+extern U8 PowRxchar[],EvntRxchar[];
 //volatile U8 npage=0; // wk @130403 --> uncomment
 //volatile U16 nBlock=0,nBlock_old=1024; // wk @130403 --> uncomment
-/* function 申明 */
-char_ptr num2string(int_32 num,uchar len,uchar type);
+
 /*******************************************************************************
 * 函  数  名      : GUI_VIEW_UI
 * 描      述      : 电流电压波形及有效值显示，颜色为黄绿红，采用C104指令可自动擦除。
@@ -462,7 +439,6 @@ void GUI_VIEW_HarmoGraph()
     ChartoFloat(&PowRxchar[temp1+200], &Graphfloat[26],26,10000);//转换电流数据
     // wk @130408--> revrese dot end
     
-   
     /* wk --> end */
     //电压范围0~300,分三级显示0~3.0,3.0~300
     //循环构建柱状图的数组，每一个数据转换成矩形的（Xe，Ye）（Xs，Ys）
@@ -1141,6 +1117,8 @@ void GUI_SYS_EVENTSET(void)
     U8 k,temp=0;
     U16 ParaSetC108[98]= {0};
     static U8 flg_event[11]={0}; // wk @130326 --> 事件设置参数超限标志
+    U16 NumWave;
+    U16 DotWave;
     
     SHELL_CONTEXT_PTR    shell_ptr;
     shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
@@ -1960,32 +1938,32 @@ void PowerSave(void)
 ** Dessription	： 将 32 位整数转换成字符串
 ** Reverse	：
 *******************************************************************************/
-char_ptr num2string(int_32 num,uchar len,uchar type) // wk --> len <= 13-4-1=8
-{
-  char_ptr name;
-  name = _mem_alloc_zero( len+5 );
-  uchar sep_data[9];uint_32 temp;
-  for(int i=0;i<len;i++)
-  {
-    temp=(uint_32)pow(10,i);
-    sep_data[i]=(num/temp)%10;
-  }
-  
-  for(int i=0;i<len;i++)
-  {
-    *(name+i)=(uchar)(0x30+sep_data[len-1-i]);
-  }
-  if(type==0)
-  {
-    *(name+len)='\0';
-  }
-  else
-  {
-    *(name+len)=0x2e; // .
-    *(name+len+1)=0x43; // C
-    *(name+len+2)=0x53; // S
-    *(name+len+3)=0x56; // V
-    *(name+len+4)='\0';
-  }
-  return name;
-}
+//char_ptr num2string(int_32 num,uchar len,uchar type) // wk --> len <= 13-4-1=8
+//{
+//  char_ptr name;
+//  name = _mem_alloc_zero( len+5 );
+//  uchar sep_data[9];uint_32 temp;
+//  for(int i=0;i<len;i++)
+//  {
+//    temp=(uint_32)pow(10,i);
+//    sep_data[i]=(num/temp)%10;
+//  }
+//  
+//  for(int i=0;i<len;i++)
+//  {
+//    *(name+i)=(uchar)(0x30+sep_data[len-1-i]);
+//  }
+//  if(type==0)
+//  {
+//    *(name+len)='\0';
+//  }
+//  else
+//  {
+//    *(name+len)=0x2e; // .
+//    *(name+len+1)=0x43; // C
+//    *(name+len+2)=0x53; // S
+//    *(name+len+3)=0x56; // V
+//    *(name+len+4)='\0';
+//  }
+//  return name;
+//}
