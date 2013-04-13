@@ -17,14 +17,16 @@
 
 /* wk @130409 --> 变量定义 & 申明 */
 //extern volatile U8 EVEnum,send_ok;  // wk @130403 --> uncomment
+U8 EVEnum=0,EveRdNum=1;
 const U16 COLOR[] = {0xffe0,0x07E0,0xf800,0x0000};
 U8 HarmoInfo[][8]= {"A","B","C","幅 值","含有率"};
 U8 SysParaOldIndex=0,SysEventOldIndex=0,EventOldIndex=0,EVEnum_old;
 U8 SysFlashDataT[84];   //系统设置的数据的临时参数
 U8 SysFlashData[84];   //wk @130326 -->写入Flash的系统设置参数
 U8 EventNum[18];  // wk @130405 --> 9次事件发生次数保存，每个事件占2字节，能记录65535次
-U8 EventAddr[400]; // wk@130405 -->记录事件发生的时间：月、日、时、分、秒，每个占4字节
+U32 EventAddr[100]; // wk@130405 -->记录事件发生的时间：月、日、时、分、秒，每个占4字节
 U8 USB_Flg=0;  // wk @130407 --> USB 是否插入标志
+U16 evntyear_old=0;
 
 extern U8 PowRxchar[],EvntRxchar[];
 //volatile U8 npage=0; // wk @130403 --> uncomment
@@ -328,7 +330,6 @@ void GUI_VIEW_ListQuality() // wk --> 电能质量参数
 #endif
     
 }
-
 
 /*******************************************************************************
 * 函  数  名      : GUI_VIEW_ListQuality2
@@ -955,7 +956,7 @@ void GUI_SYS_PARASET(void)
       }
     }
     /* WK --> 保存键 */
-    if(SysSet.SaveFlg)
+    if(SysSet.ParaSaveFlg)
     {    
       /* pwd*/
 //     shell_ptr->ARGC=1;
@@ -1093,7 +1094,7 @@ void GUI_SYS_PARASET(void)
         YADA_C108(ParaSetAddr, 9);   //写入有效值，每次10个
         delay_us(10);  
         
-        SysSet.SaveFlg=0;  // WK --> 清楚标志
+        SysSet.ParaSaveFlg=0;  // WK --> 清楚标志
         _mem_free(shell_ptr); 
     }
     else
@@ -1341,7 +1342,7 @@ void GUI_SYS_EVENTSET(void)
         SysSet.DataFlg=0;
     }
     
-    if(SysSet.SaveFlg)//将参数值发给DSP
+    if(SysSet.EventSaveFlg)//将参数值发给DSP
     {
      for(int i=0;i<11;i++)
       if(flg_event[i]==1)
@@ -1521,19 +1522,23 @@ void GUI_SYS_EVENTSET(void)
          YADA_C108(EventSetAddr,11);   //写入有效值，每次10个
        /* wk --> 保存成功标志 END */
          
-       SysSet.SaveFlg=0; //清楚保存标志
+       SysSet.EventSaveFlg=0; //清楚保存标志
+       SysSet.EventSendFlg=1; //开启 K60 2 DSP 标志
        _mem_free(shell_ptr); 
-       
-//       TEST[7]=SysSet.ParaIndex;
-//       temp=SysSet.EvntIndex*4;
-//       for(U8 i=0;i<4;i++)
-//       {
-//         TEST[7+i]=SysFlashData[temp+i+EVESET_INDEX];
-//       }
-       
     }
     else
       _mem_free(shell_ptr); 
+    
+    if(SysSet.EventSendFlg)
+    {
+        YADA_71(MenuSysEvent,521,425,630,439,521,425);
+        YADA_98(521, 425, 0x22, 0x81, 0x02, 0xffe0, 0x0000, "SENDING...", 10);
+    }
+    else
+    {
+        YADA_71(MenuSysEvent,521,425,630,439,521,425);
+        YADA_98(521, 425, 0x22, 0x81, 0x02, 0xffe0, 0x0000, "WAITING...", 10); // 可以考虑换成擦除上面的文字
+    }
     
 }
 
@@ -1599,110 +1604,188 @@ void GUI_EventMonitor(U8 U_DISK)
 * 输      入      : 无
 * 返      回      : 无
 *******************************************************************************/
-//void GUI_EventList(void)
-//{
-//    U16 EVELSTXY[]= {30,40,35,63,30,70,35,93,30,98,35,121,30,125,35,148,30,152,35,175,30,179,35,202,30,206,
-//                     35,229,30,233,35,256,30,262,35,285,30,288,35,311,30,316,35,339,30,342,35,365,30,370,35,393,30,396,35,419
-//                    };
-//    U8 EVECONTENT[14][35]= {0},i,temp=0;
-//    YADA_40(0x0000,0xfc00);//前景色为黑色，背景色为橙色 set only once
-//    if(EVEfunflg==1)  //功能键发生标志置一
-//    {
-//        YADA_5B(&EVELSTXY[EventOldIndex*4],4);//擦除前一处
-//        YADA_5A(&EVELSTXY[EVEline*4],4);    //背景色填充相所在的矩形区域
-//        EventOldIndex=EVEline;
-//        EVEfunflg=0;
-//    }
-//   for(i=14*EVEpage; i<14*EVEpage+14; i++)
-//    {
-//      temp=14*EVEpage;
-//        PageRead(NBlock[i],NPage[i],EVECONTENT[i-temp]); //从nandflash中把事件基本情况读到EVECONTENT
-//        delay_us(1);
-//        YADA_98(40, EVELSTXY[(i-temp)*4+1], 0x22, 0x81, 0x02, 0xffff, 0x0000, EVECONTENT[i-temp], numsize);
-//        _NOP();
-//    } 
-//}
+void GUI_EventList(void)
+{
+  U16 EVELSTXY[]= {30,40,35,63,30,70,35,93,30,98,35,121,30,125,35,148,30,152,35,175,30,179,35,202,30,206,
+                     35,229,30,233,35,256,30,262,35,285,30,288,35,311,30,316,35,339,30,342,35,365,30,370,35,393,30,396,35,419
+                    };
+    U8 temp_num;
+    char EVECONTENT[14][35]= {0};
+    char EvntType[][5]= {"U_ERR","F_ERR","U_WAV","U_UNB","L_FLK","U_THD","I_HAM","E_HAM","O_HAM"};
+    char EvntPhase[2][5]= {"START","STOP "};
+    uchar EvntHead[10];
+//    char_ptr file_name="12345678.csv",temp_dir="2013";
+    char temp_dir[5]="2013",file_name[12]="wk12345.csv";
+    U16 temp_year=0;U8 temp_month=0,month;U32 file_num;
+    
+    YADA_40(0x0000,0xfc00);//前景色为黑色，背景色为橙色 set only once
+    if(EVEfunflg==1)  //功能键发生标志置一
+    {
+        YADA_5B(&EVELSTXY[EventOldIndex*4],4);//擦除前一处
+        YADA_5A(&EVELSTXY[EVEline*4],4);    //背景色填充相所在的矩形区域
+        EventOldIndex=EVEline;
+        EveRdNum=EVEline+14*EVEpage+1;     //2013-4-9-10-18新增EveRdNum变量，记录故障录波波形的地址，加1.
+        EVEfunflg=0;
+    }
+    else
+    {
+      YADA_5A(&EVELSTXY[EventOldIndex*4],4); //2013-4-9-15-18,未按上移下移按键的标注。
+    }
+    
+    if(USB_Flg==1&& SysFlashDataT[6]==1)
+    {
+      SHELL_CONTEXT_PTR    shell_ptr;
+      shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
+      _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
+    
+      shell_ptr->ARGC = 2;
+      shell_ptr->ARGV[0]="cd";
+      shell_ptr->ARGV[1]="u:\\event"; 
+      Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+      
+      for(uchar i=0;i<EVEnum;i++)
+      {
+        if(temp_year!=evntyear_old)
+        {
+          temp_year=evntyear_old;
+//          temp_dir=num2string(evntyear_old,4,0);
+          sprintf(temp_dir,"%d",evntyear_old);
+          
+          shell_ptr->ARGC = 2;
+          shell_ptr->ARGV[0]="cd";
+          shell_ptr->ARGV[1]=temp_dir; 
+          Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+        }
+//        month=(EventAddr[i]/100000000);
+        month = EventAddr[i]>>22;
+        if(temp_month!=month)
+        {
+          temp_month=month;
+//          temp_dir=num2string(month,2,0);
+          sprintf(temp_dir,"%d",month);
+          shell_ptr->ARGC = 2;
+          shell_ptr->ARGV[0]="cd";
+          shell_ptr->ARGV[1]=temp_dir; 
+          Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+        }
+//        file_num=EventAddr[i]%100000000;
+        file_num=EventAddr[i]&0x3fffff;
+//        file_name=num2string(file_num,8,1);
+        sprintf(file_name,"%d.csv",file_num);
+        
+        shell_ptr->ARGC=5;
+        shell_ptr->ARGV[0]="read";
+        shell_ptr->ARGV[1]=file_name;
+        shell_ptr->ARGV[2]="10";
+        shell_ptr->ARGV[3]="begin";
+        shell_ptr->ARGV[4]="0";
+        Shell_read_wk(shell_ptr->ARGC, shell_ptr->ARGV,EvntHead);
+        temp_num=i%14;
+        sprintf( EVECONTENT[temp_num], "%d %d-%d-%d %d:%d:%d %.5s %.5s",EvntHead[0],EvntHead[1]+EvntHead[2]<<8,
+                 EvntHead[3],EvntHead[4],EvntHead[5],EvntHead[6],EvntHead[7],EvntType[EvntHead[8]&0x3f],EvntPhase[EvntHead[9]]);
+        asm("NOP");
+        YADA_98(40, EVELSTXY[temp_num*4+1], 0x22, 0x81, 0x02, C108FC_W, 0x0000, (U8 *)EVECONTENT[temp_num], 34);
+        
+         _mem_free(shell_ptr);
+      }
+    }
+    else if(USB_Flg==0)
+    {
+      printf("\nATTENTION:USB is DETACHED!\n");
+    }
+    else if(SysFlashDataT[6]==0)
+    {
+      printf("\nATTENTION:USB Switch is CLOSED!\n");
+    }
+}
 /*******************************************************************************
 * 函  数  名      : GUI_EventWave
 * 描      述      : 事件波形显示
 * 输      入      : 无
 * 返      回      : 无
-*******************************************************************************/
-//void GUI_EventWave(U8 U_DISK)
-//{
-//  if(U_DISK==1)
-//  {
-//    //LCD暂存缓冲区多次写入一次读出显示,或者调整为分次读取分次显示，是否能增加一次读取的点数？？
-//    U32 filesize=0;
-//    U16 bufsize=1600;
-//    U8 readnum=0;//读取次数
-//    U8 linenum=0;//csv中每行6个数据，每一通道可画点数，bufsize为3200时，linenum大概为80左右.
-//    //C0发送数据个数与linenum有关，linenum应小于120.亦涉及到EVEUI数组大小
-//    U16 totalline=0;
-//    U8 lastrestflt=0;//上一次读取剩余未画线的点数0-5，浮点数个数
-//    U16 Coord_UI[]= {14,68,614,225,273,429};   //剪切及原点坐标
-////    int EVEUI[50*6]= {0};  //int *EveUI;
-//    U16 EVEUI[50*6]= {0};  //int *EveUI;  // modified by wk 
-//    U8 EveWav[80*20]= {0}; //*EveWav;
-//    U8 buf[20],LEN[2],length,s;
-//    float Evefloat[50*6]= {0}; //留有一定余量
-//   
-//    sprintf(buf, "/FAULTRD/%d.CSV" ,EVEnum-EVEline*EVEpage);
-//    s = CH376FileOpenPath( buf );  //直接打开多级目录下的文件,这是CH376FileOpenPath子程序内部由多次逐级打开组合而成
-//    //???当文件不存在时？
-//    s = CH376ByteLocate( 0 );
-//    s=CH376ByteRead(LEN,4,NULL);
-//    length=atoi(LEN);
-//    filesize= CH376GetFileSize();//读取文件大小必须紧接对filesize的操作
-//    readnum=(filesize-length-4)/bufsize+1;
-//    U16 j=0;
-//    char txt[9],k=0;
-//    for(U8 lv_num=0; lv_num<readnum; lv_num++)
-//    {
-//        s=CH376ByteLocate(length+4+bufsize*lv_num);
-//        if(lv_num!=readnum-1)
-//        {
-//            bufsize=1600;
-//        }
-//        else
-//        {
-//            bufsize=filesize-length-4-(readnum-1)*1600;    //最后一次读取可能只需读取小于1600的数据量
-//        }
-//        //EveWav=(U8 *) malloc(bufsize * sizeof(U8));
-//        s=CH376ByteRead(EveWav,bufsize,NULL);//EVEUILEN*16
-//        for(U16 i=0; i<bufsize; i++)
-//        {
-//            txt[k]=EveWav[i];
-//            k++;
-//            if((EveWav[i]==',')||EveWav[i]==0x0d)
-//            {
-//                Evefloat[j]=atof(txt);
-//                k=0;
-//                j++;
-//            }
-//        }
-//        //free(EveWav);
-//        linenum=j/6;
-//        lastrestflt=j%6;
-//        FLTOINT_UI(Evefloat,EVEUI,linenum);//把U盘里的浮点数转化为需要的int数据做曲线
-//        YADA_C0 (0x0000+totalline,EVEUI,linenum);
-//        YADA_C0 (0x0280+totalline,&EVEUI[linenum],linenum);//,UB_addr
-//        YADA_C0 (0x0640+totalline,&EVEUI[linenum*2],linenum);
-//        //将所有采样数据写入触摸屏,分次写入。不需要擦除，不动的，不用104指令。
-//        for(U8 m=0; m<lastrestflt; m++)
-//        {
-//            Evefloat[m]=Evefloat[linenum*6+m];
-//        }
-//        j=lastrestflt;
-//        totalline=linenum+totalline;
-//    }
-//    YADA_C103 (0x0000,14,Coord_UI[3],totalline-1,1,3,16,COLOR[0]);
-//    YADA_C103 (0x0280,14,Coord_UI[3],totalline-1,1,3,16,COLOR[1]);
-//    YADA_C103 (0x0640,14,Coord_UI[3],totalline-1,1,3,16,COLOR[2]);
-//    s = CH376FileClose( TRUE );  //关闭文件,自动更新文件长度 /
-//  }
-//    
-//}
+* 问      题      : ? 在函数内部定义局部变量数据 EvntWave时，程序会走飞，研究栈与堆可以解决此问题。? @130413
+*******************************************************************************/ 
+
+void GUI_EventWave(U8 U_DISK)
+{
+    U16 totalline=0,Coord_UI[]= {14,68,200,404,273,429};   //剪切及原点坐标;
+    U16 XY[]= {36,54,40,50,44,54,40,50,40,420,40,224,598,224,594,220,598,224,594,228};
+    U16 EVEUI[192];
+//    U8 EvntWave[1536];
+    
+    char file_name[18]="12\\12345678.csv";
+    uint_32 file_num;
+    
+    if(USB_Flg==1&& SysFlashDataT[6]==1)
+    {
+      SHELL_CONTEXT_PTR    shell_ptr;
+      shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
+      _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
+      
+      shell_ptr->ARGC = 2;
+      shell_ptr->ARGV[0]="cd";
+      shell_ptr->ARGV[1]="u:\\event"; 
+      Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);   
+      
+//      uchar SECOND=50,MINUTE=30,HOUR=11,DAY=13,MONTH=4,EvntRx=128;
+//      file_num=(U32)SECOND+((U32)MINUTE<<6)+((U32)HOUR<<12)+((U32)DAY<<17)
+//                               +((U32)MONTH<<22)+((U32)(EvntRx&0x0f)<<26);  // WK @30413 --> TEST
+      file_num=EventAddr[EveRdNum-1]; // wk @130413-->获取事件的文件名的月、日、时、分、秒值
+      sprintf(file_name,"%d\\%d.CSV",file_num>>22,file_num&0x3fffff);///100000000
+      printf("file=%s\n",file_name);
+      
+//      shell_ptr->ARGC=5;
+//      shell_ptr->ARGV[0]="read";
+//      shell_ptr->ARGV[1]=file_name;
+//      shell_ptr->ARGV[2]="1536";
+//      shell_ptr->ARGV[3]="begin";
+//      shell_ptr->ARGV[4]="0";
+//      Shell_read_wk(shell_ptr->ARGC, shell_ptr->ARGV,EveWav);  
+
+      if((EVEnum>1)&&(EveRdNum<=(EVEnum-1)))  //2013-4-9-12-30故障发生才显示。
+      {
+            for(U8 i=0; i<4; i++)
+            {
+                for(U8 j=0; j<LINENUM; j++)
+                {
+                    //JT-test 2013-4-6，放大倍数改变。
+//                    EVEUI[j]=((((int)EveWav[j*24])<<8)+((int)EveWav[j*24+1]))/40+85;
+//                    EVEUI[j+Linenum]=((((int)EveWav[j*24+2])<<8)+((int)EveWav[j*24+3]))/40+85;
+//                    EVEUI[j+Linenum*2]=((((int)EveWav[j*24+4])<<8)+((int)EveWav[j*24+5]))/40+85;
+                  /* WK @130413 --> ?? 待完善，首先解决局部变量和全局变量之间差异的问题，也应该是堆和栈的问题 */
+                    EVEUI[j]=0; 
+                    EVEUI[j+LINENUM]=1;
+                    EVEUI[j+LINENUM*2]=3;
+                }
+                totalline=LINENUM*i;
+                YADA_C0 (0x0000+totalline,EVEUI,LINENUM);
+                YADA_C0 (0x0400+totalline,&EVEUI[LINENUM],LINENUM);//,UB_addr
+                YADA_C0 (0x0800+totalline,&EVEUI[LINENUM*2],LINENUM);
+            }
+            //JT-test xy坐标
+            YADA_40(0xffff,0x0000);
+            YADA_56(XY,6);
+            YADA_56(&XY[6],4);
+            YADA_56(&XY[10],4);
+            YADA_56(&XY[14],6);
+            YADA_98(44,56, 0x22, 0x81, 0x02, C108FC_W, 0x0000,"U", 1);
+            YADA_C103 (0x0000,40,Coord_UI[3],255,1,2,32,COLOR[0]);
+            YADA_C103 (0x0400,40,Coord_UI[3],255,1,2,32,COLOR[1]);
+            YADA_C103 (0x0800,40,Coord_UI[3],255,1,2,32,COLOR[2]);    
+      } 
+      YADA_98(150, 40, 0x22, 0x81, 0x02, C108FC_W, 0x0000,(U8 *)file_name, 16);//2013-4-9-10-18测试事件文件名 ????
+      delay_ms(5);
+      _mem_free(shell_ptr);
+    }
+    else if(USB_Flg==0)
+    {
+      printf("\nATTENTION:USB is DETACHED!\n");
+    }
+    else if(SysFlashDataT[6]==0)
+    {
+      printf("\nATTENTION:USB Switch is CLOSED!\n");
+    }
+}
 /*******************************************************************************
 * 函  数  名      : GUI_STATUS
 * 描      述      : 工作状态的显示，如U盘存储，IP地址，版本号等。
@@ -1745,13 +1828,15 @@ void GUI_STATUS(U8 U_DISK)
 *******************************************************************************/
 void EventSave(U8 U_DISK)
 {
-    if(USB_Flg==1) // ==1 时插入
+    if(USB_Flg==1&& SysFlashDataT[6]==1) // ==1 时插入
     {
           SHELL_CONTEXT_PTR    shell_ptr;
           shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
           _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
-          static   char_ptr file_name="12345678.csv",dir_name,monthDir_name;
-          static uint_16 year_old=0,month_old=0;
+//          static   char_ptr file_name="12345678.csv",evntdir_name,monthDir_name;
+          static char file_name[12]="wk12345.csv",evntdir_name[5]="2013",monthDir_name[3]="12";
+          
+          static uint_16 month_old=0;
           uint_32 file_size;
           
           TIME_STRUCT             time_sf;
@@ -1764,24 +1849,26 @@ void EventSave(U8 U_DISK)
           shell_ptr->ARGV[1]="u:\\event"; 
           Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
         
-          if(year_old!=date_sf.YEAR) // wk --> creata a dir named of year
+          if(evntyear_old!=date_sf.YEAR) // wk --> creata a dir named of year
           {
-            dir_name=num2string(date_sf.YEAR,4,0);
-            year_old=date_sf.YEAR;
+//            evntdir_name=num2string(date_sf.YEAR,4,0);
+            sprintf(evntdir_name,"%d",date_sf.YEAR);
+            evntyear_old=date_sf.YEAR;
             
             shell_ptr->ARGC = 2;
             shell_ptr->ARGV[0]="mkdir";
-            shell_ptr->ARGV[1]=dir_name; 
+            shell_ptr->ARGV[1]=evntdir_name; 
             Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
           }
           
           shell_ptr->ARGC = 2;
           shell_ptr->ARGV[0]="cd";
-          shell_ptr->ARGV[1]=dir_name; 
+          shell_ptr->ARGV[1]=evntdir_name; 
           Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
           if(month_old!=date_sf.MONTH)
           {
-            monthDir_name=num2string(date_sf.YEAR,2,0);
+//            monthDir_name=num2string(date_sf.MONTH,2,0);
+            sprintf(monthDir_name,"%d",date_sf.MONTH);
             month_old=date_sf.MONTH;
             
             shell_ptr->ARGC = 2;
@@ -1794,46 +1881,64 @@ void EventSave(U8 U_DISK)
           shell_ptr->ARGV[1]=monthDir_name; 
           Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
           
-          if(file_name=="12345678.csv")
-          {
-            file_name=num2string(date_sf.DAY*1000000+date_sf.HOUR*10000+date_sf.MINUTE*100+
-                                 date_sf.SECOND,8,1);       
-          }
-          else
-          {
-            shell_ptr->ARGC = 2;
-            shell_ptr->ARGV[0]="df_s";
-            shell_ptr->ARGV[1]=file_name;   //wk --> 注意：查找的文件名暂时必须要是大写
-            Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
-            
-            if(file_size>134217728)  // wk --> 128M = 128*1024*1024 bytes
-            {
-              file_name=num2string(date_sf.DAY*1000000+date_sf.HOUR*10000+date_sf.MINUTE*100+
-                                   date_sf.SECOND,8,1); 
-            }
-          }
+//          if(*file_name=='w')
+//          {
+////            file_name=num2string(date_sf.DAY*1000000+date_sf.HOUR*10000+date_sf.MINUTE*100+
+////                                 date_sf.SECOND,8,1);   
+//            sprintf(file_name,"%d.csv",date_sf.SECOND+(date_sf.MINUTE<<6)+(date_sf.HOUR<<12)+(date_sf.DAY<<17));
+//          }
+//          else
+//          {
+//            shell_ptr->ARGC = 2;
+//            shell_ptr->ARGV[0]="df_s";
+//            shell_ptr->ARGV[1]=file_name;   //wk --> 注意：查找的文件名暂时必须要是大写
+//            Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
+//            
+//            if(file_size>134217728)  // wk --> 128M = 128*1024*1024 bytes
+//            {
+////              file_name=num2string(date_sf.DAY*1000000+date_sf.HOUR*10000+date_sf.MINUTE*100+
+////                                   date_sf.SECOND,8,1); 
+//              sprintf(file_name,"%d.csv",date_sf.SECOND+(date_sf.MINUTE<<6)+(date_sf.HOUR<<12)+(date_sf.DAY<<17));
+//            }
+//          }
           
+          sprintf(file_name,"%d.csv",date_sf.SECOND+(date_sf.MINUTE<<6)+(date_sf.HOUR<<12)+(date_sf.DAY<<17));
+          
+          if(EVEnum==100)
+            EVEnum=1;
+          else
+            EVEnum++; // wk @130412-->事件总数
+//          EventAddr[EVEnum-1]=date_sf.MONTH*100000000+date_sf.DAY*1000000+date_sf.HOUR*10000+
+//                            date_sf.MINUTE*100+date_sf.SECOND; // wk @130412-->获得当前事件的地址：、日、时、分、秒
+          EventAddr[EVEnum-1]= date_sf.SECOND+(date_sf.MINUTE<<6)+(date_sf.HOUR<<12)+(date_sf.DAY<<17)
+                               +(date_sf.MONTH<<22)+((EvntRxchar[0]&0x3f)<<26);
+          EventNum[(EvntRxchar[0]&0x3f)*2]++; // wk @130412-->事件类型叠加
+          
+          /* wk @130412--> 总数 + 时间 + 类型 + 开始/结束 + 数据 */
+         
           shell_ptr->ARGC=4;
           shell_ptr->ARGV[0]="write";
           shell_ptr->ARGV[1]=file_name;
           shell_ptr->ARGV[2]="current";
           shell_ptr->ARGV[3]="0";
+          Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,1,&EVEnum);
           Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,7,&date_sf);
-          
-          uchar test[]={0,1,2,3,4,5,6,7,8,9,10};
-    //      shell_ptr->ARGC=4;
-    //      shell_ptr->ARGV[0]="write";
-    //      shell_ptr->ARGV[1]=file_name;
-    //      shell_ptr->ARGV[2]="current";
-    //      shell_ptr->ARGV[3]="0";
-          Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,100,test);
+          /* wk @130412 --> test */
+//          uchar test[]={0,1,2,3,4,5,6,7,8,9,10};
+//          Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,100,test);
+          /* wk @130412 --> save event data */
+          Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,Evnt_SIZE,EvntRxchar); // wk @130412-->EvntRxchar包含标志位和事件数据
     
          _mem_free(shell_ptr);  // wk @130403 --> important
     }
-    else
-    {
-      printf("\nATTENTION:USB is DETACHED\n");
-    }
+  else if(USB_Flg==0)
+  {
+    printf("\nATTENTION:USB is DETACHED!\n");
+  }
+  else if(SysFlashDataT[6]==0)
+  {
+    printf("\nATTENTION:USB Switch is CLOSED!\n");
+  }
 }
 /*******************************************************************************
 * 函  数  名      : PowerSave
@@ -1849,7 +1954,8 @@ void PowerSave(void)
       shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
       _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
       uint_32 file_size;
-      static   char_ptr file_name="123456.csv",dir_name="1000";
+//      static   char_ptr file_name="123456.csv",dir_name="1000";
+     static char file_name[10]="wk384.csv",dir_name[5]="1000";
       static uint_16 year_old=0;
       TIME_STRUCT             time_sf;
       DATE_STRUCT             date_sf;
@@ -1866,9 +1972,8 @@ void PowerSave(void)
       
       if(year_old!=date_sf.YEAR) // wk --> creata a dir named of year
       {
-        dir_name=num2string((uint_32)date_sf.YEAR,4,0);
-//        dir_name=num2string_s((uint_32)date_sf.YEAR,4);
-//        dir_name="2013";
+//        dir_name=num2string((uint_32)date_sf.YEAR,4,0);
+        sprintf(dir_name,"%d",date_sf.YEAR);
         year_old=date_sf.YEAR;
         
 //        shell_ptr->ARGC = 2;
@@ -1882,9 +1987,10 @@ void PowerSave(void)
       shell_ptr->ARGV[1]=dir_name; 
       Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
       
-      if(file_name=="123456.csv")
+      if(*file_name=='w') // wk --> 第一次进来时，用月、日、时获取文件名
       {
-       file_name=num2string(date_sf.MONTH*10000+date_sf.DAY*100+date_sf.MINUTE,6,1);
+//       file_name=num2string(date_sf.MINUTE+(date_sf.DAY<<6)+(date_sf.MONTH<<11),6,1);
+        sprintf(file_name,"%d.CSV",date_sf.HOUR+(date_sf.DAY<<5)+(date_sf.MONTH<<10));
       }
       else
       {
@@ -1895,7 +2001,8 @@ void PowerSave(void)
         
         if(file_size>134217728)  // wk --> 128M = 128*1024*1024 bytes
         {
-          file_name=num2string(date_sf.MONTH*10000+date_sf.DAY*100+date_sf.MINUTE,6,1);
+//          file_name=num2string(date_sf.MINUTE+(date_sf.DAY<<6)+(date_sf.MONTH<<11),6,1);
+          sprintf(file_name,"%d.CSV",date_sf.HOUR+(date_sf.DAY<<5)+(date_sf.MONTH<<10));
         }
       }
       
@@ -1905,15 +2012,20 @@ void PowerSave(void)
       shell_ptr->ARGV[2]="current";
       shell_ptr->ARGV[3]="0";
       Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,7,&date_sf);
-      
-      uchar test[100]={0,1,2,3,4,5,6,7,8,9,10};
+           
 //      shell_ptr->ARGC=4;
 //      shell_ptr->ARGV[0]="write";
 //      shell_ptr->ARGV[1]=file_name;
 //      shell_ptr->ARGV[2]="current";
 //      shell_ptr->ARGV[3]="0";
-      for(uchar i=0;i<20;i++)
-      Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,100,test);
+      /* wk @130412 --> test power save */
+//      uchar test[200]={0,1,2,3,4,5,6,7,8,9,10};
+//      for(int i=0;i<200;i++)
+//        test[i]=i+5;
+//      for(uchar i=0;i<10;i++)
+//      Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,200,test);
+      /* wk @130412 --> write power data */
+        Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,Pow_SIZE,PowRxchar);
 
      _mem_free(shell_ptr);  // wk @130403 --> important
   }
@@ -1928,42 +2040,3 @@ void PowerSave(void)
      
 }
 
-/*******************************************************************************
-** Function Name	：num2string
-** Input		： type =0 文件夹，=1 .CSV文件
-** Return		：
-** Author		：
-** Version	：
-** Date		：
-** Dessription	： 将 32 位整数转换成字符串
-** Reverse	：
-*******************************************************************************/
-//char_ptr num2string(int_32 num,uchar len,uchar type) // wk --> len <= 13-4-1=8
-//{
-//  char_ptr name;
-//  name = _mem_alloc_zero( len+5 );
-//  uchar sep_data[9];uint_32 temp;
-//  for(int i=0;i<len;i++)
-//  {
-//    temp=(uint_32)pow(10,i);
-//    sep_data[i]=(num/temp)%10;
-//  }
-//  
-//  for(int i=0;i<len;i++)
-//  {
-//    *(name+i)=(uchar)(0x30+sep_data[len-1-i]);
-//  }
-//  if(type==0)
-//  {
-//    *(name+len)='\0';
-//  }
-//  else
-//  {
-//    *(name+len)=0x2e; // .
-//    *(name+len+1)=0x43; // C
-//    *(name+len+2)=0x53; // S
-//    *(name+len+3)=0x56; // V
-//    *(name+len+4)='\0';
-//  }
-//  return name;
-//}

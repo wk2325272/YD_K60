@@ -88,6 +88,7 @@
 
 //#define EVESEND_FLAG 85
 #define EVESEND_FLAG 70
+#define LINENUM 64
 
 
 extern U8 SysFlashDataT[84];   //系统设置的数据的临时参数
@@ -95,8 +96,9 @@ extern U8 SysFlashData[84];   //wk @130326 -->写入Flash的系统设置参数
 //MenuV_EXT U8 NPage[115]; //写入芯片flash有关的数组。NPage[0~99]为事件nandflash的页值，NPage[100]为事件总次数，NPage[101~114]为各类事件次数
 //MenuV_EXT U16 NBlock[100]; //写入芯片flash有关的数组。nandflash的block数
 extern U8 EventNum[18]; // wk @130405 --> 9次事件发生次数保存，每个事件占2字节，能记录65535次
-extern U8 EventAddr[400];// wk@130405 -->记录事件发生的时间：月、日、时、分、秒，每个占4字节
+extern U32 EventAddr[100];// wk@130405 -->记录事件发生的时间：月、日、时、分、秒，每个占4字节
 extern U8 USB_Flg; // wk @130407 --> USB 是否插入标志
+extern U8 EVEnum;
 
 void GUI_VIEW_UI(void);
 void GUI_VIEW_U(void);

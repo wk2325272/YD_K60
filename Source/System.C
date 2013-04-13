@@ -11,6 +11,7 @@
 // Defined for Delay_ms_Common()
 #define MCU_BUS_CLOCK 96000000L
 #define MCU_BUS_CYCLES_100US (MCU_BUS_CLOCK / 10000)
+
 static void Cpu_Delay100US(U16 us100)
 {
   unsigned int i;

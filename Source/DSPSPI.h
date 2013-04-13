@@ -3,9 +3,19 @@
 
 #include "includes.h"
 
+/* wk @130412 --> 测试用宏定义 */
+#define T_SPI 1
+
 #define ARRAY_SIZE 1 // wk --> for test
-#define Pow_SIZE  2532+112+16+4 //
-#define OffSET 111 // WK --> 用于从BufRxchar中取电能质量数据到PowRxchar中的偏移
+/* wk @130412 : Pow_SIZE --> 2052 + 480 */
+/* 基本电能数据 + 波形数据 */
+#define Pow_SIZE  2532 
+
+/* wk @130412 : OFFSET --> 14 + 84 + 2*/
+/* 预留 + MCU2DSP + 标志 */
+#define OffSET 100 // WK --> 用于从BufRxchar中取电能质量数据到PowRxchar中的偏移
+
+
 #define Evnt_SIZE 2006
 #define TEST_CHANNEL_INT2 "ispi2:"
 

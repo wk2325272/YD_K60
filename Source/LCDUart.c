@@ -497,7 +497,7 @@ void LCDUartSET(U8 Touch_key)   // wk --> 系统设置 键号跳转函数
         
         break;
      case 19:
-       SysSet.SaveFlg=1;      // WK --> 具体实现带研究
+       SysSet.ParaSaveFlg=1;      // WK --> 具体实现带研究
        break;
      
     case 0x60:  // WK --> TCP/IP开关      0 关闭  1 开启
@@ -553,7 +553,7 @@ void LCDUartSET(U8 Touch_key)   // wk --> 系统设置 键号跳转函数
         (SysSet.EvntIndex < 7) ? (SysSet.EvntIndex=7 ) : (SysSet.EvntIndex=0);
         break;     
     case 67:                       /*保存键*/
-        SysSet.SaveFlg=1;      // WK --> 具体实现带研究
+        SysSet.EventSaveFlg=1;      // WK --> 具体实现带研究
         break;
      /************************************* end******************************/
         

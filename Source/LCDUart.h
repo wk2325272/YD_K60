@@ -36,7 +36,9 @@ typedef struct SS //系统参数设置及事件设置页面中使用的变量
     U8 SwFlg;//页面切换标志
     U8 FuncFlg;//功能键（切换键）按下标志，默认0
     U8 DataFlg;//数值键盘按下标志
-    U8 SaveFlg;//保存标志
+    U8 ParaSaveFlg;//保存标志
+    U8 EventSaveFlg;
+volatile U8 EventSendFlg; 
     U8 ParaIndex;//0-11系统参数设置页下
     U8 EvntIndex;//0-11.事件设置页下
     U8 DataCnt;//控制输入数值位数

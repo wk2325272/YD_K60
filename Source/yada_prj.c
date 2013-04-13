@@ -68,6 +68,7 @@ static void timer_isr
 
 //    printf("\nhellow\n");
     SavePowerFlg =1;
+//    GUI_EventWave(1);
 //    EventKeyFlg=1; SPIEventFlg=1;// wk @130401 --> test event data save
     _lpt_init(0,3 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO,TRUE);
 }
@@ -82,7 +83,7 @@ static void timer_isr
 const TASK_TEMPLATE_STRUCT  MQX_template_list[] =    //  | MQX_TIME_SLICE_TASK
 { 
    /* Task Index,   Function,         Stack,  Priority, Name,     Attributes,          Param, Time Slice */
-   {1,  YaDa,       1500,   11,         "MAIN&GUI_Task", MQX_AUTO_START_TASK , 0,    1000 },  // | MQX_TIME_SLICE_TASK
+   {1,  YaDa,       4000,   11,         "MAIN&GUI_Task", MQX_AUTO_START_TASK , 0,    1000 },  // | MQX_TIME_SLICE_TASK
    {2,  Shell_Task, 4000L,  12, "Shell_Task",   MQX_AUTO_START_TASK, 0,     1000 },  //  | MQX_TIME_SLICE_TASK
    
    {3,  FTP_task,   2000,   9L,   "FTP_Task",     MQX_AUTO_START_TASK, 0,     0 },

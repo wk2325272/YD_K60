@@ -3847,6 +3847,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$\..\lib\twrk60n512.iar\shell\shell_twrk60n512_d_20130406_wr_s.a</name>
+      <excluded>
+        <configuration>Int Flash Debug</configuration>
+      </excluded>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\lib\twrk60n512.iar\shell\shell_twrk60n512_d_20130412.a</name>
     </file>
   </group>
   <group>
