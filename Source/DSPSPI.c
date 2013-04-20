@@ -135,7 +135,7 @@ void DMA_RecData_OK
 )
 {
    U16 StatusFlg=0;
-#if 1 // wk @130412 --> 旧协议  
+#if 0 // wk @130412 --> 旧协议  
     if(count<4)
     {
       HeadFlg[count]=BufRxchar[0];
@@ -144,7 +144,7 @@ void DMA_RecData_OK
         if(HeadFlg[0]==0x33 && HeadFlg[1]==0x33 && HeadFlg[2]==0x33 && (HeadFlg[3]== 0x44 ||HeadFlg[3]== 0x55))
         {
           if(HeadFlg[3]==0x44)
-            DataSize= 2556; // wk @130420 -->发送数据 4+1+14+2+2532+3+4=2560
+            DataSize= 2556; // wk @130420 -->发送数据 4+1+14+2+2532+12+4=2560
           else
             DataSize= Evnt_SIZE + 4; // wk @20130325 -->
           
@@ -188,7 +188,7 @@ void DMA_RecData_OK
     }
 #endif 
          /* wk @130412 -->基于新协议 */
-#if 0
+#if 1
     if(count<6)
     {
       HeadFlg[count]=BufRxchar[0];
@@ -205,9 +205,9 @@ void DMA_RecData_OK
       }
       else if(count==6)
       {
-        DataSize = HeadFlg[4]<<8+HeadFlg[5];
+        // wk @130420 --> 发送数据 4+2+1+14+2+2532+12+4 = 2571,DMA的数据长度=2571-7=2564，但是数据接收时有两个丢失，故减2
+        DataSize = (((U16)HeadFlg[4])<<8) + HeadFlg[5]-2;
         count=7;  
-//        printf("Len:%d\n",DataSize); 
       }
      
     }
@@ -226,7 +226,7 @@ void DMA_RecData_OK
          for(int i=0;i<Pow_SIZE;i++)
            PowRxchar[i] = BufRxchar[i+OffSET];
          
-         printf("POW:%x\t%x\t%x\t%x\n",PowRxchar[0],PowRxchar[1],PowRxchar[2],PowRxchar[3]); 
+//         printf("POW:%x\t%x\t%x\t%x\n",PowRxchar[0],PowRxchar[1],PowRxchar[2],PowRxchar[3]); 
          SPIPowerFlg=1;
        }
        else
