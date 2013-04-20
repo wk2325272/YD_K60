@@ -10,7 +10,8 @@
  void ChartoFloat(U8 CharIn[], float FloatOut[],U16 FNum,U16 times);
  void BCD2Decimal(U8 Data[],U8 Num);
 // void FloatTo4DecimalsC108(float DataIn[],U16 DataBack[],U8 Num);
- void PhaseShift(float DataIn[],U16 DataBack[],U8 Num,U32 DATABACK[]);
+// void PhaseShift(float DataIn[],U16 DataBack[],U8 Num,U32 DATABACK[]); // wk @130420
+ void PhaseShift(float DataIn[],U16 DataBack[],U8 Num,U8 DATBACK[]);
 
  void CharToInt(U8 CharIn[], U16 WordOut[],U8 LineNum,U8 HalfRange);
  void WR_WAVE_UI(U16 DATAIN[],U8 UI_U_I, U8 rewrite);

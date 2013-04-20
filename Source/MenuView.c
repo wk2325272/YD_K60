@@ -20,6 +20,7 @@
 U8 EVEnum=0,EveRdNum=1;
 const U16 COLOR[] = {0xffe0,0x07E0,0xf800,0x0000};
 U8 HarmoInfo[][8]= {"A","B","C","幅 值","含有率"};
+//U8 text[][3]= {"Ua","Ub","Uc","Ia","Ib","Ic"};//ColorF[9]= {0};
 U8 SysParaOldIndex=0,SysEventOldIndex=0,EventOldIndex=0,EVEnum_old;
 U8 SysFlashDataT[84];   //系统设置的数据的临时参数
 U8 SysFlashData[84];   //wk @130326 -->写入Flash的系统设置参数
@@ -112,52 +113,52 @@ void GUI_VIEW_I(void)
 *******************************************************************************/
 void GUI_VIEW_VECT(void)
 {
-    U8 text[][3]= {"Ua","Ub","Uc","Ia","Ib","Ic"}; //0使ASCII字符间的间距缩小  // wk @130403 --> global 2 local
+    U8 text[][3]= {"Ua","Ub","Uc","Ia","Ib","Ic"}; 
     U16 VI_line[4];                                 //一条向量的数组
     U16 C108Dat[42] = {0};                          //剪切及原点坐标
-    U16 VEC_ORIG_YCOORD=95;       //wk @20130325 --> old:96        //相位的初始Y 坐标
+    U16 VEC_ORIG_YCOORD=95;                        //相位的初始Y 坐标
     U16 Vec_Angle1[6]= {0};
-    U32 Vec_Angle[6];
-    float Vec_Anglefloat[6]= {0.0};                   //向量的浮点型，调用方便
+    U8 temp1,Angle_DIS[24],temp2;
+    float Vec_Anglefloat[6]= {0.0},temp;                   //向量的浮点型，调用方便
     YADA_71 (MenuViewVector,0,40,366,417,0,40);
-    /**电压电流各向量及标识**/
+    //电压电流各向量及标识
     ChartoFloat(&PowRxchar[VEC_INDEX],Vec_Anglefloat,6,10000);
-    PhaseShift(Vec_Anglefloat,Vec_Angle1,6,Vec_Angle);
+    PhaseShift(Vec_Anglefloat,Vec_Angle1,6,Angle_DIS);
     for(U8 j=0; j<3; j++)
     {
         for(U8 i=0; i<2; i++)
         {
+            temp=Vec_Angle1[i*3+j]*PI/180;
             YADA_40(COLOR[j],0x0000);
             VI_line[0]=Vec_X0;
             VI_line[1]=Vec_Y0;
-            VI_line[2]=(U16)(Vec_X0+Vec_R0*cos(Vec_Angle1[i+j*2]*PI/180));
-            VI_line[3]=(U16)(Vec_Y0-Vec_R0*sin(Vec_Angle1[i+j*2]*PI/180));
-            YADA_98((U16)(Vec_X0+(Vec_R0 - 30*i - 10)*cos(Vec_Angle1[i+j*2]*PI/180)),
-                    (U16)(Vec_Y0-(Vec_R0 - 30*i - 10)*sin(Vec_Angle1[i+j*2]*PI/180)),
-                    0x22,0x81,0x01,COLOR[j],0x0000,text[j+i*3],0);//16是根据显示文本的点阵大小确定的，使文本在背景范围内显示
+            VI_line[2]=(U16)(Vec_X0+Vec_R0*cos(temp));
+            VI_line[3]=(U16)(Vec_Y0-Vec_R0*sin(temp));
+            YADA_98((U16)(Vec_X0+(Vec_R0 - 30*i - 10)*cos(temp)),(U16)(Vec_Y0-(Vec_R0 - 30*i - 10)*sin(temp)),0x22,0x81,0x01,COLOR[j],0x0000,text[j+i*3],0);//16是根据显示文本的点阵大小确定的，使文本在背景范围内显示
             YADA_56(VI_line,4);//前景色划直线
             delay_ms(2);
         }
     }
-    delay_ms(5);
-    /**电压电流各相角的实时数值显示**/
+    //Sig_Fiq(&PowRxchar[VEC_INDEX],Angle_DIS,1000,2);
+    //电压电流各相角的实时数值显示
     for (U8 k = 0; k < 2; k++)
     {
         for(U8 i=0; i<3; i++)
         {
-            C108Dat[21*k + 7*i + 0] = 0x3104;         //P  显示数据的模式 // wk @130408--> revrese dot 0x3404
-            C108Dat[21*k + 7*i + 1] = 455;            //显示相位的X坐标
-            C108Dat[21*k + 7*i + 2] = VEC_ORIG_YCOORD + i*44 + k*158;     //Y坐标
-            C108Dat[21*k + 7*i + 3] = 0xffff;         //白色，下为黑色
-            C108Dat[21*k + 7*i + 4] = 0x0000;
-            C108Dat[21*k + 7*i + 5] = (U16)(Vec_Angle[2*i+k]>>16);//两个字节转为一个字
-            C108Dat[21*k + 7*i + 6] = (U16)(Vec_Angle[2*i+k]);
+            temp2=12*k+4*i;
+            temp1=21*k + 7*i;
+            C108Dat[temp1 + 0] = 0x3104;         //P  显示数据的模式
+            C108Dat[temp1 + 1] = 455;            //显示相位的X坐标
+            C108Dat[temp1 + 2] = VEC_ORIG_YCOORD + i*44 + k*158;     //Y坐标
+            C108Dat[temp1 + 3] = C108FC_W;         //白色，下为黑色
+            C108Dat[temp1 + 4] = 0x0000;
+            C108Dat[temp1 + 5] = ((U16)(Angle_DIS[temp2])<<8)+((U16)Angle_DIS[temp2+1]);//两个字节转为一个字
+            C108Dat[temp1 + 6] = ((U16)(Angle_DIS[temp2+2])<<8)+((U16)Angle_DIS[temp2+3]);
         }
     }
     YADA_C0(Vectoraddr,C108Dat,42);
     YADA_C108(Vectoraddr,6);
-    delay_ms(5);
-    //delay_ms(50);
+    delay_ms(5);  
 }
 /*******************************************************************************
 * 函  数  名      : GUI_VIEW_ListMeasure
@@ -681,13 +682,16 @@ void linemark(U16 Y_COORD, U16 UorI)
     U8 UORI[][2]= {"V","A"},temp,temp1,k;
     for(k=0; k<3; k++)
     {
-      if(UorI)
+      if(UorI==0)
          // wk @130408--> revrese dot tx
 //        Sig_Fiq(&PowRxchar[UI_VIRTUAL_INDEX+8+16*k],&VI_DIS[4*k],10);   //数据显示为要求的有效数字
-       Sig_Fiq(PowRxchar,VI_DIS,100,3);
+      {
+//      PowRxchar[0]=0x00;PowRxchar[1]=0x21;PowRxchar[2]=0x01;PowRxchar[3]=0x93;
+      Sig_Fiq(PowRxchar,VI_DIS,100,3);
+      }
       else
          // wk @130408--> revrese dot tx
-//        Sig_Fiq(&PowRxchar[UI_VIRTUAL_INDEX+16*k],&VI_DIS[4*k],100);
+//        Sig_Fiq(&PowRxchar[UI_VIRTUAL_INDEX+16*k],&VI_DIS[4*k],100); 
        Sig_Fiq(&PowRxchar[I_VIRTUAL_INDEX],VI_DIS,10,3);
     }
     for(k=0; k<3; k++)
@@ -710,6 +714,7 @@ void linemark(U16 Y_COORD, U16 UorI)
         C108Dat[temp + 6] = ((U16)(VI_DIS[temp1+2]) << 8) + (U16)(VI_DIS[3 + temp1]);
         YADA_98(198+200*k, Y_COORD, 0x22, 0x81, 0x01, COLOR[k], 0x0000, UORI[UorI], 0);  //标注电压或电流的单位
     }
+    
     delay_ms(5);
     YADA_C0(WAVEUIaddr + UorI*42, C108Dat, 21);
     YADA_C108(WAVEUIaddr + UorI*42, 3);   //写入有效值，每次3个

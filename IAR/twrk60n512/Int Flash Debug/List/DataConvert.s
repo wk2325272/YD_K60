@@ -1,45 +1,47 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    13/Apr/2013  17:02:50 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    20/Apr/2013  15:25:16 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\DataCo /
-//                    nvert.c                                                 /
-//    Command line =  L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\DataCo /
-//                    nvert.c -D _DEBUG=1 -lC "L:\git_workspace\YD_PRJ_NEW_20 /
-//                    130323_git_\IAR\twrk60n512\Int Flash Debug\List\" -lA   /
-//                    "L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\twrk60n5 /
-//                    12\Int Flash Debug\List\" --diag_suppress               /
-//                    Pa039,Pa082,Pe186 -o "L:\git_workspace\YD_PRJ_NEW_20130 /
-//                    323_git_\IAR\twrk60n512\Int Flash Debug\Obj\" --no_cse  /
-//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
-//                    --no_clustering --no_scheduling --debug                 /
+//    Source file  =  E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\D /
+//                    ataConvert.c                                            /
+//    Command line =  E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\D /
+//                    ataConvert.c -D _DEBUG=1 -lC                            /
+//                    "E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\twr /
+//                    k60n512\Int Flash Debug\List\" -lA                      /
+//                    "E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\twr /
+//                    k60n512\Int Flash Debug\List\" --diag_suppress          /
+//                    Pa039,Pa082,Pe186 -o "E:\Freescale\mqx_test\YD_PRJ_NEW_ /
+//                    20130323_git_\IAR\twrk60n512\Int Flash Debug\Obj\"      /
+//                    --no_cse --no_unroll --no_inline --no_code_motion       /
+//                    --no_tbaa --no_clustering --no_scheduling --debug       /
 //                    --endian=little --cpu=Cortex-M4 -e --fpu=None           /
 //                    --dlib_config "D:\Program Files\IAR Systems\Embedded    /
 //                    Workbench 6.0\arm\INC\c\DLib_Config_Normal.h" -I        /
-//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\tw /
-//                    rk60n512.iar\ -I L:\git_workspace\YD_PRJ_NEW_20130323_g /
-//                    it_\IAR\..\lib\twrk60n512.iar\bsp\ -I                   /
-//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\tw /
-//                    rk60n512.iar\psp\ -I L:\git_workspace\YD_PRJ_NEW_201303 /
-//                    23_git_\IAR\..\lib\twrk60n512.iar\bsp\Generated_Code\   /
-//                    -I L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib /
-//                    \twrk60n512.iar\rtcs\ -I L:\git_workspace\YD_PRJ_NEW_20 /
-//                    130323_git_\IAR\..\lib\twrk60n512.iar\mfs\ -I           /
-//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\tw /
-//                    rk60n512.iar\usb\host\ -I L:\git_workspace\YD_PRJ_NEW_2 /
-//                    0130323_git_\IAR\..\lib\twrk60n512.iar\shell\ -I        /
-//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\tw /
-//                    rk60n512.iar\usb\ -I L:\git_workspace\YD_PRJ_NEW_201303 /
-//                    23_git_\IAR\..\ -I L:\git_workspace\YD_PRJ_NEW_20130323 /
-//                    _git_\IAR\..\Source\Source_MQX\ -I                      /
-//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\Source /
-//                    \ -I "E:\Freescale\Freescale MQX                        /
-//                    3.8\shell\source\include\" -Ol --use_c++_inline         /
-//    List file    =  L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\twrk60n51 /
-//                    2\Int Flash Debug\List\DataConvert.s                    /
+//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\l /
+//                    ib\twrk60n512.iar\ -I E:\Freescale\mqx_test\YD_PRJ_NEW_ /
+//                    20130323_git_\IAR\..\lib\twrk60n512.iar\bsp\ -I         /
+//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\l /
+//                    ib\twrk60n512.iar\psp\ -I E:\Freescale\mqx_test\YD_PRJ_ /
+//                    NEW_20130323_git_\IAR\..\lib\twrk60n512.iar\bsp\Generat /
+//                    ed_Code\ -I E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_g /
+//                    it_\IAR\..\lib\twrk60n512.iar\rtcs\ -I                  /
+//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\l /
+//                    ib\twrk60n512.iar\mfs\ -I E:\Freescale\mqx_test\YD_PRJ_ /
+//                    NEW_20130323_git_\IAR\..\lib\twrk60n512.iar\usb\host\   /
+//                    -I E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\. /
+//                    .\lib\twrk60n512.iar\shell\ -I                          /
+//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\l /
+//                    ib\twrk60n512.iar\usb\ -I E:\Freescale\mqx_test\YD_PRJ_ /
+//                    NEW_20130323_git_\IAR\..\ -I                            /
+//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\S /
+//                    ource\Source_MQX\ -I E:\Freescale\mqx_test\YD_PRJ_NEW_2 /
+//                    0130323_git_\IAR\..\Source\ -I "E:\Freescale\Freescale  /
+//                    MQX 3.8\shell\source\include\" -Ol --use_c++_inline     /
+//    List file    =  E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\twrk /
+//                    60n512\Int Flash Debug\List\DataConvert.s               /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -66,6 +68,7 @@
         EXTERN __aeabi_fsub
         EXTERN __aeabi_i2d
         EXTERN __aeabi_i2f
+        EXTERN __aeabi_memclr4
         EXTERN __aeabi_ui2f
         EXTERN _lwmem_alloc_zero
         EXTERN abs
@@ -112,7 +115,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\DataConvert.c
+// E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\DataConvert.c
 //    1 /*******************************************************************************
 //    2 * File Name        : DataConvert.c
 //    3 * Author             : LB&TX
@@ -452,13 +455,34 @@ BCD2Decimal:
 //  110 * 输      入      : DataIn[]，Num
 //  111 * 返      回      : DataBack[]
 //  112 *******************************************************************************/
+//  113 #if 0 // @130420
+//  114 void PhaseShift(float DataIn[],U16 DataBack[],U8 Num,U32 DATABACK[])
+//  115 {
+//  116     U8 i;
+//  117     for(i=0; i<Num; i++)
+//  118     {
+//  119         if(((DataIn[i]-DataIn[0])<0)==1)
+//  120         {
+//  121             //DataBack[i]=(int)((DataIn[i]-DataIn[0]+360)*PI/180);
+//  122             DataBack[i]=(int)((DataIn[i]-DataIn[0]+360));
+//  123             DATABACK[i]=(U32)((DataIn[i]-DataIn[0]+360)*10000);
+//  124         }
+//  125         else
+//  126         {
+//  127             //DataBack[i]=(int)((DataIn[i]-DataIn[0])*PI/180);
+//  128             DataBack[i]=(int)((DataIn[i]-DataIn[0]));
+//  129             DATABACK[i]=(U32)((DataIn[i]-DataIn[0])*10000);
+//  130         }
+//  131     }
+//  132 }
+//  133 #endif
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock4 Using cfiCommon0
           CFI Function PhaseShift
         THUMB
-//  113 void PhaseShift(float DataIn[],U16 DataBack[],U8 Num,U32 DATABACK[])
-//  114 {
+//  134 void PhaseShift(float DataIn[],U16 DataBack[],U8 Num,U8 DATBACK[])
+//  135 {
 PhaseShift:
         PUSH     {R4-R8,LR}
           CFI R14 Frame(CFA, -4)
@@ -468,25 +492,41 @@ PhaseShift:
           CFI R5 Frame(CFA, -20)
           CFI R4 Frame(CFA, -24)
           CFI CFA R13+24
+        SUB      SP,SP,#+24
+          CFI CFA R13+48
         MOVS     R4,R0
         MOVS     R5,R1
         MOVS     R6,R2
         MOVS     R7,R3
-//  115     U8 i;
-//  116     for(i=0; i<Num; i++)
+//  136     U8 i,temp;//
+//  137     U32 DATA_TEMP[6]= {0};
+        ADD      R0,SP,#+0
+        MOVS     R1,#+24
+          CFI FunCall __aeabi_memclr4
+        BL       __aeabi_memclr4
+//  138     for(i=0; i<Num; i++)
         MOVS     R8,#+0
         B.N      ??PhaseShift_0
-//  117     {
-//  118         if(((DataIn[i]-DataIn[0])<0)==1)
-//  119         {
-//  120             //DataBack[i]=(int)((DataIn[i]-DataIn[0]+360)*PI/180);
-//  121             DataBack[i]=(int)((DataIn[i]-DataIn[0]+360));
-//  122             DATABACK[i]=(U32)((DataIn[i]-DataIn[0]+360)*10000);
-//  123         }
-//  124         else
-//  125         {
-//  126             //DataBack[i]=(int)((DataIn[i]-DataIn[0])*PI/180);
-//  127             DataBack[i]=(int)((DataIn[i]-DataIn[0]));
+//  139     {
+//  140         if((DataIn[i]-DataIn[0])<0)
+//  141         {
+//  142             //DataBack[i]=(int)((DataIn[i]-DataIn[0]+360)*PI/180);
+//  143             DataBack[i]=(int)((DataIn[i]-DataIn[0]+360));
+//  144             DATA_TEMP[i]=(U32)((DataIn[i]-DataIn[0]+360)*10);
+//  145             temp=4*i;
+//  146             DATBACK[temp]=(U8)(DATA_TEMP[i]>>24);
+//  147             DATBACK[temp+1]=(U8)(DATA_TEMP[i]>>16);
+//  148             DATBACK[temp+2]=(U8)(DATA_TEMP[i]>>8);
+//  149             DATBACK[temp+3]=(U8)(DATA_TEMP[i]);
+//  150             // DATA_TEMP[i]=(U16)((DataIn[i]-DataIn[0]+360)*10);
+//  151             /// temp=2*i;
+//  152             // DATBACK[temp+1]=(U8)DATA_TEMP[i];
+//  153             //DATBACK[temp]=((U8)DATA_TEMP[i]>>8);
+//  154         }
+//  155         else
+//  156         {
+//  157             //DataBack[i]=(int)((DataIn[i]-DataIn[0])*PI/180);
+//  158             DataBack[i]=(int)((DataIn[i]-DataIn[0]));
 ??PhaseShift_1:
         UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
         LDR      R0,[R4, R8, LSL #+2]
@@ -497,20 +537,58 @@ PhaseShift:
         BL       __aeabi_f2iz
         UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
         STRH     R0,[R5, R8, LSL #+1]
-//  128             DATABACK[i]=(U32)((DataIn[i]-DataIn[0])*10000);
+//  159             DATA_TEMP[i]=(U32)((DataIn[i]-DataIn[0])*10);
         UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
         LDR      R0,[R4, R8, LSL #+2]
         LDR      R1,[R4, #+0]
           CFI FunCall __aeabi_fsub
         BL       __aeabi_fsub
-        LDR.W    R1,??DataTable4_1  ;; 0x461c4000
+        LDR.W    R1,??DataTable4_1  ;; 0x41200000
           CFI FunCall __aeabi_fmul
         BL       __aeabi_fmul
           CFI FunCall __aeabi_f2uiz
         BL       __aeabi_f2uiz
         UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        STR      R0,[R7, R8, LSL #+2]
-//  129         }
+        ADD      R1,SP,#+0
+        STR      R0,[R1, R8, LSL #+2]
+//  160             temp=4*i;
+        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+        LSLS     R0,R8,#+2
+//  161             DATBACK[temp]=(U8)(DATA_TEMP[i]>>24);
+        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+        ADD      R1,SP,#+0
+        LDR      R1,[R1, R8, LSL #+2]
+        LSRS     R1,R1,#+24
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        STRB     R1,[R0, R7]
+//  162             DATBACK[temp+1]=(U8)(DATA_TEMP[i]>>16);
+        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+        ADD      R1,SP,#+0
+        LDR      R1,[R1, R8, LSL #+2]
+        LSRS     R1,R1,#+16
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        ADDS     R2,R0,R7
+        STRB     R1,[R2, #+1]
+//  163             DATBACK[temp+2]=(U8)(DATA_TEMP[i]>>8);
+        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+        ADD      R1,SP,#+0
+        LDR      R1,[R1, R8, LSL #+2]
+        LSRS     R1,R1,#+8
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        ADDS     R2,R0,R7
+        STRB     R1,[R2, #+2]
+//  164             DATBACK[temp+3]=(U8)(DATA_TEMP[i]);
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        ADDS     R0,R0,R7
+        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+        ADD      R1,SP,#+0
+        LDR      R1,[R1, R8, LSL #+2]
+        STRB     R1,[R0, #+3]
+//  165             //DATA_TEMP[i]=(U16)((DataIn[i]-DataIn[0])*10);
+//  166             // temp=2*i;
+//  167             // DATBACK[temp+1]=(U8)DATA_TEMP[i];
+//  168             // DATBACK[temp]=((U8)DATA_TEMP[i]>>8);
+//  169         }
 ??PhaseShift_2:
         ADDS     R8,R8,#+1
 ??PhaseShift_0:
@@ -547,33 +625,64 @@ PhaseShift:
         LDR.W    R1,??DataTable4_2  ;; 0x43b40000
           CFI FunCall __aeabi_fadd
         BL       __aeabi_fadd
-        LDR.W    R1,??DataTable4_1  ;; 0x461c4000
+        LDR.W    R1,??DataTable4_1  ;; 0x41200000
           CFI FunCall __aeabi_fmul
         BL       __aeabi_fmul
           CFI FunCall __aeabi_f2uiz
         BL       __aeabi_f2uiz
         UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
-        STR      R0,[R7, R8, LSL #+2]
+        ADD      R1,SP,#+0
+        STR      R0,[R1, R8, LSL #+2]
+        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+        LSLS     R0,R8,#+2
+        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+        ADD      R1,SP,#+0
+        LDR      R1,[R1, R8, LSL #+2]
+        LSRS     R1,R1,#+24
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        STRB     R1,[R0, R7]
+        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+        ADD      R1,SP,#+0
+        LDR      R1,[R1, R8, LSL #+2]
+        LSRS     R1,R1,#+16
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        ADDS     R2,R0,R7
+        STRB     R1,[R2, #+1]
+        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+        ADD      R1,SP,#+0
+        LDR      R1,[R1, R8, LSL #+2]
+        LSRS     R1,R1,#+8
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        ADDS     R2,R0,R7
+        STRB     R1,[R2, #+2]
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        ADDS     R0,R0,R7
+        UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
+        ADD      R1,SP,#+0
+        LDR      R1,[R1, R8, LSL #+2]
+        STRB     R1,[R0, #+3]
         B.N      ??PhaseShift_2
-//  130     }
-//  131 }
+//  170     }
+//  171 }
 ??PhaseShift_3:
+        ADD      SP,SP,#+24
+          CFI CFA R13+24
         POP      {R4-R8,PC}       ;; return
           CFI EndBlock cfiBlock4
-//  132 /*******************************************************************************
-//  133 * 函  数  名      : WR_WAVE_UI
-//  134 * 描      述      : 将WAVE_UI写入触摸屏，一次最多248个字节，所以分次写入
-//  135                     用C104画波形，需将数据再写入触摸屏。
-//  136 * 输      入      : DataIn[]，UI_U_I，rewrite
-//  137 * 返      回      : 无
-//  138 *******************************************************************************/
+//  172 /*******************************************************************************
+//  173 * 函  数  名      : WR_WAVE_UI
+//  174 * 描      述      : 将WAVE_UI写入触摸屏，一次最多248个字节，所以分次写入
+//  175                     用C104画波形，需将数据再写入触摸屏。
+//  176 * 输      入      : DataIn[]，UI_U_I，rewrite
+//  177 * 返      回      : 无
+//  178 *******************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock5 Using cfiCommon0
           CFI Function WR_WAVE_UI
         THUMB
-//  139 void WR_WAVE_UI(U16 DATAIN[],U8 UI_U_I, U8 rewrite)
-//  140 {
+//  179 void WR_WAVE_UI(U16 DATAIN[],U8 UI_U_I, U8 rewrite)
+//  180 {
 WR_WAVE_UI:
         PUSH     {R3-R5,LR}
           CFI R14 Frame(CFA, -4)
@@ -582,7 +691,7 @@ WR_WAVE_UI:
           CFI CFA R13+16
         MOVS     R4,R0
         MOVS     R5,R2
-//  141     switch(UI_U_I)
+//  181     switch(UI_U_I)
         UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
         CMP      R1,#+1
         BEQ.N    ??WR_WAVE_UI_0
@@ -591,9 +700,9 @@ WR_WAVE_UI:
         BEQ.N    ??WR_WAVE_UI_2
         BCC.N    ??WR_WAVE_UI_3
         B.N      ??WR_WAVE_UI_1
-//  142     {
-//  143     case 1:
-//  144         YADA_C0 (UA_addr + rewrite*size_UI,DATAIN,size_UI);  // #define size_UI 100               //波形采样数据各相总数
+//  182     {
+//  183     case 1:
+//  184         YADA_C0 (UA_addr + rewrite*size_UI,DATAIN,size_UI);  // #define size_UI 100               //波形采样数据各相总数
 ??WR_WAVE_UI_0:
         MOVS     R2,#+100
         MOVS     R1,R4
@@ -603,7 +712,7 @@ WR_WAVE_UI:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall YADA_C0
         BL       YADA_C0
-//  145         YADA_C0 (UB_addr + rewrite*size_UI,&DATAIN[size_UI],size_UI);
+//  185         YADA_C0 (UB_addr + rewrite*size_UI,&DATAIN[size_UI],size_UI);
         MOVS     R2,#+100
         ADDS     R1,R4,#+200
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
@@ -613,7 +722,7 @@ WR_WAVE_UI:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall YADA_C0
         BL       YADA_C0
-//  146         YADA_C0 (UC_addr + rewrite*size_UI,&DATAIN[size_UI*2],size_UI);
+//  186         YADA_C0 (UC_addr + rewrite*size_UI,&DATAIN[size_UI*2],size_UI);
         MOVS     R2,#+100
         ADDW     R1,R4,#+400
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
@@ -623,7 +732,7 @@ WR_WAVE_UI:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall YADA_C0
         BL       YADA_C0
-//  147         YADA_C0 (IA_addr + rewrite*size_UI,&DATAIN[size_UI*3],size_UI);
+//  187         YADA_C0 (IA_addr + rewrite*size_UI,&DATAIN[size_UI*3],size_UI);
         MOVS     R2,#+100
         ADDW     R1,R4,#+600
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
@@ -633,7 +742,7 @@ WR_WAVE_UI:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall YADA_C0
         BL       YADA_C0
-//  148         YADA_C0 (IB_addr + rewrite*size_UI,&DATAIN[size_UI*4],size_UI);
+//  188         YADA_C0 (IB_addr + rewrite*size_UI,&DATAIN[size_UI*4],size_UI);
         MOVS     R2,#+100
         ADDW     R1,R4,#+800
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
@@ -643,7 +752,7 @@ WR_WAVE_UI:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall YADA_C0
         BL       YADA_C0
-//  149         YADA_C0 (IC_addr + rewrite*size_UI,&DATAIN[size_UI*5],size_UI);
+//  189         YADA_C0 (IC_addr + rewrite*size_UI,&DATAIN[size_UI*5],size_UI);
         MOVS     R2,#+100
         ADDW     R1,R4,#+1000
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
@@ -653,10 +762,10 @@ WR_WAVE_UI:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall YADA_C0
         BL       YADA_C0
-//  150         break;
+//  190         break;
         B.N      ??WR_WAVE_UI_4
-//  151     case 2:
-//  152         YADA_C0 (UA_addr + rewrite*size_UI,DATAIN,size_UI);
+//  191     case 2:
+//  192         YADA_C0 (UA_addr + rewrite*size_UI,DATAIN,size_UI);
 ??WR_WAVE_UI_3:
         MOVS     R2,#+100
         MOVS     R1,R4
@@ -666,7 +775,7 @@ WR_WAVE_UI:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall YADA_C0
         BL       YADA_C0
-//  153         YADA_C0 (UB_addr + rewrite*size_UI,&DATAIN[size_UI],size_UI);
+//  193         YADA_C0 (UB_addr + rewrite*size_UI,&DATAIN[size_UI],size_UI);
         MOVS     R2,#+100
         ADDS     R1,R4,#+200
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
@@ -676,7 +785,7 @@ WR_WAVE_UI:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall YADA_C0
         BL       YADA_C0
-//  154         YADA_C0 (UC_addr + rewrite*size_UI,&DATAIN[size_UI*2],size_UI);
+//  194         YADA_C0 (UC_addr + rewrite*size_UI,&DATAIN[size_UI*2],size_UI);
         MOVS     R2,#+100
         ADDW     R1,R4,#+400
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
@@ -686,10 +795,10 @@ WR_WAVE_UI:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall YADA_C0
         BL       YADA_C0
-//  155         break;
+//  195         break;
         B.N      ??WR_WAVE_UI_4
-//  156     case 3:
-//  157         YADA_C0 (IA_addr + rewrite*size_UI,DATAIN,size_UI);
+//  196     case 3:
+//  197         YADA_C0 (IA_addr + rewrite*size_UI,DATAIN,size_UI);
 ??WR_WAVE_UI_2:
         MOVS     R2,#+100
         MOVS     R1,R4
@@ -700,7 +809,7 @@ WR_WAVE_UI:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall YADA_C0
         BL       YADA_C0
-//  158         YADA_C0 (IB_addr + rewrite*size_UI,&DATAIN[size_UI],size_UI);
+//  198         YADA_C0 (IB_addr + rewrite*size_UI,&DATAIN[size_UI],size_UI);
         MOVS     R2,#+100
         ADDS     R1,R4,#+200
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
@@ -710,7 +819,7 @@ WR_WAVE_UI:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall YADA_C0
         BL       YADA_C0
-//  159         YADA_C0 (IC_addr + rewrite*size_UI,&DATAIN[size_UI*2],size_UI);
+//  199         YADA_C0 (IC_addr + rewrite*size_UI,&DATAIN[size_UI*2],size_UI);
         MOVS     R2,#+100
         ADDW     R1,R4,#+400
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
@@ -720,29 +829,29 @@ WR_WAVE_UI:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall YADA_C0
         BL       YADA_C0
-//  160         break;
+//  200         break;
         B.N      ??WR_WAVE_UI_4
-//  161     default:
-//  162         break;
-//  163     }
-//  164 }
+//  201     default:
+//  202         break;
+//  203     }
+//  204 }
 ??WR_WAVE_UI_1:
 ??WR_WAVE_UI_4:
         POP      {R0,R4,R5,PC}    ;; return
           CFI EndBlock cfiBlock5
-//  165 /*******************************************************************************
-//  166 * 函  数  名      : AtoFA
-//  167 * 描      述      : 将U盘读到的字符串转化为浮点数数组,包含正负
-//  168 * 输      入      : DATAIN[],待转化的字符数组
-//  169 * 返      回      : DATAOUT[],转化得到的浮点数数组
-//  170 *******************************************************************************/
+//  205 /*******************************************************************************
+//  206 * 函  数  名      : AtoFA
+//  207 * 描      述      : 将U盘读到的字符串转化为浮点数数组,包含正负
+//  208 * 输      入      : DATAIN[],待转化的字符数组
+//  209 * 返      回      : DATAOUT[],转化得到的浮点数数组
+//  210 *******************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock6 Using cfiCommon0
           CFI Function AtoFA
         THUMB
-//  171 void AtoFA(U8 DATAIN[],float DATAOUT[],U16 NUM)
-//  172 {
+//  211 void AtoFA(U8 DATAIN[],float DATAOUT[],U16 NUM)
+//  212 {
 AtoFA:
         PUSH     {R4-R8,LR}
           CFI R14 Frame(CFA, -4)
@@ -757,11 +866,11 @@ AtoFA:
         MOVS     R4,R0
         MOVS     R5,R1
         MOVS     R6,R2
-//  173     U16 j=0;
+//  213     U16 j=0;
         MOVS     R7,#+0
-//  174     char TEST[9],k=0;
+//  214     char TEST[9],k=0;
         MOVS     R0,#+0
-//  175     for(U16 i=0; i<NUM*48; i++)//每行预设为48个字符
+//  215     for(U16 i=0; i<NUM*48; i++)//每行预设为48个字符
         MOVS     R8,#+0
         B.N      ??AtoFA_0
 ??AtoFA_1:
@@ -773,16 +882,16 @@ AtoFA:
         MUL      R1,R1,R6
         CMP      R8,R1
         BGE.N    ??AtoFA_2
-//  176     {
-//  177         TEST[k]=DATAIN[i];
+//  216     {
+//  217         TEST[k]=DATAIN[i];
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         ADD      R1,SP,#+0
         UXTH     R8,R8            ;; ZeroExt  R8,R8,#+16,#+16
         LDRB     R2,[R8, R4]
         STRB     R2,[R0, R1]
-//  178         k++;
+//  218         k++;
         ADDS     R0,R0,#+1
-//  179         if((DATAIN[i]==',')||DATAIN[i]==0x0d)
+//  219         if((DATAIN[i]==',')||DATAIN[i]==0x0d)
         UXTH     R8,R8            ;; ZeroExt  R8,R8,#+16,#+16
         LDRB     R1,[R8, R4]
         CMP      R1,#+44
@@ -791,8 +900,8 @@ AtoFA:
         LDRB     R1,[R8, R4]
         CMP      R1,#+13
         BNE.N    ??AtoFA_1
-//  180         {
-//  181             DATAOUT[j]=atof(TEST);
+//  220         {
+//  221             DATAOUT[j]=atof(TEST);
 ??AtoFA_3:
         ADD      R0,SP,#+0
           CFI FunCall atof
@@ -801,40 +910,40 @@ AtoFA:
         BL       __aeabi_d2f
         UXTH     R7,R7            ;; ZeroExt  R7,R7,#+16,#+16
         STR      R0,[R5, R7, LSL #+2]
-//  182             k=0;
+//  222             k=0;
         MOVS     R0,#+0
-//  183             //printf("%f",DATAOUT[j]);
-//  184             j++;
+//  223             //printf("%f",DATAOUT[j]);
+//  224             j++;
         ADDS     R7,R7,#+1
-//  185             if(j>=NUM*6)
+//  225             if(j>=NUM*6)
         UXTH     R7,R7            ;; ZeroExt  R7,R7,#+16,#+16
         UXTH     R6,R6            ;; ZeroExt  R6,R6,#+16,#+16
         MOVS     R1,#+6
         MUL      R1,R1,R6
         CMP      R7,R1
         BLT.N    ??AtoFA_1
-//  186             {
-//  187                 break;
-//  188             }
-//  189         }
-//  190     }
-//  191 }
+//  226             {
+//  227                 break;
+//  228             }
+//  229         }
+//  230     }
+//  231 }
 ??AtoFA_2:
         POP      {R0-R8,PC}       ;; return
           CFI EndBlock cfiBlock6
-//  192 /*******************************************************************************
-//  193 * 函  数  名      : FLTOINT_UI
-//  194 * 描      述      : 将U盘读到的电压电流浮点数数组转化为C104显示波形的整型数据
-//  195 * 输      入      : DATAIN[],电压电流浮点数组
-//  196 * 返      回      : DATOUT[],输出用于事件波形C104显示的数组
-//  197 *******************************************************************************/
+//  232 /*******************************************************************************
+//  233 * 函  数  名      : FLTOINT_UI
+//  234 * 描      述      : 将U盘读到的电压电流浮点数数组转化为C104显示波形的整型数据
+//  235 * 输      入      : DATAIN[],电压电流浮点数组
+//  236 * 返      回      : DATOUT[],输出用于事件波形C104显示的数组
+//  237 *******************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock7 Using cfiCommon0
           CFI Function FLTOINT_UI
         THUMB
-//  198 void FLTOINT_UI(float DATAIN[],int DATOUT[],U16 FLAGNUM)
-//  199 {
+//  238 void FLTOINT_UI(float DATAIN[],int DATOUT[],U16 FLAGNUM)
+//  239 {
 FLTOINT_UI:
         PUSH     {R4-R8,LR}
           CFI R14 Frame(CFA, -4)
@@ -847,11 +956,11 @@ FLTOINT_UI:
         MOVS     R4,R0
         MOVS     R5,R1
         MOVS     R6,R2
-//  200     for(U8 i=0; i<FLAGNUM; i++)
+//  240     for(U8 i=0; i<FLAGNUM; i++)
         MOVS     R7,#+0
         B.N      ??FLTOINT_UI_0
-//  201     {
-//  202         DATOUT[i]=(int)(DATAIN[i*6]/4)+87;   //电压+-311变为屏幕显示的数据，87为中线值。
+//  241     {
+//  242         DATOUT[i]=(int)(DATAIN[i*6]/4)+87;   //电压+-311变为屏幕显示的数据，87为中线值。
 ??FLTOINT_UI_1:
         UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
         MOVS     R0,#+24
@@ -865,7 +974,7 @@ FLTOINT_UI:
         ADDS     R0,R0,#+87
         UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
         STR      R0,[R5, R7, LSL #+2]
-//  203         DATOUT[i+FLAGNUM]=(int)(DATAIN[i*6+1]/4)+87;
+//  243         DATOUT[i+FLAGNUM]=(int)(DATAIN[i*6+1]/4)+87;
         UXTH     R6,R6            ;; ZeroExt  R6,R6,#+16,#+16
         UXTAB    R8,R6,R7
         UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
@@ -880,7 +989,7 @@ FLTOINT_UI:
         BL       __aeabi_f2iz
         ADDS     R0,R0,#+87
         STR      R0,[R5, R8, LSL #+2]
-//  204         DATOUT[i+2*FLAGNUM]=(int)(DATAIN[i*6+2]/4)+87;
+//  244         DATOUT[i+2*FLAGNUM]=(int)(DATAIN[i*6+2]/4)+87;
         UXTH     R6,R6            ;; ZeroExt  R6,R6,#+16,#+16
         LSLS     R0,R6,#+1
         UXTAB    R8,R0,R7
@@ -896,10 +1005,10 @@ FLTOINT_UI:
         BL       __aeabi_f2iz
         ADDS     R0,R0,#+87
         STR      R0,[R5, R8, LSL #+2]
-//  205         /*DATOUT[i+3*FLAGNUM]=(int)(DATAIN[i*6+3]*14)+87;//电流+-6变为屏幕显示的数据，87为中线值。
-//  206         DATOUT[i+4*FLAGNUM]=(int)(DATAIN[i*6+4]*14)+87;
-//  207         DATOUT[i+5*FLAGNUM]=(int)(DATAIN[i*6+5]*14)+87;*/
-//  208     }
+//  245         /*DATOUT[i+3*FLAGNUM]=(int)(DATAIN[i*6+3]*14)+87;//电流+-6变为屏幕显示的数据，87为中线值。
+//  246         DATOUT[i+4*FLAGNUM]=(int)(DATAIN[i*6+4]*14)+87;
+//  247         DATOUT[i+5*FLAGNUM]=(int)(DATAIN[i*6+5]*14)+87;*/
+//  248     }
         ADDS     R7,R7,#+1
 ??FLTOINT_UI_0:
         MOVS     R0,R7
@@ -908,22 +1017,22 @@ FLTOINT_UI:
         UXTH     R6,R6            ;; ZeroExt  R6,R6,#+16,#+16
         CMP      R0,R6
         BCC.N    ??FLTOINT_UI_1
-//  209 }
+//  249 }
         POP      {R4-R8,PC}       ;; return
           CFI EndBlock cfiBlock7
-//  210 /*******************************************************************************
-//  211 * 函  数  名      :
-//  212 * 描      述      : 将U盘读到的电流浮点数数组转化为整型，并且改变正负
-//  213 * 输      入      : DATAIN[],待转化的浮点数数组
-//  214 * 返      回      : DATOUT1[],DATOUT2[],DATOUT3[]三相电压数组输出
-//  215 ******************************************************************************/
+//  250 /*******************************************************************************
+//  251 * 函  数  名      :
+//  252 * 描      述      : 将U盘读到的电流浮点数数组转化为整型，并且改变正负
+//  253 * 输      入      : DATAIN[],待转化的浮点数数组
+//  254 * 返      回      : DATOUT1[],DATOUT2[],DATOUT3[]三相电压数组输出
+//  255 ******************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock8 Using cfiCommon0
           CFI Function EVEUISHIFT
         THUMB
-//  216 void EVEUISHIFT(U8 DATAIN[],float DATAOUT[])
-//  217 {
+//  256 void EVEUISHIFT(U8 DATAIN[],float DATAOUT[])
+//  257 {
 EVEUISHIFT:
         PUSH     {R4-R6,LR}
           CFI R14 Frame(CFA, -4)
@@ -933,12 +1042,12 @@ EVEUISHIFT:
           CFI CFA R13+16
         MOVS     R4,R0
         MOVS     R5,R1
-//  218     U16 temp;
-//  219     for(U16 i=0; i<EVEUILEN*12; i++)
+//  258     U16 temp;
+//  259     for(U16 i=0; i<EVEUILEN*12; i++)
         MOVS     R6,#+0
         B.N      ??EVEUISHIFT_0
-//  220     {
-//  221         temp=((U16)(DATAIN[2*i])<<8)+((U16)(DATAIN[2*i+1]));
+//  260     {
+//  261         temp=((U16)(DATAIN[2*i])<<8)+((U16)(DATAIN[2*i+1]));
 ??EVEUISHIFT_1:
         UXTH     R6,R6            ;; ZeroExt  R6,R6,#+16,#+16
         LDRB     R0,[R4, R6, LSL #+1]
@@ -947,7 +1056,7 @@ EVEUISHIFT:
         ADDS     R1,R4,R6, LSL #+1
         LDRB     R1,[R1, #+1]
         UXTAB    R0,R0,R1
-//  222         DATAOUT[i]=((float)temp)/100;
+//  262         DATAOUT[i]=((float)temp)/100;
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
           CFI FunCall __aeabi_ui2f
         BL       __aeabi_ui2f
@@ -956,28 +1065,28 @@ EVEUISHIFT:
         BL       __aeabi_fdiv
         UXTH     R6,R6            ;; ZeroExt  R6,R6,#+16,#+16
         STR      R0,[R5, R6, LSL #+2]
-//  223     }
+//  263     }
         ADDS     R6,R6,#+1
 ??EVEUISHIFT_0:
         UXTH     R6,R6            ;; ZeroExt  R6,R6,#+16,#+16
         CMP      R6,#+3840
         BCC.N    ??EVEUISHIFT_1
-//  224 }
+//  264 }
         POP      {R4-R6,PC}       ;; return
           CFI EndBlock cfiBlock8
-//  225 /*******************************************************************************
-//  226 * 函  数  名      : U16TOFL_UI
-//  227 * 描      述      : 将AD的电压电流采样值变为+-311v和+-8.48A以内
-//  228 * 输      入      : U8 DADAIN[],U8 NUM,UI_FLG,0为电压，1为电流
-//  229 * 返      回      : 返float DATAOUT[]
-//  230 *******************************************************************************/
+//  265 /*******************************************************************************
+//  266 * 函  数  名      : U16TOFL_UI
+//  267 * 描      述      : 将AD的电压电流采样值变为+-311v和+-8.48A以内
+//  268 * 输      入      : U8 DADAIN[],U8 NUM,UI_FLG,0为电压，1为电流
+//  269 * 返      回      : 返float DATAOUT[]
+//  270 *******************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock9 Using cfiCommon0
           CFI Function U16TOFL_UI
         THUMB
-//  231 void U16TOFL_UI(U8 DADAIN[],U16 NUM,float DATAOUT[])//NUM为待转换数据个数
-//  232 {
+//  271 void U16TOFL_UI(U8 DADAIN[],U16 NUM,float DATAOUT[])//NUM为待转换数据个数
+//  272 {
 U16TOFL_UI:
         PUSH     {R4-R8,LR}
           CFI R14 Frame(CFA, -4)
@@ -990,11 +1099,11 @@ U16TOFL_UI:
         MOVS     R4,R0
         MOVS     R5,R1
         MOVS     R6,R2
-//  233     for(U16 i=0; i<NUM; i++)
+//  273     for(U16 i=0; i<NUM; i++)
         MOVS     R7,#+0
         B.N      ??U16TOFL_UI_0
-//  234     {
-//  235         DATAOUT[i]=((float)((int)(DADAIN[2*i])<<8)+(int)(DADAIN[2*i+1]))/10;//>>7~=/128.0.00026 0.0095
+//  274     {
+//  275         DATAOUT[i]=((float)((int)(DADAIN[2*i])<<8)+(int)(DADAIN[2*i+1]))/10;//>>7~=/128.0.00026 0.0095
 ??U16TOFL_UI_1:
         UXTH     R7,R7            ;; ZeroExt  R7,R7,#+16,#+16
         LDRB     R0,[R4, R7, LSL #+1]
@@ -1010,50 +1119,50 @@ U16TOFL_UI:
         MOV      R1,R8
           CFI FunCall __aeabi_fadd
         BL       __aeabi_fadd
-        LDR.N    R1,??DataTable4_4  ;; 0x41200000
+        LDR.N    R1,??DataTable4_1  ;; 0x41200000
           CFI FunCall __aeabi_fdiv
         BL       __aeabi_fdiv
         UXTH     R7,R7            ;; ZeroExt  R7,R7,#+16,#+16
         STR      R0,[R6, R7, LSL #+2]
-//  236     }
+//  276     }
         ADDS     R7,R7,#+1
 ??U16TOFL_UI_0:
         UXTH     R7,R7            ;; ZeroExt  R7,R7,#+16,#+16
         UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
         CMP      R7,R5
         BCC.N    ??U16TOFL_UI_1
-//  237     /*
-//  238   for(U16 i=NUM; i<NUM*2; i++)
-//  239   {
-//  240      DATAOUT[i]=(((int)(DADAIN[2*i])<<8)+(int)(DADAIN[2*i+1]))*0.00026;
-//  241   }*/
-//  242 }
+//  277     /*
+//  278   for(U16 i=NUM; i<NUM*2; i++)
+//  279   {
+//  280      DATAOUT[i]=(((int)(DADAIN[2*i])<<8)+(int)(DADAIN[2*i+1]))*0.00026;
+//  281   }*/
+//  282 }
         POP      {R4-R8,PC}       ;; return
           CFI EndBlock cfiBlock9
-//  243 /*******************************************************************************
-//  244 * 函  数  名      : Sig_Fiq
-//  245 * 描      述      : 将电能数据按要求的有效数字进行转换
-//  246 * 输      入      : U8 DADAIN[],U8 TIMES，10为不缩小10倍即3位有效数字,
-//  247                     100为缩小100倍即2位有效数字,1000为不缩小1000倍即1位有效数字
-//  248 * 返      回      : 返float DATAOUT[]
-//  249 *******************************************************************************/
-//  250 //void Sig_Fiq(U8 DADAIN[],U8 DATAOUT[],U16 TIMES)
-//  251 //{
-//  252 //  long temp;
-//  253 //  temp=(((long)(DADAIN[0])<<24)+((long)(DADAIN[1])<<16)+((long)(DADAIN[2])<<8)+((long)(DADAIN[3])))/TIMES;
-//  254 //  DATAOUT[3]=temp;
-//  255 //  DATAOUT[2]=temp>>8;
-//  256 //  DATAOUT[1]=temp>>16;
-//  257 //  DATAOUT[0]=temp>>24;
-//  258 //}
+//  283 /*******************************************************************************
+//  284 * 函  数  名      : Sig_Fiq
+//  285 * 描      述      : 将电能数据按要求的有效数字进行转换
+//  286 * 输      入      : U8 DADAIN[],U8 TIMES，10为不缩小10倍即3位有效数字,
+//  287                     100为缩小100倍即2位有效数字,1000为不缩小1000倍即1位有效数字
+//  288 * 返      回      : 返float DATAOUT[]
+//  289 *******************************************************************************/
+//  290 //void Sig_Fiq(U8 DADAIN[],U8 DATAOUT[],U16 TIMES)
+//  291 //{
+//  292 //  long temp;
+//  293 //  temp=(((long)(DADAIN[0])<<24)+((long)(DADAIN[1])<<16)+((long)(DADAIN[2])<<8)+((long)(DADAIN[3])))/TIMES;
+//  294 //  DATAOUT[3]=temp;
+//  295 //  DATAOUT[2]=temp>>8;
+//  296 //  DATAOUT[1]=temp>>16;
+//  297 //  DATAOUT[0]=temp>>24;
+//  298 //}
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock10 Using cfiCommon0
           CFI Function Sig_Fiq
           CFI NoCalls
         THUMB
-//  259 void Sig_Fiq(U8 DADAIN[],U8 DATAOUT[],U16 TIMES, U8 NUM)
-//  260 {
+//  299 void Sig_Fiq(U8 DADAIN[],U8 DATAOUT[],U16 TIMES, U8 NUM)
+//  300 {
 Sig_Fiq:
         PUSH     {R4-R7}
           CFI R7 Frame(CFA, -4)
@@ -1061,17 +1170,17 @@ Sig_Fiq:
           CFI R5 Frame(CFA, -12)
           CFI R4 Frame(CFA, -16)
           CFI CFA R13+16
-//  261     long temp;
-//  262     U8 i,j;
-//  263     for(i=0; i<NUM; i++)
+//  301     long temp;
+//  302     U8 i,j;
+//  303     for(i=0; i<NUM; i++)
         MOVS     R4,#+0
         B.N      ??Sig_Fiq_0
-//  264     {
-//  265         j=4*i;
+//  304     {
+//  305         j=4*i;
 ??Sig_Fiq_1:
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         LSLS     R5,R4,#+2
-//  266         temp=(((long)(DADAIN[j])<<24)+((long)(DADAIN[1+j])<<16)+((long)(DADAIN[2+j])<<8)+((long)(DADAIN[3+j])))/TIMES;
+//  306         temp=(((long)(DADAIN[j])<<24)+((long)(DADAIN[1+j])<<16)+((long)(DADAIN[2+j])<<8)+((long)(DADAIN[3+j])))/TIMES;
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         LDRB     R6,[R5, R0]
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
@@ -1089,32 +1198,32 @@ Sig_Fiq:
         UXTAB    R6,R6,R7
         UXTH     R2,R2            ;; ZeroExt  R2,R2,#+16,#+16
         SDIV     R6,R6,R2
-//  267         DATAOUT[3+j]=temp;
+//  307         DATAOUT[3+j]=temp;
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         ADDS     R7,R5,R1
         STRB     R6,[R7, #+3]
-//  268         DATAOUT[2+j]=temp>>8;
+//  308         DATAOUT[2+j]=temp>>8;
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         ADDS     R7,R5,R1
         ASRS     R12,R6,#+8
         STRB     R12,[R7, #+2]
-//  269         DATAOUT[1+j]=temp>>16;
+//  309         DATAOUT[1+j]=temp>>16;
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         ADDS     R7,R5,R1
         ASRS     R12,R6,#+16
         STRB     R12,[R7, #+1]
-//  270         DATAOUT[j]=temp>>24;
+//  310         DATAOUT[j]=temp>>24;
         UXTB     R5,R5            ;; ZeroExt  R5,R5,#+24,#+24
         ASRS     R6,R6,#+24
         STRB     R6,[R5, R1]
-//  271     }
+//  311     }
         ADDS     R4,R4,#+1
 ??Sig_Fiq_0:
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         UXTB     R3,R3            ;; ZeroExt  R3,R3,#+24,#+24
         CMP      R4,R3
         BCC.N    ??Sig_Fiq_1
-//  272 }
+//  312 }
         POP      {R4-R7}
           CFI R4 SameValue
           CFI R5 SameValue
@@ -1123,24 +1232,24 @@ Sig_Fiq:
           CFI CFA R13+0
         BX       LR               ;; return
           CFI EndBlock cfiBlock10
-//  273 
-//  274 /*******************************************************************************
-//  275 ** Function Name	：num2string
-//  276 ** Input		： type =0 文件夹，=1 .CSV文件
-//  277 ** Return		：转好好的字符串指针
-//  278 ** Author		： wk
-//  279 ** Version	：
-//  280 ** Date		：
-//  281 ** Dessription	： 将 32 位整数转换成字符串
-//  282 ** Reverse	：
-//  283 *******************************************************************************/
+//  313 
+//  314 /*******************************************************************************
+//  315 ** Function Name	：num2string
+//  316 ** Input		： type =0 文件夹，=1 .CSV文件
+//  317 ** Return		：转好好的字符串指针
+//  318 ** Author		： wk
+//  319 ** Version	：
+//  320 ** Date		：
+//  321 ** Dessription	： 将 32 位整数转换成字符串
+//  322 ** Reverse	：
+//  323 *******************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock11 Using cfiCommon0
           CFI Function num2string
         THUMB
-//  284 char_ptr num2string(int_32 num,uchar len,uchar type) // wk --> len <= 13-4-1=8
-//  285 {
+//  324 char_ptr num2string(int_32 num,uchar len,uchar type) // wk --> len <= 13-4-1=8
+//  325 {
 num2string:
         PUSH     {R4-R8,LR}
           CFI R14 Frame(CFA, -4)
@@ -1155,19 +1264,19 @@ num2string:
         MOV      R8,R0
         MOVS     R4,R1
         MOVS     R7,R2
-//  286   char_ptr name;
-//  287   name = _mem_alloc_zero( len+5 );
+//  326   char_ptr name;
+//  327   name = _mem_alloc_zero( len+5 );
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         ADDS     R0,R4,#+5
           CFI FunCall _lwmem_alloc_zero
         BL       _lwmem_alloc_zero
         MOVS     R5,R0
-//  288   uchar sep_data[9];uint_32 temp;
-//  289   for(int i=0;i<len;i++)
+//  328   uchar sep_data[9];uint_32 temp;
+//  329   for(int i=0;i<len;i++)
         MOVS     R6,#+0
         B.N      ??num2string_0
-//  290   {
-//  291     temp=(uint_32)pow(10,i);
+//  330   {
+//  331     temp=(uint_32)pow(10,i);
 ??num2string_1:
         MOVS     R0,R6
           CFI FunCall __aeabi_i2d
@@ -1175,30 +1284,30 @@ num2string:
         MOVS     R2,R0
         MOVS     R3,R1
         MOVS     R0,#+0
-        LDR.N    R1,??DataTable4_5  ;; 0x40240000
+        LDR.N    R1,??DataTable4_4  ;; 0x40240000
           CFI FunCall pow
         BL       pow
           CFI FunCall __aeabi_d2uiz
         BL       __aeabi_d2uiz
-//  292     sep_data[i]=(num/temp)%10;
+//  332     sep_data[i]=(num/temp)%10;
         UDIV     R0,R8,R0
         MOVS     R1,#+10
         UDIV     R2,R0,R1
         MLS      R0,R1,R2,R0
         ADD      R1,SP,#+0
         STRB     R0,[R6, R1]
-//  293   }
+//  333   }
         ADDS     R6,R6,#+1
 ??num2string_0:
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         CMP      R6,R4
         BLT.N    ??num2string_1
-//  294   
-//  295   for(int i=0;i<len;i++)
+//  334   
+//  335   for(int i=0;i<len;i++)
         MOVS     R0,#+0
         B.N      ??num2string_2
-//  296   {
-//  297     *(name+i)=(uchar)(0x30+sep_data[len-1-i]);
+//  336   {
+//  337     *(name+i)=(uchar)(0x30+sep_data[len-1-i]);
 ??num2string_3:
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         SUBS     R1,R4,#+1
@@ -1207,59 +1316,59 @@ num2string:
         LDRB     R1,[R1, R2]
         ADDS     R1,R1,#+48
         STRB     R1,[R0, R5]
-//  298   }
+//  338   }
         ADDS     R0,R0,#+1
 ??num2string_2:
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         CMP      R0,R4
         BLT.N    ??num2string_3
-//  299   if(type==0)
+//  339   if(type==0)
         UXTB     R7,R7            ;; ZeroExt  R7,R7,#+24,#+24
         CMP      R7,#+0
         BNE.N    ??num2string_4
-//  300   {
-//  301     *(name+len)='\0';
+//  340   {
+//  341     *(name+len)='\0';
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         MOVS     R0,#+0
         STRB     R0,[R4, R5]
         B.N      ??num2string_5
-//  302   }
-//  303   else
-//  304   {
-//  305     *(name+len)=0x2e; // .
+//  342   }
+//  343   else
+//  344   {
+//  345     *(name+len)=0x2e; // .
 ??num2string_4:
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         MOVS     R0,#+46
         STRB     R0,[R4, R5]
-//  306     *(name+len+1)=0x43; // C
+//  346     *(name+len+1)=0x43; // C
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         ADDS     R0,R4,R5
         MOVS     R1,#+67
         STRB     R1,[R0, #+1]
-//  307     *(name+len+2)=0x53; // S
+//  347     *(name+len+2)=0x53; // S
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         ADDS     R0,R4,R5
         MOVS     R1,#+83
         STRB     R1,[R0, #+2]
-//  308     *(name+len+3)=0x56; // V
+//  348     *(name+len+3)=0x56; // V
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         ADDS     R0,R4,R5
         MOVS     R1,#+86
         STRB     R1,[R0, #+3]
-//  309     *(name+len+4)='\0';
+//  349     *(name+len+4)='\0';
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         ADDS     R0,R4,R5
         MOVS     R1,#+0
         STRB     R1,[R0, #+4]
-//  310   }
-//  311   return name;
+//  350   }
+//  351   return name;
 ??num2string_5:
         MOVS     R0,R5
         ADD      SP,SP,#+16
           CFI CFA R13+24
         POP      {R4-R8,PC}       ;; return
           CFI EndBlock cfiBlock11
-//  312 }
+//  352 }
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -1271,7 +1380,7 @@ num2string:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable4_1:
-        DC32     0x461c4000
+        DC32     0x41200000
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -1289,12 +1398,6 @@ num2string:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable4_4:
-        DC32     0x41200000
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable4_5:
         DC32     0x40240000
 
         SECTION `.iar_vfe_header`:DATA:REORDER:NOALLOC:NOROOT(2)
@@ -1308,11 +1411,18 @@ num2string:
         SECTION __DLIB_PERTHREAD_init:DATA:REORDER:NOROOT(0)
         SECTION_TYPE SHT_PROGBITS, 0
 
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+        DATA
+        DC32 0
+        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+
         END
 // 
-// 1 612 bytes in section .text
+//    24 bytes in section .rodata
+// 1 776 bytes in section .text
 // 
-// 1 612 bytes of CODE memory
+// 1 776 bytes of CODE  memory
+//    24 bytes of CONST memory
 //
 //Errors: none
 //Warnings: none

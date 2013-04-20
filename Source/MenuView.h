@@ -35,7 +35,7 @@
 //#define VEC_INDEX 1940   //电压相角的初始下标
 #define Pst_INDEX 1964      //APst-BPst-CPst-APlt-BPlt-CPlt-ε
 #define UNBALANCED_INDEX 1988 //U-电压不平衡度、ABC(幅值相位)零、正、负，εI，ABC零、正、负
-#define WAVEUI_INDEX 2052+112   //采样波形的初始下标
+#define WAVEUI_INDEX 2052   //采样波形的初始下标
 //使用C108指令显示浮点型数据时的格式控制
 //使用C108指令显示浮点型数据时的格式控制
 #define C108Mode_63 0x6304

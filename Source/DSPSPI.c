@@ -25,7 +25,7 @@ volatile U8 SPIEventFlg;//默认值0
 U16 DataSize = ARRAY_SIZE ;  //wk -->传给 DMA 寄存器的一次服务数据长度
 volatile static uchar count=0; // 用于数据头检测
 U8 SPI_Send=0; // wk @130406 --> K60是否给DSP发送数据的标志
-
+U8 HeadFlg[6]={0};
 //volatile U16 Time_save=0;  //备份事件参数
 //volatile U8 testflgg=0;   //MCU发送数据个数
 
@@ -134,7 +134,6 @@ void DMA_RecData_OK
   void
 )
 {
-   static U8 HeadFlg[6]={0};
    U16 StatusFlg=0;
 #if 1 // wk @130412 --> 旧协议  
     if(count<4)
@@ -145,12 +144,11 @@ void DMA_RecData_OK
         if(HeadFlg[0]==0x33 && HeadFlg[1]==0x33 && HeadFlg[2]==0x33 && (HeadFlg[3]== 0x44 ||HeadFlg[3]== 0x55))
         {
           if(HeadFlg[3]==0x44)
-//            DataSize= Pow_SIZE+OffSET+8;  //wk@20130325--> 8 为 CRC + 数据尾
-            DataSize= 253; // wk @130408 --> test 
+            DataSize= 2556; // wk @130420 -->发送数据 4+1+14+2+2532+3+4=2560
           else
             DataSize= Evnt_SIZE + 4; // wk @20130325 -->
           
-          count=5; //  wk --> 数据头已经找到 
+            count=5; //  wk --> 数据头已经找到 
 //          printf("\n1");
         }
         else
@@ -164,27 +162,22 @@ void DMA_RecData_OK
     }
     else if(count==5)
     {
-         count=6; // 用一个数据改变 DMA 接收数据的长度，此数据将会被舍弃
-         
-         SPI_Send=1; // wk @130406 --> K60是否给DSP发送数据的标志
+         count=6; // 用一个数据改变 DMA 接收数据的长度，此数据将会被舍弃        
+//         SPI_Send=1; // wk @130406 --> K60是否给DSP发送数据的标志
     }
     else
     {
-     /* wk @130408 --> test */ 
-      for(int i=0;i<260;i++)
-       PowRxchar[i] = BufRxchar[i];
       /* wk @130408 --> data trans */ 
-//       if(HeadFlg[3]==0x44) // wk @20130325 -->
-//         for(int i=0;i<Pow_SIZE;i++)
-//         {
-//           PowRxchar[i] = BufRxchar[i+OffSET];
-//           SPIPowerFlg=1;
-//         }
-//       else
-//           printf("event\n");  // 事件数据还没有处理
+       if(HeadFlg[3]==0x44) // wk @20130325 -->
+         for(int i=0;i<Pow_SIZE;i++)
+         {
+           PowRxchar[i] = BufRxchar[i+OffSET];
+           SPIPowerFlg=1;
+         }
+       else
+           printf("Event\n");  // 事件数据还没有处理
        
-        printf("%x\t%x\n",BufRxchar[0],BufRxchar[1]); // test 
-//        printf("\n2");
+//        printf("%x\t%x\n",BufRxchar[0],BufRxchar[1]); // test 
         count=0; 
         DataSize=1;
         SPI_Send=0;
@@ -201,25 +194,29 @@ void DMA_RecData_OK
       HeadFlg[count]=BufRxchar[0];
       count++;
       if(count==4)
-        if(!(HeadFlg[0]==0x33 && HeadFlg[1]==0x33 && HeadFlg[2]==0x33 && (HeadFlg[3]==0x44 ||HeadFlg[3]==0x55)))
+      {
+        if(HeadFlg[0]!=0x33 || HeadFlg[1]!=0x33 || HeadFlg[2]!=0x33 || (HeadFlg[3]!=0x44 && HeadFlg[3]!=0x55))
         {
           HeadFlg[0]=HeadFlg[1];
           HeadFlg[1]=HeadFlg[2];
           HeadFlg[2]=HeadFlg[3];
           count=3;
         }
+      }
       else if(count==6)
       {
         DataSize = HeadFlg[4]<<8+HeadFlg[5];
-        count=7;
+        count=7;  
+//        printf("Len:%d\n",DataSize); 
       }
      
     }
     else if(count==7)
     {
          count=8; // 用一个数据改变 DMA 接收数据的长度，此数据将会被舍弃
-         if(SysSet.EventSendFlg)
-          SPI_Send=1; // wk @130406 --> K60是否给DSP发送数据的标志
+         /* wk @130420--> 暂时不考虑发送 */ 
+//         if(SysSet.EventSendFlg)
+//          SPI_Send=1; // wk @130406 --> K60是否给DSP发送数据的标志
     }
     else
     {
@@ -228,6 +225,8 @@ void DMA_RecData_OK
        {
          for(int i=0;i<Pow_SIZE;i++)
            PowRxchar[i] = BufRxchar[i+OffSET];
+         
+         printf("POW:%x\t%x\t%x\t%x\n",PowRxchar[0],PowRxchar[1],PowRxchar[2],PowRxchar[3]); 
          SPIPowerFlg=1;
        }
        else

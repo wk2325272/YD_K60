@@ -110,6 +110,7 @@ void BCD2Decimal(U8 Data[],U8 Num)///将BCD码转换为10进制数
 * 输      入      : DataIn[]，Num
 * 返      回      : DataBack[]
 *******************************************************************************/
+#if 0 // @130420
 void PhaseShift(float DataIn[],U16 DataBack[],U8 Num,U32 DATABACK[])
 {
     U8 i;
@@ -126,6 +127,45 @@ void PhaseShift(float DataIn[],U16 DataBack[],U8 Num,U32 DATABACK[])
             //DataBack[i]=(int)((DataIn[i]-DataIn[0])*PI/180);
             DataBack[i]=(int)((DataIn[i]-DataIn[0]));
             DATABACK[i]=(U32)((DataIn[i]-DataIn[0])*10000);
+        }
+    }
+}
+#endif
+void PhaseShift(float DataIn[],U16 DataBack[],U8 Num,U8 DATBACK[])
+{
+    U8 i,temp;//
+    U32 DATA_TEMP[6]= {0};
+    for(i=0; i<Num; i++)
+    {
+        if((DataIn[i]-DataIn[0])<0)
+        {
+            //DataBack[i]=(int)((DataIn[i]-DataIn[0]+360)*PI/180);
+            DataBack[i]=(int)((DataIn[i]-DataIn[0]+360));
+            DATA_TEMP[i]=(U32)((DataIn[i]-DataIn[0]+360)*10);
+            temp=4*i;
+            DATBACK[temp]=(U8)(DATA_TEMP[i]>>24);
+            DATBACK[temp+1]=(U8)(DATA_TEMP[i]>>16);
+            DATBACK[temp+2]=(U8)(DATA_TEMP[i]>>8);
+            DATBACK[temp+3]=(U8)(DATA_TEMP[i]);
+            // DATA_TEMP[i]=(U16)((DataIn[i]-DataIn[0]+360)*10);
+            /// temp=2*i;
+            // DATBACK[temp+1]=(U8)DATA_TEMP[i];
+            //DATBACK[temp]=((U8)DATA_TEMP[i]>>8);
+        }
+        else
+        {
+            //DataBack[i]=(int)((DataIn[i]-DataIn[0])*PI/180);
+            DataBack[i]=(int)((DataIn[i]-DataIn[0]));
+            DATA_TEMP[i]=(U32)((DataIn[i]-DataIn[0])*10);
+            temp=4*i;
+            DATBACK[temp]=(U8)(DATA_TEMP[i]>>24);
+            DATBACK[temp+1]=(U8)(DATA_TEMP[i]>>16);
+            DATBACK[temp+2]=(U8)(DATA_TEMP[i]>>8);
+            DATBACK[temp+3]=(U8)(DATA_TEMP[i]);
+            //DATA_TEMP[i]=(U16)((DataIn[i]-DataIn[0])*10);
+            // temp=2*i;
+            // DATBACK[temp+1]=(U8)DATA_TEMP[i];
+            // DATBACK[temp]=((U8)DATA_TEMP[i]>>8);
         }
     }
 }

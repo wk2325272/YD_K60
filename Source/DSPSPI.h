@@ -4,7 +4,7 @@
 #include "includes.h"
 
 /* wk @130412 --> 测试用宏定义 */
-#define T_SPI 1
+#define T_SPI 0
 
 #define ARRAY_SIZE 1 // wk --> for test
 /* wk @130412 : Pow_SIZE --> 2052 + 480 */
@@ -13,7 +13,7 @@
 
 /* wk @130412 : OFFSET --> 14 + 84 + 2*/
 /* 预留 + MCU2DSP + 标志 */
-#define OffSET 100 // WK --> 用于从BufRxchar中取电能质量数据到PowRxchar中的偏移
+#define OffSET 16 // WK --> 用于从BufRxchar中取电能质量数据到PowRxchar中的偏移
 
 
 #define Evnt_SIZE 2006
