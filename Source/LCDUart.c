@@ -42,7 +42,7 @@ volatile U8 TimeSetIndex;//初值为6，仅在此C文件中使用
 //volatile U8 BlightOffOn;
 //volatile struct SS SysSet;//在LCDUART.c中赋值，在MenuView.c中使用
 volatile SysStr SysSet; //在LCDUART.c中赋值，在MenuView.c中使用
-
+volatile U8 InitAck=0;
 /* Uart initialization for send data*/
 /* 
 ** 函数名： 
@@ -276,7 +276,7 @@ void LCDTouchSel_Task(uint_32 param)
 *******************************************************************************/
 void LCDUartView(U8 Touch_key)   // wk --> 数据显示 按键跳转函数。
 {
-    if(Touch_key<9|| Touch_key==255)  //  wk --> 内部页面切换或者是返回首页
+    if(Touch_key<10|| Touch_key==255)  //  wk --> 内部页面切换或者是返回首页
     {
         MenuSwFlg=1; //  wk -->页面切换标志 
         DisTimeOnce=1; //页面切换后完全显示时间
@@ -310,11 +310,10 @@ void LCDUartView(U8 Touch_key)   // wk --> 数据显示 按键跳转函数。
         break;
     case 8:
         Dis_PicID=MenuViewListQuality2; // wk --> 电能质量参数 2
-        break;
+        break;   
     case 9:
-        Dis_PicID=MenuViewWorkState; // wk -- > 工作状态
+        Dis_PicID = MenuStatus; // wk -- > 工作状态
         break;
-        
    /* WK --> 数据显示谐波柱状图按键  */  
     case 0x60: // wk --> 相位选择
       HarmoGraphPhase<3 ? (++HarmoGraphPhase): (HarmoGraphPhase=1);  
@@ -444,7 +443,7 @@ void LCDUartView(U8 Touch_key)   // wk --> 数据显示 按键跳转函数。
 *******************************************************************************/
 void LCDUartSET(U8 Touch_key)   // wk --> 系统设置 键号跳转函数
 {
-    if(Touch_key<2||Touch_key==255)
+    if(Touch_key<3||Touch_key==255)
     {
         MenuSwFlg=1;//切换页面
         DisTimeOnce=1;//页面切换后完全显示时间
@@ -468,8 +467,22 @@ void LCDUartSET(U8 Touch_key)   // wk --> 系统设置 键号跳转函数
         SysSet.EvntIndex=0;
         SysSet.DataCnt=0; 
         break;
-    case 18:   // wk --> 恢复出厂设置
-      // WK --> 待补充
+        
+    case 2:  /* 恢复出厂设置 */
+        Dis_PicID=MenuInitSET;
+        SysSet.SwFlg=1;
+        break;
+        
+//    case 18:   // wk --> 恢复出厂设置
+    case 0x31:                  /*事件设置清除键*/
+        InitAck=1;
+        break;
+        
+    case 0x32:                  /*事件设置清除键*/
+        //InitNoAck=1;
+        MenuSwFlg=1; //  wk -->页面切换标志
+        DisTimeOnce=1; //页面切换后完全显示时间
+        Dis_PicID=MenuParaSET;
         break;
         /**********************************************************************
         ** WK --> 系统参数设置界面按键  

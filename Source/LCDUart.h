@@ -9,6 +9,7 @@
 #define MenuTop 0
 #define MenuSysPara  10
 #define MenuSysEvent  11
+#define MenuInitSET 18
 #define MenuViewWavVolCur 20  // wk : 切换到主数据页面显示 --> 电压电流波形显示
 #define MenuViewWavVol 21  
 #define MenuViewWavCur 22
@@ -22,7 +23,7 @@
 #define MenuViewHarmoList1 28//显示1-26次谐波
 #define MenuViewHarmoList2 29//显示25-50次谐波
 // WK --> 工作状态的图片暂时还未烧写进去，先用 30代替
-#define MenuViewWorkState 30 // wk --> 工作状态
+#define MenuStatus 9 // wk --> 工作状态
 
 #define MenuEvent
 #define MenuParaSET 10
@@ -73,6 +74,7 @@ extern volatile U8 SoundOffOn;
 extern volatile U8 BlightOffOn;
 //extern volatile struct SS SysSet;//在LCDUART.c中赋值，在MenuView.c中使用
 extern volatile SysStr SysSet;
+extern volatile U8 InitAck;
 
 void LCDUartView(U8 Touch_key);
 void LCDUartSET(U8 Touch_key);

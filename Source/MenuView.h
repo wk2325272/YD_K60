@@ -118,7 +118,8 @@ void GUI_EventList(void);
 void GUI_EventWave(U8 U_DISK);
 void EventSave(U8 U_DISK);
 void PowerSave(void);
-
+void GUI_INIT_SET(void);
+void GUI_STATUS(U8 U_DISK);
 #endif
 
 

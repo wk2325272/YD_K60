@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    03/May/2013  18:27:44 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    03/May/2013  20:12:13 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -505,14 +505,14 @@ DMA_RecData_OK:
 //  206       {
 //  207         // wk @130420 --> 发送数据 4+2+1+14+2+2532+12+4 = 2571,DMA的数据长度=2571-7=2564，但是数据接收时有两个丢失，故减2
 //  208         
-//  209         DataSize = (((U16)HeadFlg[4])<<8) + HeadFlg[5]-3;
+//  209         DataSize = (((U16)HeadFlg[4])<<8) + HeadFlg[5]-2;
         LDR.N    R0,??DataTable2_5
         LDRB     R0,[R0, #+4]
         LSLS     R0,R0,#+8
         LDR.N    R1,??DataTable2_5
         LDRB     R1,[R1, #+5]
         ADDS     R0,R0,R1
-        SUBS     R0,R0,#+3
+        SUBS     R0,R0,#+2
         LDR.N    R1,??DataTable2_7
         STRH     R0,[R1, #+0]
 //  210         

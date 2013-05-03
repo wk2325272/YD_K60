@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM     25/Apr/2013  10:29:39 #
+# IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM     03/May/2013  20:17:37 #
 # Copyright 1999-2011 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -179,7 +179,11 @@ E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\LCDUart.c
      44          volatile SysStr SysSet; //在LCDUART.c中赋值，在MenuView.c中使用
    \                     SysSet:
    \   00000000                      DS8 24
-     45          
+
+   \                                 In section .bss, align 1
+     45          volatile U8 InitAck=0;
+   \                     InitAck:
+   \   00000000                      DS8 1
      46          /* Uart initialization for send data*/
      47          /* 
      48          ** 函数名： 
@@ -575,9 +579,9 @@ E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\LCDUart.c
    \                     LCDUartView:
    \   00000000   0xB500             PUSH     {LR}
    \   00000002   0xB085             SUB      SP,SP,#+20
-    279              if(Touch_key<9|| Touch_key==255)  //  wk --> 内部页面切换或者是返回首页
+    279              if(Touch_key<10|| Touch_key==255)  //  wk --> 内部页面切换或者是返回首页
    \   00000004   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   00000006   0x2809             CMP      R0,#+9
+   \   00000006   0x280A             CMP      R0,#+10
    \   00000008   0xD302             BCC.N    ??LCDUartView_0
    \   0000000A   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
    \   0000000C   0x28FF             CMP      R0,#+255
@@ -716,20 +720,19 @@ E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\LCDUart.c
    \   000000E8   0x.... 0x....      LDR.W    R0,??DataTable5_19
    \   000000EC   0x211A             MOVS     R1,#+26
    \   000000EE   0x7001             STRB     R1,[R0, #+0]
-    313                  break;
+    313                  break;   
    \   000000F0   0xE164             B.N      ??LCDUartView_25
     314              case 9:
-    315                  Dis_PicID=MenuViewWorkState; // wk -- > 工作状态
+    315                  Dis_PicID = MenuStatus; // wk -- > 工作状态
    \                     ??LCDUartView_11:
    \   000000F2   0x.... 0x....      LDR.W    R0,??DataTable5_19
-   \   000000F6   0x211E             MOVS     R1,#+30
+   \   000000F6   0x2109             MOVS     R1,#+9
    \   000000F8   0x7001             STRB     R1,[R0, #+0]
     316                  break;
    \   000000FA   0xE15F             B.N      ??LCDUartView_25
-    317                  
-    318             /* WK --> 数据显示谐波柱状图按键  */  
-    319              case 0x60: // wk --> 相位选择
-    320                HarmoGraphPhase<3 ? (++HarmoGraphPhase): (HarmoGraphPhase=1);  
+    317             /* WK --> 数据显示谐波柱状图按键  */  
+    318              case 0x60: // wk --> 相位选择
+    319                HarmoGraphPhase<3 ? (++HarmoGraphPhase): (HarmoGraphPhase=1);  
    \                     ??LCDUartView_12:
    \   000000FC   0x.... 0x....      LDR.W    R0,??DataTable5_20
    \   00000100   0x7800             LDRB     R0,[R0, #+0]
@@ -747,11 +750,11 @@ E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\LCDUart.c
    \   0000011A   0x.... 0x....      LDR.W    R1,??DataTable5_20
    \   0000011E   0x7008             STRB     R0,[R1, #+0]
    \   00000120   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    321                break;
+    320                break;
    \                     ??LCDUartView_27:
    \   00000122   0xE14B             B.N      ??LCDUartView_25
-    322              case 0x61: // wk --> 谐波选择
-    323                HarmoGraphRange==1 ? (HarmoGraphRange=2):(HarmoGraphRange=1); //WK --> 谐波在区间1-25和26-50之间切换
+    321              case 0x61: // wk --> 谐波选择
+    322                HarmoGraphRange==1 ? (HarmoGraphRange=2):(HarmoGraphRange=1); //WK --> 谐波在区间1-25和26-50之间切换
    \                     ??LCDUartView_13:
    \   00000124   0x.... 0x....      LDR.W    R0,??DataTable5_21
    \   00000128   0x7800             LDRB     R0,[R0, #+0]
@@ -767,8 +770,8 @@ E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\LCDUart.c
    \   0000013C   0x.... 0x....      LDR.W    R1,??DataTable5_21
    \   00000140   0x7008             STRB     R0,[R1, #+0]
    \   00000142   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    324                /* WK --> 在区间切换时，谐波次数相应切换*/
-    325                HarmoGraphRange==1 ? (HarmoGraphUorder=1):(HarmoGraphUorder=25);  
+    323                /* WK --> 在区间切换时，谐波次数相应切换*/
+    324                HarmoGraphRange==1 ? (HarmoGraphUorder=1):(HarmoGraphUorder=25);  
    \                     ??LCDUartView_29:
    \   00000144   0x.... 0x....      LDR.W    R0,??DataTable5_21
    \   00000148   0x7800             LDRB     R0,[R0, #+0]
@@ -784,7 +787,7 @@ E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\LCDUart.c
    \   0000015C   0x.... 0x....      LDR.W    R1,??DataTable5_22
    \   00000160   0x7008             STRB     R0,[R1, #+0]
    \   00000162   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    326                HarmoGraphRange==1 ? (HarmoGraphIorder=1):(HarmoGraphIorder=25);
+    325                HarmoGraphRange==1 ? (HarmoGraphIorder=1):(HarmoGraphIorder=25);
    \                     ??LCDUartView_31:
    \   00000164   0x.... 0x....      LDR.W    R0,??DataTable5_21
    \   00000168   0x7800             LDRB     R0,[R0, #+0]
@@ -800,194 +803,194 @@ E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\LCDUart.c
    \   0000017C   0x.... 0x....      LDR.W    R1,??DataTable5_23
    \   00000180   0x7008             STRB     R0,[R1, #+0]
    \   00000182   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    327                break;
+    326                break;
    \                     ??LCDUartView_33:
    \   00000184   0xE11A             B.N      ??LCDUartView_25
-    328              case 0x62: // wk --> 电压谐波次数功能 + 键
-    329                HarmoGraphUorder++;
+    327              case 0x62: // wk --> 电压谐波次数功能 + 键
+    328                HarmoGraphUorder++;
    \                     ??LCDUartView_14:
    \   00000186   0x.... 0x....      LDR.W    R0,??DataTable5_22
    \   0000018A   0x7800             LDRB     R0,[R0, #+0]
    \   0000018C   0x1C40             ADDS     R0,R0,#+1
    \   0000018E   0x.... 0x....      LDR.W    R1,??DataTable5_22
    \   00000192   0x7008             STRB     R0,[R1, #+0]
-    330                      if (HarmoGraphRange==1)  //WK --> 谐波在 1-25区间
+    329                      if (HarmoGraphRange==1)  //WK --> 谐波在 1-25区间
    \   00000194   0x.... 0x....      LDR.W    R0,??DataTable5_21
    \   00000198   0x7800             LDRB     R0,[R0, #+0]
    \   0000019A   0x2801             CMP      R0,#+1
    \   0000019C   0xD109             BNE.N    ??LCDUartView_34
-    331                      {
-    332                          if(HarmoGraphUorder==27)
+    330                      {
+    331                          if(HarmoGraphUorder==27)
    \   0000019E   0x.... 0x....      LDR.W    R0,??DataTable5_22
    \   000001A2   0x7800             LDRB     R0,[R0, #+0]
    \   000001A4   0x281B             CMP      R0,#+27
    \   000001A6   0xD10D             BNE.N    ??LCDUartView_35
-    333                          {
-    334                              HarmoGraphUorder=1;
+    332                          {
+    333                              HarmoGraphUorder=1;
    \   000001A8   0x.... 0x....      LDR.W    R0,??DataTable5_22
    \   000001AC   0x2101             MOVS     R1,#+1
    \   000001AE   0x7001             STRB     R1,[R0, #+0]
    \   000001B0   0xE008             B.N      ??LCDUartView_35
-    335                          }
-    336                      }
-    337                      else   //WK --> 谐波在 26-50 区间
-    338                      {
-    339                          if(HarmoGraphUorder==51)
+    334                          }
+    335                      }
+    336                      else   //WK --> 谐波在 26-50 区间
+    337                      {
+    338                          if(HarmoGraphUorder==51)
    \                     ??LCDUartView_34:
    \   000001B2   0x.... 0x....      LDR.W    R0,??DataTable5_22
    \   000001B6   0x7800             LDRB     R0,[R0, #+0]
    \   000001B8   0x2833             CMP      R0,#+51
    \   000001BA   0xD103             BNE.N    ??LCDUartView_35
-    340                          {
-    341                              HarmoGraphUorder=25;
+    339                          {
+    340                              HarmoGraphUorder=25;
    \   000001BC   0x.... 0x....      LDR.W    R0,??DataTable5_22
    \   000001C0   0x2119             MOVS     R1,#+25
    \   000001C2   0x7001             STRB     R1,[R0, #+0]
-    342                          }
-    343                      }
-    344                break;
+    341                          }
+    342                      }
+    343                break;
    \                     ??LCDUartView_35:
    \   000001C4   0xE0FA             B.N      ??LCDUartView_25
-    345              case 0x63: //wk -- > 电压谐波次数功能 - 键
-    346                HarmoGraphUorder--;
+    344              case 0x63: //wk -- > 电压谐波次数功能 - 键
+    345                HarmoGraphUorder--;
    \                     ??LCDUartView_15:
    \   000001C6   0x.... 0x....      LDR.W    R0,??DataTable5_22
    \   000001CA   0x7800             LDRB     R0,[R0, #+0]
    \   000001CC   0x1E40             SUBS     R0,R0,#+1
    \   000001CE   0x.... 0x....      LDR.W    R1,??DataTable5_22
    \   000001D2   0x7008             STRB     R0,[R1, #+0]
-    347                      if (HarmoGraphRange==1)
+    346                      if (HarmoGraphRange==1)
    \   000001D4   0x.... 0x....      LDR.W    R0,??DataTable5_21
    \   000001D8   0x7800             LDRB     R0,[R0, #+0]
    \   000001DA   0x2801             CMP      R0,#+1
    \   000001DC   0xD109             BNE.N    ??LCDUartView_36
-    348                      {
-    349                          if(HarmoGraphUorder==0)
+    347                      {
+    348                          if(HarmoGraphUorder==0)
    \   000001DE   0x.... 0x....      LDR.W    R0,??DataTable5_22
    \   000001E2   0x7800             LDRB     R0,[R0, #+0]
    \   000001E4   0x2800             CMP      R0,#+0
    \   000001E6   0xD10D             BNE.N    ??LCDUartView_37
-    350                          {
-    351                              HarmoGraphUorder=26;
+    349                          {
+    350                              HarmoGraphUorder=26;
    \   000001E8   0x.... 0x....      LDR.W    R0,??DataTable5_22
    \   000001EC   0x211A             MOVS     R1,#+26
    \   000001EE   0x7001             STRB     R1,[R0, #+0]
    \   000001F0   0xE008             B.N      ??LCDUartView_37
-    352                          }
-    353                      }
-    354                      else
-    355                      {
-    356                          if(HarmoGraphUorder==24)
+    351                          }
+    352                      }
+    353                      else
+    354                      {
+    355                          if(HarmoGraphUorder==24)
    \                     ??LCDUartView_36:
    \   000001F2   0x.... 0x....      LDR.W    R0,??DataTable5_22
    \   000001F6   0x7800             LDRB     R0,[R0, #+0]
    \   000001F8   0x2818             CMP      R0,#+24
    \   000001FA   0xD103             BNE.N    ??LCDUartView_37
-    357                          {
-    358                              HarmoGraphUorder=50;
+    356                          {
+    357                              HarmoGraphUorder=50;
    \   000001FC   0x.... 0x....      LDR.W    R0,??DataTable5_22
    \   00000200   0x2132             MOVS     R1,#+50
    \   00000202   0x7001             STRB     R1,[R0, #+0]
-    359                          }
-    360                      }
-    361                break;
+    358                          }
+    359                      }
+    360                break;
    \                     ??LCDUartView_37:
    \   00000204   0xE0DA             B.N      ??LCDUartView_25
-    362              case 0x64: // wk --> 电流谐波次数功能 + 键
-    363                HarmoGraphIorder++;
+    361              case 0x64: // wk --> 电流谐波次数功能 + 键
+    362                HarmoGraphIorder++;
    \                     ??LCDUartView_16:
    \   00000206   0x.... 0x....      LDR.W    R0,??DataTable5_23
    \   0000020A   0x7800             LDRB     R0,[R0, #+0]
    \   0000020C   0x1C40             ADDS     R0,R0,#+1
    \   0000020E   0x.... 0x....      LDR.W    R1,??DataTable5_23
    \   00000212   0x7008             STRB     R0,[R1, #+0]
-    364                      if (HarmoGraphRange==1)
+    363                      if (HarmoGraphRange==1)
    \   00000214   0x.... 0x....      LDR.W    R0,??DataTable5_21
    \   00000218   0x7800             LDRB     R0,[R0, #+0]
    \   0000021A   0x2801             CMP      R0,#+1
    \   0000021C   0xD109             BNE.N    ??LCDUartView_38
-    365                      {
-    366                          if(HarmoGraphIorder==27)
+    364                      {
+    365                          if(HarmoGraphIorder==27)
    \   0000021E   0x.... 0x....      LDR.W    R0,??DataTable5_23
    \   00000222   0x7800             LDRB     R0,[R0, #+0]
    \   00000224   0x281B             CMP      R0,#+27
    \   00000226   0xD10D             BNE.N    ??LCDUartView_39
-    367                          {
-    368                              HarmoGraphIorder=1;
+    366                          {
+    367                              HarmoGraphIorder=1;
    \   00000228   0x.... 0x....      LDR.W    R0,??DataTable5_23
    \   0000022C   0x2101             MOVS     R1,#+1
    \   0000022E   0x7001             STRB     R1,[R0, #+0]
    \   00000230   0xE008             B.N      ??LCDUartView_39
-    369                          }
-    370                      }
-    371                      else
-    372                      {
-    373                          if(HarmoGraphIorder==51)
+    368                          }
+    369                      }
+    370                      else
+    371                      {
+    372                          if(HarmoGraphIorder==51)
    \                     ??LCDUartView_38:
    \   00000232   0x.... 0x....      LDR.W    R0,??DataTable5_23
    \   00000236   0x7800             LDRB     R0,[R0, #+0]
    \   00000238   0x2833             CMP      R0,#+51
    \   0000023A   0xD103             BNE.N    ??LCDUartView_39
-    374                          {
-    375                              HarmoGraphIorder=25;
+    373                          {
+    374                              HarmoGraphIorder=25;
    \   0000023C   0x.... 0x....      LDR.W    R0,??DataTable5_23
    \   00000240   0x2119             MOVS     R1,#+25
    \   00000242   0x7001             STRB     R1,[R0, #+0]
-    376                          }
-    377                      }
-    378                break;
+    375                          }
+    376                      }
+    377                break;
    \                     ??LCDUartView_39:
    \   00000244   0xE0BA             B.N      ??LCDUartView_25
-    379              case 0x65: // wk --> 电流谐波次数功能 - 键
-    380                HarmoGraphIorder--;
+    378              case 0x65: // wk --> 电流谐波次数功能 - 键
+    379                HarmoGraphIorder--;
    \                     ??LCDUartView_17:
    \   00000246   0x.... 0x....      LDR.W    R0,??DataTable5_23
    \   0000024A   0x7800             LDRB     R0,[R0, #+0]
    \   0000024C   0x1E40             SUBS     R0,R0,#+1
    \   0000024E   0x.... 0x....      LDR.W    R1,??DataTable5_23
    \   00000252   0x7008             STRB     R0,[R1, #+0]
-    381                      if (HarmoGraphRange==1)
+    380                      if (HarmoGraphRange==1)
    \   00000254   0x.... 0x....      LDR.W    R0,??DataTable5_21
    \   00000258   0x7800             LDRB     R0,[R0, #+0]
    \   0000025A   0x2801             CMP      R0,#+1
    \   0000025C   0xD109             BNE.N    ??LCDUartView_40
-    382                      {
-    383                          if(!HarmoGraphIorder)
+    381                      {
+    382                          if(!HarmoGraphIorder)
    \   0000025E   0x.... 0x....      LDR.W    R0,??DataTable5_23
    \   00000262   0x7800             LDRB     R0,[R0, #+0]
    \   00000264   0x2800             CMP      R0,#+0
    \   00000266   0xD10D             BNE.N    ??LCDUartView_41
-    384                          {
-    385                              HarmoGraphIorder=26;
+    383                          {
+    384                              HarmoGraphIorder=26;
    \   00000268   0x.... 0x....      LDR.W    R0,??DataTable5_23
    \   0000026C   0x211A             MOVS     R1,#+26
    \   0000026E   0x7001             STRB     R1,[R0, #+0]
    \   00000270   0xE008             B.N      ??LCDUartView_41
-    386                          }
-    387                      }
-    388                      else
-    389                      {
-    390                          if(HarmoGraphIorder==24)
+    385                          }
+    386                      }
+    387                      else
+    388                      {
+    389                          if(HarmoGraphIorder==24)
    \                     ??LCDUartView_40:
    \   00000272   0x.... 0x....      LDR.W    R0,??DataTable5_23
    \   00000276   0x7800             LDRB     R0,[R0, #+0]
    \   00000278   0x2818             CMP      R0,#+24
    \   0000027A   0xD103             BNE.N    ??LCDUartView_41
-    391                          {
-    392                              HarmoGraphIorder=50;
+    390                          {
+    391                              HarmoGraphIorder=50;
    \   0000027C   0x.... 0x....      LDR.W    R0,??DataTable5_23
    \   00000280   0x2132             MOVS     R1,#+50
    \   00000282   0x7001             STRB     R1,[R0, #+0]
-    393                          }
-    394                      }
-    395                break;
+    392                          }
+    393                      }
+    394                break;
    \                     ??LCDUartView_41:
    \   00000284   0xE09A             B.N      ??LCDUartView_25
-    396                /* wk --> 谐波柱状图 END */
-    397                
-    398              /* WK --> 数据显示谐波柱状图按键  */ 
-    399              case 0x70:  // WK --> U/I
-    400                (HarmoListUorI==1) ? (HarmoListUorI=2):(HarmoListUorI=1); // 1--> U 2-->I
+    395                /* wk --> 谐波柱状图 END */
+    396                
+    397              /* WK --> 数据显示谐波柱状图按键  */ 
+    398              case 0x70:  // WK --> U/I
+    399                (HarmoListUorI==1) ? (HarmoListUorI=2):(HarmoListUorI=1); // 1--> U 2-->I
    \                     ??LCDUartView_18:
    \   00000286   0x.... 0x....      LDR.W    R0,??DataTable5_24
    \   0000028A   0x7800             LDRB     R0,[R0, #+0]
@@ -1003,11 +1006,11 @@ E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\LCDUart.c
    \   0000029E   0x.... 0x....      LDR.W    R1,??DataTable5_24
    \   000002A2   0x7008             STRB     R0,[R1, #+0]
    \   000002A4   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    401                break;
+    400                break;
    \                     ??LCDUartView_43:
    \   000002A6   0xE089             B.N      ??LCDUartView_25
-    402              case 0x71:  // WK --> 类型  1:幅值澹  2:含有率
-    403                (HarmoListAmporRatio==1)?(HarmoListAmporRatio=2):(HarmoListAmporRatio=1);
+    401              case 0x71:  // WK --> 类型  1:幅值澹  2:含有率
+    402                (HarmoListAmporRatio==1)?(HarmoListAmporRatio=2):(HarmoListAmporRatio=1);
    \                     ??LCDUartView_19:
    \   000002A8   0x.... 0x....      LDR.W    R0,??DataTable5_25
    \   000002AC   0x7800             LDRB     R0,[R0, #+0]
@@ -1023,11 +1026,11 @@ E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\LCDUart.c
    \   000002C0   0x.... 0x....      LDR.W    R1,??DataTable5_25
    \   000002C4   0x7008             STRB     R0,[R1, #+0]
    \   000002C6   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    404                break;
+    403                break;
    \                     ??LCDUartView_45:
    \   000002C8   0xE078             B.N      ??LCDUartView_25
-    405              case 0x72:  // WK --> 区间   1:1-26   2:25-50
-    406                (HarmoListRange==1)? (HarmoListRange=2):(HarmoListRange=1); 
+    404              case 0x72:  // WK --> 区间   1:1-26   2:25-50
+    405                (HarmoListRange==1)? (HarmoListRange=2):(HarmoListRange=1); 
    \                     ??LCDUartView_20:
    \   000002CA   0x.... 0x....      LDR.W    R0,??DataTable5_26
    \   000002CE   0x7800             LDRB     R0,[R0, #+0]
@@ -1043,12 +1046,12 @@ E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\LCDUart.c
    \   000002E2   0x.... 0x....      LDR.W    R1,??DataTable5_26
    \   000002E6   0x7008             STRB     R0,[R1, #+0]
    \   000002E8   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    407                 MenuSwFlg=1; // 两页之间切换
+    406                 MenuSwFlg=1; // 两页之间切换
    \                     ??LCDUartView_47:
    \   000002EA   0x.... 0x....      LDR.W    R0,??DataTable5_16
    \   000002EE   0x2101             MOVS     R1,#+1
    \   000002F0   0x7001             STRB     R1,[R0, #+0]
-    408                (Dis_PicID==MenuViewHarmoList1)?(Dis_PicID=MenuViewHarmoList2):(Dis_PicID=MenuViewHarmoList1);
+    407                (Dis_PicID==MenuViewHarmoList1)?(Dis_PicID=MenuViewHarmoList2):(Dis_PicID=MenuViewHarmoList1);
    \   000002F2   0x.... 0x....      LDR.W    R0,??DataTable5_19
    \   000002F6   0x7800             LDRB     R0,[R0, #+0]
    \   000002F8   0x281C             CMP      R0,#+28
@@ -1063,11 +1066,11 @@ E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\LCDUart.c
    \   0000030A   0x.... 0x....      LDR.W    R1,??DataTable5_19
    \   0000030E   0x7008             STRB     R0,[R1, #+0]
    \   00000310   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    409                break;
+    408                break;
    \                     ??LCDUartView_49:
    \   00000312   0xE053             B.N      ??LCDUartView_25
-    410              case 0x73: // WK --> 相选
-    411                 HarmoListPhase<3 ? (++HarmoListPhase): (HarmoListPhase=1);
+    409              case 0x73: // WK --> 相选
+    410                 HarmoListPhase<3 ? (++HarmoListPhase): (HarmoListPhase=1);
    \                     ??LCDUartView_21:
    \   00000314   0x.... 0x....      LDR.W    R0,??DataTable5_27
    \   00000318   0x7800             LDRB     R0,[R0, #+0]
@@ -1085,28 +1088,28 @@ E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\LCDUart.c
    \   00000332   0x.... 0x....      LDR.W    R1,??DataTable5_27
    \   00000336   0x7008             STRB     R0,[R1, #+0]
    \   00000338   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    412                break;
+    411                break;
    \                     ??LCDUartView_51:
    \   0000033A   0xE03F             B.N      ??LCDUartView_25
-    413              /* WK --> 数据显示谐波柱状图按键  END*/ 
-    414                  
-    415              case 254:       // wk --> hold 按键
-    416                  if (VIEWHoldFlg==0)
+    412              /* WK --> 数据显示谐波柱状图按键  END*/ 
+    413                  
+    414              case 254:       // wk --> hold 按键
+    415                  if (VIEWHoldFlg==0)
    \                     ??LCDUartView_22:
    \   0000033C   0x.... 0x....      LDR.W    R0,??DataTable5_18
    \   00000340   0x7800             LDRB     R0,[R0, #+0]
    \   00000342   0x2800             CMP      R0,#+0
    \   00000344   0xD11B             BNE.N    ??LCDUartView_52
-    417                  {
-    418                      VIEWHoldFlg=1;
+    416                  {
+    417                      VIEWHoldFlg=1;
    \   00000346   0x.... 0x....      LDR.W    R0,??DataTable5_18
    \   0000034A   0x2101             MOVS     R1,#+1
    \   0000034C   0x7001             STRB     R1,[R0, #+0]
-    419                      ViewKeyFlg=0;
+    418                      ViewKeyFlg=0;
    \   0000034E   0x.... 0x....      LDR.W    R0,??DataTable5_13
    \   00000352   0x2100             MOVS     R1,#+0
    \   00000354   0x7001             STRB     R1,[R0, #+0]
-    420                      YADA_98(510,453,0x22,0x81,0x02,0xf800,0x0000,"√",0);
+    419                      YADA_98(510,453,0x22,0x81,0x02,0xf800,0x0000,"√",0);
    \   00000356   0x2000             MOVS     R0,#+0
    \   00000358   0x9004             STR      R0,[SP, #+16]
    \   0000035A   0x....             ADR.N    R0,??DataTable3  ;; 0xA1, 0xCC, 0x00, 0x00
@@ -1123,15 +1126,15 @@ E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\LCDUart.c
    \   00000374   0xF44F 0x70FF      MOV      R0,#+510
    \   00000378   0x.... 0x....      BL       YADA_98
    \   0000037C   0xE018             B.N      ??LCDUartView_53
-    421                  }
-    422                  else
-    423                  {
-    424                      VIEWHoldFlg=0;
+    420                  }
+    421                  else
+    422                  {
+    423                      VIEWHoldFlg=0;
    \                     ??LCDUartView_52:
    \   0000037E   0x.... 0x....      LDR.W    R0,??DataTable5_18
    \   00000382   0x2100             MOVS     R1,#+0
    \   00000384   0x7001             STRB     R1,[R0, #+0]
-    425                      YADA_71(Dis_PicID,510,453,532,475,510,453);
+    424                      YADA_71(Dis_PicID,510,453,532,475,510,453);
    \   00000386   0xF240 0x10C5      MOVW     R0,#+453
    \   0000038A   0x9002             STR      R0,[SP, #+8]
    \   0000038C   0xF44F 0x70FF      MOV      R0,#+510
@@ -1145,731 +1148,771 @@ E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\LCDUart.c
    \   000003A8   0x7800             LDRB     R0,[R0, #+0]
    \   000003AA   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
    \   000003AC   0x.... 0x....      BL       YADA_71
-    426                  }
-    427                  break;
+    425                  }
+    426                  break;
    \                     ??LCDUartView_53:
    \   000003B0   0xE004             B.N      ??LCDUartView_25
-    428              case 255:
-    429                  Dis_PicID=MenuTop;
+    427              case 255:
+    428                  Dis_PicID=MenuTop;
    \                     ??LCDUartView_23:
    \   000003B2   0x.... 0x....      LDR.W    R0,??DataTable5_19
    \   000003B6   0x2100             MOVS     R1,#+0
    \   000003B8   0x7001             STRB     R1,[R0, #+0]
-    430                  break;
+    429                  break;
    \   000003BA   0xE7FF             B.N      ??LCDUartView_25
-    431              default:
-    432                  break;
-    433              }
-    434          }
+    430              default:
+    431                  break;
+    432              }
+    433          }
    \                     ??LCDUartView_24:
    \                     ??LCDUartView_25:
    \   000003BC   0xB005             ADD      SP,SP,#+20
    \   000003BE   0xBD00             POP      {PC}             ;; return
-    435          /*******************************************************************************
-    436          * 函  数  名      : LCDUartSET
-    437          * 描      述      : LCDUart触摸屏中断系统设置按键判断
-    438          * 输      入      : Touch_key.
-    439          * 返      回      : 无.
-    440          *
-    441          * 修       改     : WK
-    442          * 时       间     : 2013-03-13
-    443          * 描       述     : 基于2013-03-08界面 -->保存键 、恢复出厂设置   还没有完成
-    444          *******************************************************************************/
+    434          /*******************************************************************************
+    435          * 函  数  名      : LCDUartSET
+    436          * 描      述      : LCDUart触摸屏中断系统设置按键判断
+    437          * 输      入      : Touch_key.
+    438          * 返      回      : 无.
+    439          *
+    440          * 修       改     : WK
+    441          * 时       间     : 2013-03-13
+    442          * 描       述     : 基于2013-03-08界面 -->保存键 、恢复出厂设置   还没有完成
+    443          *******************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    445          void LCDUartSET(U8 Touch_key)   // wk --> 系统设置 键号跳转函数
-    446          {
-    447              if(Touch_key<2||Touch_key==255)
+    444          void LCDUartSET(U8 Touch_key)   // wk --> 系统设置 键号跳转函数
+    445          {
+    446              if(Touch_key<3||Touch_key==255)
    \                     LCDUartSET:
    \   00000000   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   00000002   0x2802             CMP      R0,#+2
+   \   00000002   0x2803             CMP      R0,#+3
    \   00000004   0xD302             BCC.N    ??LCDUartSET_0
    \   00000006   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
    \   00000008   0x28FF             CMP      R0,#+255
    \   0000000A   0xD107             BNE.N    ??LCDUartSET_1
-    448              {
-    449                  MenuSwFlg=1;//切换页面
+    447              {
+    448                  MenuSwFlg=1;//切换页面
    \                     ??LCDUartSET_0:
    \   0000000C   0x.... 0x....      LDR.W    R1,??DataTable5_16
    \   00000010   0x2201             MOVS     R2,#+1
    \   00000012   0x700A             STRB     R2,[R1, #+0]
-    450                  DisTimeOnce=1;//页面切换后完全显示时间
+    449                  DisTimeOnce=1;//页面切换后完全显示时间
    \   00000014   0x.... 0x....      LDR.W    R1,??DataTable5_17
    \   00000018   0x2201             MOVS     R2,#+1
    \   0000001A   0x700A             STRB     R2,[R1, #+0]
-    451                   //系统设置按键均使发送完成标志清零
-    452              }         
-    453              switch(Touch_key)
+    450                   //系统设置按键均使发送完成标志清零
+    451              }         
+    452              switch(Touch_key)
    \                     ??LCDUartSET_1:
    \   0000001C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
    \   0000001E   0x0001             MOVS     R1,R0
    \   00000020   0x2900             CMP      R1,#+0
-   \   00000022   0xD03C             BEQ.N    ??LCDUartSET_2
+   \   00000022   0xD041             BEQ.N    ??LCDUartSET_2
    \   00000024   0x2901             CMP      R1,#+1
-   \   00000026   0xD053             BEQ.N    ??LCDUartSET_3
-   \   00000028   0x2910             CMP      R1,#+16
-   \   0000002A   0xD063             BEQ.N    ??LCDUartSET_4
-   \   0000002C   0x2911             CMP      R1,#+17
-   \   0000002E   0xF000 0x8085      BEQ.W    ??LCDUartSET_5
-   \   00000032   0x2912             CMP      R1,#+18
-   \   00000034   0xD05D             BEQ.N    ??LCDUartSET_6
-   \   00000036   0x2913             CMP      R1,#+19
-   \   00000038   0xF000 0x80A4      BEQ.W    ??LCDUartSET_7
-   \   0000003C   0x2918             CMP      R1,#+24
-   \   0000003E   0xF000 0x819C      BEQ.W    ??LCDUartSET_8
-   \   00000042   0x2919             CMP      R1,#+25
-   \   00000044   0xF000 0x81A9      BEQ.W    ??LCDUartSET_9
-   \   00000048   0x2940             CMP      R1,#+64
-   \   0000004A   0xF000 0x8133      BEQ.W    ??LCDUartSET_10
-   \   0000004E   0x2941             CMP      R1,#+65
-   \   00000050   0xF000 0x8157      BEQ.W    ??LCDUartSET_11
-   \   00000054   0x2942             CMP      R1,#+66
-   \   00000056   0xF000 0x817B      BEQ.W    ??LCDUartSET_12
-   \   0000005A   0x2943             CMP      R1,#+67
-   \   0000005C   0xF000 0x8189      BEQ.W    ??LCDUartSET_13
-   \   00000060   0x2948             CMP      R1,#+72
-   \   00000062   0xF000 0x818B      BEQ.W    ??LCDUartSET_14
-   \   00000066   0x2949             CMP      R1,#+73
-   \   00000068   0xF000 0x8197      BEQ.W    ??LCDUartSET_9
-   \   0000006C   0x2960             CMP      R1,#+96
-   \   0000006E   0xF000 0x808E      BEQ.W    ??LCDUartSET_15
-   \   00000072   0x2961             CMP      R1,#+97
-   \   00000074   0xF000 0x80A0      BEQ.W    ??LCDUartSET_16
-   \   00000078   0x2962             CMP      R1,#+98
-   \   0000007A   0xF000 0x80B2      BEQ.W    ??LCDUartSET_17
-   \   0000007E   0x2963             CMP      R1,#+99
-   \   00000080   0xF000 0x80C4      BEQ.W    ??LCDUartSET_18
-   \   00000084   0x2964             CMP      R1,#+100
-   \   00000086   0xF000 0x80D6      BEQ.W    ??LCDUartSET_19
-   \   0000008A   0x2965             CMP      R1,#+101
-   \   0000008C   0xF000 0x80E8      BEQ.W    ??LCDUartSET_20
-   \   00000090   0x2966             CMP      R1,#+102
-   \   00000092   0xF000 0x80FA      BEQ.W    ??LCDUartSET_21
-   \   00000096   0x29FF             CMP      R1,#+255
-   \   00000098   0xF000 0x8186      BEQ.W    ??LCDUartSET_22
-   \   0000009C   0xE188             B.N      ??LCDUartSET_23
-    454              {
-    455              case 0: //系参设置//对SwFlg、FuncFlg、DataFlg、SaveFlg、ParaIndex、DataCnt赋初值
-    456                  // VIEWHoldFlg=0;
-    457                  Dis_PicID=MenuParaSET;
+   \   00000026   0xD058             BEQ.N    ??LCDUartSET_3
+   \   00000028   0x2902             CMP      R1,#+2
+   \   0000002A   0xD067             BEQ.N    ??LCDUartSET_4
+   \   0000002C   0x2910             CMP      R1,#+16
+   \   0000002E   0xF000 0x8080      BEQ.W    ??LCDUartSET_5
+   \   00000032   0x2911             CMP      R1,#+17
+   \   00000034   0xF000 0x80A1      BEQ.W    ??LCDUartSET_6
+   \   00000038   0x2913             CMP      R1,#+19
+   \   0000003A   0xF000 0x80C2      BEQ.W    ??LCDUartSET_7
+   \   0000003E   0x2918             CMP      R1,#+24
+   \   00000040   0xF000 0x81BA      BEQ.W    ??LCDUartSET_8
+   \   00000044   0x2919             CMP      R1,#+25
+   \   00000046   0xF000 0x81C7      BEQ.W    ??LCDUartSET_9
+   \   0000004A   0x2931             CMP      R1,#+49
+   \   0000004C   0xD05F             BEQ.N    ??LCDUartSET_10
+   \   0000004E   0x2932             CMP      R1,#+50
+   \   00000050   0xD062             BEQ.N    ??LCDUartSET_11
+   \   00000052   0x2940             CMP      R1,#+64
+   \   00000054   0xF000 0x814D      BEQ.W    ??LCDUartSET_12
+   \   00000058   0x2941             CMP      R1,#+65
+   \   0000005A   0xF000 0x8171      BEQ.W    ??LCDUartSET_13
+   \   0000005E   0x2942             CMP      R1,#+66
+   \   00000060   0xF000 0x8195      BEQ.W    ??LCDUartSET_14
+   \   00000064   0x2943             CMP      R1,#+67
+   \   00000066   0xF000 0x81A3      BEQ.W    ??LCDUartSET_15
+   \   0000006A   0x2948             CMP      R1,#+72
+   \   0000006C   0xF000 0x81A5      BEQ.W    ??LCDUartSET_16
+   \   00000070   0x2949             CMP      R1,#+73
+   \   00000072   0xF000 0x81B1      BEQ.W    ??LCDUartSET_9
+   \   00000076   0x2960             CMP      R1,#+96
+   \   00000078   0xF000 0x80A8      BEQ.W    ??LCDUartSET_17
+   \   0000007C   0x2961             CMP      R1,#+97
+   \   0000007E   0xF000 0x80BA      BEQ.W    ??LCDUartSET_18
+   \   00000082   0x2962             CMP      R1,#+98
+   \   00000084   0xF000 0x80CC      BEQ.W    ??LCDUartSET_19
+   \   00000088   0x2963             CMP      R1,#+99
+   \   0000008A   0xF000 0x80DE      BEQ.W    ??LCDUartSET_20
+   \   0000008E   0x2964             CMP      R1,#+100
+   \   00000090   0xF000 0x80F0      BEQ.W    ??LCDUartSET_21
+   \   00000094   0x2965             CMP      R1,#+101
+   \   00000096   0xF000 0x8102      BEQ.W    ??LCDUartSET_22
+   \   0000009A   0x2966             CMP      R1,#+102
+   \   0000009C   0xF000 0x8114      BEQ.W    ??LCDUartSET_23
+   \   000000A0   0x29FF             CMP      R1,#+255
+   \   000000A2   0xF000 0x81A0      BEQ.W    ??LCDUartSET_24
+   \   000000A6   0xE1A2             B.N      ??LCDUartSET_25
+    453              {
+    454              case 0: //系参设置//对SwFlg、FuncFlg、DataFlg、SaveFlg、ParaIndex、DataCnt赋初值
+    455                  // VIEWHoldFlg=0;
+    456                  Dis_PicID=MenuParaSET;
    \                     ??LCDUartSET_2:
-   \   0000009E   0x.... 0x....      LDR.W    R0,??DataTable5_19
-   \   000000A2   0x210A             MOVS     R1,#+10
-   \   000000A4   0x7001             STRB     R1,[R0, #+0]
-    458                  OtherSetIndex=0; // WK --> ?
-   \   000000A6   0x.... 0x....      LDR.W    R0,??DataTable5_28
-   \   000000AA   0x2100             MOVS     R1,#+0
-   \   000000AC   0x7001             STRB     R1,[R0, #+0]
-    459                  TimeSetIndex=9;  // WK --> ?
-   \   000000AE   0x.... 0x....      LDR.W    R0,??DataTable5_29
-   \   000000B2   0x2109             MOVS     R1,#+9
-   \   000000B4   0x7001             STRB     R1,[R0, #+0]
-    460                  SysSet.SwFlg=1;
-   \   000000B6   0x.... 0x....      LDR.W    R0,??DataTable5_30
-   \   000000BA   0x2101             MOVS     R1,#+1
-   \   000000BC   0x7001             STRB     R1,[R0, #+0]
-    461                  SysSet.ParaIndex=0;
-   \   000000BE   0x.... 0x....      LDR.W    R0,??DataTable5_30
-   \   000000C2   0x2100             MOVS     R1,#+0
-   \   000000C4   0x7181             STRB     R1,[R0, #+6]
-    462                  SysSet.DataCnt=0;
-   \   000000C6   0x.... 0x....      LDR.W    R0,??DataTable5_30
-   \   000000CA   0x2100             MOVS     R1,#+0
-   \   000000CC   0x7201             STRB     R1,[R0, #+8]
-    463                  break;
-   \   000000CE   0xE1B2             B.N      ??LCDUartSET_24
-    464              case 1:                       /*事件设置*/
-    465                  //VIEWHoldFlg=0;
-    466                  Dis_PicID=MenuEventSET;
+   \   000000A8   0x.... 0x....      LDR.W    R0,??DataTable5_19
+   \   000000AC   0x210A             MOVS     R1,#+10
+   \   000000AE   0x7001             STRB     R1,[R0, #+0]
+    457                  OtherSetIndex=0; // WK --> ?
+   \   000000B0   0x.... 0x....      LDR.W    R0,??DataTable5_28
+   \   000000B4   0x2100             MOVS     R1,#+0
+   \   000000B6   0x7001             STRB     R1,[R0, #+0]
+    458                  TimeSetIndex=9;  // WK --> ?
+   \   000000B8   0x.... 0x....      LDR.W    R0,??DataTable5_29
+   \   000000BC   0x2109             MOVS     R1,#+9
+   \   000000BE   0x7001             STRB     R1,[R0, #+0]
+    459                  SysSet.SwFlg=1;
+   \   000000C0   0x.... 0x....      LDR.W    R0,??DataTable5_30
+   \   000000C4   0x2101             MOVS     R1,#+1
+   \   000000C6   0x7001             STRB     R1,[R0, #+0]
+    460                  SysSet.ParaIndex=0;
+   \   000000C8   0x.... 0x....      LDR.W    R0,??DataTable5_30
+   \   000000CC   0x2100             MOVS     R1,#+0
+   \   000000CE   0x7181             STRB     R1,[R0, #+6]
+    461                  SysSet.DataCnt=0;
+   \   000000D0   0x.... 0x....      LDR.W    R0,??DataTable5_30
+   \   000000D4   0x2100             MOVS     R1,#+0
+   \   000000D6   0x7201             STRB     R1,[R0, #+8]
+    462                  break;
+   \   000000D8   0xE1CC             B.N      ??LCDUartSET_26
+    463              case 1:                       /*事件设置*/
+    464                  //VIEWHoldFlg=0;
+    465                  Dis_PicID=MenuEventSET;
    \                     ??LCDUartSET_3:
-   \   000000D0   0x.... 0x....      LDR.W    R0,??DataTable5_19
-   \   000000D4   0x210B             MOVS     R1,#+11
-   \   000000D6   0x7001             STRB     R1,[R0, #+0]
-    467                  SysSet.SwFlg=1;
-   \   000000D8   0x.... 0x....      LDR.W    R0,??DataTable5_30
-   \   000000DC   0x2101             MOVS     R1,#+1
-   \   000000DE   0x7001             STRB     R1,[R0, #+0]
-    468                  SysSet.EvntIndex=0;
-   \   000000E0   0x.... 0x....      LDR.W    R0,??DataTable5_30
-   \   000000E4   0x2100             MOVS     R1,#+0
-   \   000000E6   0x71C1             STRB     R1,[R0, #+7]
-    469                  SysSet.DataCnt=0; 
-   \   000000E8   0x.... 0x....      LDR.W    R0,??DataTable5_30
-   \   000000EC   0x2100             MOVS     R1,#+0
-   \   000000EE   0x7201             STRB     R1,[R0, #+8]
-    470                  break;
-   \   000000F0   0xE1A1             B.N      ??LCDUartSET_24
-    471              case 18:   // wk --> 恢复出厂设置
-    472                // WK --> 待补充
-    473                  break;
-   \                     ??LCDUartSET_6:
-   \   000000F2   0xE1A0             B.N      ??LCDUartSET_24
-    474                  /**********************************************************************
-    475                  ** WK --> 系统参数设置界面按键  
-    476                  **********************************************************************/
-    477              case 16:                       /*系统参数右移切换键*/
-    478                  OtherSetIndex++ ;
+   \   000000DA   0x.... 0x....      LDR.W    R0,??DataTable5_19
+   \   000000DE   0x210B             MOVS     R1,#+11
+   \   000000E0   0x7001             STRB     R1,[R0, #+0]
+    466                  SysSet.SwFlg=1;
+   \   000000E2   0x.... 0x....      LDR.W    R0,??DataTable5_30
+   \   000000E6   0x2101             MOVS     R1,#+1
+   \   000000E8   0x7001             STRB     R1,[R0, #+0]
+    467                  SysSet.EvntIndex=0;
+   \   000000EA   0x.... 0x....      LDR.W    R0,??DataTable5_30
+   \   000000EE   0x2100             MOVS     R1,#+0
+   \   000000F0   0x71C1             STRB     R1,[R0, #+7]
+    468                  SysSet.DataCnt=0; 
+   \   000000F2   0x.... 0x....      LDR.W    R0,??DataTable5_30
+   \   000000F6   0x2100             MOVS     R1,#+0
+   \   000000F8   0x7201             STRB     R1,[R0, #+8]
+    469                  break;
+   \   000000FA   0xE1BB             B.N      ??LCDUartSET_26
+    470                  
+    471              case 2:  /* 恢复出厂设置 */
+    472                  Dis_PicID=MenuInitSET;
    \                     ??LCDUartSET_4:
-   \   000000F4   0x.... 0x....      LDR.W    R0,??DataTable5_28
-   \   000000F8   0x7800             LDRB     R0,[R0, #+0]
-   \   000000FA   0x1C40             ADDS     R0,R0,#+1
-   \   000000FC   0x.... 0x....      LDR.W    R1,??DataTable5_28
-   \   00000100   0x7008             STRB     R0,[R1, #+0]
-    479                  SysSet.FuncFlg=1;  // WK --> 有光标移动
-   \   00000102   0x.... 0x....      LDR.W    R0,??DataTable5_30
-   \   00000106   0x2101             MOVS     R1,#+1
-   \   00000108   0x7041             STRB     R1,[R0, #+1]
-    480                  if(OtherSetIndex==9||TimeSetIndex!=9)//从时间项切换回其余项时，光标需回到第一项
-   \   0000010A   0x.... 0x....      LDR.W    R0,??DataTable5_28
-   \   0000010E   0x7800             LDRB     R0,[R0, #+0]
-   \   00000110   0x2809             CMP      R0,#+9
-   \   00000112   0xD004             BEQ.N    ??LCDUartSET_25
-   \   00000114   0x.... 0x....      LDR.W    R0,??DataTable5_29
-   \   00000118   0x7800             LDRB     R0,[R0, #+0]
-   \   0000011A   0x2809             CMP      R0,#+9
-   \   0000011C   0xD007             BEQ.N    ??LCDUartSET_26
-    481                  {
-    482                      OtherSetIndex=0;
-   \                     ??LCDUartSET_25:
-   \   0000011E   0x.... 0x....      LDR.W    R0,??DataTable5_28
-   \   00000122   0x2100             MOVS     R1,#+0
-   \   00000124   0x7001             STRB     R1,[R0, #+0]
-    483                      TimeSetIndex=9;  //实际只需在TimeSetIndex!=6时将其值置为6
-   \   00000126   0x.... 0x....      LDR.W    R0,??DataTable5_29
-   \   0000012A   0x2109             MOVS     R1,#+9
-   \   0000012C   0x7001             STRB     R1,[R0, #+0]
-    484                  }
-    485                  SysSet.ParaIndex=OtherSetIndex;
-   \                     ??LCDUartSET_26:
-   \   0000012E   0x.... 0x....      LDR.W    R0,??DataTable5_30
-   \   00000132   0x.... 0x....      LDR.W    R1,??DataTable5_28
-   \   00000136   0x7809             LDRB     R1,[R1, #+0]
-   \   00000138   0x7181             STRB     R1,[R0, #+6]
-    486                 
-    487                  break;
-   \   0000013A   0xE17C             B.N      ??LCDUartSET_24
-    488              case 17:
-    489                  SysSet.FuncFlg=1;
-   \                     ??LCDUartSET_5:
-   \   0000013C   0x.... 0x....      LDR.W    R0,??DataTable5_30
-   \   00000140   0x2101             MOVS     R1,#+1
-   \   00000142   0x7041             STRB     R1,[R0, #+1]
-    490                  if(OtherSetIndex==0||TimeSetIndex!=9)//从时间项切换回其余项时，光标需回到第五项
-   \   00000144   0x.... 0x....      LDR.W    R0,??DataTable5_28
-   \   00000148   0x7800             LDRB     R0,[R0, #+0]
-   \   0000014A   0x2800             CMP      R0,#+0
-   \   0000014C   0xD004             BEQ.N    ??LCDUartSET_27
-   \   0000014E   0x.... 0x....      LDR.W    R0,??DataTable5_29
-   \   00000152   0x7800             LDRB     R0,[R0, #+0]
-   \   00000154   0x2809             CMP      R0,#+9
-   \   00000156   0xD007             BEQ.N    ??LCDUartSET_28
-    491                  {
-    492                      OtherSetIndex=9;
-   \                     ??LCDUartSET_27:
-   \   00000158   0x.... 0x....      LDR.W    R0,??DataTable5_28
-   \   0000015C   0x2109             MOVS     R1,#+9
-   \   0000015E   0x7001             STRB     R1,[R0, #+0]
-    493                      TimeSetIndex=9;
-   \   00000160   0x.... 0x....      LDR.W    R0,??DataTable5_29
-   \   00000164   0x2109             MOVS     R1,#+9
-   \   00000166   0x7001             STRB     R1,[R0, #+0]
-    494                  }
-    495                  OtherSetIndex-- ;
-   \                     ??LCDUartSET_28:
-   \   00000168   0x.... 0x....      LDR.W    R0,??DataTable5_28
-   \   0000016C   0x7800             LDRB     R0,[R0, #+0]
-   \   0000016E   0x1E40             SUBS     R0,R0,#+1
-   \   00000170   0x.... 0x....      LDR.W    R1,??DataTable5_28
-   \   00000174   0x7008             STRB     R0,[R1, #+0]
-    496                  SysSet.ParaIndex=OtherSetIndex;
-   \   00000176   0x.... 0x....      LDR.W    R0,??DataTable5_30
-   \   0000017A   0x.... 0x....      LDR.W    R1,??DataTable5_28
-   \   0000017E   0x7809             LDRB     R1,[R1, #+0]
-   \   00000180   0x7181             STRB     R1,[R0, #+6]
-    497                  
-    498                  break;
-   \   00000182   0xE158             B.N      ??LCDUartSET_24
-    499               case 19:
-    500                 SysSet.ParaSaveFlg=1;      // WK --> 具体实现带研究
-   \                     ??LCDUartSET_7:
-   \   00000184   0x.... 0x....      LDR.W    R0,??DataTable5_30
-   \   00000188   0x2101             MOVS     R1,#+1
-   \   0000018A   0x70C1             STRB     R1,[R0, #+3]
-    501                 break;
-   \   0000018C   0xE153             B.N      ??LCDUartSET_24
-    502               
-    503              case 0x60:  // WK --> TCP/IP开关      0 关闭  1 开启
-    504                SysSet.SwitchSet[0]==0?(SysSet.SwitchSet[0]=1):(SysSet.SwitchSet[0]=0);
-   \                     ??LCDUartSET_15:
-   \   0000018E   0x.... 0x....      LDR.W    R0,??DataTable5_30
-   \   00000192   0x7B80             LDRB     R0,[R0, #+14]
-   \   00000194   0x2800             CMP      R0,#+0
-   \   00000196   0xD105             BNE.N    ??LCDUartSET_29
-   \   00000198   0x2001             MOVS     R0,#+1
-   \   0000019A   0x.... 0x....      LDR.W    R1,??DataTable5_30
-   \   0000019E   0x7388             STRB     R0,[R1, #+14]
-   \   000001A0   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   000001A2   0xE004             B.N      ??LCDUartSET_30
-   \                     ??LCDUartSET_29:
-   \   000001A4   0x2000             MOVS     R0,#+0
-   \   000001A6   0x.... 0x....      LDR.W    R1,??DataTable5_30
-   \   000001AA   0x7388             STRB     R0,[R1, #+14]
-   \   000001AC   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    505                SysSet.SwitchSet[7]=1;
-   \                     ??LCDUartSET_30:
-   \   000001AE   0x.... 0x....      LDR.W    R0,??DataTable5_30
-   \   000001B2   0x2101             MOVS     R1,#+1
-   \   000001B4   0x7541             STRB     R1,[R0, #+21]
-    506                break;
-   \   000001B6   0xE13E             B.N      ??LCDUartSET_24
-    507              case 0x61:  // WK --> 485上行
-    508                SysSet.SwitchSet[1]==0?(SysSet.SwitchSet[1]=1):(SysSet.SwitchSet[1]=0);
-   \                     ??LCDUartSET_16:
-   \   000001B8   0x.... 0x....      LDR.W    R0,??DataTable5_30
-   \   000001BC   0x7BC0             LDRB     R0,[R0, #+15]
-   \   000001BE   0x2800             CMP      R0,#+0
-   \   000001C0   0xD105             BNE.N    ??LCDUartSET_31
-   \   000001C2   0x2001             MOVS     R0,#+1
-   \   000001C4   0x.... 0x....      LDR.W    R1,??DataTable5_30
-   \   000001C8   0x73C8             STRB     R0,[R1, #+15]
-   \   000001CA   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   000001CC   0xE004             B.N      ??LCDUartSET_32
-   \                     ??LCDUartSET_31:
-   \   000001CE   0x2000             MOVS     R0,#+0
-   \   000001D0   0x.... 0x....      LDR.W    R1,??DataTable5_30
-   \   000001D4   0x73C8             STRB     R0,[R1, #+15]
-   \   000001D6   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    509                SysSet.SwitchSet[7]=1;
-   \                     ??LCDUartSET_32:
-   \   000001D8   0x.... 0x....      LDR.W    R0,??DataTable5_30
-   \   000001DC   0x2101             MOVS     R1,#+1
-   \   000001DE   0x7541             STRB     R1,[R0, #+21]
-    510                break;
-   \   000001E0   0xE129             B.N      ??LCDUartSET_24
-    511              case 0x62:  // WK --> 485下行
-    512                SysSet.SwitchSet[2]==0?(SysSet.SwitchSet[2]=1):(SysSet.SwitchSet[2]=0);
-   \                     ??LCDUartSET_17:
-   \   000001E2   0x.... 0x....      LDR.W    R0,??DataTable5_30
-   \   000001E6   0x7C00             LDRB     R0,[R0, #+16]
-   \   000001E8   0x2800             CMP      R0,#+0
-   \   000001EA   0xD105             BNE.N    ??LCDUartSET_33
-   \   000001EC   0x2001             MOVS     R0,#+1
-   \   000001EE   0x.... 0x....      LDR.W    R1,??DataTable5_30
-   \   000001F2   0x7408             STRB     R0,[R1, #+16]
-   \   000001F4   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   000001F6   0xE004             B.N      ??LCDUartSET_34
-   \                     ??LCDUartSET_33:
-   \   000001F8   0x2000             MOVS     R0,#+0
-   \   000001FA   0x.... 0x....      LDR.W    R1,??DataTable5_30
-   \   000001FE   0x7408             STRB     R0,[R1, #+16]
-   \   00000200   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    513                SysSet.SwitchSet[7]=1;
-   \                     ??LCDUartSET_34:
-   \   00000202   0x.... 0x....      LDR.W    R0,??DataTable5_30
-   \   00000206   0x2101             MOVS     R1,#+1
-   \   00000208   0x7541             STRB     R1,[R0, #+21]
-    514                break;
-   \   0000020A   0xE114             B.N      ??LCDUartSET_24
-    515              case 0x63:  // WK --> GPS对时
-    516                SysSet.SwitchSet[3]==0?(SysSet.SwitchSet[3]=1):(SysSet.SwitchSet[3]=0);
-   \                     ??LCDUartSET_18:
-   \   0000020C   0x.... 0x....      LDR.W    R0,??DataTable5_30
-   \   00000210   0x7C40             LDRB     R0,[R0, #+17]
-   \   00000212   0x2800             CMP      R0,#+0
-   \   00000214   0xD105             BNE.N    ??LCDUartSET_35
-   \   00000216   0x2001             MOVS     R0,#+1
-   \   00000218   0x.... 0x....      LDR.W    R1,??DataTable5_30
-   \   0000021C   0x7448             STRB     R0,[R1, #+17]
-   \   0000021E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   00000220   0xE004             B.N      ??LCDUartSET_36
-   \                     ??LCDUartSET_35:
-   \   00000222   0x2000             MOVS     R0,#+0
-   \   00000224   0x.... 0x....      LDR.W    R1,??DataTable5_30
-   \   00000228   0x7448             STRB     R0,[R1, #+17]
-   \   0000022A   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    517                SysSet.SwitchSet[7]=1;
-   \                     ??LCDUartSET_36:
-   \   0000022C   0x.... 0x....      LDR.W    R0,??DataTable5_30
-   \   00000230   0x2101             MOVS     R1,#+1
-   \   00000232   0x7541             STRB     R1,[R0, #+21]
-    518                break;
-   \   00000234   0xE0FF             B.N      ??LCDUartSET_24
-    519              case 0x64:  // WK --> 声音设置
-    520                SysSet.SwitchSet[4]==0?(SysSet.SwitchSet[4]=1):(SysSet.SwitchSet[4]=0);
-   \                     ??LCDUartSET_19:
-   \   00000236   0x.... 0x....      LDR.W    R0,??DataTable5_30
-   \   0000023A   0x7C80             LDRB     R0,[R0, #+18]
-   \   0000023C   0x2800             CMP      R0,#+0
-   \   0000023E   0xD105             BNE.N    ??LCDUartSET_37
-   \   00000240   0x2001             MOVS     R0,#+1
-   \   00000242   0x.... 0x....      LDR.W    R1,??DataTable5_30
-   \   00000246   0x7488             STRB     R0,[R1, #+18]
-   \   00000248   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   0000024A   0xE004             B.N      ??LCDUartSET_38
-   \                     ??LCDUartSET_37:
-   \   0000024C   0x2000             MOVS     R0,#+0
-   \   0000024E   0x.... 0x....      LDR.W    R1,??DataTable5_30
-   \   00000252   0x7488             STRB     R0,[R1, #+18]
-   \   00000254   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    521                SysSet.SwitchSet[7]=1;
-   \                     ??LCDUartSET_38:
-   \   00000256   0x.... 0x....      LDR.W    R0,??DataTable5_30
-   \   0000025A   0x2101             MOVS     R1,#+1
-   \   0000025C   0x7541             STRB     R1,[R0, #+21]
-    522                break;
-   \   0000025E   0xE0EA             B.N      ??LCDUartSET_24
-    523              case 0x65:  // WK --> 背光设置
-    524                SysSet.SwitchSet[5]==0?(SysSet.SwitchSet[5]=1):(SysSet.SwitchSet[5]=0);
-   \                     ??LCDUartSET_20:
-   \   00000260   0x.... 0x....      LDR.W    R0,??DataTable5_30
-   \   00000264   0x7CC0             LDRB     R0,[R0, #+19]
-   \   00000266   0x2800             CMP      R0,#+0
-   \   00000268   0xD105             BNE.N    ??LCDUartSET_39
-   \   0000026A   0x2001             MOVS     R0,#+1
-   \   0000026C   0x.... 0x....      LDR.W    R1,??DataTable5_30
-   \   00000270   0x74C8             STRB     R0,[R1, #+19]
-   \   00000272   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   00000274   0xE004             B.N      ??LCDUartSET_40
-   \                     ??LCDUartSET_39:
-   \   00000276   0x2000             MOVS     R0,#+0
-   \   00000278   0x.... 0x....      LDR.W    R1,??DataTable5_30
-   \   0000027C   0x74C8             STRB     R0,[R1, #+19]
-   \   0000027E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    525                SysSet.SwitchSet[7]=1;
-   \                     ??LCDUartSET_40:
-   \   00000280   0x.... 0x....      LDR.W    R0,??DataTable5_30
-   \   00000284   0x2101             MOVS     R1,#+1
-   \   00000286   0x7541             STRB     R1,[R0, #+21]
-    526                break;
-   \   00000288   0xE0D5             B.N      ??LCDUartSET_24
-    527              case 0x66:  // WK --> 移动存储
-    528                SysSet.SwitchSet[6]==0?(SysSet.SwitchSet[6]=1):(SysSet.SwitchSet[6]=0);
-   \                     ??LCDUartSET_21:
-   \   0000028A   0x.... 0x....      LDR.W    R0,??DataTable5_30
-   \   0000028E   0x7D00             LDRB     R0,[R0, #+20]
-   \   00000290   0x2800             CMP      R0,#+0
-   \   00000292   0xD105             BNE.N    ??LCDUartSET_41
-   \   00000294   0x2001             MOVS     R0,#+1
-   \   00000296   0x.... 0x....      LDR.W    R1,??DataTable5_30
-   \   0000029A   0x7508             STRB     R0,[R1, #+20]
-   \   0000029C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   0000029E   0xE004             B.N      ??LCDUartSET_42
-   \                     ??LCDUartSET_41:
-   \   000002A0   0x2000             MOVS     R0,#+0
-   \   000002A2   0x.... 0x....      LDR.W    R1,??DataTable5_30
-   \   000002A6   0x7508             STRB     R0,[R1, #+20]
-   \   000002A8   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    529                SysSet.SwitchSet[7]=1;
-   \                     ??LCDUartSET_42:
-   \   000002AA   0x.... 0x....      LDR.W    R0,??DataTable5_30
-   \   000002AE   0x2101             MOVS     R1,#+1
-   \   000002B0   0x7541             STRB     R1,[R0, #+21]
-    530                break;        
-   \   000002B2   0xE0C0             B.N      ??LCDUartSET_24
-    531               /******************************** end *********************************/
-    532                 
-    533               /**********************************************************************
-    534                ** WK --> 系统事件设置界面按键  
-    535                **********************************************************************/  
-    536              case 64:               // WK --> 事件设置下移       
-    537                  // WK --> 待补充  
-    538                  SysSet.FuncFlg=1;
+   \   000000FC   0x.... 0x....      LDR.W    R0,??DataTable5_19
+   \   00000100   0x2112             MOVS     R1,#+18
+   \   00000102   0x7001             STRB     R1,[R0, #+0]
+    473                  SysSet.SwFlg=1;
+   \   00000104   0x.... 0x....      LDR.W    R0,??DataTable5_30
+   \   00000108   0x2101             MOVS     R1,#+1
+   \   0000010A   0x7001             STRB     R1,[R0, #+0]
+    474                  break;
+   \   0000010C   0xE1B2             B.N      ??LCDUartSET_26
+    475                  
+    476          //    case 18:   // wk --> 恢复出厂设置
+    477              case 0x31:                  /*事件设置清除键*/
+    478                  InitAck=1;
    \                     ??LCDUartSET_10:
-   \   000002B4   0x....             LDR.N    R0,??DataTable5_30
-   \   000002B6   0x2101             MOVS     R1,#+1
-   \   000002B8   0x7041             STRB     R1,[R0, #+1]
-    539                  if(SysSet.EvntIndex <7 )
-   \   000002BA   0x....             LDR.N    R0,??DataTable5_30
-   \   000002BC   0x79C0             LDRB     R0,[R0, #+7]
-   \   000002BE   0x2807             CMP      R0,#+7
-   \   000002C0   0xD20F             BCS.N    ??LCDUartSET_43
-    540                    (SysSet.EvntIndex==6)? (SysSet.EvntIndex=0): (++SysSet.EvntIndex);  
-   \   000002C2   0x....             LDR.N    R0,??DataTable5_30
-   \   000002C4   0x79C0             LDRB     R0,[R0, #+7]
-   \   000002C6   0x2806             CMP      R0,#+6
-   \   000002C8   0xD104             BNE.N    ??LCDUartSET_44
-   \   000002CA   0x2000             MOVS     R0,#+0
-   \   000002CC   0x....             LDR.N    R1,??DataTable5_30
-   \   000002CE   0x71C8             STRB     R0,[R1, #+7]
-   \   000002D0   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   000002D2   0xE015             B.N      ??LCDUartSET_45
-   \                     ??LCDUartSET_44:
-   \   000002D4   0x....             LDR.N    R0,??DataTable5_30
-   \   000002D6   0x79C0             LDRB     R0,[R0, #+7]
-   \   000002D8   0x1C40             ADDS     R0,R0,#+1
-   \   000002DA   0x....             LDR.N    R1,??DataTable5_30
-   \   000002DC   0x71C8             STRB     R0,[R1, #+7]
-   \   000002DE   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   000002E0   0xE00E             B.N      ??LCDUartSET_45
-    541                  else
-    542                   (SysSet.EvntIndex==10)? (SysSet.EvntIndex=7):(++SysSet.EvntIndex);
-   \                     ??LCDUartSET_43:
-   \   000002E2   0x....             LDR.N    R0,??DataTable5_30
-   \   000002E4   0x79C0             LDRB     R0,[R0, #+7]
-   \   000002E6   0x280A             CMP      R0,#+10
-   \   000002E8   0xD104             BNE.N    ??LCDUartSET_46
-   \   000002EA   0x2007             MOVS     R0,#+7
-   \   000002EC   0x....             LDR.N    R1,??DataTable5_30
-   \   000002EE   0x71C8             STRB     R0,[R1, #+7]
-   \   000002F0   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   000002F2   0xE005             B.N      ??LCDUartSET_45
-   \                     ??LCDUartSET_46:
-   \   000002F4   0x....             LDR.N    R0,??DataTable5_30
-   \   000002F6   0x79C0             LDRB     R0,[R0, #+7]
-   \   000002F8   0x1C40             ADDS     R0,R0,#+1
-   \   000002FA   0x....             LDR.N    R1,??DataTable5_30
-   \   000002FC   0x71C8             STRB     R0,[R1, #+7]
-   \   000002FE   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    543                  break;
-   \                     ??LCDUartSET_45:
-   \   00000300   0xE099             B.N      ??LCDUartSET_24
-    544              case 65:              // WK --> 事件设置上移         
-    545                    SysSet.FuncFlg=1;
+   \   0000010E   0x.... 0x....      LDR.W    R0,??DataTable5_31
+   \   00000112   0x2101             MOVS     R1,#+1
+   \   00000114   0x7001             STRB     R1,[R0, #+0]
+    479                  break;
+   \   00000116   0xE1AD             B.N      ??LCDUartSET_26
+    480                  
+    481              case 0x32:                  /*事件设置清除键*/
+    482                  //InitNoAck=1;
+    483                  MenuSwFlg=1; //  wk -->页面切换标志
    \                     ??LCDUartSET_11:
-   \   00000302   0x....             LDR.N    R0,??DataTable5_30
-   \   00000304   0x2101             MOVS     R1,#+1
-   \   00000306   0x7041             STRB     R1,[R0, #+1]
-    546                    if(SysSet.EvntIndex <7 )
-   \   00000308   0x....             LDR.N    R0,??DataTable5_30
-   \   0000030A   0x79C0             LDRB     R0,[R0, #+7]
-   \   0000030C   0x2807             CMP      R0,#+7
-   \   0000030E   0xD20F             BCS.N    ??LCDUartSET_47
-    547                      (SysSet.EvntIndex==0)? (SysSet.EvntIndex=6):(--SysSet.EvntIndex);      
-   \   00000310   0x....             LDR.N    R0,??DataTable5_30
-   \   00000312   0x79C0             LDRB     R0,[R0, #+7]
-   \   00000314   0x2800             CMP      R0,#+0
-   \   00000316   0xD104             BNE.N    ??LCDUartSET_48
-   \   00000318   0x2006             MOVS     R0,#+6
-   \   0000031A   0x....             LDR.N    R1,??DataTable5_30
-   \   0000031C   0x71C8             STRB     R0,[R1, #+7]
-   \   0000031E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   00000320   0xE015             B.N      ??LCDUartSET_49
-   \                     ??LCDUartSET_48:
-   \   00000322   0x....             LDR.N    R0,??DataTable5_30
-   \   00000324   0x79C0             LDRB     R0,[R0, #+7]
-   \   00000326   0x1E40             SUBS     R0,R0,#+1
-   \   00000328   0x....             LDR.N    R1,??DataTable5_30
-   \   0000032A   0x71C8             STRB     R0,[R1, #+7]
-   \   0000032C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   0000032E   0xE00E             B.N      ??LCDUartSET_49
-    548                    else
-    549                      (SysSet.EvntIndex==10)?(SysSet.EvntIndex=7):(--SysSet.EvntIndex);   
-   \                     ??LCDUartSET_47:
-   \   00000330   0x....             LDR.N    R0,??DataTable5_30
-   \   00000332   0x79C0             LDRB     R0,[R0, #+7]
-   \   00000334   0x280A             CMP      R0,#+10
-   \   00000336   0xD104             BNE.N    ??LCDUartSET_50
-   \   00000338   0x2007             MOVS     R0,#+7
-   \   0000033A   0x....             LDR.N    R1,??DataTable5_30
-   \   0000033C   0x71C8             STRB     R0,[R1, #+7]
-   \   0000033E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   00000340   0xE005             B.N      ??LCDUartSET_49
-   \                     ??LCDUartSET_50:
-   \   00000342   0x....             LDR.N    R0,??DataTable5_30
-   \   00000344   0x79C0             LDRB     R0,[R0, #+7]
-   \   00000346   0x1E40             SUBS     R0,R0,#+1
-   \   00000348   0x....             LDR.N    R1,??DataTable5_30
-   \   0000034A   0x71C8             STRB     R0,[R1, #+7]
-   \   0000034C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    550                  break;
-   \                     ??LCDUartSET_49:
-   \   0000034E   0xE072             B.N      ??LCDUartSET_24
-    551              case 66:             // WK --> 事件设置右移         
-    552                  SysSet.FuncFlg=1;
-   \                     ??LCDUartSET_12:
-   \   00000350   0x....             LDR.N    R0,??DataTable5_30
-   \   00000352   0x2101             MOVS     R1,#+1
-   \   00000354   0x7041             STRB     R1,[R0, #+1]
-    553                  (SysSet.EvntIndex < 7) ? (SysSet.EvntIndex=7 ) : (SysSet.EvntIndex=0);
-   \   00000356   0x....             LDR.N    R0,??DataTable5_30
-   \   00000358   0x79C0             LDRB     R0,[R0, #+7]
-   \   0000035A   0x2807             CMP      R0,#+7
-   \   0000035C   0xD204             BCS.N    ??LCDUartSET_51
-   \   0000035E   0x2007             MOVS     R0,#+7
-   \   00000360   0x....             LDR.N    R1,??DataTable5_30
-   \   00000362   0x71C8             STRB     R0,[R1, #+7]
-   \   00000364   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   00000366   0xE003             B.N      ??LCDUartSET_52
-   \                     ??LCDUartSET_51:
-   \   00000368   0x2000             MOVS     R0,#+0
-   \   0000036A   0x....             LDR.N    R1,??DataTable5_30
-   \   0000036C   0x71C8             STRB     R0,[R1, #+7]
-   \   0000036E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-    554                  break;     
-   \                     ??LCDUartSET_52:
-   \   00000370   0xE061             B.N      ??LCDUartSET_24
-    555              case 67:                       /*保存键*/
-    556                  SysSet.EventSaveFlg=1;      // WK --> 具体实现带研究
-   \                     ??LCDUartSET_13:
-   \   00000372   0x....             LDR.N    R0,??DataTable5_30
-   \   00000374   0x2101             MOVS     R1,#+1
-   \   00000376   0x7101             STRB     R1,[R0, #+4]
-    557                  break;
-   \   00000378   0xE05D             B.N      ??LCDUartSET_24
-    558               /************************************* end******************************/
-    559                  
-    560              case 24:
-    561                  break;               /*参数设置已去除小数点键*/
-   \                     ??LCDUartSET_8:
-   \   0000037A   0xE05C             B.N      ??LCDUartSET_24
-    562              case 72:                  /*事件设置小数点键*/
-    563                  if(SysSet.DataCnt)
-   \                     ??LCDUartSET_14:
-   \   0000037C   0x....             LDR.N    R0,??DataTable5_30
-   \   0000037E   0x7A00             LDRB     R0,[R0, #+8]
-   \   00000380   0x2800             CMP      R0,#+0
-   \   00000382   0xD009             BEQ.N    ??LCDUartSET_53
-    564                  {
-    565                      SysSet.Data[SysSet.DataCnt++]='.';
-   \   00000384   0x....             LDR.N    R0,??DataTable5_30
-   \   00000386   0x7A00             LDRB     R0,[R0, #+8]
-   \   00000388   0x....             LDR.N    R1,??DataTable5_30
-   \   0000038A   0x1C42             ADDS     R2,R0,#+1
-   \   0000038C   0x720A             STRB     R2,[R1, #+8]
-   \   0000038E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-   \   00000390   0x....             LDR.N    R1,??DataTable5_30
-   \   00000392   0x1840             ADDS     R0,R0,R1
-   \   00000394   0x212E             MOVS     R1,#+46
-   \   00000396   0x7241             STRB     R1,[R0, #+9]
-    566                  }
-    567                  break;
-   \                     ??LCDUartSET_53:
-   \   00000398   0xE04D             B.N      ??LCDUartSET_24
-    568              case 25:                  /*参数设置清除键*/
-    569              case 73:                  /*事件设置清除键*/
-    570                  SysSet.DataFlg=1;
-   \                     ??LCDUartSET_9:
-   \   0000039A   0x....             LDR.N    R0,??DataTable5_30
-   \   0000039C   0x2101             MOVS     R1,#+1
-   \   0000039E   0x7081             STRB     R1,[R0, #+2]
-    571                  SysSet.DataCnt=0;
-   \   000003A0   0x....             LDR.N    R0,??DataTable5_30
-   \   000003A2   0x2100             MOVS     R1,#+0
-   \   000003A4   0x7201             STRB     R1,[R0, #+8]
-    572                  break;
-   \   000003A6   0xE046             B.N      ??LCDUartSET_24
-    573              case 255:
-    574                  Dis_PicID=MenuTop;   // wk --> 返回主界面
+   \   00000118   0x.... 0x....      LDR.W    R0,??DataTable5_16
+   \   0000011C   0x2101             MOVS     R1,#+1
+   \   0000011E   0x7001             STRB     R1,[R0, #+0]
+    484                  DisTimeOnce=1; //页面切换后完全显示时间
+   \   00000120   0x.... 0x....      LDR.W    R0,??DataTable5_17
+   \   00000124   0x2101             MOVS     R1,#+1
+   \   00000126   0x7001             STRB     R1,[R0, #+0]
+    485                  Dis_PicID=MenuParaSET;
+   \   00000128   0x.... 0x....      LDR.W    R0,??DataTable5_19
+   \   0000012C   0x210A             MOVS     R1,#+10
+   \   0000012E   0x7001             STRB     R1,[R0, #+0]
+    486                  break;
+   \   00000130   0xE1A0             B.N      ??LCDUartSET_26
+    487                  /**********************************************************************
+    488                  ** WK --> 系统参数设置界面按键  
+    489                  **********************************************************************/
+    490              case 16:                       /*系统参数右移切换键*/
+    491                  OtherSetIndex++ ;
+   \                     ??LCDUartSET_5:
+   \   00000132   0x.... 0x....      LDR.W    R0,??DataTable5_28
+   \   00000136   0x7800             LDRB     R0,[R0, #+0]
+   \   00000138   0x1C40             ADDS     R0,R0,#+1
+   \   0000013A   0x.... 0x....      LDR.W    R1,??DataTable5_28
+   \   0000013E   0x7008             STRB     R0,[R1, #+0]
+    492                  SysSet.FuncFlg=1;  // WK --> 有光标移动
+   \   00000140   0x.... 0x....      LDR.W    R0,??DataTable5_30
+   \   00000144   0x2101             MOVS     R1,#+1
+   \   00000146   0x7041             STRB     R1,[R0, #+1]
+    493                  if(OtherSetIndex==9||TimeSetIndex!=9)//从时间项切换回其余项时，光标需回到第一项
+   \   00000148   0x.... 0x....      LDR.W    R0,??DataTable5_28
+   \   0000014C   0x7800             LDRB     R0,[R0, #+0]
+   \   0000014E   0x2809             CMP      R0,#+9
+   \   00000150   0xD004             BEQ.N    ??LCDUartSET_27
+   \   00000152   0x.... 0x....      LDR.W    R0,??DataTable5_29
+   \   00000156   0x7800             LDRB     R0,[R0, #+0]
+   \   00000158   0x2809             CMP      R0,#+9
+   \   0000015A   0xD007             BEQ.N    ??LCDUartSET_28
+    494                  {
+    495                      OtherSetIndex=0;
+   \                     ??LCDUartSET_27:
+   \   0000015C   0x.... 0x....      LDR.W    R0,??DataTable5_28
+   \   00000160   0x2100             MOVS     R1,#+0
+   \   00000162   0x7001             STRB     R1,[R0, #+0]
+    496                      TimeSetIndex=9;  //实际只需在TimeSetIndex!=6时将其值置为6
+   \   00000164   0x.... 0x....      LDR.W    R0,??DataTable5_29
+   \   00000168   0x2109             MOVS     R1,#+9
+   \   0000016A   0x7001             STRB     R1,[R0, #+0]
+    497                  }
+    498                  SysSet.ParaIndex=OtherSetIndex;
+   \                     ??LCDUartSET_28:
+   \   0000016C   0x.... 0x....      LDR.W    R0,??DataTable5_30
+   \   00000170   0x.... 0x....      LDR.W    R1,??DataTable5_28
+   \   00000174   0x7809             LDRB     R1,[R1, #+0]
+   \   00000176   0x7181             STRB     R1,[R0, #+6]
+    499                 
+    500                  break;
+   \   00000178   0xE17C             B.N      ??LCDUartSET_26
+    501              case 17:
+    502                  SysSet.FuncFlg=1;
+   \                     ??LCDUartSET_6:
+   \   0000017A   0x.... 0x....      LDR.W    R0,??DataTable5_30
+   \   0000017E   0x2101             MOVS     R1,#+1
+   \   00000180   0x7041             STRB     R1,[R0, #+1]
+    503                  if(OtherSetIndex==0||TimeSetIndex!=9)//从时间项切换回其余项时，光标需回到第五项
+   \   00000182   0x.... 0x....      LDR.W    R0,??DataTable5_28
+   \   00000186   0x7800             LDRB     R0,[R0, #+0]
+   \   00000188   0x2800             CMP      R0,#+0
+   \   0000018A   0xD004             BEQ.N    ??LCDUartSET_29
+   \   0000018C   0x.... 0x....      LDR.W    R0,??DataTable5_29
+   \   00000190   0x7800             LDRB     R0,[R0, #+0]
+   \   00000192   0x2809             CMP      R0,#+9
+   \   00000194   0xD007             BEQ.N    ??LCDUartSET_30
+    504                  {
+    505                      OtherSetIndex=9;
+   \                     ??LCDUartSET_29:
+   \   00000196   0x.... 0x....      LDR.W    R0,??DataTable5_28
+   \   0000019A   0x2109             MOVS     R1,#+9
+   \   0000019C   0x7001             STRB     R1,[R0, #+0]
+    506                      TimeSetIndex=9;
+   \   0000019E   0x.... 0x....      LDR.W    R0,??DataTable5_29
+   \   000001A2   0x2109             MOVS     R1,#+9
+   \   000001A4   0x7001             STRB     R1,[R0, #+0]
+    507                  }
+    508                  OtherSetIndex-- ;
+   \                     ??LCDUartSET_30:
+   \   000001A6   0x.... 0x....      LDR.W    R0,??DataTable5_28
+   \   000001AA   0x7800             LDRB     R0,[R0, #+0]
+   \   000001AC   0x1E40             SUBS     R0,R0,#+1
+   \   000001AE   0x.... 0x....      LDR.W    R1,??DataTable5_28
+   \   000001B2   0x7008             STRB     R0,[R1, #+0]
+    509                  SysSet.ParaIndex=OtherSetIndex;
+   \   000001B4   0x.... 0x....      LDR.W    R0,??DataTable5_30
+   \   000001B8   0x.... 0x....      LDR.W    R1,??DataTable5_28
+   \   000001BC   0x7809             LDRB     R1,[R1, #+0]
+   \   000001BE   0x7181             STRB     R1,[R0, #+6]
+    510                  
+    511                  break;
+   \   000001C0   0xE158             B.N      ??LCDUartSET_26
+    512               case 19:
+    513                 SysSet.ParaSaveFlg=1;      // WK --> 具体实现带研究
+   \                     ??LCDUartSET_7:
+   \   000001C2   0x.... 0x....      LDR.W    R0,??DataTable5_30
+   \   000001C6   0x2101             MOVS     R1,#+1
+   \   000001C8   0x70C1             STRB     R1,[R0, #+3]
+    514                 break;
+   \   000001CA   0xE153             B.N      ??LCDUartSET_26
+    515               
+    516              case 0x60:  // WK --> TCP/IP开关      0 关闭  1 开启
+    517                SysSet.SwitchSet[0]==0?(SysSet.SwitchSet[0]=1):(SysSet.SwitchSet[0]=0);
+   \                     ??LCDUartSET_17:
+   \   000001CC   0x.... 0x....      LDR.W    R0,??DataTable5_30
+   \   000001D0   0x7B80             LDRB     R0,[R0, #+14]
+   \   000001D2   0x2800             CMP      R0,#+0
+   \   000001D4   0xD105             BNE.N    ??LCDUartSET_31
+   \   000001D6   0x2001             MOVS     R0,#+1
+   \   000001D8   0x.... 0x....      LDR.W    R1,??DataTable5_30
+   \   000001DC   0x7388             STRB     R0,[R1, #+14]
+   \   000001DE   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   000001E0   0xE004             B.N      ??LCDUartSET_32
+   \                     ??LCDUartSET_31:
+   \   000001E2   0x2000             MOVS     R0,#+0
+   \   000001E4   0x.... 0x....      LDR.W    R1,??DataTable5_30
+   \   000001E8   0x7388             STRB     R0,[R1, #+14]
+   \   000001EA   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+    518                SysSet.SwitchSet[7]=1;
+   \                     ??LCDUartSET_32:
+   \   000001EC   0x.... 0x....      LDR.W    R0,??DataTable5_30
+   \   000001F0   0x2101             MOVS     R1,#+1
+   \   000001F2   0x7541             STRB     R1,[R0, #+21]
+    519                break;
+   \   000001F4   0xE13E             B.N      ??LCDUartSET_26
+    520              case 0x61:  // WK --> 485上行
+    521                SysSet.SwitchSet[1]==0?(SysSet.SwitchSet[1]=1):(SysSet.SwitchSet[1]=0);
+   \                     ??LCDUartSET_18:
+   \   000001F6   0x.... 0x....      LDR.W    R0,??DataTable5_30
+   \   000001FA   0x7BC0             LDRB     R0,[R0, #+15]
+   \   000001FC   0x2800             CMP      R0,#+0
+   \   000001FE   0xD105             BNE.N    ??LCDUartSET_33
+   \   00000200   0x2001             MOVS     R0,#+1
+   \   00000202   0x.... 0x....      LDR.W    R1,??DataTable5_30
+   \   00000206   0x73C8             STRB     R0,[R1, #+15]
+   \   00000208   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000020A   0xE004             B.N      ??LCDUartSET_34
+   \                     ??LCDUartSET_33:
+   \   0000020C   0x2000             MOVS     R0,#+0
+   \   0000020E   0x.... 0x....      LDR.W    R1,??DataTable5_30
+   \   00000212   0x73C8             STRB     R0,[R1, #+15]
+   \   00000214   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+    522                SysSet.SwitchSet[7]=1;
+   \                     ??LCDUartSET_34:
+   \   00000216   0x.... 0x....      LDR.W    R0,??DataTable5_30
+   \   0000021A   0x2101             MOVS     R1,#+1
+   \   0000021C   0x7541             STRB     R1,[R0, #+21]
+    523                break;
+   \   0000021E   0xE129             B.N      ??LCDUartSET_26
+    524              case 0x62:  // WK --> 485下行
+    525                SysSet.SwitchSet[2]==0?(SysSet.SwitchSet[2]=1):(SysSet.SwitchSet[2]=0);
+   \                     ??LCDUartSET_19:
+   \   00000220   0x.... 0x....      LDR.W    R0,??DataTable5_30
+   \   00000224   0x7C00             LDRB     R0,[R0, #+16]
+   \   00000226   0x2800             CMP      R0,#+0
+   \   00000228   0xD105             BNE.N    ??LCDUartSET_35
+   \   0000022A   0x2001             MOVS     R0,#+1
+   \   0000022C   0x.... 0x....      LDR.W    R1,??DataTable5_30
+   \   00000230   0x7408             STRB     R0,[R1, #+16]
+   \   00000232   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000234   0xE004             B.N      ??LCDUartSET_36
+   \                     ??LCDUartSET_35:
+   \   00000236   0x2000             MOVS     R0,#+0
+   \   00000238   0x.... 0x....      LDR.W    R1,??DataTable5_30
+   \   0000023C   0x7408             STRB     R0,[R1, #+16]
+   \   0000023E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+    526                SysSet.SwitchSet[7]=1;
+   \                     ??LCDUartSET_36:
+   \   00000240   0x.... 0x....      LDR.W    R0,??DataTable5_30
+   \   00000244   0x2101             MOVS     R1,#+1
+   \   00000246   0x7541             STRB     R1,[R0, #+21]
+    527                break;
+   \   00000248   0xE114             B.N      ??LCDUartSET_26
+    528              case 0x63:  // WK --> GPS对时
+    529                SysSet.SwitchSet[3]==0?(SysSet.SwitchSet[3]=1):(SysSet.SwitchSet[3]=0);
+   \                     ??LCDUartSET_20:
+   \   0000024A   0x.... 0x....      LDR.W    R0,??DataTable5_30
+   \   0000024E   0x7C40             LDRB     R0,[R0, #+17]
+   \   00000250   0x2800             CMP      R0,#+0
+   \   00000252   0xD105             BNE.N    ??LCDUartSET_37
+   \   00000254   0x2001             MOVS     R0,#+1
+   \   00000256   0x.... 0x....      LDR.W    R1,??DataTable5_30
+   \   0000025A   0x7448             STRB     R0,[R1, #+17]
+   \   0000025C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000025E   0xE004             B.N      ??LCDUartSET_38
+   \                     ??LCDUartSET_37:
+   \   00000260   0x2000             MOVS     R0,#+0
+   \   00000262   0x.... 0x....      LDR.W    R1,??DataTable5_30
+   \   00000266   0x7448             STRB     R0,[R1, #+17]
+   \   00000268   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+    530                SysSet.SwitchSet[7]=1;
+   \                     ??LCDUartSET_38:
+   \   0000026A   0x.... 0x....      LDR.W    R0,??DataTable5_30
+   \   0000026E   0x2101             MOVS     R1,#+1
+   \   00000270   0x7541             STRB     R1,[R0, #+21]
+    531                break;
+   \   00000272   0xE0FF             B.N      ??LCDUartSET_26
+    532              case 0x64:  // WK --> 声音设置
+    533                SysSet.SwitchSet[4]==0?(SysSet.SwitchSet[4]=1):(SysSet.SwitchSet[4]=0);
+   \                     ??LCDUartSET_21:
+   \   00000274   0x.... 0x....      LDR.W    R0,??DataTable5_30
+   \   00000278   0x7C80             LDRB     R0,[R0, #+18]
+   \   0000027A   0x2800             CMP      R0,#+0
+   \   0000027C   0xD105             BNE.N    ??LCDUartSET_39
+   \   0000027E   0x2001             MOVS     R0,#+1
+   \   00000280   0x.... 0x....      LDR.W    R1,??DataTable5_30
+   \   00000284   0x7488             STRB     R0,[R1, #+18]
+   \   00000286   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000288   0xE004             B.N      ??LCDUartSET_40
+   \                     ??LCDUartSET_39:
+   \   0000028A   0x2000             MOVS     R0,#+0
+   \   0000028C   0x.... 0x....      LDR.W    R1,??DataTable5_30
+   \   00000290   0x7488             STRB     R0,[R1, #+18]
+   \   00000292   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+    534                SysSet.SwitchSet[7]=1;
+   \                     ??LCDUartSET_40:
+   \   00000294   0x.... 0x....      LDR.W    R0,??DataTable5_30
+   \   00000298   0x2101             MOVS     R1,#+1
+   \   0000029A   0x7541             STRB     R1,[R0, #+21]
+    535                break;
+   \   0000029C   0xE0EA             B.N      ??LCDUartSET_26
+    536              case 0x65:  // WK --> 背光设置
+    537                SysSet.SwitchSet[5]==0?(SysSet.SwitchSet[5]=1):(SysSet.SwitchSet[5]=0);
    \                     ??LCDUartSET_22:
-   \   000003A8   0x....             LDR.N    R0,??DataTable5_19
-   \   000003AA   0x2100             MOVS     R1,#+0
-   \   000003AC   0x7001             STRB     R1,[R0, #+0]
-    575                  break;
-   \   000003AE   0xE042             B.N      ??LCDUartSET_24
-    576                  
-    577              default:
-    578                  if(Touch_key>31&&Touch_key<42)//系统参数设置下的小键盘0-9
+   \   0000029E   0x.... 0x....      LDR.W    R0,??DataTable5_30
+   \   000002A2   0x7CC0             LDRB     R0,[R0, #+19]
+   \   000002A4   0x2800             CMP      R0,#+0
+   \   000002A6   0xD105             BNE.N    ??LCDUartSET_41
+   \   000002A8   0x2001             MOVS     R0,#+1
+   \   000002AA   0x.... 0x....      LDR.W    R1,??DataTable5_30
+   \   000002AE   0x74C8             STRB     R0,[R1, #+19]
+   \   000002B0   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   000002B2   0xE004             B.N      ??LCDUartSET_42
+   \                     ??LCDUartSET_41:
+   \   000002B4   0x2000             MOVS     R0,#+0
+   \   000002B6   0x.... 0x....      LDR.W    R1,??DataTable5_30
+   \   000002BA   0x74C8             STRB     R0,[R1, #+19]
+   \   000002BC   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+    538                SysSet.SwitchSet[7]=1;
+   \                     ??LCDUartSET_42:
+   \   000002BE   0x.... 0x....      LDR.W    R0,??DataTable5_30
+   \   000002C2   0x2101             MOVS     R1,#+1
+   \   000002C4   0x7541             STRB     R1,[R0, #+21]
+    539                break;
+   \   000002C6   0xE0D5             B.N      ??LCDUartSET_26
+    540              case 0x66:  // WK --> 移动存储
+    541                SysSet.SwitchSet[6]==0?(SysSet.SwitchSet[6]=1):(SysSet.SwitchSet[6]=0);
    \                     ??LCDUartSET_23:
-   \   000003B0   0xF1B0 0x0120      SUBS     R1,R0,#+32
-   \   000003B4   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-   \   000003B6   0x290A             CMP      R1,#+10
-   \   000003B8   0xD223             BCS.N    ??LCDUartSET_54
-    579                  {
-    580                      SysSet.DataFlg=1;
-   \   000003BA   0x....             LDR.N    R1,??DataTable5_30
-   \   000003BC   0x2201             MOVS     R2,#+1
-   \   000003BE   0x708A             STRB     R2,[R1, #+2]
-    581                      if(SysSet.DataCnt<(SysSet.ParaIndex<4?(SysSet.ParaIndex==3?4:5):2))  // wk --> 最多输入 5 位数
-   \   000003C0   0x....             LDR.N    R1,??DataTable5_30
-   \   000003C2   0x7A09             LDRB     R1,[R1, #+8]
-   \   000003C4   0x....             LDR.N    R2,??DataTable5_30
-   \   000003C6   0x7992             LDRB     R2,[R2, #+6]
-   \   000003C8   0x2A04             CMP      R2,#+4
-   \   000003CA   0xD207             BCS.N    ??LCDUartSET_55
-   \   000003CC   0x....             LDR.N    R2,??DataTable5_30
-   \   000003CE   0x7992             LDRB     R2,[R2, #+6]
-   \   000003D0   0x2A03             CMP      R2,#+3
-   \   000003D2   0xD101             BNE.N    ??LCDUartSET_56
-   \   000003D4   0x2204             MOVS     R2,#+4
-   \   000003D6   0xE002             B.N      ??LCDUartSET_57
-   \                     ??LCDUartSET_56:
-   \   000003D8   0x2205             MOVS     R2,#+5
-   \   000003DA   0xE000             B.N      ??LCDUartSET_57
-   \                     ??LCDUartSET_55:
-   \   000003DC   0x2202             MOVS     R2,#+2
-   \                     ??LCDUartSET_57:
-   \   000003DE   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-   \   000003E0   0x4291             CMP      R1,R2
-   \   000003E2   0xDA0B             BGE.N    ??LCDUartSET_58
-    582                      {
-    583                          SysSet.Data[SysSet.DataCnt++]=Touch_key+16;
-   \   000003E4   0x....             LDR.N    R1,??DataTable5_30
-   \   000003E6   0x7A09             LDRB     R1,[R1, #+8]
-   \   000003E8   0x....             LDR.N    R2,??DataTable5_30
-   \   000003EA   0x1C4B             ADDS     R3,R1,#+1
-   \   000003EC   0x7213             STRB     R3,[R2, #+8]
-   \   000003EE   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-   \   000003F0   0x....             LDR.N    R2,??DataTable5_30
-   \   000003F2   0x1889             ADDS     R1,R1,R2
-   \   000003F4   0xF110 0x0210      ADDS     R2,R0,#+16
-   \   000003F8   0x724A             STRB     R2,[R1, #+9]
-   \   000003FA   0xE002             B.N      ??LCDUartSET_54
-    584                      }
-    585                      else
-    586                      {
-    587                          SysSet.DataCnt=0;    //相当于清除键
-   \                     ??LCDUartSET_58:
-   \   000003FC   0x....             LDR.N    R1,??DataTable5_30
-   \   000003FE   0x2200             MOVS     R2,#+0
-   \   00000400   0x720A             STRB     R2,[R1, #+8]
-    588                      }
-    589                  }
-    590                  if(Touch_key>79&&Touch_key<90)//系统事件设置下的小键盘0-9
+   \   000002C8   0x.... 0x....      LDR.W    R0,??DataTable5_30
+   \   000002CC   0x7D00             LDRB     R0,[R0, #+20]
+   \   000002CE   0x2800             CMP      R0,#+0
+   \   000002D0   0xD105             BNE.N    ??LCDUartSET_43
+   \   000002D2   0x2001             MOVS     R0,#+1
+   \   000002D4   0x.... 0x....      LDR.W    R1,??DataTable5_30
+   \   000002D8   0x7508             STRB     R0,[R1, #+20]
+   \   000002DA   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   000002DC   0xE004             B.N      ??LCDUartSET_44
+   \                     ??LCDUartSET_43:
+   \   000002DE   0x2000             MOVS     R0,#+0
+   \   000002E0   0x.... 0x....      LDR.W    R1,??DataTable5_30
+   \   000002E4   0x7508             STRB     R0,[R1, #+20]
+   \   000002E6   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+    542                SysSet.SwitchSet[7]=1;
+   \                     ??LCDUartSET_44:
+   \   000002E8   0x.... 0x....      LDR.W    R0,??DataTable5_30
+   \   000002EC   0x2101             MOVS     R1,#+1
+   \   000002EE   0x7541             STRB     R1,[R0, #+21]
+    543                break;        
+   \   000002F0   0xE0C0             B.N      ??LCDUartSET_26
+    544               /******************************** end *********************************/
+    545                 
+    546               /**********************************************************************
+    547                ** WK --> 系统事件设置界面按键  
+    548                **********************************************************************/  
+    549              case 64:               // WK --> 事件设置下移       
+    550                  // WK --> 待补充  
+    551                  SysSet.FuncFlg=1;
+   \                     ??LCDUartSET_12:
+   \   000002F2   0x....             LDR.N    R0,??DataTable5_30
+   \   000002F4   0x2101             MOVS     R1,#+1
+   \   000002F6   0x7041             STRB     R1,[R0, #+1]
+    552                  if(SysSet.EvntIndex <7 )
+   \   000002F8   0x....             LDR.N    R0,??DataTable5_30
+   \   000002FA   0x79C0             LDRB     R0,[R0, #+7]
+   \   000002FC   0x2807             CMP      R0,#+7
+   \   000002FE   0xD20F             BCS.N    ??LCDUartSET_45
+    553                    (SysSet.EvntIndex==6)? (SysSet.EvntIndex=0): (++SysSet.EvntIndex);  
+   \   00000300   0x....             LDR.N    R0,??DataTable5_30
+   \   00000302   0x79C0             LDRB     R0,[R0, #+7]
+   \   00000304   0x2806             CMP      R0,#+6
+   \   00000306   0xD104             BNE.N    ??LCDUartSET_46
+   \   00000308   0x2000             MOVS     R0,#+0
+   \   0000030A   0x....             LDR.N    R1,??DataTable5_30
+   \   0000030C   0x71C8             STRB     R0,[R1, #+7]
+   \   0000030E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000310   0xE015             B.N      ??LCDUartSET_47
+   \                     ??LCDUartSET_46:
+   \   00000312   0x....             LDR.N    R0,??DataTable5_30
+   \   00000314   0x79C0             LDRB     R0,[R0, #+7]
+   \   00000316   0x1C40             ADDS     R0,R0,#+1
+   \   00000318   0x....             LDR.N    R1,??DataTable5_30
+   \   0000031A   0x71C8             STRB     R0,[R1, #+7]
+   \   0000031C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000031E   0xE00E             B.N      ??LCDUartSET_47
+    554                  else
+    555                   (SysSet.EvntIndex==10)? (SysSet.EvntIndex=7):(++SysSet.EvntIndex);
+   \                     ??LCDUartSET_45:
+   \   00000320   0x....             LDR.N    R0,??DataTable5_30
+   \   00000322   0x79C0             LDRB     R0,[R0, #+7]
+   \   00000324   0x280A             CMP      R0,#+10
+   \   00000326   0xD104             BNE.N    ??LCDUartSET_48
+   \   00000328   0x2007             MOVS     R0,#+7
+   \   0000032A   0x....             LDR.N    R1,??DataTable5_30
+   \   0000032C   0x71C8             STRB     R0,[R1, #+7]
+   \   0000032E   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   00000330   0xE005             B.N      ??LCDUartSET_47
+   \                     ??LCDUartSET_48:
+   \   00000332   0x....             LDR.N    R0,??DataTable5_30
+   \   00000334   0x79C0             LDRB     R0,[R0, #+7]
+   \   00000336   0x1C40             ADDS     R0,R0,#+1
+   \   00000338   0x....             LDR.N    R1,??DataTable5_30
+   \   0000033A   0x71C8             STRB     R0,[R1, #+7]
+   \   0000033C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+    556                  break;
+   \                     ??LCDUartSET_47:
+   \   0000033E   0xE099             B.N      ??LCDUartSET_26
+    557              case 65:              // WK --> 事件设置上移         
+    558                    SysSet.FuncFlg=1;
+   \                     ??LCDUartSET_13:
+   \   00000340   0x....             LDR.N    R0,??DataTable5_30
+   \   00000342   0x2101             MOVS     R1,#+1
+   \   00000344   0x7041             STRB     R1,[R0, #+1]
+    559                    if(SysSet.EvntIndex <7 )
+   \   00000346   0x....             LDR.N    R0,??DataTable5_30
+   \   00000348   0x79C0             LDRB     R0,[R0, #+7]
+   \   0000034A   0x2807             CMP      R0,#+7
+   \   0000034C   0xD20F             BCS.N    ??LCDUartSET_49
+    560                      (SysSet.EvntIndex==0)? (SysSet.EvntIndex=6):(--SysSet.EvntIndex);      
+   \   0000034E   0x....             LDR.N    R0,??DataTable5_30
+   \   00000350   0x79C0             LDRB     R0,[R0, #+7]
+   \   00000352   0x2800             CMP      R0,#+0
+   \   00000354   0xD104             BNE.N    ??LCDUartSET_50
+   \   00000356   0x2006             MOVS     R0,#+6
+   \   00000358   0x....             LDR.N    R1,??DataTable5_30
+   \   0000035A   0x71C8             STRB     R0,[R1, #+7]
+   \   0000035C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000035E   0xE015             B.N      ??LCDUartSET_51
+   \                     ??LCDUartSET_50:
+   \   00000360   0x....             LDR.N    R0,??DataTable5_30
+   \   00000362   0x79C0             LDRB     R0,[R0, #+7]
+   \   00000364   0x1E40             SUBS     R0,R0,#+1
+   \   00000366   0x....             LDR.N    R1,??DataTable5_30
+   \   00000368   0x71C8             STRB     R0,[R1, #+7]
+   \   0000036A   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000036C   0xE00E             B.N      ??LCDUartSET_51
+    561                    else
+    562                      (SysSet.EvntIndex==10)?(SysSet.EvntIndex=7):(--SysSet.EvntIndex);   
+   \                     ??LCDUartSET_49:
+   \   0000036E   0x....             LDR.N    R0,??DataTable5_30
+   \   00000370   0x79C0             LDRB     R0,[R0, #+7]
+   \   00000372   0x280A             CMP      R0,#+10
+   \   00000374   0xD104             BNE.N    ??LCDUartSET_52
+   \   00000376   0x2007             MOVS     R0,#+7
+   \   00000378   0x....             LDR.N    R1,??DataTable5_30
+   \   0000037A   0x71C8             STRB     R0,[R1, #+7]
+   \   0000037C   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   0000037E   0xE005             B.N      ??LCDUartSET_51
+   \                     ??LCDUartSET_52:
+   \   00000380   0x....             LDR.N    R0,??DataTable5_30
+   \   00000382   0x79C0             LDRB     R0,[R0, #+7]
+   \   00000384   0x1E40             SUBS     R0,R0,#+1
+   \   00000386   0x....             LDR.N    R1,??DataTable5_30
+   \   00000388   0x71C8             STRB     R0,[R1, #+7]
+   \   0000038A   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+    563                  break;
+   \                     ??LCDUartSET_51:
+   \   0000038C   0xE072             B.N      ??LCDUartSET_26
+    564              case 66:             // WK --> 事件设置右移         
+    565                  SysSet.FuncFlg=1;
+   \                     ??LCDUartSET_14:
+   \   0000038E   0x....             LDR.N    R0,??DataTable5_30
+   \   00000390   0x2101             MOVS     R1,#+1
+   \   00000392   0x7041             STRB     R1,[R0, #+1]
+    566                  (SysSet.EvntIndex < 7) ? (SysSet.EvntIndex=7 ) : (SysSet.EvntIndex=0);
+   \   00000394   0x....             LDR.N    R0,??DataTable5_30
+   \   00000396   0x79C0             LDRB     R0,[R0, #+7]
+   \   00000398   0x2807             CMP      R0,#+7
+   \   0000039A   0xD204             BCS.N    ??LCDUartSET_53
+   \   0000039C   0x2007             MOVS     R0,#+7
+   \   0000039E   0x....             LDR.N    R1,??DataTable5_30
+   \   000003A0   0x71C8             STRB     R0,[R1, #+7]
+   \   000003A2   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   000003A4   0xE003             B.N      ??LCDUartSET_54
+   \                     ??LCDUartSET_53:
+   \   000003A6   0x2000             MOVS     R0,#+0
+   \   000003A8   0x....             LDR.N    R1,??DataTable5_30
+   \   000003AA   0x71C8             STRB     R0,[R1, #+7]
+   \   000003AC   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+    567                  break;     
    \                     ??LCDUartSET_54:
-   \   00000402   0xF1B0 0x0150      SUBS     R1,R0,#+80
-   \   00000406   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-   \   00000408   0x290A             CMP      R1,#+10
-   \   0000040A   0xD214             BCS.N    ??LCDUartSET_59
-    591                  {
-    592                      SysSet.DataFlg=1;
-   \   0000040C   0x....             LDR.N    R1,??DataTable5_30
-   \   0000040E   0x2201             MOVS     R2,#+1
-   \   00000410   0x708A             STRB     R2,[R1, #+2]
-    593                      if(SysSet.DataCnt<5)
-   \   00000412   0x....             LDR.N    R1,??DataTable5_30
-   \   00000414   0x7A09             LDRB     R1,[R1, #+8]
-   \   00000416   0x2905             CMP      R1,#+5
-   \   00000418   0xD20A             BCS.N    ??LCDUartSET_60
-    594                      {
-    595                          SysSet.Data[SysSet.DataCnt++]=Touch_key-32;
-   \   0000041A   0x....             LDR.N    R1,??DataTable5_30
-   \   0000041C   0x7A09             LDRB     R1,[R1, #+8]
-   \   0000041E   0x....             LDR.N    R2,??DataTable5_30
-   \   00000420   0x1C4B             ADDS     R3,R1,#+1
-   \   00000422   0x7213             STRB     R3,[R2, #+8]
-   \   00000424   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
-   \   00000426   0x....             LDR.N    R2,??DataTable5_30
-   \   00000428   0x1889             ADDS     R1,R1,R2
-   \   0000042A   0x3820             SUBS     R0,R0,#+32
-   \   0000042C   0x7248             STRB     R0,[R1, #+9]
-   \   0000042E   0xE002             B.N      ??LCDUartSET_59
-    596                      }
-    597                      else
-    598                      {
-    599                          SysSet.DataCnt=0;    //相当于清除键
-   \                     ??LCDUartSET_60:
-   \   00000430   0x....             LDR.N    R0,??DataTable5_30
-   \   00000432   0x2100             MOVS     R1,#+0
-   \   00000434   0x7201             STRB     R1,[R0, #+8]
-    600                      }
-    601                  }
-    602                  break;
-    603              }
-    604          }
-   \                     ??LCDUartSET_59:
+   \   000003AE   0xE061             B.N      ??LCDUartSET_26
+    568              case 67:                       /*保存键*/
+    569                  SysSet.EventSaveFlg=1;      // WK --> 具体实现带研究
+   \                     ??LCDUartSET_15:
+   \   000003B0   0x....             LDR.N    R0,??DataTable5_30
+   \   000003B2   0x2101             MOVS     R1,#+1
+   \   000003B4   0x7101             STRB     R1,[R0, #+4]
+    570                  break;
+   \   000003B6   0xE05D             B.N      ??LCDUartSET_26
+    571               /************************************* end******************************/
+    572                  
+    573              case 24:
+    574                  break;               /*参数设置已去除小数点键*/
+   \                     ??LCDUartSET_8:
+   \   000003B8   0xE05C             B.N      ??LCDUartSET_26
+    575              case 72:                  /*事件设置小数点键*/
+    576                  if(SysSet.DataCnt)
+   \                     ??LCDUartSET_16:
+   \   000003BA   0x....             LDR.N    R0,??DataTable5_30
+   \   000003BC   0x7A00             LDRB     R0,[R0, #+8]
+   \   000003BE   0x2800             CMP      R0,#+0
+   \   000003C0   0xD009             BEQ.N    ??LCDUartSET_55
+    577                  {
+    578                      SysSet.Data[SysSet.DataCnt++]='.';
+   \   000003C2   0x....             LDR.N    R0,??DataTable5_30
+   \   000003C4   0x7A00             LDRB     R0,[R0, #+8]
+   \   000003C6   0x....             LDR.N    R1,??DataTable5_30
+   \   000003C8   0x1C42             ADDS     R2,R0,#+1
+   \   000003CA   0x720A             STRB     R2,[R1, #+8]
+   \   000003CC   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+   \   000003CE   0x....             LDR.N    R1,??DataTable5_30
+   \   000003D0   0x1840             ADDS     R0,R0,R1
+   \   000003D2   0x212E             MOVS     R1,#+46
+   \   000003D4   0x7241             STRB     R1,[R0, #+9]
+    579                  }
+    580                  break;
+   \                     ??LCDUartSET_55:
+   \   000003D6   0xE04D             B.N      ??LCDUartSET_26
+    581              case 25:                  /*参数设置清除键*/
+    582              case 73:                  /*事件设置清除键*/
+    583                  SysSet.DataFlg=1;
+   \                     ??LCDUartSET_9:
+   \   000003D8   0x....             LDR.N    R0,??DataTable5_30
+   \   000003DA   0x2101             MOVS     R1,#+1
+   \   000003DC   0x7081             STRB     R1,[R0, #+2]
+    584                  SysSet.DataCnt=0;
+   \   000003DE   0x....             LDR.N    R0,??DataTable5_30
+   \   000003E0   0x2100             MOVS     R1,#+0
+   \   000003E2   0x7201             STRB     R1,[R0, #+8]
+    585                  break;
+   \   000003E4   0xE046             B.N      ??LCDUartSET_26
+    586              case 255:
+    587                  Dis_PicID=MenuTop;   // wk --> 返回主界面
    \                     ??LCDUartSET_24:
-   \   00000436   0x4770             BX       LR               ;; return
-    605          /*******************************************************************************
-    606          * 函  数  名      : LCDUartEVENT
-    607          * 描      述      : LCDUart触摸屏中断系统设置按键判断
-    608          * 输      入      : Touch_key.
-    609          * 返      回      : 无.
-    610          *******************************************************************************/
+   \   000003E6   0x....             LDR.N    R0,??DataTable5_19
+   \   000003E8   0x2100             MOVS     R1,#+0
+   \   000003EA   0x7001             STRB     R1,[R0, #+0]
+    588                  break;
+   \   000003EC   0xE042             B.N      ??LCDUartSET_26
+    589                  
+    590              default:
+    591                  if(Touch_key>31&&Touch_key<42)//系统参数设置下的小键盘0-9
+   \                     ??LCDUartSET_25:
+   \   000003EE   0xF1B0 0x0120      SUBS     R1,R0,#+32
+   \   000003F2   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   000003F4   0x290A             CMP      R1,#+10
+   \   000003F6   0xD223             BCS.N    ??LCDUartSET_56
+    592                  {
+    593                      SysSet.DataFlg=1;
+   \   000003F8   0x....             LDR.N    R1,??DataTable5_30
+   \   000003FA   0x2201             MOVS     R2,#+1
+   \   000003FC   0x708A             STRB     R2,[R1, #+2]
+    594                      if(SysSet.DataCnt<(SysSet.ParaIndex<4?(SysSet.ParaIndex==3?4:5):2))  // wk --> 最多输入 5 位数
+   \   000003FE   0x....             LDR.N    R1,??DataTable5_30
+   \   00000400   0x7A09             LDRB     R1,[R1, #+8]
+   \   00000402   0x....             LDR.N    R2,??DataTable5_30
+   \   00000404   0x7992             LDRB     R2,[R2, #+6]
+   \   00000406   0x2A04             CMP      R2,#+4
+   \   00000408   0xD207             BCS.N    ??LCDUartSET_57
+   \   0000040A   0x....             LDR.N    R2,??DataTable5_30
+   \   0000040C   0x7992             LDRB     R2,[R2, #+6]
+   \   0000040E   0x2A03             CMP      R2,#+3
+   \   00000410   0xD101             BNE.N    ??LCDUartSET_58
+   \   00000412   0x2204             MOVS     R2,#+4
+   \   00000414   0xE002             B.N      ??LCDUartSET_59
+   \                     ??LCDUartSET_58:
+   \   00000416   0x2205             MOVS     R2,#+5
+   \   00000418   0xE000             B.N      ??LCDUartSET_59
+   \                     ??LCDUartSET_57:
+   \   0000041A   0x2202             MOVS     R2,#+2
+   \                     ??LCDUartSET_59:
+   \   0000041C   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   0000041E   0x4291             CMP      R1,R2
+   \   00000420   0xDA0B             BGE.N    ??LCDUartSET_60
+    595                      {
+    596                          SysSet.Data[SysSet.DataCnt++]=Touch_key+16;
+   \   00000422   0x....             LDR.N    R1,??DataTable5_30
+   \   00000424   0x7A09             LDRB     R1,[R1, #+8]
+   \   00000426   0x....             LDR.N    R2,??DataTable5_30
+   \   00000428   0x1C4B             ADDS     R3,R1,#+1
+   \   0000042A   0x7213             STRB     R3,[R2, #+8]
+   \   0000042C   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   0000042E   0x....             LDR.N    R2,??DataTable5_30
+   \   00000430   0x1889             ADDS     R1,R1,R2
+   \   00000432   0xF110 0x0210      ADDS     R2,R0,#+16
+   \   00000436   0x724A             STRB     R2,[R1, #+9]
+   \   00000438   0xE002             B.N      ??LCDUartSET_56
+    597                      }
+    598                      else
+    599                      {
+    600                          SysSet.DataCnt=0;    //相当于清除键
+   \                     ??LCDUartSET_60:
+   \   0000043A   0x....             LDR.N    R1,??DataTable5_30
+   \   0000043C   0x2200             MOVS     R2,#+0
+   \   0000043E   0x720A             STRB     R2,[R1, #+8]
+    601                      }
+    602                  }
+    603                  if(Touch_key>79&&Touch_key<90)//系统事件设置下的小键盘0-9
+   \                     ??LCDUartSET_56:
+   \   00000440   0xF1B0 0x0150      SUBS     R1,R0,#+80
+   \   00000444   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000446   0x290A             CMP      R1,#+10
+   \   00000448   0xD214             BCS.N    ??LCDUartSET_61
+    604                  {
+    605                      SysSet.DataFlg=1;
+   \   0000044A   0x....             LDR.N    R1,??DataTable5_30
+   \   0000044C   0x2201             MOVS     R2,#+1
+   \   0000044E   0x708A             STRB     R2,[R1, #+2]
+    606                      if(SysSet.DataCnt<5)
+   \   00000450   0x....             LDR.N    R1,??DataTable5_30
+   \   00000452   0x7A09             LDRB     R1,[R1, #+8]
+   \   00000454   0x2905             CMP      R1,#+5
+   \   00000456   0xD20A             BCS.N    ??LCDUartSET_62
+    607                      {
+    608                          SysSet.Data[SysSet.DataCnt++]=Touch_key-32;
+   \   00000458   0x....             LDR.N    R1,??DataTable5_30
+   \   0000045A   0x7A09             LDRB     R1,[R1, #+8]
+   \   0000045C   0x....             LDR.N    R2,??DataTable5_30
+   \   0000045E   0x1C4B             ADDS     R3,R1,#+1
+   \   00000460   0x7213             STRB     R3,[R2, #+8]
+   \   00000462   0xB2C9             UXTB     R1,R1            ;; ZeroExt  R1,R1,#+24,#+24
+   \   00000464   0x....             LDR.N    R2,??DataTable5_30
+   \   00000466   0x1889             ADDS     R1,R1,R2
+   \   00000468   0x3820             SUBS     R0,R0,#+32
+   \   0000046A   0x7248             STRB     R0,[R1, #+9]
+   \   0000046C   0xE002             B.N      ??LCDUartSET_61
+    609                      }
+    610                      else
+    611                      {
+    612                          SysSet.DataCnt=0;    //相当于清除键
+   \                     ??LCDUartSET_62:
+   \   0000046E   0x....             LDR.N    R0,??DataTable5_30
+   \   00000470   0x2100             MOVS     R1,#+0
+   \   00000472   0x7201             STRB     R1,[R0, #+8]
+    613                      }
+    614                  }
+    615                  break;
+    616              }
+    617          }
+   \                     ??LCDUartSET_61:
+   \                     ??LCDUartSET_26:
+   \   00000474   0x4770             BX       LR               ;; return
+    618          /*******************************************************************************
+    619          * 函  数  名      : LCDUartEVENT
+    620          * 描      述      : LCDUart触摸屏中断系统设置按键判断
+    621          * 输      入      : Touch_key.
+    622          * 返      回      : 无.
+    623          *******************************************************************************/
 
    \                                 In section .text, align 2, keep-with-next
-    611          void LCDUartEVENT(U8 Touch_key)   //事件显示按键跳转函数。
-    612          {
-    613              if(Touch_key<3||Touch_key==255)
+    624          void LCDUartEVENT(U8 Touch_key)   //事件显示按键跳转函数。
+    625          {
+    626              if(Touch_key<3||Touch_key==255)
    \                     LCDUartEVENT:
    \   00000000   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
    \   00000002   0x2803             CMP      R0,#+3
@@ -1877,18 +1920,18 @@ E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\LCDUart.c
    \   00000006   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
    \   00000008   0x28FF             CMP      R0,#+255
    \   0000000A   0xD105             BNE.N    ??LCDUartEVENT_1
-    614              {
-    615                  MenuSwFlg=1;//切换页面
+    627              {
+    628                  MenuSwFlg=1;//切换页面
    \                     ??LCDUartEVENT_0:
    \   0000000C   0x....             LDR.N    R1,??DataTable5_16
    \   0000000E   0x2201             MOVS     R2,#+1
    \   00000010   0x700A             STRB     R2,[R1, #+0]
-    616                  DisTimeOnce=1;//页面切换后完全显示时间
+    629                  DisTimeOnce=1;//页面切换后完全显示时间
    \   00000012   0x....             LDR.N    R1,??DataTable5_17
    \   00000014   0x2201             MOVS     R2,#+1
    \   00000016   0x700A             STRB     R2,[R1, #+0]
-    617              }
-    618              switch(Touch_key)
+    630              }
+    631              switch(Touch_key)
    \                     ??LCDUartEVENT_1:
    \   00000018   0xB2C0             UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
    \   0000001A   0x2800             CMP      R0,#+0
@@ -1908,161 +1951,161 @@ E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\LCDUart.c
    \   00000036   0x28FF             CMP      R0,#+255
    \   00000038   0xD051             BEQ.N    ??LCDUartEVENT_9
    \   0000003A   0xE054             B.N      ??LCDUartEVENT_10
-    619              {
-    620              case 0:
-    621                  Dis_PicID=MenuEventMON;   //事件监测
+    632              {
+    633              case 0:
+    634                  Dis_PicID=MenuEventMON;   //事件监测
    \                     ??LCDUartEVENT_2:
    \   0000003C   0x....             LDR.N    R0,??DataTable5_19
    \   0000003E   0x2128             MOVS     R1,#+40
    \   00000040   0x7001             STRB     R1,[R0, #+0]
-    622                  break;
+    635                  break;
    \   00000042   0xE050             B.N      ??LCDUartEVENT_11
-    623              case 1:
-    624                  Dis_PicID=MenuEventList;  //事件列表
+    636              case 1:
+    637                  Dis_PicID=MenuEventList;  //事件列表
    \                     ??LCDUartEVENT_3:
    \   00000044   0x....             LDR.N    R0,??DataTable5_19
    \   00000046   0x2129             MOVS     R1,#+41
    \   00000048   0x7001             STRB     R1,[R0, #+0]
-    625                  EVEnum_old=0;
-   \   0000004A   0x....             LDR.N    R0,??DataTable5_31
+    638                  EVEnum_old=0;
+   \   0000004A   0x....             LDR.N    R0,??DataTable5_32
    \   0000004C   0x2100             MOVS     R1,#+0
    \   0000004E   0x7001             STRB     R1,[R0, #+0]
-    626                  break;
+    639                  break;
    \   00000050   0xE049             B.N      ??LCDUartEVENT_11
-    627              case 2:
-    628                  Dis_PicID= MenuEventWave;  //事件波形
+    640              case 2:
+    641                  Dis_PicID= MenuEventWave;  //事件波形
    \                     ??LCDUartEVENT_4:
    \   00000052   0x....             LDR.N    R0,??DataTable5_19
    \   00000054   0x212A             MOVS     R1,#+42
    \   00000056   0x7001             STRB     R1,[R0, #+0]
-    629                  break;
+    642                  break;
    \   00000058   0xE045             B.N      ??LCDUartEVENT_11
-    630              case 32:            //事件列表中的上翻页
-    631                  if(EVEpage>0)
+    643              case 32:            //事件列表中的上翻页
+    644                  if(EVEpage>0)
    \                     ??LCDUartEVENT_5:
-   \   0000005A   0x....             LDR.N    R0,??DataTable5_32
+   \   0000005A   0x....             LDR.N    R0,??DataTable5_33
    \   0000005C   0x7800             LDRB     R0,[R0, #+0]
    \   0000005E   0x2801             CMP      R0,#+1
    \   00000060   0xD305             BCC.N    ??LCDUartEVENT_12
-    632                  {
-    633                      EVEpage--;
-   \   00000062   0x....             LDR.N    R0,??DataTable5_32
+    645                  {
+    646                      EVEpage--;
+   \   00000062   0x....             LDR.N    R0,??DataTable5_33
    \   00000064   0x7800             LDRB     R0,[R0, #+0]
    \   00000066   0x1E40             SUBS     R0,R0,#+1
-   \   00000068   0x....             LDR.N    R1,??DataTable5_32
+   \   00000068   0x....             LDR.N    R1,??DataTable5_33
    \   0000006A   0x7008             STRB     R0,[R1, #+0]
    \   0000006C   0xE002             B.N      ??LCDUartEVENT_13
-    634                  }
-    635                  else
-    636                  {
-    637                      EVEpage=0;
+    647                  }
+    648                  else
+    649                  {
+    650                      EVEpage=0;
    \                     ??LCDUartEVENT_12:
-   \   0000006E   0x....             LDR.N    R0,??DataTable5_32
+   \   0000006E   0x....             LDR.N    R0,??DataTable5_33
    \   00000070   0x2100             MOVS     R1,#+0
    \   00000072   0x7001             STRB     R1,[R0, #+0]
-    638                  }
-    639                  MenuSwFlg=1;
+    651                  }
+    652                  MenuSwFlg=1;
    \                     ??LCDUartEVENT_13:
    \   00000074   0x....             LDR.N    R0,??DataTable5_16
    \   00000076   0x2101             MOVS     R1,#+1
    \   00000078   0x7001             STRB     R1,[R0, #+0]
-    640                  break;
+    653                  break;
    \   0000007A   0xE034             B.N      ??LCDUartEVENT_11
-    641              case 33:             //事件列表中的下翻页
-    642                  if(EVEpage==8)
+    654              case 33:             //事件列表中的下翻页
+    655                  if(EVEpage==8)
    \                     ??LCDUartEVENT_6:
-   \   0000007C   0x....             LDR.N    R0,??DataTable5_32
+   \   0000007C   0x....             LDR.N    R0,??DataTable5_33
    \   0000007E   0x7800             LDRB     R0,[R0, #+0]
    \   00000080   0x2808             CMP      R0,#+8
    \   00000082   0xD102             BNE.N    ??LCDUartEVENT_14
-    643                  {
-    644                      EVEpage=0;
-   \   00000084   0x....             LDR.N    R0,??DataTable5_32
+    656                  {
+    657                      EVEpage=0;
+   \   00000084   0x....             LDR.N    R0,??DataTable5_33
    \   00000086   0x2100             MOVS     R1,#+0
    \   00000088   0x7001             STRB     R1,[R0, #+0]
-    645                  }
-    646                  EVEpage++;
+    658                  }
+    659                  EVEpage++;
    \                     ??LCDUartEVENT_14:
-   \   0000008A   0x....             LDR.N    R0,??DataTable5_32
+   \   0000008A   0x....             LDR.N    R0,??DataTable5_33
    \   0000008C   0x7800             LDRB     R0,[R0, #+0]
    \   0000008E   0x1C40             ADDS     R0,R0,#+1
-   \   00000090   0x....             LDR.N    R1,??DataTable5_32
+   \   00000090   0x....             LDR.N    R1,??DataTable5_33
    \   00000092   0x7008             STRB     R0,[R1, #+0]
-    647                  MenuSwFlg=1;
+    660                  MenuSwFlg=1;
    \   00000094   0x....             LDR.N    R0,??DataTable5_16
    \   00000096   0x2101             MOVS     R1,#+1
    \   00000098   0x7001             STRB     R1,[R0, #+0]
-    648                  break;
+    661                  break;
    \   0000009A   0xE024             B.N      ??LCDUartEVENT_11
-    649              case 34:             //事件列表中的上移
-    650                  if(EVEline>0)
+    662              case 34:             //事件列表中的上移
+    663                  if(EVEline>0)
    \                     ??LCDUartEVENT_7:
-   \   0000009C   0x....             LDR.N    R0,??DataTable5_33
+   \   0000009C   0x....             LDR.N    R0,??DataTable5_34
    \   0000009E   0x7800             LDRB     R0,[R0, #+0]
    \   000000A0   0x2801             CMP      R0,#+1
    \   000000A2   0xD305             BCC.N    ??LCDUartEVENT_15
-    651                  {
-    652                      EVEline--;
-   \   000000A4   0x....             LDR.N    R0,??DataTable5_33
+    664                  {
+    665                      EVEline--;
+   \   000000A4   0x....             LDR.N    R0,??DataTable5_34
    \   000000A6   0x7800             LDRB     R0,[R0, #+0]
    \   000000A8   0x1E40             SUBS     R0,R0,#+1
-   \   000000AA   0x....             LDR.N    R1,??DataTable5_33
+   \   000000AA   0x....             LDR.N    R1,??DataTable5_34
    \   000000AC   0x7008             STRB     R0,[R1, #+0]
    \   000000AE   0xE002             B.N      ??LCDUartEVENT_16
-    653                  }
-    654                  else
-    655                  {
-    656                      EVEline=0;
+    666                  }
+    667                  else
+    668                  {
+    669                      EVEline=0;
    \                     ??LCDUartEVENT_15:
-   \   000000B0   0x....             LDR.N    R0,??DataTable5_33
+   \   000000B0   0x....             LDR.N    R0,??DataTable5_34
    \   000000B2   0x2100             MOVS     R1,#+0
    \   000000B4   0x7001             STRB     R1,[R0, #+0]
-    657                  }
-    658                  EVEfunflg=1;
+    670                  }
+    671                  EVEfunflg=1;
    \                     ??LCDUartEVENT_16:
-   \   000000B6   0x....             LDR.N    R0,??DataTable5_34
+   \   000000B6   0x....             LDR.N    R0,??DataTable5_35
    \   000000B8   0x2101             MOVS     R1,#+1
    \   000000BA   0x7001             STRB     R1,[R0, #+0]
-    659                  break;
+    672                  break;
    \   000000BC   0xE013             B.N      ??LCDUartEVENT_11
-    660              case 35:           //事件列表中的下移
-    661                  if(EVEline==14)
+    673              case 35:           //事件列表中的下移
+    674                  if(EVEline==14)
    \                     ??LCDUartEVENT_8:
-   \   000000BE   0x....             LDR.N    R0,??DataTable5_33
+   \   000000BE   0x....             LDR.N    R0,??DataTable5_34
    \   000000C0   0x7800             LDRB     R0,[R0, #+0]
    \   000000C2   0x280E             CMP      R0,#+14
    \   000000C4   0xD102             BNE.N    ??LCDUartEVENT_17
-    662                  {
-    663                      EVEline=0;
-   \   000000C6   0x....             LDR.N    R0,??DataTable5_33
+    675                  {
+    676                      EVEline=0;
+   \   000000C6   0x....             LDR.N    R0,??DataTable5_34
    \   000000C8   0x2100             MOVS     R1,#+0
    \   000000CA   0x7001             STRB     R1,[R0, #+0]
-    664                  }
-    665                  EVEline++;
+    677                  }
+    678                  EVEline++;
    \                     ??LCDUartEVENT_17:
-   \   000000CC   0x....             LDR.N    R0,??DataTable5_33
+   \   000000CC   0x....             LDR.N    R0,??DataTable5_34
    \   000000CE   0x7800             LDRB     R0,[R0, #+0]
    \   000000D0   0x1C40             ADDS     R0,R0,#+1
-   \   000000D2   0x....             LDR.N    R1,??DataTable5_33
+   \   000000D2   0x....             LDR.N    R1,??DataTable5_34
    \   000000D4   0x7008             STRB     R0,[R1, #+0]
-    666                  EVEfunflg=1;
-   \   000000D6   0x....             LDR.N    R0,??DataTable5_34
+    679                  EVEfunflg=1;
+   \   000000D6   0x....             LDR.N    R0,??DataTable5_35
    \   000000D8   0x2101             MOVS     R1,#+1
    \   000000DA   0x7001             STRB     R1,[R0, #+0]
-    667                  break;
+    680                  break;
    \   000000DC   0xE003             B.N      ??LCDUartEVENT_11
-    668              case 255:
-    669                  Dis_PicID=MenuTop;
+    681              case 255:
+    682                  Dis_PicID=MenuTop;
    \                     ??LCDUartEVENT_9:
    \   000000DE   0x....             LDR.N    R0,??DataTable5_19
    \   000000E0   0x2100             MOVS     R1,#+0
    \   000000E2   0x7001             STRB     R1,[R0, #+0]
-    670                  break;
+    683                  break;
    \   000000E4   0xE7FF             B.N      ??LCDUartEVENT_11
-    671              default:
-    672                  break;
-    673              }
-    674          }
+    684              default:
+    685                  break;
+    686              }
+    687          }
    \                     ??LCDUartEVENT_10:
    \                     ??LCDUartEVENT_11:
    \   000000E6   0x4770             BX       LR               ;; return
@@ -2198,18 +2241,22 @@ E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\LCDUart.c
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable5_31:
-   \   00000000   0x........         DC32     EVEnum_old
+   \   00000000   0x........         DC32     InitAck
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable5_32:
-   \   00000000   0x........         DC32     EVEpage
+   \   00000000   0x........         DC32     EVEnum_old
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable5_33:
-   \   00000000   0x........         DC32     EVEline
+   \   00000000   0x........         DC32     EVEpage
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable5_34:
+   \   00000000   0x........         DC32     EVEline
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_35:
    \   00000000   0x........         DC32     EVEfunflg
 
    \                                 In section .rodata, align 4
@@ -2434,6 +2481,7 @@ E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\LCDUart.c
        4  ??DataTable5_32
        4  ??DataTable5_33
        4  ??DataTable5_34
+       4  ??DataTable5_35
        4  ??DataTable5_4
        4  ??DataTable5_5
        4  ??DataTable5_6
@@ -2455,9 +2503,10 @@ E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\LCDUart.c
        1  HarmoListRange
        1  HarmoListShift
        1  HarmoListUorI
+       1  InitAck
      224  LCDTouchSel_Task
      232  LCDUartEVENT
-    1080  LCDUartSET
+    1142  LCDUartSET
      960  LCDUartView
        1  MenuSwFlg
        1  OtherSetIndex
@@ -2472,13 +2521,13 @@ E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\LCDUart.c
      116  new_uart_isr
 
  
-    47 bytes in section .bss
+    48 bytes in section .bss
    232 bytes in section .rodata
- 2 782 bytes in section .text
+ 2 848 bytes in section .text
  
- 2 782 bytes of CODE  memory
+ 2 848 bytes of CODE  memory
    232 bytes of CONST memory
-    47 bytes of DATA  memory
+    48 bytes of DATA  memory
 
 Errors: none
 Warnings: none

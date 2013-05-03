@@ -959,7 +959,9 @@ void GUI_SYS_PARASET(void)
             YADA_98(152, PARA_y, 0x22, 0x81, 0x02, 0xffff, 0x0000, OFF_ON[SysFlashDataT[i]], 4);// WK -->字库选择
             delay_us(10);
       }
+      SysSet.SwitchSet[7]=0;  // wk --> 清楚标志
     }
+    
     /* WK --> 保存键 */
     if(SysSet.ParaSaveFlg)
     {    
@@ -1556,24 +1558,45 @@ void GUI_SYS_EVENTSET(void)
 void GUI_INIT_SET(void)
 {
     U8 PBUF[]= {"恢复出厂设置成功！"};
-//    if(InitAck)
-//    {
-//        memset(SysFlashData,0,99);//SysFlashData[0~85]赋初值0
-//        Init_Sys_Set();
-//        memset(NBlock,0,200);//NBlock[0~199]赋初值0
-//        memset(NPage,0,115);//NPage[0~199]赋初值0
-//        Write_Flash(SysFlashData,99,SysSetAddr);  //系统设置字节写入芯片flash
-//        delay_us(10);
-//        Write_Flash(NPage,115,NFPAddr);   //nandflash的页面值字节写入芯片flash
-//        delay_us(10);
-//        Write_WFlash(NBlock,64,NFBAddr);//nandflash的block值分两次字写入芯片flash
-//        delay_us(10);
-//        Write_WFlash(&NBlock[64],36,NFBAddr+128);
-//        delay_us(10);
-//        YADA_98(200, 211, 0x22, 0x81, 0x02, 0xffe0, 0x0000, PBUF, 0);
-//        InitAck=0;
-//    }
-// if(InitNoAck)
+    
+    SHELL_CONTEXT_PTR    shell_ptr;
+    shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
+    _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
+    
+    if(InitAck)
+    {
+//        memset(SysFlashDataT,0,84);//SysFlashData[0~85]赋初值0
+        for(uchar i=0;i<84;i++)
+          SysFlashDataT[i]=0;
+
+        shell_ptr->ARGC=2;
+        shell_ptr->ARGV[0]="cd";
+        shell_ptr->ARGV[1]="f:\\"; 
+        Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+        
+        shell_ptr->ARGC = 2;
+        shell_ptr->ARGV[0]="cd";
+        shell_ptr->ARGV[1]="sysset";
+        Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+        
+        shell_ptr->ARGC=4;
+        shell_ptr->ARGV[0]="w";
+        shell_ptr->ARGV[1]="sysset.txt";
+        shell_ptr->ARGV[2]="begin";
+        shell_ptr->ARGV[3]="0";
+        Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,84,SysFlashDataT);
+        
+        shell_ptr->ARGC=2;
+        shell_ptr->ARGV[0]="update"; // wk --> update
+        shell_ptr->ARGV[1]="flush";
+        Shell_update(shell_ptr->ARGC, shell_ptr->ARGV);
+        
+        YADA_98(200, 211, 0x22, 0x81, 0x02, 0xffe0, 0x0000, PBUF, 0);
+        InitAck=0;
+    }
+//    else
+
+    _mem_free(shell_ptr); 
 }
 
 /*******************************************************************************

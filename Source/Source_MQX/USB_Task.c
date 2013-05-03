@@ -113,8 +113,7 @@ void usb_host_mass_device_event
       uint_32           event_code
    )
 {
-   INTERFACE_DESCRIPTOR_PTR   intf_ptr =
-      (INTERFACE_DESCRIPTOR_PTR)intf_handle;
+   INTERFACE_DESCRIPTOR_PTR   intf_ptr = (INTERFACE_DESCRIPTOR_PTR)intf_handle;
 
    switch (event_code) {
       case USB_CONFIG_EVENT:

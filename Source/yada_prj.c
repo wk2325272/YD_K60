@@ -17,7 +17,7 @@
 #define LPT_FLAG_CLOCK_SOURCE_LPO           (0x00000002) // wk @130330 --> test timer
 
 volatile U8 RefreshFlg; // 页面刷新标志
-U8 U_FLAG = 0;
+U8 U_FLAG = 0,Time_Ref = 0;
 uchar read_buffer[8]={0x12,0x23};  // wk @130403 --> uncomment
 U8 SavePowerFlg; // WK @130401 --> 电能质量数据存储标志 1时存储
 
@@ -52,7 +52,7 @@ void int_callback(void)
 ** Author		：wk
 ** Version	：v1.0
 ** Date		：130330
-** Dessription	：LPT 定时器中断函数入口
+** Dessription	：LPT 定时器0中断函数入口
 ** Reverse	：
 *******************************************************************************/
 static void timer_isr
@@ -71,6 +71,31 @@ static void timer_isr
 //    GUI_EventWave(1);
 //    EventKeyFlg=1; SPIEventFlg=1;// wk @130401 --> test event data save
     _lpt_init(0,3 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO,TRUE);
+}
+/*******************************************************************************
+** Function Name	：timser_isr
+** Input		：device num of timer
+** Return		：void
+** Author		：wk
+** Version	：v1.0
+** Date		：130330
+** Dessription	：LPT 定时器1中断函数入口
+** Reverse	：
+*******************************************************************************/
+static void timer_isr_1
+    (
+        pointer parameter
+    )
+{
+    uint_32 timer = (uint_32)parameter;
+    
+    /* Stop the timer */
+    _lpt_run (timer, FALSE);
+    _lpt_clear_int (timer);
+    
+    Time_Ref = 1;
+    printf("1s\n");
+    _lpt_init(1,1 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO,TRUE);
 }
 
 /*
@@ -164,7 +189,9 @@ void YaDa
    ioctl(port_file4, GPIO_IOCTL_SET_IRQ_FUNCTION, (pointer)int_callback);        
   /* end */
   /* wk @130330 -->timer of lpt */
-   _lpt_install (0,3 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO, 11, timer_isr, TRUE);//2 * 1000000  --> 2秒     
+   _lpt_install (0,3 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO, 11, timer_isr, TRUE);//2 * 1000000  --> 2秒  
+   /* wk --> 刷新时钟 注意：现在除了timer 0 能用之外，其他的都不能用，待研究中……*/
+    _lpt_install (1,1 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO, 11, timer_isr_1, TRUE);//2 * 1000000  --> 2秒  
   /* wk @130330 -->timer end */
    
    for(int i=0;i<84;i++)
@@ -181,7 +208,6 @@ void YaDa
         {
             YADA_5F(0x08);                             //背光部分开
         }
-      
       MainLoop(); //循环主程序
   }
 }
@@ -245,6 +271,32 @@ void MainLoop()
     YADA_70(Dis_PicID); //有时会出现切屏不及时，冗余思想
   }
   
+  if (Dis_PicID != MenuTop)//时间显示需放在界面切换之后，放数据刷新之后的话延时更长才显示
+    {
+//        /*
+//        if( DisTimeOnce==1 )
+//        {
+//          DisTimeOnce=0;
+//          DISTIME(1);   //显示完整时间。
+//        }
+//          DISTIME(0);//只刷新秒  */
+        if(Time_Ref==1)//设置8025固定中断，一分钟才刷新，但秒比较闪
+        {
+//            //U8 Config =0x20;
+//            Write8025(&Config,15,1);//使/INTA="L"设置为ＯＦＦ
+          Time_Ref=0;
+//          DISTIME(1);
+        }
+        
+        if(USB_Flg) //U盘图标显示
+        {
+            YADA_71(PageIcon,55,450,102,475,55,450);
+        }
+        else
+        {
+            YADA_71(PageIcon,55,400,102,425,55,450);
+        }
+    }
   /* ……*/
   switch(RefreshFlg)
   {
@@ -256,7 +308,10 @@ void MainLoop()
         GUI_SYS_PARASET();
         break;
       case MenuEventSET:
-      GUI_SYS_EVENTSET();  // 涉及 U盘数据  --> wk 
+        GUI_SYS_EVENTSET();  // 涉及 U盘数据  --> wk 
+        break;
+      case MenuInitSET:
+        GUI_INIT_SET();
         break;
       default:
         break;
@@ -295,6 +350,10 @@ void MainLoop()
     case MenuViewListQuality2: // wk --> 
       GUI_VIEW_ListQuality2(U_FLAG);
       break;
+      
+    case MenuStatus:
+      GUI_STATUS(U_FLAG);
+      break;  
       
     default:
       break; 

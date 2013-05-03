@@ -206,7 +206,7 @@ void DMA_RecData_OK
       {
         // wk @130420 --> 发送数据 4+2+1+14+2+2532+12+4 = 2571,DMA的数据长度=2571-7=2564，但是数据接收时有两个丢失，故减2
         
-        DataSize = (((U16)HeadFlg[4])<<8) + HeadFlg[5]-3;
+        DataSize = (((U16)HeadFlg[4])<<8) + HeadFlg[5]-2;
         
         count=7;
       }
