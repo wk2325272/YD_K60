@@ -16,7 +16,7 @@
 #define OffSET 16 // WK --> 用于从BufRxchar中取电能质量数据到PowRxchar中的偏移
 
 
-#define Evnt_SIZE 2006
+#define Evnt_SIZE 6146
 #define TEST_CHANNEL_INT2 "ispi2:"
 
 /* wk -->  变量申明 */

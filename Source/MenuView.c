@@ -1661,6 +1661,7 @@ void GUI_EventList(void)
           shell_ptr->ARGV[1]=temp_dir; 
           Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
         }
+        /* wk @30425 --查看最新的事件地址存储协议，看下事件月份文件夹和文件名的获取是否是最新的 */
 //        month=(EventAddr[i]/100000000);
         month = EventAddr[i]>>22;
         if(temp_month!=month)
@@ -1674,8 +1675,10 @@ void GUI_EventList(void)
           Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
         }
 //        file_num=EventAddr[i]%100000000;
-        file_num=EventAddr[i]&0x3fffff;
+        file_num=EventAddr[i]&0x3fffff;  // 
 //        file_name=num2string(file_num,8,1);
+        /* wk @30425 --> end */
+        
         sprintf(file_name,"%d.csv",file_num);
         
         shell_ptr->ARGC=5;
@@ -1885,28 +1888,7 @@ void EventSave(U8 U_DISK)
           shell_ptr->ARGV[0]="cd";
           shell_ptr->ARGV[1]=monthDir_name; 
           Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
-          
-//          if(*file_name=='w')
-//          {
-////            file_name=num2string(date_sf.DAY*1000000+date_sf.HOUR*10000+date_sf.MINUTE*100+
-////                                 date_sf.SECOND,8,1);   
-//            sprintf(file_name,"%d.csv",date_sf.SECOND+(date_sf.MINUTE<<6)+(date_sf.HOUR<<12)+(date_sf.DAY<<17));
-//          }
-//          else
-//          {
-//            shell_ptr->ARGC = 2;
-//            shell_ptr->ARGV[0]="df_s";
-//            shell_ptr->ARGV[1]=file_name;   //wk --> 注意：查找的文件名暂时必须要是大写
-//            Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
-//            
-//            if(file_size>134217728)  // wk --> 128M = 128*1024*1024 bytes
-//            {
-////              file_name=num2string(date_sf.DAY*1000000+date_sf.HOUR*10000+date_sf.MINUTE*100+
-////                                   date_sf.SECOND,8,1); 
-//              sprintf(file_name,"%d.csv",date_sf.SECOND+(date_sf.MINUTE<<6)+(date_sf.HOUR<<12)+(date_sf.DAY<<17));
-//            }
-//          }
-          
+                    
           sprintf(file_name,"%d.csv",date_sf.SECOND+(date_sf.MINUTE<<6)+(date_sf.HOUR<<12)+(date_sf.DAY<<17));
           
           if(EVEnum==100)
@@ -1916,7 +1898,7 @@ void EventSave(U8 U_DISK)
 //          EventAddr[EVEnum-1]=date_sf.MONTH*100000000+date_sf.DAY*1000000+date_sf.HOUR*10000+
 //                            date_sf.MINUTE*100+date_sf.SECOND; // wk @130412-->获得当前事件的地址：、日、时、分、秒
           EventAddr[EVEnum-1]= date_sf.SECOND+(date_sf.MINUTE<<6)+(date_sf.HOUR<<12)+(date_sf.DAY<<17)
-                               +(date_sf.MONTH<<22)+((EvntRxchar[0]&0x3f)<<26);
+                               +(date_sf.MONTH<<22)+((EvntRxchar[0]&0x3f)<<26)+EvntRxchar[1]&0x01<<30;  //wk @130425 -->添加事件开始/结束标志
           EventNum[(EvntRxchar[0]&0x3f)*2]++; // wk @130412-->事件类型叠加
           
           /* wk @130412--> 总数 + 时间 + 类型 + 开始/结束 + 数据 */

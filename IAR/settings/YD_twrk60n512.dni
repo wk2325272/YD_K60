@@ -9,7 +9,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=-1500789182
+Checksum=-748541610
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -108,7 +108,8 @@ Bp46=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Freescale MQX 3.8\shell\source\mfs\sh
 Bp47=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Freescale MQX 3.8\shell\source\mfs\sh_search_file.c}.114.19" 0 0 1 "" 0 "" 0
 Bp48=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Freescale MQX 3.8\shell\source\mfs\sh_search_file.c}.128.21" 0 0 1 "" 0 "" 0
 Bp49=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Freescale MQX 3.8\shell\source\mfs\sh_dir.c}.102.19" 0 0 1 "" 0 "" 0
-Count=50
+Bp50=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Source\DSPSPI.c}.237.10" 0 0 1 "" 0 "" 0
+Count=51
 [Aliases]
 A0=_ "D:\Freescale\Freescale MQX 3.8\mqx\source\bsp\twrk60n512\init_hw.c" "E:\Freescale\Freescale MQX 3.8\mqx\source\bsp\twrk60n512\init_hw.c"
 A1=_ "D:\Freescale\Freescale MQX 3.8\mqx\source\fio\io_ioctl.c" "E:\Freescale\Freescale MQX 3.8\mqx\source\fio\io_ioctl.c"

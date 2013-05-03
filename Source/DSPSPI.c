@@ -12,7 +12,7 @@
 #define _SPIDMADATA_DBUG_  // 是否有 DBUG 输出信息
 
 //U8 BufRxchar[ARRAY_SIZE]= {0};//转存数组，仅在此C文件中使用
-U8 BufRxchar[2900]= {0};// wk -->转存数组，仅在此C文件中使用
+U8 BufRxchar[6175]= {0};// wk -->转存数组，仅在此C文件中使用
 U8 PowRxchar[Pow_SIZE]= {0}; //去除起始符结束符的有效数据，通信协议中的数据长度减去结束符
 U8 EvntRxchar[Evnt_SIZE]= {0};
 U8 SPIRxCnt=0;   //SPI接收标志，作用域在此文件
@@ -134,7 +134,6 @@ void DMA_RecData_OK
   void
 )
 {
-   U16 StatusFlg=0;
 #if 0 // wk @130412 --> 旧协议  
     if(count<4)
     {
@@ -206,8 +205,10 @@ void DMA_RecData_OK
       else if(count==6)
       {
         // wk @130420 --> 发送数据 4+2+1+14+2+2532+12+4 = 2571,DMA的数据长度=2571-7=2564，但是数据接收时有两个丢失，故减2
-        DataSize = (((U16)HeadFlg[4])<<8) + HeadFlg[5]-2;
-        count=7;  
+        
+        DataSize = (((U16)HeadFlg[4])<<8) + HeadFlg[5]-3;
+        
+        count=7;
       }
      
     }
@@ -225,22 +226,27 @@ void DMA_RecData_OK
        {
          for(int i=0;i<Pow_SIZE;i++)
            PowRxchar[i] = BufRxchar[i+OffSET];
-         
-//         printf("POW:%x\t%x\t%x\t%x\n",PowRxchar[0],PowRxchar[1],PowRxchar[2],PowRxchar[3]); 
+          
          SPIPowerFlg=1;
        }
        else
        {
          for(int i=0;i<Evnt_SIZE;i++)
            EvntRxchar[i]= BufRxchar[i+OffSET-2]; //wk @130412 -->将标志也存到数据中
+         
          SPIEventFlg=1;
-         printf("event\n");
+         
+         /* 事件类型测试 */
+//         uchar type;
+//         type=EvntRxchar[0]&0x3f;
+//         printf("%d\n",type);
+         asm("NOP");
+
        }
        
        if(SysSet.EventSendFlg) //wk @130412 -->判断DSP是否成功接收数据
        {
-         StatusFlg=BufRxchar[OffSET-2]<<8+BufRxchar[OffSET-1];
-         if((StatusFlg&0xB0)==0xB0)
+         if(EvntRxchar[0]&0xB0==0xB0)
            SysSet.EventSendFlg=0;    //wk @130412 --> 发送成功   
        }
        
