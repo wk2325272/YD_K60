@@ -32,7 +32,7 @@ volatile U8 HarmoListUorI;//默认值1，
 volatile U8 HarmoListRange;//默认值1，
 volatile U8 HarmoListAmporRatio;////默认值1，谐波列表显示中显示幅值澹(1)或者含有率(2)的选择
 volatile U8 VIEWHoldFlg;//保持键默认为0，键按下时值变为1，再次按下时值变为0；
-volatile U8 EVEpage;//事件的页面键，上翻下翻
+volatile U8 EVEpage=0;//事件的页面键，上翻下翻
 volatile U8 EVEline;//事件的上下移按键，确定事件的行即第几个事件。
 volatile U8 EVEfunflg;//事件的上下移按键功能标志。
 volatile U8 OtherSetIndex;//初值为0，仅在此C文件中使用
@@ -43,6 +43,7 @@ volatile U8 TimeSetIndex;//初值为6，仅在此C文件中使用
 //volatile struct SS SysSet;//在LCDUART.c中赋值，在MenuView.c中使用
 volatile SysStr SysSet; //在LCDUART.c中赋值，在MenuView.c中使用
 volatile U8 InitAck=0;
+volatile U8 EvntPgUpFlg=0;
 /* Uart initialization for send data*/
 /* 
 ** 函数名： 
@@ -650,6 +651,7 @@ void LCDUartEVENT(U8 Touch_key)   //事件显示按键跳转函数。
             EVEpage=0;
         }
         MenuSwFlg=1;
+        EvntPgUpFlg=1;
         break;
     case 33:             //事件列表中的下翻页
         if(EVEpage==8)

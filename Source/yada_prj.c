@@ -189,9 +189,10 @@ void YaDa
    ioctl(port_file4, GPIO_IOCTL_SET_IRQ_FUNCTION, (pointer)int_callback);        
   /* end */
   /* wk @130330 -->timer of lpt */
-   _lpt_install (0,3 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO, 11, timer_isr, TRUE);//2 * 1000000  --> 2秒  
+   /* wk @130504 --> 调试事件，先关闭 */
+//   _lpt_install (0,3 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO, 11, timer_isr, TRUE);//2 * 1000000  --> 2秒  
    /* wk --> 刷新时钟 注意：现在除了timer 0 能用之外，其他的都不能用，待研究中……*/
-    _lpt_install (1,1 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO, 11, timer_isr_1, TRUE);//2 * 1000000  --> 2秒  
+//    _lpt_install (1,1 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO, 11, timer_isr_1, TRUE);//2 * 1000000  --> 2秒  
   /* wk @130330 -->timer end */
    
    for(int i=0;i<84;i++)
@@ -249,7 +250,6 @@ void MainLoop()
     RefreshFlg = 3;
     if (SPIEventFlg)
     {
-//      EVEnum++;
       EventSave(U_FLAG);
     }
     SPIEventFlg = 0;
@@ -365,7 +365,7 @@ void MainLoop()
     switch (Dis_PicID)
     {
     case MenuEventList:
-//      GUI_EVENTList();   // 涉及 U 盘数据  --> wk 
+      GUI_EventList();   // 涉及 U 盘数据  --> wk 
       break;
     case MenuEventWave:
 //      GUI_EventWave(U_FLAG);   // 涉及 U 盘数据  --> wk

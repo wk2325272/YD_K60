@@ -75,6 +75,7 @@ extern volatile U8 BlightOffOn;
 //extern volatile struct SS SysSet;//在LCDUART.c中赋值，在MenuView.c中使用
 extern volatile SysStr SysSet;
 extern volatile U8 InitAck;
+extern volatile U8 EvntPgUpFlg;
 
 void LCDUartView(U8 Touch_key);
 void LCDUartSET(U8 Touch_key);

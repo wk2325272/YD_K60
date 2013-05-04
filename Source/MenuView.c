@@ -24,10 +24,11 @@ U8 HarmoInfo[][8]= {"A","B","C","幅 值","含有率"};
 U8 SysParaOldIndex=0,SysEventOldIndex=0,EventOldIndex=0,EVEnum_old;
 U8 SysFlashDataT[84];   //系统设置的数据的临时参数
 U8 SysFlashData[84];   //wk @130326 -->写入Flash的系统设置参数
-U8 EventNum[18];  // wk @130405 --> 9次事件发生次数保存，每个事件占2字节，能记录65535次
+U16 EventNum[9];  // wk @130405 --> 9次事件发生次数保存，每个事件占2字节，能记录65535次
 U32 EventAddr[100]; // wk@130405 -->记录事件发生的时间：月、日、时、分、秒，每个占4字节
 U8 USB_Flg=0;  // wk @130407 --> USB 是否插入标志
 U16 evntyear_old=0;
+U8 time[7];
 
 extern U8 PowRxchar[],EvntRxchar[];
 //volatile U8 npage=0; // wk @130403 --> uncomment
@@ -1604,6 +1605,8 @@ void GUI_INIT_SET(void)
 * 描      述      : 事件监测显示，NPage[101~114]为事件的类别叠加;
 * 输      入      : 无
 * 返      回      : 无
+* 
+* 修改：修改完成！@130504
 *******************************************************************************/
 void GUI_EventMonitor(U8 U_DISK)
 {
@@ -1621,7 +1624,7 @@ void GUI_EventMonitor(U8 U_DISK)
         MONITC108[temp + 3] = 0xffff;         //白色，下为黑色
         MONITC108[temp + 4] = 0x0000;
         MONITC108[temp + 5] =0;
-        MONITC108[temp + 6] =0;
+        MONITC108[temp + 6] =EventNum[k];
     }
     YADA_C0(EventMonLAddr, MONITC108, 63);
     YADA_C108(EventMonLAddr, 9);   //写入事件，每次10个
@@ -1631,22 +1634,96 @@ void GUI_EventMonitor(U8 U_DISK)
 * 描      述      : 事件列表显示，从nandflash中读取。
 * 输      入      : 无
 * 返      回      : 无
+*
+* 修改： 列表显示完成 @130504 
 *******************************************************************************/
 void GUI_EventList(void)
 {
   U16 EVELSTXY[]= {30,40,35,63,30,70,35,93,30,98,35,121,30,125,35,148,30,152,35,175,30,179,35,202,30,206,
                      35,229,30,233,35,256,30,262,35,285,30,288,35,311,30,316,35,339,30,342,35,365,30,370,35,393,30,396,35,419
                     };
-    U8 temp_num;
-    char EVECONTENT[14][35]= {0};
-    char EvntType[][5]= {"U_ERR","F_ERR","U_WAV","U_UNB","L_FLK","U_THD","I_HAM","E_HAM","O_HAM"};
-    char EvntPhase[2][5]= {"START","STOP "};
+    U8 wNum; //wk@130504 -->  每页列表写的次数
+    char EVECONTENT[14][34]= {0};
+    char EvntType[][6]= {"U_ERR","F_ERR","U_WAV","U_UNB","L_FLK","U_THD","I_HAM","E_HAM","O_HAM"};
+    char EvntPhase[2][6]= {"START","STOP "};
     uchar EvntHead[10];
-//    char_ptr file_name="12345678.csv",temp_dir="2013";
+    
     char temp_dir[5]="2013",file_name[12]="wk12345.csv";
     U16 temp_year=0;U8 temp_month=0,month;U32 file_num;
     
     YADA_40(0x0000,0xfc00);//前景色为黑色，背景色为橙色 set only once
+//    if(EVEfunflg==1)  //功能键发生标志置一
+//    {
+//        YADA_5B(&EVELSTXY[EventOldIndex*4],4);//擦除前一处
+//        YADA_5A(&EVELSTXY[EVEline*4],4);    //背景色填充相所在的矩形区域
+//        EventOldIndex=EVEline;
+//        EveRdNum=EVEline+14*EVEpage+1;     //2013-4-9-10-18新增EveRdNum变量，记录故障录波波形的地址，加1.
+//        EVEfunflg=0;
+//    }
+//    else
+//    {
+//      YADA_5A(&EVELSTXY[EventOldIndex*4],4); //2013-4-9-15-18,未按上移下移按键的标注。
+//    } 
+    if(USB_Flg==1&& SysFlashDataT[6]==1)
+    {
+      SHELL_CONTEXT_PTR    shell_ptr;
+      shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
+      _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
+      
+      if((EvntPgUpFlg==1) || ((EVEpage+1)<(EVEnum/14)) )
+        {
+           wNum=14;
+           EvntPgUpFlg=0;
+        }
+        else 
+           wNum=EVEnum%15;
+      
+      shell_ptr->ARGC = 2;
+      shell_ptr->ARGV[0]="cd";
+      shell_ptr->ARGV[1]="u:\\event"; 
+      Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+ 
+      for(uchar i=0;i<wNum;i++)
+      {
+          EvntPgUpFlg=0;
+          if(temp_year!=evntyear_old)
+          {
+            temp_year=evntyear_old;
+            sprintf(temp_dir,"%d",evntyear_old);
+            
+            shell_ptr->ARGC = 2;
+            shell_ptr->ARGV[0]="cd";
+            shell_ptr->ARGV[1]=temp_dir; 
+            Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+          }
+          month = (EventAddr[i+14*EVEpage]>>22)&0x0f;
+          if(temp_month!=month)
+          {
+            temp_month=month;
+            sprintf(temp_dir,"%d",month);
+            shell_ptr->ARGC = 2;
+            shell_ptr->ARGV[0]="cd";
+            shell_ptr->ARGV[1]=temp_dir; 
+            Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+          }
+          file_num=EventAddr[i+14*EVEpage]&0x3fffff;  // 
+          /* wk @30425 --> end */
+          sprintf(file_name,"%d.csv",file_num);
+          
+          shell_ptr->ARGC=5;
+          shell_ptr->ARGV[0]="read";
+          shell_ptr->ARGV[1]=file_name;
+          shell_ptr->ARGV[2]="10";
+          shell_ptr->ARGV[3]="begin";
+          shell_ptr->ARGV[4]="0";
+          Shell_read_wk(shell_ptr->ARGC, shell_ptr->ARGV,EvntHead);
+          
+          sprintf( EVECONTENT[i], "%d %d-%d-%d %d:%d:%d %.6s %.6s",EvntHead[0],(U16)EvntHead[1]+((U16)EvntHead[2]<<8),
+                   EvntHead[3],EvntHead[4],EvntHead[5],EvntHead[6],EvntHead[7],EvntType[EvntHead[8]&0x0f],EvntPhase[EvntHead[9]]); 
+          asm("NOP");
+          YADA_98(40, EVELSTXY[i*4+1], 0x22, 0x81, 0x02, C108FC_W, 0x0000, (U8 *)EVECONTENT[i], 34);  
+      }  
+       
     if(EVEfunflg==1)  //功能键发生标志置一
     {
         YADA_5B(&EVELSTXY[EventOldIndex*4],4);//擦除前一处
@@ -1660,65 +1737,7 @@ void GUI_EventList(void)
       YADA_5A(&EVELSTXY[EventOldIndex*4],4); //2013-4-9-15-18,未按上移下移按键的标注。
     }
     
-    if(USB_Flg==1&& SysFlashDataT[6]==1)
-    {
-      SHELL_CONTEXT_PTR    shell_ptr;
-      shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
-      _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
-    
-      shell_ptr->ARGC = 2;
-      shell_ptr->ARGV[0]="cd";
-      shell_ptr->ARGV[1]="u:\\event"; 
-      Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
-      
-      for(uchar i=0;i<EVEnum;i++)
-      {
-        if(temp_year!=evntyear_old)
-        {
-          temp_year=evntyear_old;
-//          temp_dir=num2string(evntyear_old,4,0);
-          sprintf(temp_dir,"%d",evntyear_old);
-          
-          shell_ptr->ARGC = 2;
-          shell_ptr->ARGV[0]="cd";
-          shell_ptr->ARGV[1]=temp_dir; 
-          Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
-        }
-        /* wk @30425 --查看最新的事件地址存储协议，看下事件月份文件夹和文件名的获取是否是最新的 */
-//        month=(EventAddr[i]/100000000);
-        month = EventAddr[i]>>22;
-        if(temp_month!=month)
-        {
-          temp_month=month;
-//          temp_dir=num2string(month,2,0);
-          sprintf(temp_dir,"%d",month);
-          shell_ptr->ARGC = 2;
-          shell_ptr->ARGV[0]="cd";
-          shell_ptr->ARGV[1]=temp_dir; 
-          Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
-        }
-//        file_num=EventAddr[i]%100000000;
-        file_num=EventAddr[i]&0x3fffff;  // 
-//        file_name=num2string(file_num,8,1);
-        /* wk @30425 --> end */
-        
-        sprintf(file_name,"%d.csv",file_num);
-        
-        shell_ptr->ARGC=5;
-        shell_ptr->ARGV[0]="read";
-        shell_ptr->ARGV[1]=file_name;
-        shell_ptr->ARGV[2]="10";
-        shell_ptr->ARGV[3]="begin";
-        shell_ptr->ARGV[4]="0";
-        Shell_read_wk(shell_ptr->ARGC, shell_ptr->ARGV,EvntHead);
-        temp_num=i%14;
-        sprintf( EVECONTENT[temp_num], "%d %d-%d-%d %d:%d:%d %.5s %.5s",EvntHead[0],EvntHead[1]+EvntHead[2]<<8,
-                 EvntHead[3],EvntHead[4],EvntHead[5],EvntHead[6],EvntHead[7],EvntType[EvntHead[8]&0x3f],EvntPhase[EvntHead[9]]);
-        asm("NOP");
-        YADA_98(40, EVELSTXY[temp_num*4+1], 0x22, 0x81, 0x02, C108FC_W, 0x0000, (U8 *)EVECONTENT[temp_num], 34);
-        
-         _mem_free(shell_ptr);
-      }
+      _mem_free(shell_ptr);
     }
     else if(USB_Flg==0)
     {
@@ -1874,6 +1893,13 @@ void EventSave(U8 U_DISK)
           DATE_STRUCT             date_sf;     
           _time_get(&time_sf);
           _time_to_date(&time_sf,&date_sf);
+          time[0]=date_sf.YEAR&0x00ff;
+          time[1]=date_sf.YEAR>>8;
+          time[2]=date_sf.MONTH;
+          time[3]=date_sf.DAY;
+          time[4]=date_sf.HOUR;
+          time[5]=date_sf.MINUTE;
+          time[6]=date_sf.SECOND;
     
           shell_ptr->ARGC = 2;
           shell_ptr->ARGV[0]="cd";
@@ -1915,14 +1941,21 @@ void EventSave(U8 U_DISK)
           sprintf(file_name,"%d.csv",date_sf.SECOND+(date_sf.MINUTE<<6)+(date_sf.HOUR<<12)+(date_sf.DAY<<17));
           
           if(EVEnum==100)
+          {
             EVEnum=1;
+            for(uchar tmpNum=0;tmpNum<100;tmpNum++)
+              EventAddr[tmpNum]=0;
+            for(uchar tmpNum=0;tmpNum<9;tmpNum++)
+              EventNum[tmpNum]=0;
+          }
           else
             EVEnum++; // wk @130412-->事件总数
 //          EventAddr[EVEnum-1]=date_sf.MONTH*100000000+date_sf.DAY*1000000+date_sf.HOUR*10000+
 //                            date_sf.MINUTE*100+date_sf.SECOND; // wk @130412-->获得当前事件的地址：、日、时、分、秒
-          EventAddr[EVEnum-1]= date_sf.SECOND+(date_sf.MINUTE<<6)+(date_sf.HOUR<<12)+(date_sf.DAY<<17)
-                               +(date_sf.MONTH<<22)+((EvntRxchar[0]&0x3f)<<26)+EvntRxchar[1]&0x01<<30;  //wk @130425 -->添加事件开始/结束标志
-          EventNum[(EvntRxchar[0]&0x3f)*2]++; // wk @130412-->事件类型叠加
+          EventAddr[EVEnum-1]= date_sf.SECOND+((U32)date_sf.MINUTE<<6)+((U32)date_sf.HOUR<<12)+((U32)date_sf.DAY<<17)
+                               +((U32)date_sf.MONTH<<22)+((U32)(EvntRxchar[0]&0x0f)<<26)+((U32)(EvntRxchar[1]&0x01)<<30);  //wk @130425 -->添加事件开始/结束标志
+          /* wk @130504--> 待补充事件次数限制判断*/
+          EventNum[(EvntRxchar[0]&0x3f)]++; // wk @130412-->事件类型叠加
           
           /* wk @130412--> 总数 + 时间 + 类型 + 开始/结束 + 数据 */
          
@@ -1932,7 +1965,7 @@ void EventSave(U8 U_DISK)
           shell_ptr->ARGV[2]="current";
           shell_ptr->ARGV[3]="0";
           Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,1,&EVEnum);
-          Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,7,&date_sf);
+          Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,7,&time);
           /* wk @130412 --> test */
 //          uchar test[]={0,1,2,3,4,5,6,7,8,9,10};
 //          Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,100,test);
