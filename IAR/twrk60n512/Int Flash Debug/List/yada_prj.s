@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    04/May/2013  18:52:37 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    04/May/2013  19:24:55 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -65,6 +65,7 @@
         EXTERN FTP_task
         EXTERN GUI_EventList
         EXTERN GUI_EventMonitor
+        EXTERN GUI_EventWave
         EXTERN GUI_INIT_SET
         EXTERN GUI_STATUS
         EXTERN GUI_SYS_EVENTSET
@@ -573,7 +574,7 @@ YaDa:
 //  174 //        shell_ptr->ARGC = 2;
 //  175 //        shell_ptr->ARGV[0]="mkdir";
 //  176       shell_ptr->ARGV[1]="SYSSET"; 
-        LDR.N    R0,??DataTable3_6
+        LDR.W    R0,??DataTable3_6
         STR      R0,[R4, #+4]
 //  177       Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
         MOVS     R1,R4
@@ -1110,9 +1111,13 @@ MainLoop:
 //  369       break;
         B.N      ??MainLoop_38
 //  370     case MenuEventWave:
-//  371 //      GUI_EventWave(U_FLAG);   // 涉及 U 盘数据  --> wk
-//  372       break;
+//  371       GUI_EventWave(U_FLAG);   // 涉及 U 盘数据  --> wk
 ??MainLoop_36:
+        LDR.N    R0,??DataTable3_18
+        LDRB     R0,[R0, #+0]
+          CFI FunCall GUI_EventWave
+        BL       GUI_EventWave
+//  372       break;
         B.N      ??MainLoop_38
 //  373     case MenuEventMON:
 //  374       GUI_EventMonitor(U_FLAG);  // 涉及 U 盘数据  --> wk
@@ -1464,9 +1469,9 @@ flg_int:
 //     4 bytes in section .bss
 //     8 bytes in section .data
 //   628 bytes in section .rodata
-// 1 036 bytes in section .text
+// 1 046 bytes in section .text
 // 
-// 1 036 bytes of CODE  memory
+// 1 046 bytes of CODE  memory
 //   628 bytes of CONST memory
 //    12 bytes of DATA  memory
 //

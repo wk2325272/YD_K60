@@ -30,6 +30,8 @@ U8 USB_Flg=0;  // wk @130407 --> USB 是否插入标志
 U16 evntyear_old=0;
 U8 time[7];
 
+U8 EvntWave[1536]={0}; // wk @130504 --> 定义局部变量时，程序跑飞，暂时定义成全局变量
+
 extern U8 PowRxchar[],EvntRxchar[];
 //volatile U8 npage=0; // wk @130403 --> uncomment
 //volatile U16 nBlock=0,nBlock_old=1024; // wk @130403 --> uncomment
@@ -1761,9 +1763,9 @@ void GUI_EventWave(U8 U_DISK)
     U16 totalline=0,Coord_UI[]= {14,68,200,404,273,429};   //剪切及原点坐标;
     U16 XY[]= {36,54,40,50,44,54,40,50,40,420,40,224,598,224,594,220,598,224,594,228};
     U16 EVEUI[192];
-//    U8 EvntWave[1536];
+//    U8 EvntWave[1536]; // wk @130504 --> 定义局部变量时，程序跑飞，暂时定义成全局变量
     
-    char file_name[18]="12\\12345678.csv";
+    char file_name[18]="12\\123456.csv";
     uint_32 file_num;
     
     if(USB_Flg==1&& SysFlashDataT[6]==1)
@@ -1777,20 +1779,16 @@ void GUI_EventWave(U8 U_DISK)
       shell_ptr->ARGV[1]="u:\\event"; 
       Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);   
       
-//      uchar SECOND=50,MINUTE=30,HOUR=11,DAY=13,MONTH=4,EvntRx=128;
-//      file_num=(U32)SECOND+((U32)MINUTE<<6)+((U32)HOUR<<12)+((U32)DAY<<17)
-//                               +((U32)MONTH<<22)+((U32)(EvntRx&0x0f)<<26);  // WK @30413 --> TEST
       file_num=EventAddr[EveRdNum-1]; // wk @130413-->获取事件的文件名的月、日、时、分、秒值
-      sprintf(file_name,"%d\\%d.CSV",file_num>>22,file_num&0x3fffff);///100000000
-      printf("file=%s\n",file_name);
+      sprintf(file_name,"%d\\%d.CSV",((file_num>>22)&0x0f),file_num&0x3fffff);///100000000
       
-//      shell_ptr->ARGC=5;
-//      shell_ptr->ARGV[0]="read";
-//      shell_ptr->ARGV[1]=file_name;
-//      shell_ptr->ARGV[2]="1536";
-//      shell_ptr->ARGV[3]="begin";
-//      shell_ptr->ARGV[4]="0";
-//      Shell_read_wk(shell_ptr->ARGC, shell_ptr->ARGV,EveWav);  
+      shell_ptr->ARGC=5;
+      shell_ptr->ARGV[0]="read";
+      shell_ptr->ARGV[1]=file_name;
+      shell_ptr->ARGV[2]="1536";
+      shell_ptr->ARGV[3]="begin";
+      shell_ptr->ARGV[4]="0";
+      Shell_read_wk(shell_ptr->ARGC, shell_ptr->ARGV,EvntWave);  
 
       if((EVEnum>1)&&(EveRdNum<=(EVEnum-1)))  //2013-4-9-12-30故障发生才显示。
       {
@@ -1799,13 +1797,9 @@ void GUI_EventWave(U8 U_DISK)
                 for(U8 j=0; j<LINENUM; j++)
                 {
                     //JT-test 2013-4-6，放大倍数改变。
-//                    EVEUI[j]=((((int)EveWav[j*24])<<8)+((int)EveWav[j*24+1]))/40+85;
-//                    EVEUI[j+Linenum]=((((int)EveWav[j*24+2])<<8)+((int)EveWav[j*24+3]))/40+85;
-//                    EVEUI[j+Linenum*2]=((((int)EveWav[j*24+4])<<8)+((int)EveWav[j*24+5]))/40+85;
-                  /* WK @130413 --> ?? 待完善，首先解决局部变量和全局变量之间差异的问题，也应该是堆和栈的问题 */
-                    EVEUI[j]=0; 
-                    EVEUI[j+LINENUM]=1;
-                    EVEUI[j+LINENUM*2]=3;
+                    EVEUI[j]=((((int)EvntWave[j*24])<<8)+((int)EvntWave[j*24+1]))/40+85;
+                    EVEUI[j+LINENUM]=((((int)EvntWave[j*24+2])<<8)+((int)EvntWave[j*24+3]))/40+85;
+                    EVEUI[j+LINENUM*2]=((((int)EvntWave[j*24+4])<<8)+((int)EvntWave[j*24+5]))/40+85;
                 }
                 totalline=LINENUM*i;
                 YADA_C0 (0x0000+totalline,EVEUI,LINENUM);
@@ -1887,7 +1881,6 @@ void EventSave(U8 U_DISK)
           static char file_name[12]="wk12345.csv",evntdir_name[5]="2013",monthDir_name[3]="12";
           
           static uint_16 month_old=0;
-          uint_32 file_size;
           
           TIME_STRUCT             time_sf;
           DATE_STRUCT             date_sf;     
@@ -1943,6 +1936,7 @@ void EventSave(U8 U_DISK)
           if(EVEnum==100)
           {
             EVEnum=1;
+            
             for(uchar tmpNum=0;tmpNum<100;tmpNum++)
               EventAddr[tmpNum]=0;
             for(uchar tmpNum=0;tmpNum<9;tmpNum++)

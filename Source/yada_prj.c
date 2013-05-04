@@ -368,7 +368,7 @@ void MainLoop()
       GUI_EventList();   // 涉及 U 盘数据  --> wk 
       break;
     case MenuEventWave:
-//      GUI_EventWave(U_FLAG);   // 涉及 U 盘数据  --> wk
+      GUI_EventWave(U_FLAG);   // 涉及 U 盘数据  --> wk
       break;
     case MenuEventMON:
       GUI_EventMonitor(U_FLAG);  // 涉及 U 盘数据  --> wk
