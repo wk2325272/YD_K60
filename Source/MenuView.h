@@ -93,6 +93,7 @@
 
 extern U8 SysFlashDataT[84];   //系统设置的数据的临时参数
 extern U8 SysFlashData[84];   //wk @130326 -->写入Flash的系统设置参数
+extern U8 SysDataSend[56]; // K60写给DSP的数据
 //MenuV_EXT U8 NPage[115]; //写入芯片flash有关的数组。NPage[0~99]为事件nandflash的页值，NPage[100]为事件总次数，NPage[101~114]为各类事件次数
 //MenuV_EXT U16 NBlock[100]; //写入芯片flash有关的数组。nandflash的block数
 extern U16 EventNum[9]; // wk @130405 --> 9次事件发生次数保存，每个事件占2字节，能记录65535次
