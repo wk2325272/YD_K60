@@ -88,7 +88,7 @@
 
 //#define EVESEND_FLAG 85
 #define EVESEND_FLAG 70
-#define LINENUM 64
+#define LINENUM 256
 
 
 extern U8 SysFlashDataT[84];   //系统设置的数据的临时参数

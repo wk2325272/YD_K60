@@ -29,9 +29,10 @@ U32 EventAddr[100]; // wk@130405 -->记录事件发生的时间：月、日、时、分、秒，每个
 U8 USB_Flg=0;  // wk @130407 --> USB 是否插入标志
 U16 evntyear_old=0;
 U8 time[7];
-
-U8 EvntWave[1536]={0}; // wk @130504 --> 定义局部变量时，程序跑飞，暂时定义成全局变量
-
+/* wk@130508 --> 用于波形显示，后期需要优化 */
+U8 EvntWave[6144]={0}; // wk @130504 --> 定义局部变量时，程序跑飞，暂时定义成全局变量
+U16 EVEUI[768];
+ 
 extern U8 PowRxchar[],EvntRxchar[];
 //volatile U8 npage=0; // wk @130403 --> uncomment
 //volatile U16 nBlock=0,nBlock_old=1024; // wk @130403 --> uncomment
@@ -1760,66 +1761,89 @@ void GUI_EventList(void)
 
 void GUI_EventWave(U8 U_DISK)
 {
-    U16 totalline=0,Coord_UI[]= {14,68,200,404,273,429};   //剪切及原点坐标;
+    U16 Coord_UI[]= {14,68,200,404,273,429};   //剪切及原点坐标;
     U16 XY[]= {36,54,40,50,44,54,40,50,40,420,40,224,598,224,594,220,598,224,594,228};
-    U16 EVEUI[192];
+//    U16 EVEUI[192];
 //    U8 EvntWave[1536]; // wk @130504 --> 定义局部变量时，程序跑飞，暂时定义成全局变量
-    
-    char file_name[18]="12\\123456.csv";
+    char file_name[18]="1234567.csv",temp_dir[5]="2013";
     uint_32 file_num;
+    U8 month;
     
     if(USB_Flg==1&& SysFlashDataT[6]==1)
     {
-      SHELL_CONTEXT_PTR    shell_ptr;
-      shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
-      _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
-      
-      shell_ptr->ARGC = 2;
-      shell_ptr->ARGV[0]="cd";
-      shell_ptr->ARGV[1]="u:\\event"; 
-      Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);   
-      
-      file_num=EventAddr[EveRdNum-1]; // wk @130413-->获取事件的文件名的月、日、时、分、秒值
-      sprintf(file_name,"%d\\%d.CSV",((file_num>>22)&0x0f),file_num&0x3fffff);///100000000
-      
-      shell_ptr->ARGC=5;
-      shell_ptr->ARGV[0]="read";
-      shell_ptr->ARGV[1]=file_name;
-      shell_ptr->ARGV[2]="1536";
-      shell_ptr->ARGV[3]="begin";
-      shell_ptr->ARGV[4]="0";
-      Shell_read_wk(shell_ptr->ARGC, shell_ptr->ARGV,EvntWave);  
-
-      if((EVEnum>1)&&(EveRdNum<=(EVEnum-1)))  //2013-4-9-12-30故障发生才显示。
+      if((EVEnum>0)&&(EveRdNum<=(EVEnum)))  //2013-4-9-12-30故障发生才显示。
       {
-            for(U8 i=0; i<4; i++)
-            {
-                for(U8 j=0; j<LINENUM; j++)
-                {
-                    //JT-test 2013-4-6，放大倍数改变。
-                    EVEUI[j]=((((int)EvntWave[j*24])<<8)+((int)EvntWave[j*24+1]))/40+85;
-                    EVEUI[j+LINENUM]=((((int)EvntWave[j*24+2])<<8)+((int)EvntWave[j*24+3]))/40+85;
-                    EVEUI[j+LINENUM*2]=((((int)EvntWave[j*24+4])<<8)+((int)EvntWave[j*24+5]))/40+85;
-                }
-                totalline=LINENUM*i;
-                YADA_C0 (0x0000+totalline,EVEUI,LINENUM);
-                YADA_C0 (0x0400+totalline,&EVEUI[LINENUM],LINENUM);//,UB_addr
-                YADA_C0 (0x0800+totalline,&EVEUI[LINENUM*2],LINENUM);
-            }
-            //JT-test xy坐标
-            YADA_40(0xffff,0x0000);
-            YADA_56(XY,6);
-            YADA_56(&XY[6],4);
-            YADA_56(&XY[10],4);
-            YADA_56(&XY[14],6);
-            YADA_98(44,56, 0x22, 0x81, 0x02, C108FC_W, 0x0000,"U", 1);
-            YADA_C103 (0x0000,40,Coord_UI[3],255,1,2,32,COLOR[0]);
-            YADA_C103 (0x0400,40,Coord_UI[3],255,1,2,32,COLOR[1]);
-            YADA_C103 (0x0800,40,Coord_UI[3],255,1,2,32,COLOR[2]);    
-      } 
-      YADA_98(150, 40, 0x22, 0x81, 0x02, C108FC_W, 0x0000,(U8 *)file_name, 16);//2013-4-9-10-18测试事件文件名 ????
-      delay_ms(5);
-      _mem_free(shell_ptr);
+        SHELL_CONTEXT_PTR    shell_ptr;
+        shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
+        _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
+        
+        shell_ptr->ARGC = 2;
+        shell_ptr->ARGV[0]="cd";
+        shell_ptr->ARGV[1]="u:\\event"; 
+        Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);   
+        
+        sprintf(temp_dir,"%d",evntyear_old);
+    //      shell_ptr->ARGC = 2;
+    //      shell_ptr->ARGV[0]="cd";
+        shell_ptr->ARGV[1]=temp_dir; 
+        Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+              
+        month = (EventAddr[EveRdNum-1]>>22)&0x0f;
+        sprintf(temp_dir,"%d",month);
+    //      shell_ptr->ARGC = 2;
+    //      shell_ptr->ARGV[0]="cd";
+        shell_ptr->ARGV[1]=temp_dir; 
+        Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+        
+        
+        file_num=EventAddr[EveRdNum-1]; // wk @130413-->获取事件的文件名的月、日、时、分、秒值
+        sprintf(file_name,"%d.CSV",file_num&0x3fffff);///100000000
+        
+        shell_ptr->ARGC=5;
+        shell_ptr->ARGV[0]="read";
+        shell_ptr->ARGV[1]=file_name;
+        shell_ptr->ARGV[2]="6144";
+        shell_ptr->ARGV[3]="begin";
+        shell_ptr->ARGV[4]="10";
+        Shell_read_wk(shell_ptr->ARGC, shell_ptr->ARGV,EvntWave);  
+       
+        for(U16 j=0; j<LINENUM; j++)
+        {
+            //JT-test 2013-4-6，放大倍数改变。
+            EVEUI[j]=(((((int_32)EvntWave[j*24])<<24)+(((int_32)EvntWave[j*24+1])<<16))>>22)+90;
+            EVEUI[j+LINENUM]=(((((int_32)EvntWave[j*24+2])<<24)+(((int_32)EvntWave[j*24+3])<<16))>>22)+90;
+            EVEUI[j+LINENUM*2]=(((((int_32)EvntWave[j*24+4])<<24)+(((int_32)EvntWave[j*24+5])<<16))>>22)+90;
+        }
+        /* wk @130508--> 显示点数 LINENUM */ 
+        YADA_C0 (0x0000,EVEUI,LINENUM>>1);
+        YADA_C0 (0x0000+(LINENUM>>1),&EVEUI[LINENUM>>1],LINENUM>>1);
+        YADA_C0 (0x0000,EVEUI,255); // wk@130508-->显示点数 LINENUM-1
+        /* wk @130508--> 显示点数 LINENUM */ 
+        YADA_C0 (0x0100,&EVEUI[LINENUM],LINENUM>>1);// UB_addr
+        YADA_C0 (0x0100+(LINENUM>>1),&EVEUI[LINENUM+(LINENUM>>1)],LINENUM>>1);// UB_addr
+//        YADA_C0 (0x0100,&EVEUI[LINENUM],255); // wk@130508-->显示点数 LINENUM-1 UB_addr
+       /* wk @130508--> 显示点数 LINENUM */  
+        YADA_C0 (0x0200,&EVEUI[LINENUM<<1],LINENUM>>1);
+        YADA_C0 (0x0200+(LINENUM>>1),&EVEUI[(LINENUM<<1)+(LINENUM>>1)],LINENUM>>1);
+//        YADA_C0 (0x0200,&EVEUI[LINENUM<<1],255);// wk@130508-->显示点数 LINENUM-1 UC_addr
+      
+        //JT-test xy坐标
+        YADA_40(0xffff,0x0000);
+        YADA_56(XY,6);
+        YADA_56(&XY[6],4);
+        YADA_56(&XY[10],4);
+        YADA_56(&XY[14],6);
+        YADA_98(44,56, 0x22, 0x81, 0x02, C108FC_W, 0x0000,"U", 1);
+        
+        YADA_C103 (0x0000,40,Coord_UI[3],255,1,2,32,COLOR[0]);
+        YADA_C103 (0x0100,40,Coord_UI[3],255,1,2,32,COLOR[1]);
+        YADA_C103 (0x0200,40,Coord_UI[3],255,1,2,32,COLOR[2]);  
+        
+        YADA_98(150, 40, 0x22, 0x81, 0x02, C108FC_W, 0x0000,(U8 *)file_name, 12);//2013-4-9-10-18测试事件文件名 ????
+        delay_ms(5);
+        
+       _mem_free(shell_ptr);
+     }
     }
     else if(USB_Flg==0)
     {

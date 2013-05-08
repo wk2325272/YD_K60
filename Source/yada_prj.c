@@ -68,7 +68,6 @@ static void timer_isr
 
 //    printf("\nhellow\n");
     SavePowerFlg =1;
-//    GUI_EventWave(1);
 //    EventKeyFlg=1; SPIEventFlg=1;// wk @130401 --> test event data save
     _lpt_init(0,3 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO,TRUE);
 }
@@ -129,7 +128,6 @@ const TASK_TEMPLATE_STRUCT  MQX_template_list[] =    //  | MQX_TIME_SLICE_TASK
 *    
 *
 *END*-----------------------------------------------------*/
-
 void YaDa
    (
       uint_32 initial_data
@@ -141,7 +139,6 @@ void YaDa
    printf("\n----------             ----------\n");
    printf("\n----------      END    ----------\n");
 #endif 
-   
   UartLCD_init();  // uart initialization
   UartTouch_init();
   flg_int(); // wk --> 初始化一些标志 !  
@@ -190,7 +187,7 @@ void YaDa
   /* end */
   /* wk @130330 -->timer of lpt */
    /* wk @130504 --> 调试事件，先关闭 */
-//   _lpt_install (0,3 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO, 11, timer_isr, TRUE);//2 * 1000000  --> 2秒  
+   _lpt_install (0,3 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO, 11, timer_isr, TRUE);//2 * 1000000  --> 2秒  
    /* wk --> 刷新时钟 注意：现在除了timer 0 能用之外，其他的都不能用，待研究中……*/
 //    _lpt_install (1,1 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO, 11, timer_isr_1, TRUE);//2 * 1000000  --> 2秒  
   /* wk @130330 -->timer end */
@@ -209,6 +206,7 @@ void YaDa
         {
             YADA_5F(0x08);                             //背光部分开
         }
+      
       MainLoop(); //循环主程序
   }
 }
