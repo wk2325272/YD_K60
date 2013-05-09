@@ -1876,7 +1876,12 @@ void GUI_STATUS(U8 U_DISK)
 {
   // wk @130409 --> 内容待完善
     U16 StatusC108[21]= {0},U_DISC[3]= {0};
-    U8 temp=0,pBuf1[64]= {0},pBuf2[64]= {0};
+    U8 temp=0; 
+    char file_name[15]="48.123.72.200";
+    
+    uint_32 ipaddr= 200 + ((uint_32)72<<8) + ((uint_32)123<<16) + ((uint_32)49<<24);
+    sprintf(file_name,"%d.%d.%d.%d",(ipaddr>>24)&0xff,(ipaddr>>16)&0xff,(ipaddr>>8)&0xff,(ipaddr)&0xff);
+    YADA_98(150, 168, 0x22, 0x81, 0x02, C108FC_W, 0x0000, file_name, 15);  
     
     if(USB_Flg==1)
     {
@@ -1884,37 +1889,28 @@ void GUI_STATUS(U8 U_DISK)
       shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
       _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
       
-//      Shell_df_driver
-    
+      shell_ptr->ARGC=2;
+      shell_ptr->ARGV[0]="df_d";
+      shell_ptr->ARGV[1]="u:";
+      Shell_df_driver(shell_ptr->ARGC, shell_ptr->ARGV,&U_DISC[0],&U_DISC[1]);
+      U_DISC[2]=(U16)(U_DISC[1]/120);
+      
+      _mem_free(shell_ptr);
     }
-//    if(U_DISK==1)
-//    {
-//        CH376ReadBlock( pBuf1 );  //如果需要,可以读取数据块CH376_CMD_DATA.DiskMountInq,返回长度
-//        CH376DiskCapacity((PU32)pBuf2);//为读取U盘总容量函数。
-//        CH376DiskQuery((PU32)pBuf1);  //读取U盘剩余容量函数。
-//        U_DISC[0]=(U16)(*(PU32)pBuf2 / ( 1000000 / DEF_SECTOR_SIZE ) );
-//        U_DISC[1]=(U16)(*(PU32)pBuf1 / ( 1000000 / DEF_SECTOR_SIZE ) );
-//        U_DISC[2]=(U16)(U_DISC[1]/120);
-//    }
-//    for(U8 i=0; i<3; i++)
-//    {
-//        temp=7*i;
-//        StatusC108[temp]=0x6004;//显示数据的模式
-//        StatusC108[temp+1]=480;//显示左边列谐波数据的X为82,右边列谐波数据X为438
-//        StatusC108[temp+2]=94+37*i;//Y坐标
-//        StatusC108[temp+3]=C108FC_W;
-//        StatusC108[temp+4]=0x0000;
-//        StatusC108[temp+5]=0;
-//        StatusC108[temp+6]=U_DISC[i];
-//    }
-//    YADA_C0(StatusAddr,StatusC108,21);
-//    YADA_C108(StatusAddr,3);
     
-    char file_name[15]="48.123.72.200";
-    uint_32 ipaddr= 200 + ((uint_32)72<<8) + ((uint_32)123<<16) + ((uint_32)49<<24);
-    sprintf(file_name,"%d.%d.%d.%d",(ipaddr>>24)&0xff,(ipaddr>>16)&0xff,(ipaddr>>8)&0xff,(ipaddr)&0xff);
-    YADA_98(150, 168, 0x22, 0x81, 0x02, C108FC_W, 0x0000, file_name, 15);  
-    
+    for(U8 i=0; i<3; i++)
+    {
+        temp=7*i;
+        StatusC108[temp]=0x6004;//显示数据的模式
+        StatusC108[temp+1]=480;//显示左边列谐波数据的X为82,右边列谐波数据X为438
+        StatusC108[temp+2]=94+37*i;//Y坐标
+        StatusC108[temp+3]=C108FC_W;
+        StatusC108[temp+4]=0x0000;
+        StatusC108[temp+5]=0;
+        StatusC108[temp+6]=U_DISC[i];
+    }
+    YADA_C0(StatusAddr,StatusC108,21);
+    YADA_C108(StatusAddr,3);   
 }
 /*******************************************************************************
 * 函  数  名      : EventSave

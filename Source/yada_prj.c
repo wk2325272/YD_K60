@@ -401,9 +401,8 @@ void flg_int()   // wk --> 一些标志的初始化
     EVEfunflg=0;
     
     SavePowerFlg =0;
-    
+    /* wk@130509-->初始化K602DSP数组的数据头和数据尾*/
     SysDataSend[0]=0x33;SysDataSend[1]=0x33;SysDataSend[2]=0x33;SysDataSend[3]=0x44;
-     
     SysDataSend[52]=0xcc;SysDataSend[53]=0x33;SysDataSend[54]=0xc3;SysDataSend[55]=0x3c;
     
 }

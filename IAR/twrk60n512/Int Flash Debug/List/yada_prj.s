@@ -1,47 +1,45 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    09/May/2013  16:43:55 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    09/May/2013  22:13:20 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\y /
-//                    ada_prj.c                                               /
-//    Command line =  E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\y /
-//                    ada_prj.c -D _DEBUG=1 -lC "E:\Freescale\mqx_test\YD_PRJ /
-//                    _NEW_20130323_git_\IAR\twrk60n512\Int Flash             /
-//                    Debug\List\" -lA "E:\Freescale\mqx_test\YD_PRJ_NEW_2013 /
-//                    0323_git_\IAR\twrk60n512\Int Flash Debug\List\"         /
-//                    --diag_suppress Pa039,Pa082,Pe186 -o                    /
-//                    "E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\twr /
-//                    k60n512\Int Flash Debug\Obj\" --no_cse --no_unroll      /
-//                    --no_inline --no_code_motion --no_tbaa --no_clustering  /
-//                    --no_scheduling --debug --endian=little                 /
-//                    --cpu=Cortex-M4 -e --fpu=None --dlib_config             /
-//                    "D:\Program Files\IAR Systems\Embedded Workbench        /
-//                    6.0\arm\INC\c\DLib_Config_Normal.h" -I                  /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\l /
-//                    ib\twrk60n512.iar\ -I E:\Freescale\mqx_test\YD_PRJ_NEW_ /
-//                    20130323_git_\IAR\..\lib\twrk60n512.iar\bsp\ -I         /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\l /
-//                    ib\twrk60n512.iar\psp\ -I E:\Freescale\mqx_test\YD_PRJ_ /
-//                    NEW_20130323_git_\IAR\..\lib\twrk60n512.iar\bsp\Generat /
-//                    ed_Code\ -I E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_g /
-//                    it_\IAR\..\lib\twrk60n512.iar\rtcs\ -I                  /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\l /
-//                    ib\twrk60n512.iar\mfs\ -I E:\Freescale\mqx_test\YD_PRJ_ /
-//                    NEW_20130323_git_\IAR\..\lib\twrk60n512.iar\usb\host\   /
-//                    -I E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\. /
-//                    .\lib\twrk60n512.iar\shell\ -I                          /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\l /
-//                    ib\twrk60n512.iar\usb\ -I E:\Freescale\mqx_test\YD_PRJ_ /
-//                    NEW_20130323_git_\IAR\..\ -I                            /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\S /
-//                    ource\Source_MQX\ -I E:\Freescale\mqx_test\YD_PRJ_NEW_2 /
-//                    0130323_git_\IAR\..\Source\ -I "E:\Freescale\Freescale  /
-//                    MQX 3.8\shell\source\include\" -Ol --use_c++_inline     /
-//    List file    =  E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\twrk /
-//                    60n512\Int Flash Debug\List\yada_prj.s                  /
+//    Source file  =  L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\yada_p /
+//                    rj.c                                                    /
+//    Command line =  L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\yada_p /
+//                    rj.c -D _DEBUG=1 -lC "L:\git_workspace\YD_PRJ_NEW_20130 /
+//                    323_git_\IAR\twrk60n512\Int Flash Debug\List\" -lA      /
+//                    "L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\twrk60n5 /
+//                    12\Int Flash Debug\List\" --diag_suppress               /
+//                    Pa039,Pa082,Pe186 -o "L:\git_workspace\YD_PRJ_NEW_20130 /
+//                    323_git_\IAR\twrk60n512\Int Flash Debug\Obj\" --no_cse  /
+//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
+//                    --no_clustering --no_scheduling --debug                 /
+//                    --endian=little --cpu=Cortex-M4 -e --fpu=None           /
+//                    --dlib_config "D:\Program Files\IAR Systems\Embedded    /
+//                    Workbench 6.0\arm\INC\c\DLib_Config_Normal.h" -I        /
+//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\tw /
+//                    rk60n512.iar\ -I L:\git_workspace\YD_PRJ_NEW_20130323_g /
+//                    it_\IAR\..\lib\twrk60n512.iar\bsp\ -I                   /
+//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\tw /
+//                    rk60n512.iar\psp\ -I L:\git_workspace\YD_PRJ_NEW_201303 /
+//                    23_git_\IAR\..\lib\twrk60n512.iar\bsp\Generated_Code\   /
+//                    -I L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib /
+//                    \twrk60n512.iar\rtcs\ -I L:\git_workspace\YD_PRJ_NEW_20 /
+//                    130323_git_\IAR\..\lib\twrk60n512.iar\mfs\ -I           /
+//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\tw /
+//                    rk60n512.iar\usb\host\ -I L:\git_workspace\YD_PRJ_NEW_2 /
+//                    0130323_git_\IAR\..\lib\twrk60n512.iar\shell\ -I        /
+//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\tw /
+//                    rk60n512.iar\usb\ -I L:\git_workspace\YD_PRJ_NEW_201303 /
+//                    23_git_\IAR\..\ -I L:\git_workspace\YD_PRJ_NEW_20130323 /
+//                    _git_\IAR\..\Source\Source_MQX\ -I                      /
+//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\Source /
+//                    \ -I "E:\Freescale\Freescale MQX                        /
+//                    3.8\shell\source\include\" -Ol --use_c++_inline         /
+//    List file    =  L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\twrk60n51 /
+//                    2\Int Flash Debug\List\yada_prj.s                       /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -166,7 +164,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\yada_prj.c
+// L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\yada_prj.c
 //    1 /*******************************************************************************
 //    2 * File Name       	 : 
 //    3 * Author             	 : 
@@ -651,7 +649,7 @@ YaDa:
         STR      R0,[SP, #+0]
         MOVS     R3,#+11
         MOVS     R2,#+2
-        LDR.W    R1,??DataTable4_3  ;; 0x2dc6c0
+        LDR.N    R1,??DataTable4_3  ;; 0x2dc6c0
         MOVS     R0,#+0
           CFI FunCall _lpt_install
         BL       _lpt_install
@@ -723,13 +721,13 @@ MainLoop:
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+16
 //  219   if (SPIPowerFlg) //接收到电能数据
-        LDR.W    R0,??DataTable4_14
+        LDR.N    R0,??DataTable4_14
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??MainLoop_0
 //  220   {
 //  221     if (VIEWHoldFlg == 0)
-        LDR.W    R0,??DataTable4_15
+        LDR.N    R0,??DataTable4_15
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
         BNE.N    ??MainLoop_1
@@ -1274,21 +1272,8 @@ flg_int:
         LDR.N    R0,??DataTable4_37
         MOVS     R1,#+68
         STRB     R1,[R0, #+3]
-//  406     for(uchar ij=4;ij<52;ij++) // wk@130509--> 将发送给DSP的数据赋值
-        MOVS     R0,#+4
-        B.N      ??flg_int_0
-//  407        SysDataSend[ij]=ij;
-??flg_int_1:
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.N    R1,??DataTable4_37
-        STRB     R0,[R0, R1]
-        ADDS     R0,R0,#+1
-??flg_int_0:
-        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        CMP      R0,#+52
-        BCC.N    ??flg_int_1
-//  408     
-//  409     SysDataSend[52]=0xcc;SysDataSend[53]=0x33;SysDataSend[54]=0xc3;SysDataSend[55]=0x3c;
+//  406      
+//  407     SysDataSend[52]=0xcc;SysDataSend[53]=0x33;SysDataSend[54]=0xc3;SysDataSend[55]=0x3c;
         LDR.N    R0,??DataTable4_37
         MOVS     R1,#+204
         STRB     R1,[R0, #+52]
@@ -1301,8 +1286,8 @@ flg_int:
         LDR.N    R0,??DataTable4_37
         MOVS     R1,#+60
         STRB     R1,[R0, #+55]
-//  410     
-//  411 }
+//  408     
+//  409 }
         BX       LR               ;; return
           CFI EndBlock cfiBlock4
 
@@ -1550,9 +1535,9 @@ flg_int:
 //     4 bytes in section .bss
 //     8 bytes in section .data
 //   628 bytes in section .rodata
-// 1 190 bytes in section .text
+// 1 166 bytes in section .text
 // 
-// 1 190 bytes of CODE  memory
+// 1 166 bytes of CODE  memory
 //   628 bytes of CONST memory
 //    12 bytes of DATA  memory
 //

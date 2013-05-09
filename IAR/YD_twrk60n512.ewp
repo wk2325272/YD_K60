@@ -3865,6 +3865,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$\..\lib\twrk60n512.iar\shell\shell_twrk60n512_d_20130412.a</name>
+      <excluded>
+        <configuration>Int Flash Debug</configuration>
+      </excluded>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\lib\twrk60n512.iar\shell\shell_twrk60n512_d_20130509.a</name>
     </file>
   </group>
   <group>
@@ -3945,10 +3951,10 @@
   <group>
     <name>USB_Libs</name>
     <file>
-      <name>$PROJ_DIR$\..\..\..\Freescale MQX 3.8\shell\source\mfs\sh_cd.c</name>
+      <name>E:\Freescale\Freescale MQX 3.8\shell\source\mfs\sh_cd.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\Freescale MQX 3.8\shell\source\mfs\sh_di.c</name>
+      <name>E:\Freescale\Freescale MQX 3.8\shell\source\mfs\sh_di.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\lib\twrk60n512.iar\usb\host\usb_classes.c</name>

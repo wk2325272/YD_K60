@@ -90,6 +90,7 @@
 #define EVESEND_FLAG 70
 #define LINENUM 256
 
+#define StatusAddr 0x9100 //工作状态的地址，3个数据，42个字节。
 
 extern U8 SysFlashDataT[84];   //系统设置的数据的临时参数
 extern U8 SysFlashData[84];   //wk @130326 -->写入Flash的系统设置参数

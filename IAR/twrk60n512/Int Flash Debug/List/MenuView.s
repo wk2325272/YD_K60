@@ -1,47 +1,45 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    09/May/2013  16:46:07 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    09/May/2013  22:15:15 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
 //    Endian       =  little                                                  /
-//    Source file  =  E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\M /
-//                    enuView.c                                               /
-//    Command line =  E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\M /
-//                    enuView.c -D _DEBUG=1 -lC "E:\Freescale\mqx_test\YD_PRJ /
-//                    _NEW_20130323_git_\IAR\twrk60n512\Int Flash             /
-//                    Debug\List\" -lA "E:\Freescale\mqx_test\YD_PRJ_NEW_2013 /
-//                    0323_git_\IAR\twrk60n512\Int Flash Debug\List\"         /
-//                    --diag_suppress Pa039,Pa082,Pe186 -o                    /
-//                    "E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\twr /
-//                    k60n512\Int Flash Debug\Obj\" --no_cse --no_unroll      /
-//                    --no_inline --no_code_motion --no_tbaa --no_clustering  /
-//                    --no_scheduling --debug --endian=little                 /
-//                    --cpu=Cortex-M4 -e --fpu=None --dlib_config             /
-//                    "D:\Program Files\IAR Systems\Embedded Workbench        /
-//                    6.0\arm\INC\c\DLib_Config_Normal.h" -I                  /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\l /
-//                    ib\twrk60n512.iar\ -I E:\Freescale\mqx_test\YD_PRJ_NEW_ /
-//                    20130323_git_\IAR\..\lib\twrk60n512.iar\bsp\ -I         /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\l /
-//                    ib\twrk60n512.iar\psp\ -I E:\Freescale\mqx_test\YD_PRJ_ /
-//                    NEW_20130323_git_\IAR\..\lib\twrk60n512.iar\bsp\Generat /
-//                    ed_Code\ -I E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_g /
-//                    it_\IAR\..\lib\twrk60n512.iar\rtcs\ -I                  /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\l /
-//                    ib\twrk60n512.iar\mfs\ -I E:\Freescale\mqx_test\YD_PRJ_ /
-//                    NEW_20130323_git_\IAR\..\lib\twrk60n512.iar\usb\host\   /
-//                    -I E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\. /
-//                    .\lib\twrk60n512.iar\shell\ -I                          /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\l /
-//                    ib\twrk60n512.iar\usb\ -I E:\Freescale\mqx_test\YD_PRJ_ /
-//                    NEW_20130323_git_\IAR\..\ -I                            /
-//                    E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\..\S /
-//                    ource\Source_MQX\ -I E:\Freescale\mqx_test\YD_PRJ_NEW_2 /
-//                    0130323_git_\IAR\..\Source\ -I "E:\Freescale\Freescale  /
-//                    MQX 3.8\shell\source\include\" -Ol --use_c++_inline     /
-//    List file    =  E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\IAR\twrk /
-//                    60n512\Int Flash Debug\List\MenuView.s                  /
+//    Source file  =  L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\MenuVi /
+//                    ew.c                                                    /
+//    Command line =  L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\MenuVi /
+//                    ew.c -D _DEBUG=1 -lC "L:\git_workspace\YD_PRJ_NEW_20130 /
+//                    323_git_\IAR\twrk60n512\Int Flash Debug\List\" -lA      /
+//                    "L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\twrk60n5 /
+//                    12\Int Flash Debug\List\" --diag_suppress               /
+//                    Pa039,Pa082,Pe186 -o "L:\git_workspace\YD_PRJ_NEW_20130 /
+//                    323_git_\IAR\twrk60n512\Int Flash Debug\Obj\" --no_cse  /
+//                    --no_unroll --no_inline --no_code_motion --no_tbaa      /
+//                    --no_clustering --no_scheduling --debug                 /
+//                    --endian=little --cpu=Cortex-M4 -e --fpu=None           /
+//                    --dlib_config "D:\Program Files\IAR Systems\Embedded    /
+//                    Workbench 6.0\arm\INC\c\DLib_Config_Normal.h" -I        /
+//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\tw /
+//                    rk60n512.iar\ -I L:\git_workspace\YD_PRJ_NEW_20130323_g /
+//                    it_\IAR\..\lib\twrk60n512.iar\bsp\ -I                   /
+//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\tw /
+//                    rk60n512.iar\psp\ -I L:\git_workspace\YD_PRJ_NEW_201303 /
+//                    23_git_\IAR\..\lib\twrk60n512.iar\bsp\Generated_Code\   /
+//                    -I L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib /
+//                    \twrk60n512.iar\rtcs\ -I L:\git_workspace\YD_PRJ_NEW_20 /
+//                    130323_git_\IAR\..\lib\twrk60n512.iar\mfs\ -I           /
+//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\tw /
+//                    rk60n512.iar\usb\host\ -I L:\git_workspace\YD_PRJ_NEW_2 /
+//                    0130323_git_\IAR\..\lib\twrk60n512.iar\shell\ -I        /
+//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\lib\tw /
+//                    rk60n512.iar\usb\ -I L:\git_workspace\YD_PRJ_NEW_201303 /
+//                    23_git_\IAR\..\ -I L:\git_workspace\YD_PRJ_NEW_20130323 /
+//                    _git_\IAR\..\Source\Source_MQX\ -I                      /
+//                    L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\..\Source /
+//                    \ -I "E:\Freescale\Freescale MQX                        /
+//                    3.8\shell\source\include\" -Ol --use_c++_inline         /
+//    List file    =  L:\git_workspace\YD_PRJ_NEW_20130323_git_\IAR\twrk60n51 /
+//                    2\Int Flash Debug\List\MenuView.s                       /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -75,6 +73,7 @@
         EXTERN PhaseShift
         EXTERN PowRxchar
         EXTERN Shell_cd
+        EXTERN Shell_df_driver
         EXTERN Shell_mkdir
         EXTERN Shell_pwd
         EXTERN Shell_read_wk
@@ -192,7 +191,7 @@
           CFI R14 SameValue
           CFI EndCommon cfiCommon0
         
-// E:\Freescale\mqx_test\YD_PRJ_NEW_20130323_git_\Source\MenuView.c
+// L:\git_workspace\YD_PRJ_NEW_20130323_git_\Source\MenuView.c
 //    1 /*******************************************************************************
 //    2 * File Name        : MenuView.c
 //    3 * Author             : LB&TX
@@ -1003,20 +1002,6 @@ EveRdNum:
         DC8 0, 0, 0, 0, 0, 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-        DATA
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-
-        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
-        DATA
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-
-        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "48.123.72.200">`:
         DATA
         DC8 "48.123.72.200"
@@ -1026,6 +1011,17 @@ EveRdNum:
 `?<Constant "%d.%d.%d.%d">`:
         DATA
         DC8 "%d.%d.%d.%d"
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+`?<Constant "df_d">`:
+        DATA
+        DC8 "df_d"
+        DC8 0, 0, 0
+
+        SECTION `.rodata`:CONST:REORDER:NOROOT(2)
+        DATA
+        DC8 "u:"
+        DC8 0
 
         SECTION `.rodata`:CONST:REORDER:NOROOT(2)
 `?<Constant "mkdir">`:
@@ -5937,7 +5933,7 @@ GUI_SYS_EVENTSET:
 // 1143                           481,97, 481,133, 481,169, 481,205 /* WK -->第2列数据坐标 */
 // 1144                         }; 
         ADD      R0,SP,#+36
-        LDR.W    R1,??DataTable12_1
+        LDR.W    R1,??DataTable12
         MOVS     R2,#+44
           CFI FunCall __aeabi_memcpy4
         BL       __aeabi_memcpy4
@@ -5948,7 +5944,7 @@ GUI_SYS_EVENTSET:
 // 1149                               476,96,479,122, 476,132,479,158, 476,168,479,194, 476,204,479,230
 // 1150                            }; //相、UI选择\区间所在的黑色矩形框
         ADD      R0,SP,#+80
-        LDR.W    R1,??DataTable12_2
+        LDR.W    R1,??DataTable12_1
         MOVS     R2,#+88
           CFI FunCall __aeabi_memcpy4
         BL       __aeabi_memcpy4
@@ -6041,7 +6037,7 @@ GUI_SYS_EVENTSET:
         MOVS     R0,#+5
         STR      R0,[R4, #+32]
 // 1197         shell_ptr->ARGV[0]="read";
-        LDR.W    R0,??DataTable12_3
+        LDR.W    R0,??DataTable12_2
         STR      R0,[R4, #+0]
 // 1198         shell_ptr->ARGV[1]="sysevent.txt";
         LDR.W    R0,??DataTable13_2
@@ -6281,7 +6277,7 @@ GUI_SYS_EVENTSET:
         BNE.N    ??GUI_SYS_EVENTSET_8
 // 1251                 for(i++,k=0.1; i<SysSet.DataCnt&&SysSet.Data[i]!='.'; i++,k=k/10)
         ADDS     R5,R5,#+1
-        LDR.W    R7,??DataTable13_11  ;; 0x3dcccccd
+        LDR.W    R7,??DataTable13_9  ;; 0x3dcccccd
         B.N      ??GUI_SYS_EVENTSET_12
         Nop      
         DATA
@@ -6370,7 +6366,7 @@ GUI_SYS_EVENTSET:
 // 1263         
 // 1264         U16 OneC108[7]= {0x3204,SysEventXY[2*SysSet.EvntIndex],SysEventXY[2*SysSet.EvntIndex + 1],0xffff,0x0000};
         ADD      R0,SP,#+20
-        LDR.W    R1,??DataTable13_14
+        LDR.W    R1,??DataTable13_15
         MOVS     R2,#+16
           CFI FunCall __aeabi_memcpy4
         BL       __aeabi_memcpy4
@@ -6490,7 +6486,7 @@ GUI_SYS_EVENTSET:
         MOV      R0,#+63488
         STRH     R0,[SP, #+26]
 // 1281             flg_event[0]=1;
-        LDR.W    R0,??DataTable13_15
+        LDR.W    R0,??DataTable13_16
         MOVS     R1,#+1
         STRB     R1,[R0, #+0]
 // 1282            }
@@ -6525,7 +6521,7 @@ GUI_SYS_EVENTSET:
         MOV      R0,#+63488
         STRH     R0,[SP, #+26]
 // 1289             flg_event[1]=1;
-        LDR.W    R0,??DataTable13_15
+        LDR.W    R0,??DataTable13_16
         MOVS     R1,#+1
         STRB     R1,[R0, #+1]
 // 1290           }
@@ -6546,7 +6542,7 @@ GUI_SYS_EVENTSET:
         MOV      R0,#+63488
         STRH     R0,[SP, #+26]
 // 1296             flg_event[2]=1;
-        LDR.W    R0,??DataTable13_15
+        LDR.W    R0,??DataTable13_16
         MOVS     R1,#+1
         STRB     R1,[R0, #+2]
 // 1297            }
@@ -6567,7 +6563,7 @@ GUI_SYS_EVENTSET:
         MOV      R0,#+63488
         STRH     R0,[SP, #+26]
 // 1303             flg_event[3]=1;
-        LDR.W    R0,??DataTable13_15
+        LDR.W    R0,??DataTable13_16
         MOVS     R1,#+1
         STRB     R1,[R0, #+3]
 // 1304            }
@@ -6588,7 +6584,7 @@ GUI_SYS_EVENTSET:
         MOV      R0,#+63488
         STRH     R0,[SP, #+26]
 // 1310             flg_event[4]=1;          
-        LDR.W    R0,??DataTable13_15
+        LDR.W    R0,??DataTable13_16
         MOVS     R1,#+1
         STRB     R1,[R0, #+4]
 // 1311           }
@@ -6609,7 +6605,7 @@ GUI_SYS_EVENTSET:
         MOV      R0,#+63488
         STRH     R0,[SP, #+26]
 // 1317             flg_event[5]=1;          
-        LDR.W    R0,??DataTable13_15
+        LDR.W    R0,??DataTable13_16
         MOVS     R1,#+1
         STRB     R1,[R0, #+5]
 // 1318           }
@@ -6630,7 +6626,7 @@ GUI_SYS_EVENTSET:
         MOV      R0,#+63488
         STRH     R0,[SP, #+26]
 // 1324             flg_event[6]=1;          
-        LDR.W    R0,??DataTable13_15
+        LDR.W    R0,??DataTable13_16
         MOVS     R1,#+1
         STRB     R1,[R0, #+6]
 // 1325           }
@@ -6651,7 +6647,7 @@ GUI_SYS_EVENTSET:
         MOV      R0,#+63488
         STRH     R0,[SP, #+26]
 // 1331             flg_event[7]=1;          
-        LDR.W    R0,??DataTable13_15
+        LDR.W    R0,??DataTable13_16
         MOVS     R1,#+1
         STRB     R1,[R0, #+7]
 // 1332           }
@@ -6676,7 +6672,7 @@ GUI_SYS_EVENTSET:
         MOV      R0,#+63488
         STRH     R0,[SP, #+26]
 // 1340             flg_event[9]=1;          
-        LDR.W    R0,??DataTable13_15
+        LDR.W    R0,??DataTable13_16
         MOVS     R1,#+1
         STRB     R1,[R0, #+9]
 // 1341           }
@@ -6697,7 +6693,7 @@ GUI_SYS_EVENTSET:
         MOV      R0,#+63488
         STRH     R0,[SP, #+26]
 // 1347             flg_event[10]=1;          
-        LDR.W    R0,??DataTable13_15
+        LDR.W    R0,??DataTable13_16
         MOVS     R1,#+1
         STRB     R1,[R0, #+10]
 // 1348           }
@@ -6854,7 +6850,7 @@ GUI_SYS_EVENTSET:
 ??GUI_SYS_EVENTSET_41:
         CMP      R0,#+11
         BGE.W    ??GUI_SYS_EVENTSET_44
-        LDR.W    R1,??DataTable13_15
+        LDR.W    R1,??DataTable13_16
         LDRB     R1,[R0, R1]
         CMP      R1,#+1
         BNE.N    ??GUI_SYS_EVENTSET_43
@@ -6972,7 +6968,7 @@ GUI_SYS_EVENTSET:
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+28]
-        LDR.W    R1,??DataTable13_15
+        LDR.W    R1,??DataTable13_16
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
         B.N      ??GUI_SYS_EVENTSET_43
@@ -7038,7 +7034,7 @@ GUI_SYS_EVENTSET:
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+28]
-        LDR.W    R1,??DataTable13_15
+        LDR.W    R1,??DataTable13_16
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
         B.N      ??GUI_SYS_EVENTSET_43
@@ -7059,7 +7055,7 @@ GUI_SYS_EVENTSET:
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+28]
-        LDR.W    R1,??DataTable13_15
+        LDR.W    R1,??DataTable13_16
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
         B.N      ??GUI_SYS_EVENTSET_43
@@ -7080,7 +7076,7 @@ GUI_SYS_EVENTSET:
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+28]
-        LDR.W    R1,??DataTable13_15
+        LDR.W    R1,??DataTable13_16
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
         B.N      ??GUI_SYS_EVENTSET_43
@@ -7101,7 +7097,7 @@ GUI_SYS_EVENTSET:
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+28]
-        LDR.W    R1,??DataTable13_15
+        LDR.W    R1,??DataTable13_16
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
         B.N      ??GUI_SYS_EVENTSET_43
@@ -7122,7 +7118,7 @@ GUI_SYS_EVENTSET:
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+28]
-        LDR.W    R1,??DataTable13_15
+        LDR.W    R1,??DataTable13_16
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
         B.N      ??GUI_SYS_EVENTSET_43
@@ -7143,7 +7139,7 @@ GUI_SYS_EVENTSET:
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+28]
-        LDR.W    R1,??DataTable13_15
+        LDR.W    R1,??DataTable13_16
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
         B.N      ??GUI_SYS_EVENTSET_43
@@ -7164,7 +7160,7 @@ GUI_SYS_EVENTSET:
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+28]
-        LDR.W    R1,??DataTable13_15
+        LDR.W    R1,??DataTable13_16
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
 ??GUI_SYS_EVENTSET_52:
@@ -7186,7 +7182,7 @@ GUI_SYS_EVENTSET:
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+28]
-        LDR.W    R1,??DataTable13_15
+        LDR.W    R1,??DataTable13_16
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
         B.N      ??GUI_SYS_EVENTSET_43
@@ -7207,7 +7203,7 @@ GUI_SYS_EVENTSET:
         ADDS     R1,R1,R0, LSL #+2
         MOVS     R2,#+0
         STRB     R2,[R1, #+28]
-        LDR.W    R1,??DataTable13_15
+        LDR.W    R1,??DataTable13_16
         MOVS     R2,#+0
         STRB     R2,[R0, R1]
         B.N      ??GUI_SYS_EVENTSET_43
@@ -7250,7 +7246,7 @@ GUI_SYS_EVENTSET:
 // 1496     {
 // 1497       SysFlashData[i+25]=SysFlashDataT[i+25];  
 ??GUI_SYS_EVENTSET_65:
-        LDR.W    R1,??DataTable16_1
+        LDR.W    R1,??DataTable16
         ADDS     R1,R0,R1
         LDR.W    R2,??DataTable13_5
         ADDS     R2,R0,R2
@@ -7298,16 +7294,16 @@ GUI_SYS_EVENTSET:
         ADR.N    R0,??DataTable11_2  ;; "w"
         STR      R0,[R4, #+0]
 // 1511     shell_ptr->ARGV[1]="sysevent.txt";
-        LDR.N    R0,??DataTable13_2
+        LDR.W    R0,??DataTable13_2
         STR      R0,[R4, #+4]
 // 1512     shell_ptr->ARGV[2]="begin";
-        LDR.N    R0,??DataTable13_3
+        LDR.W    R0,??DataTable13_3
         STR      R0,[R4, #+8]
 // 1513     shell_ptr->ARGV[3]="0";  // WK @130326 --> 偏移 26  注意：偏移25时，初始上电时，波形个数为2.55，因此该到了偏移26
-        ADR.N    R0,??DataTable12  ;; "0"
+        ADR.N    R0,??DataTable11_3  ;; "0"
         STR      R0,[R4, #+12]
 // 1514     Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,44,&(SysFlashData[25]));
-        LDR.W    R3,??DataTable16_2
+        LDR.W    R3,??DataTable16_1
         MOVS     R2,#+44
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
@@ -7318,10 +7314,10 @@ GUI_SYS_EVENTSET:
         MOVS     R0,#+2
         STR      R0,[R4, #+32]
 // 1517     shell_ptr->ARGV[0]="update";// wk --> update
-        LDR.W    R0,??DataTable16_3
+        LDR.W    R0,??DataTable16_2
         STR      R0,[R4, #+0]
 // 1518     shell_ptr->ARGV[1]="flush";
-        LDR.W    R0,??DataTable16_4
+        LDR.W    R0,??DataTable16_3
         STR      R0,[R4, #+4]
 // 1519 //    Shell_update(shell_ptr->ARGC, shell_ptr->ARGV,44,&(SysFlashSave[25]));
 // 1520     Shell_update(shell_ptr->ARGC, shell_ptr->ARGV);
@@ -7331,9 +7327,20 @@ GUI_SYS_EVENTSET:
         BL       Shell_update
 // 1521 #endif
 // 1522            
-// 1523 //       for(uchar ij=0;ij<56;ij++) // wk@130509--> 将发送给DSP的数据赋值
-// 1524 ////         SysDataSend[ij]= SysFlashData[ij+21];
-// 1525 //         SysDataSend[ij]=ij;
+// 1523        for(uchar ij=4;ij<52;ij++) // wk@130509--> 将发送给DSP的数据赋值
+        MOVS     R0,#+4
+        B.N      ??GUI_SYS_EVENTSET_66
+// 1524 //         SysDataSend[ij]= SysFlashData[ij+21];
+// 1525          SysDataSend[ij]=ij;
+??GUI_SYS_EVENTSET_67:
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        LDR.W    R1,??DataTable16_4
+        STRB     R0,[R0, R1]
+        ADDS     R0,R0,#+1
+??GUI_SYS_EVENTSET_66:
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        CMP      R0,#+52
+        BCC.N    ??GUI_SYS_EVENTSET_67
 // 1526          
 // 1527        SysSet.EventSaveFlg=0; //清楚保存标志
         LDR.N    R0,??DataTable13
@@ -7347,7 +7354,7 @@ GUI_SYS_EVENTSET:
         MOVS     R0,R4
           CFI FunCall _lwmem_free
         BL       _lwmem_free
-        B.N      ??GUI_SYS_EVENTSET_66
+        B.N      ??GUI_SYS_EVENTSET_68
 // 1530     }
 // 1531     else
 // 1532       _mem_free(shell_ptr); 
@@ -7357,11 +7364,11 @@ GUI_SYS_EVENTSET:
         BL       _lwmem_free
 // 1533     
 // 1534     if(SysSet.EventSendFlg==1)
-??GUI_SYS_EVENTSET_66:
+??GUI_SYS_EVENTSET_68:
         LDR.N    R0,??DataTable13
         LDRB     R0,[R0, #+5]
         CMP      R0,#+1
-        BNE.N    ??GUI_SYS_EVENTSET_67
+        BNE.N    ??GUI_SYS_EVENTSET_69
 // 1535     {
 // 1536         YADA_71(MenuSysEvent,521,425,630,439,521,425);
         MOVW     R0,#+425
@@ -7393,14 +7400,14 @@ GUI_SYS_EVENTSET:
         MOVW     R0,#+521
           CFI FunCall YADA_98
         BL       YADA_98
-        B.N      ??GUI_SYS_EVENTSET_68
+        B.N      ??GUI_SYS_EVENTSET_70
 // 1538     }
 // 1539     else if(SysSet.EventSendFlg==2)
-??GUI_SYS_EVENTSET_67:
+??GUI_SYS_EVENTSET_69:
         LDR.N    R0,??DataTable13
         LDRB     R0,[R0, #+5]
         CMP      R0,#+2
-        BNE.W    ??GUI_SYS_EVENTSET_69
+        BNE.W    ??GUI_SYS_EVENTSET_71
 // 1540     {
 // 1541         YADA_71(MenuSysEvent,521,425,630,439,521,425);
         MOVW     R0,#+425
@@ -7436,10 +7443,10 @@ GUI_SYS_EVENTSET:
 // 1544          /*WK --> 保存成功并发送成功标志，使字体变黄显示 */
 // 1545         for(k=0; k<11; k++)
         MOVS     R0,#+0
-        B.N      ??GUI_SYS_EVENTSET_70
+        B.N      ??GUI_SYS_EVENTSET_72
 // 1546             {
 // 1547                 temp=7*k;
-??GUI_SYS_EVENTSET_71:
+??GUI_SYS_EVENTSET_73:
         MOVS     R1,#+7
         MUL      R5,R1,R0
 // 1548                 ParaSetC108[temp + 0] = 0x3204;         //P  显示数据的模式
@@ -7509,10 +7516,10 @@ GUI_SYS_EVENTSET:
         STRH     R1,[R2, #+12]
 // 1555             }
         ADDS     R0,R0,#+1
-??GUI_SYS_EVENTSET_70:
+??GUI_SYS_EVENTSET_72:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+11
-        BCC.N    ??GUI_SYS_EVENTSET_71
+        BCC.N    ??GUI_SYS_EVENTSET_73
 // 1556          YADA_C0(EventSetAddr, ParaSetC108, 11*7);
         MOVS     R2,#+77
         ADD      R1,SP,#+168
@@ -7524,13 +7531,13 @@ GUI_SYS_EVENTSET:
         MOVW     R0,#+2807
           CFI FunCall YADA_C108
         BL       YADA_C108
-        B.N      ??GUI_SYS_EVENTSET_68
+        B.N      ??GUI_SYS_EVENTSET_70
 // 1558        /* wk --> 保存成功并发送成功标志 END */
 // 1559     }
 // 1560     else
 // 1561     {
 // 1562        YADA_71(MenuSysEvent,521,425,630,439,521,425);
-??GUI_SYS_EVENTSET_69:
+??GUI_SYS_EVENTSET_71:
         MOVW     R0,#+425
         STR      R0,[SP, #+8]
         MOVW     R0,#+521
@@ -7546,7 +7553,7 @@ GUI_SYS_EVENTSET:
 // 1563        YADA_98(521, 425, 0x22, 0x81, 0x02, 0xffe0, 0x0000, "WAITING...", 11);
         MOVS     R0,#+11
         STR      R0,[SP, #+16]
-        LDR.W    R0,??DataTable18
+        LDR.W    R0,??DataTable17_1
         STR      R0,[SP, #+12]
         MOVS     R0,#+0
         STR      R0,[SP, #+8]
@@ -7563,7 +7570,7 @@ GUI_SYS_EVENTSET:
 // 1564     }
 // 1565     
 // 1566 }
-??GUI_SYS_EVENTSET_68:
+??GUI_SYS_EVENTSET_70:
         ADD      SP,SP,#+364
           CFI CFA R13+20
         POP      {R4-R7,PC}       ;; return
@@ -7586,6 +7593,12 @@ GUI_SYS_EVENTSET:
         DATA
 ??DataTable11_2:
         DC8      "w",0x0,0x0
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable11_3:
+        DC8      "0",0x0,0x0
 
         SECTION `.bss`:DATA:REORDER:NOROOT(2)
 ??flg_event:
@@ -7613,7 +7626,7 @@ GUI_INIT_SET:
           CFI CFA R13+48
 // 1576     U8 PBUF[]= {"恢复出厂设置成功！"};
         ADD      R0,SP,#+20
-        LDR.W    R1,??DataTable17
+        LDR.W    R1,??DataTable16_8
         MOVS     R2,#+19
           CFI FunCall __aeabi_memcpy4
         BL       __aeabi_memcpy4
@@ -7631,7 +7644,7 @@ GUI_INIT_SET:
         BL       _lwmem_set_type
 // 1581     
 // 1582     if(InitAck)
-        LDR.W    R0,??DataTable18_1
+        LDR.W    R0,??DataTable18
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??GUI_INIT_SET_0
@@ -7656,10 +7669,10 @@ GUI_INIT_SET:
         MOVS     R0,#+2
         STR      R0,[R4, #+32]
 // 1589         shell_ptr->ARGV[0]="cd";
-        ADR.N    R0,??DataTable13_9  ;; 0x63, 0x64, 0x00, 0x00
+        ADR.N    R0,??DataTable13_10  ;; 0x63, 0x64, 0x00, 0x00
         STR      R0,[R4, #+0]
 // 1590         shell_ptr->ARGV[1]="f:\\"; 
-        ADR.N    R0,??DataTable13_10  ;; "f:\\"
+        ADR.N    R0,??DataTable13_11  ;; "f:\\"
         STR      R0,[R4, #+4]
 // 1591         Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
         MOVS     R1,R4
@@ -7671,7 +7684,7 @@ GUI_INIT_SET:
         MOVS     R0,#+2
         STR      R0,[R4, #+32]
 // 1594         shell_ptr->ARGV[0]="cd";
-        ADR.N    R0,??DataTable13_9  ;; 0x63, 0x64, 0x00, 0x00
+        ADR.N    R0,??DataTable13_10  ;; 0x63, 0x64, 0x00, 0x00
         STR      R0,[R4, #+0]
 // 1595         shell_ptr->ARGV[1]="sysset";
         LDR.N    R0,??DataTable13_1
@@ -7689,13 +7702,13 @@ GUI_INIT_SET:
         ADR.N    R0,??DataTable13_12  ;; "w"
         STR      R0,[R4, #+0]
 // 1600         shell_ptr->ARGV[1]="sysset.txt";
-        LDR.W    R0,??DataTable17_3
+        LDR.W    R0,??DataTable17_2
         STR      R0,[R4, #+4]
 // 1601         shell_ptr->ARGV[2]="begin";
         LDR.N    R0,??DataTable13_3
         STR      R0,[R4, #+8]
 // 1602         shell_ptr->ARGV[3]="0";
-        ADR.N    R0,??DataTable12  ;; "0"
+        ADR.N    R0,??DataTable13_14  ;; "0"
         STR      R0,[R4, #+12]
 // 1603         Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,84,SysFlashDataT);
         LDR.N    R3,??DataTable13_5
@@ -7709,10 +7722,10 @@ GUI_INIT_SET:
         MOVS     R0,#+2
         STR      R0,[R4, #+32]
 // 1606         shell_ptr->ARGV[0]="update"; // wk --> update
-        LDR.W    R0,??DataTable16_3
+        LDR.W    R0,??DataTable16_2
         STR      R0,[R4, #+0]
 // 1607         shell_ptr->ARGV[1]="flush";
-        LDR.W    R0,??DataTable16_4
+        LDR.W    R0,??DataTable16_3
         STR      R0,[R4, #+4]
 // 1608         Shell_update(shell_ptr->ARGC, shell_ptr->ARGV);
         MOVS     R1,R4
@@ -7738,7 +7751,7 @@ GUI_INIT_SET:
           CFI FunCall YADA_98
         BL       YADA_98
 // 1611         InitAck=0;
-        LDR.W    R0,??DataTable18_1
+        LDR.W    R0,??DataTable18
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
 // 1612     }
@@ -7759,24 +7772,18 @@ GUI_INIT_SET:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable12:
-        DC8      "0",0x0,0x0
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable12_1:
         DC32     `?<Constant {155, 97, 155, 133, 155, 169, 155, `
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable12_2:
+??DataTable12_1:
         DC32     `?<Constant {150, 96, 153, 122, 150, 132, 153, `
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable12_3:
+??DataTable12_2:
         DC32     `?<Constant "read">`
 // 1617 
 // 1618 /*******************************************************************************
@@ -7804,7 +7811,7 @@ GUI_EventMonitor:
 // 1629                          505,219,505,265
 // 1630                         };
         ADD      R0,SP,#+128
-        LDR.W    R1,??DataTable17_4
+        LDR.W    R1,??DataTable17_5
         MOVS     R2,#+36
           CFI FunCall __aeabi_memcpy4
         BL       __aeabi_memcpy4
@@ -7869,7 +7876,7 @@ GUI_EventMonitor:
         ADD      R2,SP,#+0
         ADDS     R1,R2,R1, LSL #+1
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.W    R2,??DataTable18_2
+        LDR.W    R2,??DataTable18_1
         LDRH     R2,[R2, R0, LSL #+1]
         STRH     R2,[R1, #+12]
 // 1643     }
@@ -7953,19 +7960,19 @@ GUI_EventMonitor:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable13_9:
-        DC8      0x63, 0x64, 0x00, 0x00
+        DC32     0x3dcccccd
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable13_10:
-        DC8      "f:\\"
+        DC8      0x63, 0x64, 0x00, 0x00
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable13_11:
-        DC32     0x3dcccccd
+        DC8      "f:\\"
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -7983,12 +7990,18 @@ GUI_EventMonitor:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable13_14:
-        DC32     `?<Constant {12804, 0, 0, 65535, 0}>`
+        DC8      "0",0x0,0x0
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable13_15:
+        DC32     `?<Constant {12804, 0, 0, 65535, 0}>`
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable13_16:
         DC32     ??flg_event
 // 1647 /*******************************************************************************
 // 1648 * 函  数  名      : GUI_EventList
@@ -8020,7 +8033,7 @@ GUI_EventList:
 // 1658                      35,229,30,233,35,256,30,262,35,285,30,288,35,311,30,316,35,339,30,342,35,365,30,370,35,393,30,396,35,419
 // 1659                     };
         ADD      R0,SP,#+604
-        LDR.W    R1,??DataTable18_3
+        LDR.W    R1,??DataTable17_6
         MOVS     R2,#+112
           CFI FunCall __aeabi_memcpy4
         BL       __aeabi_memcpy4
@@ -8032,13 +8045,13 @@ GUI_EventList:
         BL       __aeabi_memclr4
 // 1662     char EvntType[][6]= {"U_ERR","F_ERR","U_WAV","U_UNB","L_FLK","U_THD","I_HAM","E_HAM","O_HAM"};
         ADD      R0,SP,#+72
-        LDR.W    R1,??DataTable18_4
+        LDR.W    R1,??DataTable17_7
         MOVS     R2,#+56
           CFI FunCall __aeabi_memcpy4
         BL       __aeabi_memcpy4
 // 1663     char EvntPhase[2][6]= {"START","STOP "};
         ADD      R0,SP,#+60
-        LDR.W    R1,??DataTable18_5
+        LDR.W    R1,??DataTable17_8
         LDM      R1!,{R2-R4}
         STM      R0!,{R2-R4}
         SUBS     R1,R1,#+12
@@ -8047,13 +8060,13 @@ GUI_EventList:
 // 1665     
 // 1666     char temp_dir[5]="2013",file_name[12]="wk12345.csv";
         ADD      R0,SP,#+40
-        LDR.W    R1,??DataTable18_6
+        LDR.W    R1,??DataTable18_2
         LDM      R1!,{R2,R3}
         STM      R0!,{R2,R3}
         SUBS     R1,R1,#+8
         SUBS     R0,R0,#+8
         ADD      R0,SP,#+48
-        LDR.W    R1,??DataTable18_7
+        LDR.W    R1,??DataTable18_3
         LDM      R1!,{R2-R4}
         STM      R0!,{R2-R4}
         SUBS     R1,R1,#+12
@@ -8080,11 +8093,11 @@ GUI_EventList:
 // 1680 //      YADA_5A(&EVELSTXY[EventOldIndex*4],4); //2013-4-9-15-18,未按上移下移按键的标注。
 // 1681 //    } 
 // 1682     if(USB_Flg==1&& SysFlashData[6]==1)
-        LDR.W    R0,??DataTable18_9
+        LDR.W    R0,??DataTable18_4
         LDRB     R0,[R0, #+0]
         CMP      R0,#+1
         BNE.W    ??GUI_EventList_0
-        LDR.W    R0,??DataTable16_1
+        LDR.W    R0,??DataTable16
         LDRB     R0,[R0, #+6]
         CMP      R0,#+1
         BNE.W    ??GUI_EventList_0
@@ -8102,15 +8115,15 @@ GUI_EventList:
         BL       _lwmem_set_type
 // 1687       
 // 1688       if((EvntPgUpFlg==1) || ((EVEpage+1)<(EVEnum/14)) )
-        LDR.W    R0,??DataTable18_10
+        LDR.W    R0,??DataTable18_5
         LDRB     R0,[R0, #+0]
         CMP      R0,#+1
         BEQ.N    ??GUI_EventList_1
-        LDR.W    R0,??DataTable18_11
+        LDR.W    R0,??DataTable18_6
         LDRB     R0,[R0, #+0]
         MOVS     R1,#+14
         SDIV     R0,R0,R1
-        LDR.W    R1,??DataTable18_12
+        LDR.W    R1,??DataTable18_7
         LDRB     R1,[R1, #+0]
         ADDS     R1,R1,#+1
         CMP      R1,R0
@@ -8120,7 +8133,7 @@ GUI_EventList:
 ??GUI_EventList_1:
         MOVS     R7,#+14
 // 1691            EvntPgUpFlg=0;
-        LDR.W    R0,??DataTable18_10
+        LDR.W    R0,??DataTable18_5
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
         B.N      ??GUI_EventList_3
@@ -8128,7 +8141,7 @@ GUI_EventList:
 // 1693         else 
 // 1694            wNum=EVEnum%15;
 ??GUI_EventList_2:
-        LDR.W    R0,??DataTable18_11
+        LDR.W    R0,??DataTable18_6
         LDRB     R0,[R0, #+0]
         MOVS     R1,#+15
         SDIV     R2,R0,R1
@@ -8142,7 +8155,7 @@ GUI_EventList:
         ADR.N    R0,??DataTable14  ;; 0x63, 0x64, 0x00, 0x00
         STR      R0,[R6, #+0]
 // 1698       shell_ptr->ARGV[1]="u:\\event"; 
-        LDR.W    R0,??DataTable18_13
+        LDR.W    R0,??DataTable18_8
         STR      R0,[R6, #+4]
 // 1699       Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
         MOVS     R1,R6
@@ -8156,21 +8169,21 @@ GUI_EventList:
 // 1702       {
 // 1703           EvntPgUpFlg=0;
 ??GUI_EventList_5:
-        LDR.W    R0,??DataTable18_10
+        LDR.W    R0,??DataTable18_5
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
 // 1704           if(temp_year!=evntyear_old)
-        LDR.W    R0,??DataTable18_14
+        LDR.W    R0,??DataTable18_9
         LDRH     R0,[R0, #+0]
         UXTH     R4,R4            ;; ZeroExt  R4,R4,#+16,#+16
         CMP      R4,R0
         BEQ.N    ??GUI_EventList_6
 // 1705           {
 // 1706             temp_year=evntyear_old;
-        LDR.W    R0,??DataTable18_14
+        LDR.W    R0,??DataTable18_9
         LDRH     R4,[R0, #+0]
 // 1707             sprintf(temp_dir,"%d",evntyear_old);
-        LDR.W    R0,??DataTable18_14
+        LDR.W    R0,??DataTable18_9
         LDRH     R2,[R0, #+0]
         ADR.N    R1,??DataTable14_1  ;; 0x25, 0x64, 0x00, 0x00
         ADD      R0,SP,#+40
@@ -8194,12 +8207,12 @@ GUI_EventList:
 // 1713           }
 // 1714           month = (EventAddr[i+14*EVEpage]>>22)&0x0f;
 ??GUI_EventList_6:
-        LDR.W    R0,??DataTable18_12
+        LDR.W    R0,??DataTable18_7
         LDRB     R0,[R0, #+0]
         MOVS     R1,#+14
         MULS     R0,R1,R0
         UXTAB    R0,R0,R8
-        LDR.W    R1,??DataTable18_16
+        LDR.W    R1,??DataTable18_11
         LDR      R0,[R1, R0, LSL #+2]
         LSRS     R0,R0,#+22
         ANDS     R2,R0,#0xF
@@ -8234,18 +8247,18 @@ GUI_EventList:
 // 1723           }
 // 1724           file_num=EventAddr[i+14*EVEpage]&0x3fffff;  // 
 ??GUI_EventList_7:
-        LDR.W    R0,??DataTable18_12
+        LDR.W    R0,??DataTable18_7
         LDRB     R0,[R0, #+0]
         MOVS     R1,#+14
         MULS     R0,R1,R0
         UXTAB    R0,R0,R8
-        LDR.W    R1,??DataTable18_16
+        LDR.W    R1,??DataTable18_11
         LDR      R0,[R1, R0, LSL #+2]
         LSLS     R2,R0,#+10       ;; ZeroExtS R2,R0,#+10,#+10
         LSRS     R2,R2,#+10
 // 1725           /* wk @30425 --> end */
 // 1726           sprintf(file_name,"%d.csv",file_num);
-        LDR.W    R1,??DataTable18_18
+        LDR.W    R1,??DataTable18_12
         ADD      R0,SP,#+48
           CFI FunCall _io_sprintf
         BL       _io_sprintf
@@ -8254,7 +8267,7 @@ GUI_EventList:
         MOVS     R0,#+5
         STR      R0,[R6, #+32]
 // 1729           shell_ptr->ARGV[0]="read";
-        LDR.W    R0,??DataTable18_19
+        LDR.W    R0,??DataTable18_13
         STR      R0,[R6, #+0]
 // 1730           shell_ptr->ARGV[1]=file_name;
         ADD      R0,SP,#+48
@@ -8263,7 +8276,7 @@ GUI_EventList:
         ADR.N    R0,??DataTable14_2  ;; 0x31, 0x30, 0x00, 0x00
         STR      R0,[R6, #+8]
 // 1732           shell_ptr->ARGV[3]="begin";
-        LDR.W    R0,??DataTable18_20
+        LDR.W    R0,??DataTable18_15
         STR      R0,[R6, #+12]
 // 1733           shell_ptr->ARGV[4]="0";
         ADR.N    R0,??DataTable14_3  ;; "0"
@@ -8303,7 +8316,7 @@ GUI_EventList:
         LSLS     R1,R1,#+8
         UXTAB    R3,R1,R0
         LDRB     R2,[SP, #+28]
-        LDR.W    R1,??DataTable18_21
+        LDR.W    R1,??DataTable18_17
         UXTB     R8,R8            ;; ZeroExt  R8,R8,#+24,#+24
         MOVS     R0,#+34
         ADD      R12,SP,#+128
@@ -8345,14 +8358,14 @@ GUI_EventList:
         BCC.W    ??GUI_EventList_5
 // 1741        
 // 1742     if(EVEfunflg==1)  //功能键发生标志置一
-        LDR.W    R0,??DataTable18_22
+        LDR.W    R0,??DataTable18_18
         LDRB     R0,[R0, #+0]
         CMP      R0,#+1
         BNE.N    ??GUI_EventList_8
 // 1743     {
 // 1744         YADA_5B(&EVELSTXY[EventOldIndex*4],4);//擦除前一处
         MOVS     R1,#+4
-        LDR.W    R0,??DataTable18_23
+        LDR.W    R0,??DataTable18_19
         LDRB     R0,[R0, #+0]
         ADD      R2,SP,#+604
         ADDS     R0,R2,R0, LSL #+3
@@ -8360,29 +8373,29 @@ GUI_EventList:
         BL       YADA_5B
 // 1745         YADA_5A(&EVELSTXY[EVEline*4],4);    //背景色填充相所在的矩形区域
         MOVS     R1,#+4
-        LDR.W    R0,??DataTable18_24
+        LDR.W    R0,??DataTable18_20
         LDRB     R0,[R0, #+0]
         ADD      R2,SP,#+604
         ADDS     R0,R2,R0, LSL #+3
           CFI FunCall YADA_5A
         BL       YADA_5A
 // 1746         EventOldIndex=EVEline;
-        LDR.W    R0,??DataTable18_23
-        LDR.W    R1,??DataTable18_24
+        LDR.W    R0,??DataTable18_19
+        LDR.W    R1,??DataTable18_20
         LDRB     R1,[R1, #+0]
         STRB     R1,[R0, #+0]
 // 1747         EveRdNum=EVEline+14*EVEpage+1;     //2013-4-9-10-18新增EveRdNum变量，记录故障录波波形的地址，加1.
-        LDR.W    R0,??DataTable18_24
+        LDR.W    R0,??DataTable18_20
         LDRB     R0,[R0, #+0]
-        LDR.W    R1,??DataTable18_12
+        LDR.W    R1,??DataTable18_7
         LDRB     R1,[R1, #+0]
         MOVS     R2,#+14
         MLA      R0,R2,R1,R0
         ADDS     R0,R0,#+1
-        LDR.W    R1,??DataTable18_25
+        LDR.W    R1,??DataTable18_21
         STRB     R0,[R1, #+0]
 // 1748         EVEfunflg=0;
-        LDR.W    R0,??DataTable18_22
+        LDR.W    R0,??DataTable18_18
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
         B.N      ??GUI_EventList_9
@@ -8392,7 +8405,7 @@ GUI_EventList:
 // 1752       YADA_5A(&EVELSTXY[EventOldIndex*4],4); //2013-4-9-15-18,未按上移下移按键的标注。
 ??GUI_EventList_8:
         MOVS     R1,#+4
-        LDR.W    R0,??DataTable18_23
+        LDR.W    R0,??DataTable18_19
         LDRB     R0,[R0, #+0]
         ADD      R2,SP,#+604
         ADDS     R0,R2,R0, LSL #+3
@@ -8409,26 +8422,26 @@ GUI_EventList:
 // 1756     }
 // 1757     else if(USB_Flg==0)
 ??GUI_EventList_0:
-        LDR.W    R0,??DataTable18_9
+        LDR.W    R0,??DataTable18_4
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
         BNE.N    ??GUI_EventList_11
 // 1758     {
 // 1759       printf("\nATTENTION:USB is DETACHED!\n");
-        LDR.W    R0,??DataTable18_26
+        LDR.W    R0,??DataTable18_22
           CFI FunCall _io_printf
         BL       _io_printf
         B.N      ??GUI_EventList_10
 // 1760     }
 // 1761     else if(SysFlashData[6]==0)
 ??GUI_EventList_11:
-        LDR.W    R0,??DataTable16_1
+        LDR.W    R0,??DataTable16
         LDRB     R0,[R0, #+6]
         CMP      R0,#+0
         BNE.N    ??GUI_EventList_10
 // 1762     {
 // 1763       printf("\nATTENTION:USB Switch is CLOSED!\n");
-        LDR.W    R0,??DataTable18_27
+        LDR.W    R0,??DataTable18_23
           CFI FunCall _io_printf
         BL       _io_printf
 // 1764     }
@@ -8486,14 +8499,14 @@ GUI_EventWave:
           CFI CFA R13+112
 // 1776     U16 Coord_UI[]= {14,68,200,404,273,429};   //剪切及原点坐标;
         ADD      R0,SP,#+28
-        LDR.W    R1,??DataTable18_28
+        LDR.W    R1,??DataTable18_24
         LDM      R1!,{R2-R4}
         STM      R0!,{R2-R4}
         SUBS     R1,R1,#+12
         SUBS     R0,R0,#+12
 // 1777     U16 XY[]= {36,54,40,50,44,54,40,50,40,420,40,224,598,224,594,220,598,224,594,228};
         ADD      R0,SP,#+60
-        LDR.W    R1,??DataTable18_29
+        LDR.W    R1,??DataTable18_25
         MOVS     R2,#+40
           CFI FunCall __aeabi_memcpy4
         BL       __aeabi_memcpy4
@@ -8501,12 +8514,12 @@ GUI_EventWave:
 // 1779 //    U8 EvntWave[1536]; // wk @130504 --> 定义局部变量时，程序跑飞，暂时定义成全局变量
 // 1780     char file_name[18]="1234567.csv",temp_dir[5]="2013";
         ADD      R0,SP,#+40
-        LDR.W    R1,??DataTable18_30
+        LDR.W    R1,??DataTable18_26
         MOVS     R2,#+18
           CFI FunCall __aeabi_memcpy4
         BL       __aeabi_memcpy4
         ADD      R0,SP,#+20
-        LDR.W    R1,??DataTable18_31
+        LDR.W    R1,??DataTable18_27
         LDM      R1!,{R2,R3}
         STM      R0!,{R2,R3}
         SUBS     R1,R1,#+8
@@ -8515,23 +8528,23 @@ GUI_EventWave:
 // 1782     U8 month;
 // 1783     
 // 1784     if(USB_Flg==1&& SysFlashData[6]==1)
-        LDR.W    R0,??DataTable18_9
+        LDR.W    R0,??DataTable18_4
         LDRB     R0,[R0, #+0]
         CMP      R0,#+1
         BNE.W    ??GUI_EventWave_0
-        LDR.N    R0,??DataTable16_1
+        LDR.W    R0,??DataTable16
         LDRB     R0,[R0, #+6]
         CMP      R0,#+1
         BNE.W    ??GUI_EventWave_0
 // 1785     {
 // 1786       if((EVEnum>0)&&(EveRdNum<=(EVEnum)))  //2013-4-9-12-30故障发生才显示。
-        LDR.W    R0,??DataTable18_11
+        LDR.W    R0,??DataTable18_6
         LDRB     R0,[R0, #+0]
         CMP      R0,#+1
         BCC.W    ??GUI_EventWave_1
-        LDR.W    R0,??DataTable18_11
+        LDR.W    R0,??DataTable18_6
         LDRB     R0,[R0, #+0]
-        LDR.W    R1,??DataTable18_25
+        LDR.W    R1,??DataTable18_21
         LDRB     R1,[R1, #+0]
         CMP      R0,R1
         BCC.W    ??GUI_EventWave_1
@@ -8555,7 +8568,7 @@ GUI_EventWave:
         ADR.N    R0,??DataTable15  ;; 0x63, 0x64, 0x00, 0x00
         STR      R0,[R4, #+0]
 // 1794         shell_ptr->ARGV[1]="u:\\event"; 
-        LDR.W    R0,??DataTable18_13
+        LDR.W    R0,??DataTable18_8
         STR      R0,[R4, #+4]
 // 1795         Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);   
         MOVS     R1,R4
@@ -8564,7 +8577,7 @@ GUI_EventWave:
         BL       Shell_cd
 // 1796         
 // 1797         sprintf(temp_dir,"%d",evntyear_old);
-        LDR.W    R0,??DataTable18_14
+        LDR.W    R0,??DataTable18_9
         LDRH     R2,[R0, #+0]
         ADR.N    R1,??DataTable15_1  ;; 0x25, 0x64, 0x00, 0x00
         ADD      R0,SP,#+20
@@ -8582,9 +8595,9 @@ GUI_EventWave:
         BL       Shell_cd
 // 1802               
 // 1803         month = (EventAddr[EveRdNum-1]>>22)&0x0f;
-        LDR.W    R0,??DataTable18_25
+        LDR.W    R0,??DataTable18_21
         LDRB     R0,[R0, #+0]
-        LDR.W    R1,??DataTable18_16
+        LDR.W    R1,??DataTable18_11
         ADDS     R0,R1,R0, LSL #+2
         LDR      R0,[R0, #-4]
         LSRS     R0,R0,#+22
@@ -8608,15 +8621,15 @@ GUI_EventWave:
 // 1809         
 // 1810         
 // 1811         file_num=EventAddr[EveRdNum-1]; // wk @130413-->获取事件的文件名的月、日、时、分、秒值
-        LDR.W    R0,??DataTable18_25
+        LDR.W    R0,??DataTable18_21
         LDRB     R0,[R0, #+0]
-        LDR.W    R1,??DataTable18_16
+        LDR.W    R1,??DataTable18_11
         ADDS     R0,R1,R0, LSL #+2
         LDR      R0,[R0, #-4]
 // 1812         sprintf(file_name,"%d.CSV",file_num&0x3fffff);///100000000
         LSLS     R2,R0,#+10       ;; ZeroExtS R2,R0,#+10,#+10
         LSRS     R2,R2,#+10
-        LDR.W    R1,??DataTable18_32
+        LDR.W    R1,??DataTable18_28
         ADD      R0,SP,#+40
           CFI FunCall _io_sprintf
         BL       _io_sprintf
@@ -8625,22 +8638,22 @@ GUI_EventWave:
         MOVS     R0,#+5
         STR      R0,[R4, #+32]
 // 1815         shell_ptr->ARGV[0]="read";
-        LDR.W    R0,??DataTable18_19
+        LDR.W    R0,??DataTable18_13
         STR      R0,[R4, #+0]
 // 1816         shell_ptr->ARGV[1]=file_name;
         ADD      R0,SP,#+40
         STR      R0,[R4, #+4]
 // 1817         shell_ptr->ARGV[2]="6144";
-        LDR.W    R0,??DataTable18_33
+        LDR.W    R0,??DataTable18_29
         STR      R0,[R4, #+8]
 // 1818         shell_ptr->ARGV[3]="begin";
-        LDR.W    R0,??DataTable18_20
+        LDR.W    R0,??DataTable18_15
         STR      R0,[R4, #+12]
 // 1819         shell_ptr->ARGV[4]="10";
-        ADR.N    R0,??DataTable16  ;; 0x31, 0x30, 0x00, 0x00
+        ADR.N    R0,??DataTable15_2  ;; 0x31, 0x30, 0x00, 0x00
         STR      R0,[R4, #+16]
 // 1820         Shell_read_wk(shell_ptr->ARGC, shell_ptr->ARGV,EvntWave);  
-        LDR.W    R2,??DataTable18_34
+        LDR.W    R2,??DataTable18_30
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_read_wk
@@ -8655,12 +8668,12 @@ GUI_EventWave:
 ??GUI_EventWave_3:
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         MOVS     R1,#+24
-        LDR.W    R2,??DataTable18_34
+        LDR.W    R2,??DataTable18_30
         MLA      R1,R1,R0,R2
         LDRB     R1,[R1, #+0]
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         MOVS     R2,#+24
-        LDR.W    R3,??DataTable18_34
+        LDR.W    R3,??DataTable18_30
         MLA      R2,R2,R0,R3
         LDRB     R2,[R2, #+1]
         LSLS     R2,R2,#+16
@@ -8668,17 +8681,17 @@ GUI_EventWave:
         ASRS     R1,R1,#+22
         ADDS     R1,R1,#+90
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
-        LDR.W    R2,??DataTable18_35
+        LDR.W    R2,??DataTable18_31
         STRH     R1,[R2, R0, LSL #+1]
 // 1826             EVEUI[j+LINENUM]=(((((int_32)EvntWave[j*24+2])<<24)+(((int_32)EvntWave[j*24+3])<<16))>>22)+90;
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         MOVS     R1,#+24
-        LDR.W    R2,??DataTable18_34
+        LDR.W    R2,??DataTable18_30
         MLA      R1,R1,R0,R2
         LDRB     R1,[R1, #+2]
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         MOVS     R2,#+24
-        LDR.W    R3,??DataTable18_34
+        LDR.W    R3,??DataTable18_30
         MLA      R2,R2,R0,R3
         LDRB     R2,[R2, #+3]
         LSLS     R2,R2,#+16
@@ -8686,18 +8699,18 @@ GUI_EventWave:
         ASRS     R1,R1,#+22
         ADDS     R1,R1,#+90
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
-        LDR.W    R2,??DataTable18_35
+        LDR.W    R2,??DataTable18_31
         ADDS     R2,R2,R0, LSL #+1
         STRH     R1,[R2, #+512]
 // 1827             EVEUI[j+LINENUM*2]=(((((int_32)EvntWave[j*24+4])<<24)+(((int_32)EvntWave[j*24+5])<<16))>>22)+90;
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         MOVS     R1,#+24
-        LDR.W    R2,??DataTable18_34
+        LDR.W    R2,??DataTable18_30
         MLA      R1,R1,R0,R2
         LDRB     R1,[R1, #+4]
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         MOVS     R2,#+24
-        LDR.W    R3,??DataTable18_34
+        LDR.W    R3,??DataTable18_30
         MLA      R2,R2,R0,R3
         LDRB     R2,[R2, #+5]
         LSLS     R2,R2,#+16
@@ -8705,7 +8718,7 @@ GUI_EventWave:
         ASRS     R1,R1,#+22
         ADDS     R1,R1,#+90
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
-        LDR.W    R2,??DataTable18_35
+        LDR.W    R2,??DataTable18_31
         ADDS     R2,R2,R0, LSL #+1
         STRH     R1,[R2, #+1024]
 // 1828         }
@@ -8718,32 +8731,32 @@ GUI_EventWave:
 // 1829         /* wk @130508--> 显示点数 LINENUM */ 
 // 1830         YADA_C0 (0x0000,EVEUI,LINENUM>>1);
         MOVS     R2,#+128
-        LDR.W    R1,??DataTable18_35
+        LDR.W    R1,??DataTable18_31
         MOVS     R0,#+0
           CFI FunCall YADA_C0
         BL       YADA_C0
 // 1831         YADA_C0 (0x0000+(LINENUM>>1),&EVEUI[LINENUM>>1],LINENUM>>1);
         MOVS     R2,#+128
-        LDR.W    R1,??DataTable18_36
+        LDR.W    R1,??DataTable18_32
         MOVS     R0,#+128
           CFI FunCall YADA_C0
         BL       YADA_C0
 // 1832         YADA_C0 (0x0000,EVEUI,255); // wk@130508-->显示点数 LINENUM-1
         MOVS     R2,#+255
-        LDR.W    R1,??DataTable18_35
+        LDR.W    R1,??DataTable18_31
         MOVS     R0,#+0
           CFI FunCall YADA_C0
         BL       YADA_C0
 // 1833         /* wk @130508--> 显示点数 LINENUM */ 
 // 1834         YADA_C0 (0x0100,&EVEUI[LINENUM],LINENUM>>1);// UB_addr
         MOVS     R2,#+128
-        LDR.W    R1,??DataTable18_37
+        LDR.W    R1,??DataTable18_33
         MOV      R0,#+256
           CFI FunCall YADA_C0
         BL       YADA_C0
 // 1835         YADA_C0 (0x0100+(LINENUM>>1),&EVEUI[LINENUM+(LINENUM>>1)],LINENUM>>1);// UB_addr
         MOVS     R2,#+128
-        LDR.W    R1,??DataTable18_38
+        LDR.W    R1,??DataTable18_34
         MOV      R0,#+384
           CFI FunCall YADA_C0
         BL       YADA_C0
@@ -8751,13 +8764,13 @@ GUI_EventWave:
 // 1837        /* wk @130508--> 显示点数 LINENUM */  
 // 1838         YADA_C0 (0x0200,&EVEUI[LINENUM<<1],LINENUM>>1);
         MOVS     R2,#+128
-        LDR.W    R1,??DataTable18_39
+        LDR.W    R1,??DataTable18_35
         MOV      R0,#+512
           CFI FunCall YADA_C0
         BL       YADA_C0
 // 1839         YADA_C0 (0x0200+(LINENUM>>1),&EVEUI[(LINENUM<<1)+(LINENUM>>1)],LINENUM>>1);
         MOVS     R2,#+128
-        LDR.W    R1,??DataTable18_40
+        LDR.W    R1,??DataTable18_36
         MOV      R0,#+640
           CFI FunCall YADA_C0
         BL       YADA_C0
@@ -8808,7 +8821,7 @@ GUI_EventWave:
         BL       YADA_98
 // 1849         
 // 1850         YADA_C103 (0x0000,40,Coord_UI[3],255,1,2,32,COLOR[0]);
-        LDR.W    R0,??DataTable18_41
+        LDR.W    R0,??DataTable18_37
         LDRH     R0,[R0, #+0]
         STR      R0,[SP, #+12]
         MOVS     R0,#+32
@@ -8824,7 +8837,7 @@ GUI_EventWave:
           CFI FunCall YADA_C103
         BL       YADA_C103
 // 1851         YADA_C103 (0x0100,40,Coord_UI[3],255,1,2,32,COLOR[1]);
-        LDR.W    R0,??DataTable18_41
+        LDR.W    R0,??DataTable18_37
         LDRH     R0,[R0, #+2]
         STR      R0,[SP, #+12]
         MOVS     R0,#+32
@@ -8840,7 +8853,7 @@ GUI_EventWave:
           CFI FunCall YADA_C103
         BL       YADA_C103
 // 1852         YADA_C103 (0x0200,40,Coord_UI[3],255,1,2,32,COLOR[2]);  
-        LDR.W    R0,??DataTable18_41
+        LDR.W    R0,??DataTable18_37
         LDRH     R0,[R0, #+4]
         STR      R0,[SP, #+12]
         MOVS     R0,#+32
@@ -8887,26 +8900,26 @@ GUI_EventWave:
 // 1859     }
 // 1860     else if(USB_Flg==0)
 ??GUI_EventWave_0:
-        LDR.W    R0,??DataTable18_9
+        LDR.W    R0,??DataTable18_4
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
         BNE.N    ??GUI_EventWave_4
 // 1861     {
 // 1862       printf("\nATTENTION:USB is DETACHED!\n");
-        LDR.W    R0,??DataTable18_26
+        LDR.W    R0,??DataTable18_22
           CFI FunCall _io_printf
         BL       _io_printf
         B.N      ??GUI_EventWave_1
 // 1863     }
 // 1864     else if(SysFlashData[6]==0)
 ??GUI_EventWave_4:
-        LDR.N    R0,??DataTable16_1
+        LDR.N    R0,??DataTable16
         LDRB     R0,[R0, #+6]
         CMP      R0,#+0
         BNE.N    ??GUI_EventWave_1
 // 1865     {
 // 1866       printf("\nATTENTION:USB Switch is CLOSED!\n");
-        LDR.W    R0,??DataTable18_27
+        LDR.W    R0,??DataTable18_23
           CFI FunCall _io_printf
         BL       _io_printf
 // 1867     }
@@ -8928,6 +8941,12 @@ GUI_EventWave:
         DATA
 ??DataTable15_1:
         DC8      0x25, 0x64, 0x00, 0x00
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable15_2:
+        DC8      0x31, 0x30, 0x00, 0x00
 // 1869 /*******************************************************************************
 // 1870 * 函  数  名      : GUI_STATUS
 // 1871 * 描      述      : 工作状态的显示，如U盘存储，IP地址，版本号等。
@@ -8946,96 +8965,45 @@ GUI_STATUS:
           CFI R14 Frame(CFA, -4)
           CFI R4 Frame(CFA, -8)
           CFI CFA R13+8
-        SUB      SP,SP,#+64
-          CFI CFA R13+72
+        SUB      SP,SP,#+88
+          CFI CFA R13+96
 // 1877   // wk @130409 --> 内容待完善
 // 1878     U16 StatusC108[21]= {0},U_DISC[3]= {0};
-        ADD      R0,SP,#+0
+        ADD      R0,SP,#+44
         MOVS     R1,#+44
           CFI FunCall __aeabi_memclr4
         BL       __aeabi_memclr4
-        ADD      R0,SP,#+0
+        ADD      R0,SP,#+20
         MOVS     R1,#+0
         MOVS     R2,#+0
         STM      R0!,{R1,R2}
         SUBS     R0,R0,#+8
-// 1879     U8 temp=0,pBuf1[64]= {0},pBuf2[64]= {0};
+// 1879     U8 temp=0; 
         MOVS     R4,#+0
-        ADD      R0,SP,#+0
-        MOVS     R1,#+64
-          CFI FunCall __aeabi_memclr4
-        BL       __aeabi_memclr4
-        ADD      R0,SP,#+0
-        MOVS     R1,#+64
-          CFI FunCall __aeabi_memclr4
-        BL       __aeabi_memclr4
-// 1880     
-// 1881     if(USB_Flg==1)
-        LDR.W    R0,??DataTable18_9
-        LDRB     R0,[R0, #+0]
-        CMP      R0,#+1
-        BNE.N    ??GUI_STATUS_0
-// 1882     {
-// 1883       SHELL_CONTEXT_PTR    shell_ptr;
-// 1884       shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
-        MOV      R0,#+484
-          CFI FunCall _lwmem_alloc_zero
-        BL       _lwmem_alloc_zero
-// 1885       _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
-        MOVW     R1,#+20481
-          CFI FunCall _lwmem_set_type
-        BL       _lwmem_set_type
-// 1886       
-// 1887 //      Shell_df_driver
-// 1888     
-// 1889     }
-// 1890 //    if(U_DISK==1)
-// 1891 //    {
-// 1892 //        CH376ReadBlock( pBuf1 );  //如果需要,可以读取数据块CH376_CMD_DATA.DiskMountInq,返回长度
-// 1893 //        CH376DiskCapacity((PU32)pBuf2);//为读取U盘总容量函数。
-// 1894 //        CH376DiskQuery((PU32)pBuf1);  //读取U盘剩余容量函数。
-// 1895 //        U_DISC[0]=(U16)(*(PU32)pBuf2 / ( 1000000 / DEF_SECTOR_SIZE ) );
-// 1896 //        U_DISC[1]=(U16)(*(PU32)pBuf1 / ( 1000000 / DEF_SECTOR_SIZE ) );
-// 1897 //        U_DISC[2]=(U16)(U_DISC[1]/120);
-// 1898 //    }
-// 1899 //    for(U8 i=0; i<3; i++)
-// 1900 //    {
-// 1901 //        temp=7*i;
-// 1902 //        StatusC108[temp]=0x6004;//显示数据的模式
-// 1903 //        StatusC108[temp+1]=480;//显示左边列谐波数据的X为82,右边列谐波数据X为438
-// 1904 //        StatusC108[temp+2]=94+37*i;//Y坐标
-// 1905 //        StatusC108[temp+3]=C108FC_W;
-// 1906 //        StatusC108[temp+4]=0x0000;
-// 1907 //        StatusC108[temp+5]=0;
-// 1908 //        StatusC108[temp+6]=U_DISC[i];
-// 1909 //    }
-// 1910 //    YADA_C0(StatusAddr,StatusC108,21);
-// 1911 //    YADA_C108(StatusAddr,3);
-// 1912     
-// 1913     char file_name[15]="48.123.72.200";
-??GUI_STATUS_0:
-        ADD      R0,SP,#+20
-        LDR.W    R1,??DataTable18_42
+// 1880     char file_name[15]="48.123.72.200";
+        ADD      R0,SP,#+28
+        LDR.W    R1,??DataTable18_38
         MOVS     R2,#+15
           CFI FunCall __aeabi_memcpy4
         BL       __aeabi_memcpy4
-// 1914     uint_32 ipaddr= 200 + ((uint_32)72<<8) + ((uint_32)123<<16) + ((uint_32)49<<24);
-        LDR.W    R0,??DataTable18_43  ;; 0x317b48c8
-// 1915     sprintf(file_name,"%d.%d.%d.%d",(ipaddr>>24)&0xff,(ipaddr>>16)&0xff,(ipaddr>>8)&0xff,(ipaddr)&0xff);
+// 1881     
+// 1882     uint_32 ipaddr= 200 + ((uint_32)72<<8) + ((uint_32)123<<16) + ((uint_32)49<<24);
+        LDR.W    R0,??DataTable18_39  ;; 0x317b48c8
+// 1883     sprintf(file_name,"%d.%d.%d.%d",(ipaddr>>24)&0xff,(ipaddr>>16)&0xff,(ipaddr>>8)&0xff,(ipaddr)&0xff);
         UXTB     R1,R0            ;; ZeroExt  R1,R0,#+24,#+24
         STR      R1,[SP, #+4]
         UBFX     R1,R0,#+8,#+8
         STR      R1,[SP, #+0]
         UBFX     R3,R0,#+16,#+8
         LSRS     R2,R0,#+24
-        LDR.W    R1,??DataTable18_44
-        ADD      R0,SP,#+20
+        LDR.W    R1,??DataTable18_40
+        ADD      R0,SP,#+28
           CFI FunCall _io_sprintf
         BL       _io_sprintf
-// 1916     YADA_98(150, 168, 0x22, 0x81, 0x02, C108FC_W, 0x0000, file_name, 15);  
+// 1884     YADA_98(150, 168, 0x22, 0x81, 0x02, C108FC_W, 0x0000, file_name, 15);  
         MOVS     R0,#+15
         STR      R0,[SP, #+16]
-        ADD      R0,SP,#+20
+        ADD      R0,SP,#+28
         STR      R0,[SP, #+12]
         MOVS     R0,#+0
         STR      R0,[SP, #+8]
@@ -9049,9 +9017,127 @@ GUI_STATUS:
         MOVS     R0,#+150
           CFI FunCall YADA_98
         BL       YADA_98
-// 1917     
-// 1918 }
-        ADD      SP,SP,#+64
+// 1885     
+// 1886     if(USB_Flg==1)
+        LDR.W    R0,??DataTable18_4
+        LDRB     R0,[R0, #+0]
+        CMP      R0,#+1
+        BNE.N    ??GUI_STATUS_0
+// 1887     {
+// 1888       SHELL_CONTEXT_PTR    shell_ptr;
+// 1889       shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
+        MOV      R0,#+484
+          CFI FunCall _lwmem_alloc_zero
+        BL       _lwmem_alloc_zero
+        MOVS     R4,R0
+// 1890       _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
+        MOVW     R1,#+20481
+        MOVS     R0,R4
+          CFI FunCall _lwmem_set_type
+        BL       _lwmem_set_type
+// 1891       
+// 1892       shell_ptr->ARGC=2;
+        MOVS     R0,#+2
+        STR      R0,[R4, #+32]
+// 1893       shell_ptr->ARGV[0]="df_d";
+        LDR.W    R0,??DataTable18_41
+        STR      R0,[R4, #+0]
+// 1894       shell_ptr->ARGV[1]="u:";
+        ADR.N    R0,??DataTable17  ;; 0x75, 0x3A, 0x00, 0x00
+        STR      R0,[R4, #+4]
+// 1895       Shell_df_driver(shell_ptr->ARGC, shell_ptr->ARGV,&U_DISC[0],&U_DISC[1]);
+        ADD      R3,SP,#+22
+        ADD      R2,SP,#+20
+        MOVS     R1,R4
+        LDR      R0,[R4, #+32]
+          CFI FunCall Shell_df_driver
+        BL       Shell_df_driver
+// 1896       U_DISC[2]=(U16)(U_DISC[1]/120);
+        LDRH     R0,[SP, #+22]
+        MOVS     R1,#+120
+        SDIV     R0,R0,R1
+        STRH     R0,[SP, #+24]
+// 1897       
+// 1898       _mem_free(shell_ptr);
+        MOVS     R0,R4
+          CFI FunCall _lwmem_free
+        BL       _lwmem_free
+// 1899     }
+// 1900     
+// 1901     for(U8 i=0; i<3; i++)
+??GUI_STATUS_0:
+        MOVS     R0,#+0
+        B.N      ??GUI_STATUS_1
+// 1902     {
+// 1903         temp=7*i;
+??GUI_STATUS_2:
+        MOVS     R1,#+7
+        MUL      R4,R1,R0
+// 1904         StatusC108[temp]=0x6004;//显示数据的模式
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        ADD      R1,SP,#+44
+        MOVW     R2,#+24580
+        STRH     R2,[R1, R4, LSL #+1]
+// 1905         StatusC108[temp+1]=480;//显示左边列谐波数据的X为82,右边列谐波数据X为438
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        ADD      R1,SP,#+44
+        ADDS     R1,R1,R4, LSL #+1
+        MOV      R2,#+480
+        STRH     R2,[R1, #+2]
+// 1906         StatusC108[temp+2]=94+37*i;//Y坐标
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        ADD      R1,SP,#+44
+        ADDS     R1,R1,R4, LSL #+1
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        MOVS     R2,#+37
+        MUL      R2,R2,R0
+        ADDS     R2,R2,#+94
+        STRH     R2,[R1, #+4]
+// 1907         StatusC108[temp+3]=C108FC_W;
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        ADD      R1,SP,#+44
+        ADDS     R1,R1,R4, LSL #+1
+        MOVW     R2,#+65535
+        STRH     R2,[R1, #+6]
+// 1908         StatusC108[temp+4]=0x0000;
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        ADD      R1,SP,#+44
+        ADDS     R1,R1,R4, LSL #+1
+        MOVS     R2,#+0
+        STRH     R2,[R1, #+8]
+// 1909         StatusC108[temp+5]=0;
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        ADD      R1,SP,#+44
+        ADDS     R1,R1,R4, LSL #+1
+        MOVS     R2,#+0
+        STRH     R2,[R1, #+10]
+// 1910         StatusC108[temp+6]=U_DISC[i];
+        UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
+        ADD      R1,SP,#+44
+        ADDS     R1,R1,R4, LSL #+1
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        ADD      R2,SP,#+20
+        LDRH     R2,[R2, R0, LSL #+1]
+        STRH     R2,[R1, #+12]
+// 1911     }
+        ADDS     R0,R0,#+1
+??GUI_STATUS_1:
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        CMP      R0,#+3
+        BCC.N    ??GUI_STATUS_2
+// 1912     YADA_C0(StatusAddr,StatusC108,21);
+        MOVS     R2,#+21
+        ADD      R1,SP,#+44
+        MOV      R0,#+37120
+          CFI FunCall YADA_C0
+        BL       YADA_C0
+// 1913     YADA_C108(StatusAddr,3);   
+        MOVS     R1,#+3
+        MOV      R0,#+37120
+          CFI FunCall YADA_C108
+        BL       YADA_C108
+// 1914 }
+        ADD      SP,SP,#+88
           CFI CFA R13+8
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock16
@@ -9060,31 +9146,31 @@ GUI_STATUS:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable16:
-        DC8      0x31, 0x30, 0x00, 0x00
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable16_1:
         DC32     SysFlashData
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable16_2:
+??DataTable16_1:
         DC32     SysFlashData+0x19
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable16_3:
+??DataTable16_2:
         DC32     `?<Constant "update">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable16_4:
+??DataTable16_3:
         DC32     `?<Constant "flush">`
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable16_4:
+        DC32     SysDataSend
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -9103,19 +9189,25 @@ GUI_STATUS:
         DATA
 ??DataTable16_7:
         DC32     `?<Constant "SUCCESS...">`
-// 1919 /*******************************************************************************
-// 1920 * 函  数  名      : EventSave
-// 1921 * 描      述      : 事件存储
-// 1922 * 输      入      :
-// 1923 * 返      回      : 无
-// 1924 *******************************************************************************/
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable16_8:
+        DC32     `?<Constant "\\273\\326\\270\\264\\263\\366\\263\\247\\3`
+// 1915 /*******************************************************************************
+// 1916 * 函  数  名      : EventSave
+// 1917 * 描      述      : 事件存储
+// 1918 * 输      入      :
+// 1919 * 返      回      : 无
+// 1920 *******************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock17 Using cfiCommon0
           CFI Function EventSave
         THUMB
-// 1925 void EventSave(U8 U_DISK)
-// 1926 {
+// 1921 void EventSave(U8 U_DISK)
+// 1922 {
 EventSave:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
@@ -9123,190 +9215,190 @@ EventSave:
           CFI CFA R13+8
         SUB      SP,SP,#+24
           CFI CFA R13+32
-// 1927     if(USB_Flg==1&& SysFlashData[6]==1) // ==1 时插入
-        LDR.W    R0,??DataTable18_9
+// 1923     if(USB_Flg==1&& SysFlashData[6]==1) // ==1 时插入
+        LDR.W    R0,??DataTable18_4
         LDRB     R0,[R0, #+0]
         CMP      R0,#+1
         BNE.W    ??EventSave_0
-        LDR.W    R0,??DataTable18_45
+        LDR.W    R0,??DataTable18_42
         LDRB     R0,[R0, #+6]
         CMP      R0,#+1
         BNE.W    ??EventSave_0
-// 1928     {
-// 1929           SHELL_CONTEXT_PTR    shell_ptr;
-// 1930           shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
+// 1924     {
+// 1925           SHELL_CONTEXT_PTR    shell_ptr;
+// 1926           shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
         MOV      R0,#+484
           CFI FunCall _lwmem_alloc_zero
         BL       _lwmem_alloc_zero
         MOVS     R4,R0
-// 1931           _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
+// 1927           _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
         MOVW     R1,#+20481
         MOVS     R0,R4
           CFI FunCall _lwmem_set_type
         BL       _lwmem_set_type
-// 1932 //          static   char_ptr file_name="12345678.csv",evntdir_name,monthDir_name;
-// 1933           static char file_name[12]="wk12345.csv",evntdir_name[5]="2013",monthDir_name[3]="12";
-// 1934           
-// 1935           static uint_16 month_old=0;
-// 1936           
-// 1937           TIME_STRUCT             time_sf;
-// 1938           DATE_STRUCT             date_sf;     
-// 1939           _time_get(&time_sf);
+// 1928 //          static   char_ptr file_name="12345678.csv",evntdir_name,monthDir_name;
+// 1929           static char file_name[12]="wk12345.csv",evntdir_name[5]="2013",monthDir_name[3]="12";
+// 1930           
+// 1931           static uint_16 month_old=0;
+// 1932           
+// 1933           TIME_STRUCT             time_sf;
+// 1934           DATE_STRUCT             date_sf;     
+// 1935           _time_get(&time_sf);
         ADD      R0,SP,#+16
           CFI FunCall _time_get
         BL       _time_get
-// 1940           _time_to_date(&time_sf,&date_sf);
+// 1936           _time_to_date(&time_sf,&date_sf);
         ADD      R1,SP,#+0
         ADD      R0,SP,#+16
           CFI FunCall _time_to_date
         BL       _time_to_date
-// 1941           time[0]=date_sf.YEAR&0x00ff;
-        LDR.W    R0,??DataTable18_46
+// 1937           time[0]=date_sf.YEAR&0x00ff;
+        LDR.W    R0,??DataTable18_43
         LDRH     R1,[SP, #+0]
         STRB     R1,[R0, #+0]
-// 1942           time[1]=date_sf.YEAR>>8;
-        LDR.W    R0,??DataTable18_46
+// 1938           time[1]=date_sf.YEAR>>8;
+        LDR.W    R0,??DataTable18_43
         LDRH     R1,[SP, #+0]
         UXTH     R1,R1            ;; ZeroExt  R1,R1,#+16,#+16
         LSRS     R1,R1,#+8
         STRB     R1,[R0, #+1]
-// 1943           time[2]=date_sf.MONTH;
-        LDR.W    R0,??DataTable18_46
+// 1939           time[2]=date_sf.MONTH;
+        LDR.W    R0,??DataTable18_43
         LDRH     R1,[SP, #+2]
         STRB     R1,[R0, #+2]
-// 1944           time[3]=date_sf.DAY;
-        LDR.W    R0,??DataTable18_46
+// 1940           time[3]=date_sf.DAY;
+        LDR.W    R0,??DataTable18_43
         LDRH     R1,[SP, #+4]
         STRB     R1,[R0, #+3]
-// 1945           time[4]=date_sf.HOUR;
-        LDR.W    R0,??DataTable18_46
+// 1941           time[4]=date_sf.HOUR;
+        LDR.W    R0,??DataTable18_43
         LDRH     R1,[SP, #+6]
         STRB     R1,[R0, #+4]
-// 1946           time[5]=date_sf.MINUTE;
-        LDR.W    R0,??DataTable18_46
+// 1942           time[5]=date_sf.MINUTE;
+        LDR.W    R0,??DataTable18_43
         LDRH     R1,[SP, #+8]
         STRB     R1,[R0, #+5]
-// 1947           time[6]=date_sf.SECOND;
-        LDR.W    R0,??DataTable18_46
+// 1943           time[6]=date_sf.SECOND;
+        LDR.W    R0,??DataTable18_43
         LDRH     R1,[SP, #+10]
         STRB     R1,[R0, #+6]
-// 1948     
-// 1949           shell_ptr->ARGC = 2;
+// 1944     
+// 1945           shell_ptr->ARGC = 2;
         MOVS     R0,#+2
         STR      R0,[R4, #+32]
-// 1950           shell_ptr->ARGV[0]="cd";
-        ADR.N    R0,??DataTable17_1  ;; 0x63, 0x64, 0x00, 0x00
+// 1946           shell_ptr->ARGV[0]="cd";
+        ADR.N    R0,??DataTable17_3  ;; 0x63, 0x64, 0x00, 0x00
         STR      R0,[R4, #+0]
-// 1951           shell_ptr->ARGV[1]="u:\\event"; 
-        LDR.W    R0,??DataTable18_13
+// 1947           shell_ptr->ARGV[1]="u:\\event"; 
+        LDR.W    R0,??DataTable18_8
         STR      R0,[R4, #+4]
-// 1952           Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+// 1948           Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_cd
         BL       Shell_cd
-// 1953         
-// 1954           if(evntyear_old!=date_sf.YEAR) // wk --> creata a dir named of year
-        LDR.W    R0,??DataTable18_14
+// 1949         
+// 1950           if(evntyear_old!=date_sf.YEAR) // wk --> creata a dir named of year
+        LDR.N    R0,??DataTable18_9
         LDRH     R0,[R0, #+0]
         LDRH     R1,[SP, #+0]
         CMP      R0,R1
         BEQ.N    ??EventSave_1
-// 1955           {
-// 1956 //            evntdir_name=num2string(date_sf.YEAR,4,0);
-// 1957             sprintf(evntdir_name,"%d",date_sf.YEAR);
+// 1951           {
+// 1952 //            evntdir_name=num2string(date_sf.YEAR,4,0);
+// 1953             sprintf(evntdir_name,"%d",date_sf.YEAR);
         LDRH     R2,[SP, #+0]
-        ADR.N    R1,??DataTable17_2  ;; 0x25, 0x64, 0x00, 0x00
-        LDR.W    R0,??DataTable18_47
+        ADR.N    R1,??DataTable17_4  ;; 0x25, 0x64, 0x00, 0x00
+        LDR.W    R0,??DataTable18_44
           CFI FunCall _io_sprintf
         BL       _io_sprintf
-// 1958             evntyear_old=date_sf.YEAR;
-        LDR.N    R0,??DataTable18_14
+// 1954             evntyear_old=date_sf.YEAR;
+        LDR.N    R0,??DataTable18_9
         LDRH     R1,[SP, #+0]
         STRH     R1,[R0, #+0]
-// 1959             
-// 1960             shell_ptr->ARGC = 2;
+// 1955             
+// 1956             shell_ptr->ARGC = 2;
         MOVS     R0,#+2
         STR      R0,[R4, #+32]
-// 1961             shell_ptr->ARGV[0]="mkdir";
-        LDR.W    R0,??DataTable18_48
+// 1957             shell_ptr->ARGV[0]="mkdir";
+        LDR.W    R0,??DataTable18_45
         STR      R0,[R4, #+0]
-// 1962             shell_ptr->ARGV[1]=evntdir_name; 
-        LDR.W    R0,??DataTable18_47
+// 1958             shell_ptr->ARGV[1]=evntdir_name; 
+        LDR.W    R0,??DataTable18_44
         STR      R0,[R4, #+4]
-// 1963             Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
+// 1959             Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_mkdir
         BL       Shell_mkdir
-// 1964           }
-// 1965           
-// 1966           shell_ptr->ARGC = 2;
+// 1960           }
+// 1961           
+// 1962           shell_ptr->ARGC = 2;
 ??EventSave_1:
         MOVS     R0,#+2
         STR      R0,[R4, #+32]
-// 1967           shell_ptr->ARGV[0]="cd";
-        ADR.N    R0,??DataTable17_1  ;; 0x63, 0x64, 0x00, 0x00
+// 1963           shell_ptr->ARGV[0]="cd";
+        ADR.N    R0,??DataTable17_3  ;; 0x63, 0x64, 0x00, 0x00
         STR      R0,[R4, #+0]
-// 1968           shell_ptr->ARGV[1]=evntdir_name; 
-        LDR.W    R0,??DataTable18_47
+// 1964           shell_ptr->ARGV[1]=evntdir_name; 
+        LDR.W    R0,??DataTable18_44
         STR      R0,[R4, #+4]
-// 1969           Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+// 1965           Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_cd
         BL       Shell_cd
-// 1970           if(month_old!=date_sf.MONTH)
-        LDR.W    R0,??DataTable18_49
+// 1966           if(month_old!=date_sf.MONTH)
+        LDR.W    R0,??DataTable18_46
         LDRH     R0,[R0, #+0]
         LDRH     R1,[SP, #+2]
         CMP      R0,R1
         BEQ.N    ??EventSave_2
-// 1971           {
-// 1972 //            monthDir_name=num2string(date_sf.MONTH,2,0);
-// 1973             sprintf(monthDir_name,"%d",date_sf.MONTH);
+// 1967           {
+// 1968 //            monthDir_name=num2string(date_sf.MONTH,2,0);
+// 1969             sprintf(monthDir_name,"%d",date_sf.MONTH);
         LDRH     R2,[SP, #+2]
-        ADR.N    R1,??DataTable17_2  ;; 0x25, 0x64, 0x00, 0x00
-        LDR.W    R0,??DataTable18_50
+        ADR.N    R1,??DataTable17_4  ;; 0x25, 0x64, 0x00, 0x00
+        LDR.W    R0,??DataTable18_47
           CFI FunCall _io_sprintf
         BL       _io_sprintf
-// 1974             month_old=date_sf.MONTH;
+// 1970             month_old=date_sf.MONTH;
         LDRH     R0,[SP, #+2]
-        LDR.W    R1,??DataTable18_49
+        LDR.W    R1,??DataTable18_46
         STRH     R0,[R1, #+0]
-// 1975             
-// 1976             shell_ptr->ARGC = 2;
+// 1971             
+// 1972             shell_ptr->ARGC = 2;
         MOVS     R0,#+2
         STR      R0,[R4, #+32]
-// 1977             shell_ptr->ARGV[0]="mkdir";
-        LDR.W    R0,??DataTable18_48
+// 1973             shell_ptr->ARGV[0]="mkdir";
+        LDR.W    R0,??DataTable18_45
         STR      R0,[R4, #+0]
-// 1978             shell_ptr->ARGV[1]=monthDir_name; 
-        LDR.W    R0,??DataTable18_50
+// 1974             shell_ptr->ARGV[1]=monthDir_name; 
+        LDR.W    R0,??DataTable18_47
         STR      R0,[R4, #+4]
-// 1979             Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
+// 1975             Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_mkdir
         BL       Shell_mkdir
-// 1980           }
-// 1981           shell_ptr->ARGC = 2;
+// 1976           }
+// 1977           shell_ptr->ARGC = 2;
 ??EventSave_2:
         MOVS     R0,#+2
         STR      R0,[R4, #+32]
-// 1982           shell_ptr->ARGV[0]="cd";
-        ADR.N    R0,??DataTable17_1  ;; 0x63, 0x64, 0x00, 0x00
+// 1978           shell_ptr->ARGV[0]="cd";
+        ADR.N    R0,??DataTable17_3  ;; 0x63, 0x64, 0x00, 0x00
         STR      R0,[R4, #+0]
-// 1983           shell_ptr->ARGV[1]=monthDir_name; 
-        LDR.N    R0,??DataTable18_50
+// 1979           shell_ptr->ARGV[1]=monthDir_name; 
+        LDR.N    R0,??DataTable18_47
         STR      R0,[R4, #+4]
-// 1984           Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+// 1980           Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_cd
         BL       Shell_cd
-// 1985                     
-// 1986           sprintf(file_name,"%d.csv",date_sf.SECOND+(date_sf.MINUTE<<6)+(date_sf.HOUR<<12)+(date_sf.DAY<<17));
+// 1981                     
+// 1982           sprintf(file_name,"%d.csv",date_sf.SECOND+(date_sf.MINUTE<<6)+(date_sf.HOUR<<12)+(date_sf.DAY<<17));
         LDRH     R0,[SP, #+10]
         LDRH     R1,[SP, #+8]
         LSLS     R1,R1,#+6
@@ -9315,29 +9407,29 @@ EventSave:
         ADDS     R0,R0,R1, LSL #+12
         LDRH     R1,[SP, #+4]
         ADDS     R2,R0,R1, LSL #+17
-        LDR.N    R1,??DataTable18_18
-        LDR.N    R0,??DataTable18_51
+        LDR.N    R1,??DataTable18_12
+        LDR.N    R0,??DataTable18_48
           CFI FunCall _io_sprintf
         BL       _io_sprintf
-// 1987           
-// 1988           if(EVEnum==100)
-        LDR.N    R0,??DataTable18_11
+// 1983           
+// 1984           if(EVEnum==100)
+        LDR.N    R0,??DataTable18_6
         LDRB     R0,[R0, #+0]
         CMP      R0,#+100
         BNE.N    ??EventSave_3
-// 1989           {
-// 1990             EVEnum=1;
-        LDR.N    R0,??DataTable18_11
+// 1985           {
+// 1986             EVEnum=1;
+        LDR.N    R0,??DataTable18_6
         MOVS     R1,#+1
         STRB     R1,[R0, #+0]
-// 1991             
-// 1992             for(uchar tmpNum=0;tmpNum<100;tmpNum++)
+// 1987             
+// 1988             for(uchar tmpNum=0;tmpNum<100;tmpNum++)
         MOVS     R0,#+0
         B.N      ??EventSave_4
-// 1993               EventAddr[tmpNum]=0;
+// 1989               EventAddr[tmpNum]=0;
 ??EventSave_5:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.N    R1,??DataTable18_16
+        LDR.N    R1,??DataTable18_11
         MOVS     R2,#+0
         STR      R2,[R1, R0, LSL #+2]
         ADDS     R0,R0,#+1
@@ -9345,32 +9437,32 @@ EventSave:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+100
         BCC.N    ??EventSave_5
-// 1994             for(uchar tmpNum=0;tmpNum<9;tmpNum++)
+// 1990             for(uchar tmpNum=0;tmpNum<9;tmpNum++)
         MOVS     R0,#+0
 ??EventSave_6:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         CMP      R0,#+9
         BCS.N    ??EventSave_7
-// 1995               EventNum[tmpNum]=0;
+// 1991               EventNum[tmpNum]=0;
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
-        LDR.N    R1,??DataTable18_2
+        LDR.N    R1,??DataTable18_1
         MOVS     R2,#+0
         STRH     R2,[R1, R0, LSL #+1]
         ADDS     R0,R0,#+1
         B.N      ??EventSave_6
-// 1996           }
-// 1997           else
-// 1998             EVEnum++; // wk @130412-->事件总数
+// 1992           }
+// 1993           else
+// 1994             EVEnum++; // wk @130412-->事件总数
 ??EventSave_3:
-        LDR.N    R0,??DataTable18_11
+        LDR.N    R0,??DataTable18_6
         LDRB     R0,[R0, #+0]
         ADDS     R0,R0,#+1
-        LDR.N    R1,??DataTable18_11
+        LDR.N    R1,??DataTable18_6
         STRB     R0,[R1, #+0]
-// 1999 //          EventAddr[EVEnum-1]=date_sf.MONTH*100000000+date_sf.DAY*1000000+date_sf.HOUR*10000+
-// 2000 //                            date_sf.MINUTE*100+date_sf.SECOND; // wk @130412-->获得当前事件的地址：、日、时、分、秒
-// 2001           EventAddr[EVEnum-1]= date_sf.SECOND+((U32)date_sf.MINUTE<<6)+((U32)date_sf.HOUR<<12)+((U32)date_sf.DAY<<17)
-// 2002                                +((U32)date_sf.MONTH<<22)+((U32)(EvntRxchar[0]&0x0f)<<26)+((U32)(EvntRxchar[1]&0x01)<<30);  //wk @130425 -->添加事件开始/结束标志
+// 1995 //          EventAddr[EVEnum-1]=date_sf.MONTH*100000000+date_sf.DAY*1000000+date_sf.HOUR*10000+
+// 1996 //                            date_sf.MINUTE*100+date_sf.SECOND; // wk @130412-->获得当前事件的地址：、日、时、分、秒
+// 1997           EventAddr[EVEnum-1]= date_sf.SECOND+((U32)date_sf.MINUTE<<6)+((U32)date_sf.HOUR<<12)+((U32)date_sf.DAY<<17)
+// 1998                                +((U32)date_sf.MONTH<<22)+((U32)(EvntRxchar[0]&0x0f)<<26)+((U32)(EvntRxchar[1]&0x01)<<30);  //wk @130425 -->添加事件开始/结束标志
 ??EventSave_7:
         LDRH     R0,[SP, #+10]
         LDRH     R1,[SP, #+8]
@@ -9382,108 +9474,108 @@ EventSave:
         ADDS     R0,R0,R1, LSL #+17
         LDRH     R1,[SP, #+2]
         ADDS     R0,R0,R1, LSL #+22
-        LDR.N    R1,??DataTable18_52
+        LDR.N    R1,??DataTable18_49
         LDRB     R1,[R1, #+0]
         ANDS     R1,R1,#0xF
         ADDS     R0,R0,R1, LSL #+26
-        LDR.N    R1,??DataTable18_52
+        LDR.N    R1,??DataTable18_49
         LDRB     R1,[R1, #+1]
         ANDS     R1,R1,#0x1
         ADDS     R0,R0,R1, LSL #+30
-        LDR.N    R1,??DataTable18_11
+        LDR.N    R1,??DataTable18_6
         LDRB     R1,[R1, #+0]
-        LDR.N    R2,??DataTable18_16
+        LDR.N    R2,??DataTable18_11
         ADDS     R1,R2,R1, LSL #+2
         STR      R0,[R1, #-4]
-// 2003           /* wk @130504--> 待补充事件次数限制判断*/
-// 2004           EventNum[(EvntRxchar[0]&0x3f)]++; // wk @130412-->事件类型叠加
-        LDR.N    R0,??DataTable18_52
+// 1999           /* wk @130504--> 待补充事件次数限制判断*/
+// 2000           EventNum[(EvntRxchar[0]&0x3f)]++; // wk @130412-->事件类型叠加
+        LDR.N    R0,??DataTable18_49
         LDRB     R0,[R0, #+0]
         ANDS     R0,R0,#0x3F
-        LDR.N    R1,??DataTable18_2
+        LDR.N    R1,??DataTable18_1
         LDRH     R0,[R1, R0, LSL #+1]
         ADDS     R0,R0,#+1
-        LDR.N    R1,??DataTable18_52
+        LDR.N    R1,??DataTable18_49
         LDRB     R1,[R1, #+0]
         ANDS     R1,R1,#0x3F
-        LDR.N    R2,??DataTable18_2
+        LDR.N    R2,??DataTable18_1
         STRH     R0,[R2, R1, LSL #+1]
-// 2005           
-// 2006           /* wk @130412--> 总数 + 时间 + 类型 + 开始/结束 + 数据 */
-// 2007          
-// 2008           shell_ptr->ARGC=4;
+// 2001           
+// 2002           /* wk @130412--> 总数 + 时间 + 类型 + 开始/结束 + 数据 */
+// 2003          
+// 2004           shell_ptr->ARGC=4;
         MOVS     R0,#+4
         STR      R0,[R4, #+32]
-// 2009           shell_ptr->ARGV[0]="write";
-        LDR.N    R0,??DataTable18_53
+// 2005           shell_ptr->ARGV[0]="write";
+        LDR.N    R0,??DataTable18_50
         STR      R0,[R4, #+0]
-// 2010           shell_ptr->ARGV[1]=file_name;
-        LDR.N    R0,??DataTable18_51
+// 2006           shell_ptr->ARGV[1]=file_name;
+        LDR.N    R0,??DataTable18_48
         STR      R0,[R4, #+4]
-// 2011           shell_ptr->ARGV[2]="current";
-        LDR.N    R0,??DataTable18_54
+// 2007           shell_ptr->ARGV[2]="current";
+        LDR.N    R0,??DataTable18_51
         STR      R0,[R4, #+8]
-// 2012           shell_ptr->ARGV[3]="0";
-        ADR.N    R0,??DataTable18_8  ;; "0"
+// 2008           shell_ptr->ARGV[3]="0";
+        ADR.N    R0,??DataTable18_10  ;; "0"
         STR      R0,[R4, #+12]
-// 2013           Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,1,&EVEnum);
-        LDR.N    R3,??DataTable18_11
+// 2009           Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,1,&EVEnum);
+        LDR.N    R3,??DataTable18_6
         MOVS     R2,#+1
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_write_binary
         BL       Shell_write_binary
-// 2014           Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,7,&time);
-        LDR.N    R3,??DataTable18_46
+// 2010           Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,7,&time);
+        LDR.N    R3,??DataTable18_43
         MOVS     R2,#+7
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_write_binary
         BL       Shell_write_binary
-// 2015           /* wk @130412 --> test */
-// 2016 //          uchar test[]={0,1,2,3,4,5,6,7,8,9,10};
-// 2017 //          Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,100,test);
-// 2018           /* wk @130412 --> save event data */
-// 2019           Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,Evnt_SIZE,EvntRxchar); // wk @130412-->EvntRxchar包含标志位和事件数据
-        LDR.N    R3,??DataTable18_52
+// 2011           /* wk @130412 --> test */
+// 2012 //          uchar test[]={0,1,2,3,4,5,6,7,8,9,10};
+// 2013 //          Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,100,test);
+// 2014           /* wk @130412 --> save event data */
+// 2015           Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,Evnt_SIZE,EvntRxchar); // wk @130412-->EvntRxchar包含标志位和事件数据
+        LDR.N    R3,??DataTable18_49
         MOVW     R2,#+6146
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_write_binary
         BL       Shell_write_binary
-// 2020     
-// 2021          _mem_free(shell_ptr);  // wk @130403 --> important
+// 2016     
+// 2017          _mem_free(shell_ptr);  // wk @130403 --> important
         MOVS     R0,R4
           CFI FunCall _lwmem_free
         BL       _lwmem_free
         B.N      ??EventSave_8
-// 2022     }
-// 2023   else if(USB_Flg==0)
+// 2018     }
+// 2019   else if(USB_Flg==0)
 ??EventSave_0:
-        LDR.N    R0,??DataTable18_9
+        LDR.N    R0,??DataTable18_4
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
         BNE.N    ??EventSave_9
-// 2024   {
-// 2025     printf("\nATTENTION:USB is DETACHED!\n");
-        LDR.N    R0,??DataTable18_26
+// 2020   {
+// 2021     printf("\nATTENTION:USB is DETACHED!\n");
+        LDR.N    R0,??DataTable18_22
           CFI FunCall _io_printf
         BL       _io_printf
         B.N      ??EventSave_8
-// 2026   }
-// 2027   else if(SysFlashData[6]==0)
+// 2022   }
+// 2023   else if(SysFlashData[6]==0)
 ??EventSave_9:
-        LDR.N    R0,??DataTable18_45
+        LDR.N    R0,??DataTable18_42
         LDRB     R0,[R0, #+6]
         CMP      R0,#+0
         BNE.N    ??EventSave_8
-// 2028   {
-// 2029     printf("\nATTENTION:USB Switch is CLOSED!\n");
-        LDR.N    R0,??DataTable18_27
+// 2024   {
+// 2025     printf("\nATTENTION:USB Switch is CLOSED!\n");
+        LDR.N    R0,??DataTable18_23
           CFI FunCall _io_printf
         BL       _io_printf
-// 2030   }
-// 2031 }
+// 2026   }
+// 2027 }
 ??EventSave_8:
         ADD      SP,SP,#+24
           CFI CFA R13+8
@@ -9494,31 +9586,55 @@ EventSave:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable17:
-        DC32     `?<Constant "\\273\\326\\270\\264\\263\\366\\263\\247\\3`
+        DC8      0x75, 0x3A, 0x00, 0x00
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable17_1:
-        DC8      0x63, 0x64, 0x00, 0x00
+        DC32     `?<Constant "WAITING...">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable17_2:
-        DC8      0x25, 0x64, 0x00, 0x00
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable17_3:
         DC32     `?<Constant "sysset.txt">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
+??DataTable17_3:
+        DC8      0x63, 0x64, 0x00, 0x00
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
 ??DataTable17_4:
+        DC8      0x25, 0x64, 0x00, 0x00
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_5:
         DC32     `?<Constant {181, 127, 181, 174, 181, 219, 181,`
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_6:
+        DC32     `?<Constant {30, 40, 35, 63, 30, 70, 35, 93, 30`
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_7:
+        DC32     `?<Constant {"U_ERR", "F_ERR", "U_WAV", "U_UNB"`
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable17_8:
+        DC32     `?<Constant {"START", "STOP "}>`
 
         SECTION `.data`:DATA:REORDER:NOROOT(2)
 ??file_name:
@@ -9540,19 +9656,19 @@ EventSave:
         SECTION `.bss`:DATA:REORDER:NOROOT(1)
 ??month_old:
         DS8 2
-// 2032 /*******************************************************************************
-// 2033 * 函  数  名      : PowerSave
-// 2034 * 描      述      : 电能数据存储
-// 2035 * 输      入      : 无
-// 2036 * 返      回      : 无
-// 2037 *******************************************************************************/
+// 2028 /*******************************************************************************
+// 2029 * 函  数  名      : PowerSave
+// 2030 * 描      述      : 电能数据存储
+// 2031 * 输      入      : 无
+// 2032 * 返      回      : 无
+// 2033 *******************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock18 Using cfiCommon0
           CFI Function PowerSave
         THUMB
-// 2038 void PowerSave(void)
-// 2039 {
+// 2034 void PowerSave(void)
+// 2035 {
 PowerSave:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
@@ -9560,236 +9676,236 @@ PowerSave:
           CFI CFA R13+8
         SUB      SP,SP,#+32
           CFI CFA R13+40
-// 2040   if(USB_Flg==1&& SysFlashData[6]==1)
-        LDR.N    R0,??DataTable18_9
+// 2036   if(USB_Flg==1&& SysFlashData[6]==1)
+        LDR.N    R0,??DataTable18_4
         LDRB     R0,[R0, #+0]
         CMP      R0,#+1
         BNE.W    ??PowerSave_0
-        LDR.N    R0,??DataTable18_45
+        LDR.N    R0,??DataTable18_42
         LDRB     R0,[R0, #+6]
         CMP      R0,#+1
         BNE.W    ??PowerSave_0
-// 2041   {
-// 2042       SHELL_CONTEXT_PTR    shell_ptr;
-// 2043       shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
+// 2037   {
+// 2038       SHELL_CONTEXT_PTR    shell_ptr;
+// 2039       shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
         MOV      R0,#+484
           CFI FunCall _lwmem_alloc_zero
         BL       _lwmem_alloc_zero
         MOVS     R4,R0
-// 2044       _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
+// 2040       _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
         MOVW     R1,#+20481
         MOVS     R0,R4
           CFI FunCall _lwmem_set_type
         BL       _lwmem_set_type
-// 2045       uint_32 file_size;
-// 2046 //      static   char_ptr file_name="123456.csv",dir_name="1000";
-// 2047      static char file_name[10]="wk384.csv",dir_name[5]="1000";
-// 2048       static uint_16 year_old=0;
-// 2049       TIME_STRUCT             time_sf;
-// 2050       DATE_STRUCT             date_sf;
-// 2051       
-// 2052       _time_get(&time_sf);
+// 2041       uint_32 file_size;
+// 2042 //      static   char_ptr file_name="123456.csv",dir_name="1000";
+// 2043      static char file_name[10]="wk384.csv",dir_name[5]="1000";
+// 2044       static uint_16 year_old=0;
+// 2045       TIME_STRUCT             time_sf;
+// 2046       DATE_STRUCT             date_sf;
+// 2047       
+// 2048       _time_get(&time_sf);
         ADD      R0,SP,#+20
           CFI FunCall _time_get
         BL       _time_get
-// 2053       _time_to_date(&time_sf,&date_sf);
+// 2049       _time_to_date(&time_sf,&date_sf);
         ADD      R1,SP,#+0
         ADD      R0,SP,#+20
           CFI FunCall _time_to_date
         BL       _time_to_date
-// 2054       
-// 2055 //      printf("Y=%d\tM=%d\tD=%d\tH=%d\tM=%d\tS=%d\n",date_sf.YEAR,date_sf.MONTH,date_sf.DAY,date_sf.HOUR,date_sf.MINUTE,date_sf.SECOND);
-// 2056       
-// 2057       shell_ptr->ARGC = 2;
+// 2050       
+// 2051 //      printf("Y=%d\tM=%d\tD=%d\tH=%d\tM=%d\tS=%d\n",date_sf.YEAR,date_sf.MONTH,date_sf.DAY,date_sf.HOUR,date_sf.MINUTE,date_sf.SECOND);
+// 2052       
+// 2053       shell_ptr->ARGC = 2;
         MOVS     R0,#+2
         STR      R0,[R4, #+32]
-// 2058       shell_ptr->ARGV[0]="cd";
-        ADR.N    R0,??DataTable18_15  ;; 0x63, 0x64, 0x00, 0x00
+// 2054       shell_ptr->ARGV[0]="cd";
+        ADR.N    R0,??DataTable18_14  ;; 0x63, 0x64, 0x00, 0x00
         STR      R0,[R4, #+0]
-// 2059       shell_ptr->ARGV[1]="u:\\power"; 
-        LDR.N    R0,??DataTable18_55
+// 2055       shell_ptr->ARGV[1]="u:\\power"; 
+        LDR.N    R0,??DataTable18_52
         STR      R0,[R4, #+4]
-// 2060       Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+// 2056       Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_cd
         BL       Shell_cd
-// 2061       
-// 2062       if(year_old!=date_sf.YEAR) // wk --> creata a dir named of year
-        LDR.N    R0,??DataTable18_56
+// 2057       
+// 2058       if(year_old!=date_sf.YEAR) // wk --> creata a dir named of year
+        LDR.N    R0,??DataTable18_53
         LDRH     R0,[R0, #+0]
         LDRH     R1,[SP, #+0]
         CMP      R0,R1
         BEQ.N    ??PowerSave_1
-// 2063       {
-// 2064 //        dir_name=num2string((uint_32)date_sf.YEAR,4,0);
-// 2065         sprintf(dir_name,"%d",date_sf.YEAR);
+// 2059       {
+// 2060 //        dir_name=num2string((uint_32)date_sf.YEAR,4,0);
+// 2061         sprintf(dir_name,"%d",date_sf.YEAR);
         LDRH     R2,[SP, #+0]
-        ADR.N    R1,??DataTable18_17  ;; 0x25, 0x64, 0x00, 0x00
-        LDR.N    R0,??DataTable18_57
+        ADR.N    R1,??DataTable18_16  ;; 0x25, 0x64, 0x00, 0x00
+        LDR.N    R0,??DataTable18_54
           CFI FunCall _io_sprintf
         BL       _io_sprintf
-// 2066         year_old=date_sf.YEAR;
-        LDR.N    R0,??DataTable18_56
+// 2062         year_old=date_sf.YEAR;
+        LDR.N    R0,??DataTable18_53
         LDRH     R1,[SP, #+0]
         STRH     R1,[R0, #+0]
-// 2067         
-// 2068 //        shell_ptr->ARGC = 2;
-// 2069 //        shell_ptr->ARGV[0]="mkdir";
-// 2070         shell_ptr->ARGV[1]=dir_name; 
-        LDR.N    R0,??DataTable18_57
+// 2063         
+// 2064 //        shell_ptr->ARGC = 2;
+// 2065 //        shell_ptr->ARGV[0]="mkdir";
+// 2066         shell_ptr->ARGV[1]=dir_name; 
+        LDR.N    R0,??DataTable18_54
         STR      R0,[R4, #+4]
-// 2071         Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
+// 2067         Shell_mkdir(shell_ptr->ARGC, shell_ptr->ARGV);
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_mkdir
         BL       Shell_mkdir
-// 2072       }
-// 2073       /* wk @130407 --> 注意： 这里可以添加年份文件夹查找的，确定文件夹已经建立在打开 */
-// 2074 //      shell_ptr->ARGC = 2;  //WK --> 进入 dir_name 下面
-// 2075 //      shell_ptr->ARGV[0]="cd";
-// 2076       shell_ptr->ARGV[1]=dir_name; 
+// 2068       }
+// 2069       /* wk @130407 --> 注意： 这里可以添加年份文件夹查找的，确定文件夹已经建立在打开 */
+// 2070 //      shell_ptr->ARGC = 2;  //WK --> 进入 dir_name 下面
+// 2071 //      shell_ptr->ARGV[0]="cd";
+// 2072       shell_ptr->ARGV[1]=dir_name; 
 ??PowerSave_1:
-        LDR.N    R0,??DataTable18_57
+        LDR.N    R0,??DataTable18_54
         STR      R0,[R4, #+4]
-// 2077       Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
+// 2073       Shell_cd(shell_ptr->ARGC, shell_ptr->ARGV);
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_cd
         BL       Shell_cd
-// 2078       
-// 2079       if(*file_name=='w') // wk --> 第一次进来时，用月、日、时获取文件名
-        LDR.N    R0,??DataTable18_58
+// 2074       
+// 2075       if(*file_name=='w') // wk --> 第一次进来时，用月、日、时获取文件名
+        LDR.N    R0,??DataTable18_55
         LDRB     R0,[R0, #+0]
         CMP      R0,#+119
         BNE.N    ??PowerSave_2
-// 2080       {
-// 2081 //       file_name=num2string(date_sf.MINUTE+(date_sf.DAY<<6)+(date_sf.MONTH<<11),6,1);
-// 2082         sprintf(file_name,"%d.CSV",date_sf.HOUR+(date_sf.DAY<<5)+(date_sf.MONTH<<10));
+// 2076       {
+// 2077 //       file_name=num2string(date_sf.MINUTE+(date_sf.DAY<<6)+(date_sf.MONTH<<11),6,1);
+// 2078         sprintf(file_name,"%d.CSV",date_sf.HOUR+(date_sf.DAY<<5)+(date_sf.MONTH<<10));
         LDRH     R0,[SP, #+6]
         LDRH     R1,[SP, #+4]
         LSLS     R1,R1,#+5
         UXTAH    R0,R1,R0
         LDRH     R1,[SP, #+2]
         ADDS     R2,R0,R1, LSL #+10
-        LDR.N    R1,??DataTable18_32
-        LDR.N    R0,??DataTable18_58
+        LDR.N    R1,??DataTable18_28
+        LDR.N    R0,??DataTable18_55
           CFI FunCall _io_sprintf
         BL       _io_sprintf
         B.N      ??PowerSave_3
-// 2083       }
-// 2084       else
-// 2085       {
-// 2086 //        shell_ptr->ARGC = 2;
-// 2087 //        shell_ptr->ARGV[0]="df_s";
-// 2088         shell_ptr->ARGV[1]=file_name;   //wk --> 注意：查找的文件名暂时必须要是大写
+// 2079       }
+// 2080       else
+// 2081       {
+// 2082 //        shell_ptr->ARGC = 2;
+// 2083 //        shell_ptr->ARGV[0]="df_s";
+// 2084         shell_ptr->ARGV[1]=file_name;   //wk --> 注意：查找的文件名暂时必须要是大写
 ??PowerSave_2:
-        LDR.N    R0,??DataTable18_58
+        LDR.N    R0,??DataTable18_55
         STR      R0,[R4, #+4]
-// 2089         Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
+// 2085         Shell_search_file_r1(shell_ptr->ARGC, shell_ptr->ARGV,&file_size);
         ADD      R2,SP,#+16
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_search_file_r1
         BL       Shell_search_file_r1
-// 2090         
-// 2091         if(file_size>134217728)  // wk --> 128M = 128*1024*1024 bytes
+// 2086         
+// 2087         if(file_size>134217728)  // wk --> 128M = 128*1024*1024 bytes
         LDR      R0,[SP, #+16]
         CMP      R0,#+134217728
         BLS.N    ??PowerSave_3
-// 2092         {
-// 2093 //          file_name=num2string(date_sf.MINUTE+(date_sf.DAY<<6)+(date_sf.MONTH<<11),6,1);
-// 2094           sprintf(file_name,"%d.CSV",date_sf.HOUR+(date_sf.DAY<<5)+(date_sf.MONTH<<10));
+// 2088         {
+// 2089 //          file_name=num2string(date_sf.MINUTE+(date_sf.DAY<<6)+(date_sf.MONTH<<11),6,1);
+// 2090           sprintf(file_name,"%d.CSV",date_sf.HOUR+(date_sf.DAY<<5)+(date_sf.MONTH<<10));
         LDRH     R0,[SP, #+6]
         LDRH     R1,[SP, #+4]
         LSLS     R1,R1,#+5
         UXTAH    R0,R1,R0
         LDRH     R1,[SP, #+2]
         ADDS     R2,R0,R1, LSL #+10
-        LDR.N    R1,??DataTable18_32
-        LDR.N    R0,??DataTable18_58
+        LDR.N    R1,??DataTable18_28
+        LDR.N    R0,??DataTable18_55
           CFI FunCall _io_sprintf
         BL       _io_sprintf
-// 2095         }
-// 2096       }
-// 2097       
-// 2098       shell_ptr->ARGC=4;
+// 2091         }
+// 2092       }
+// 2093       
+// 2094       shell_ptr->ARGC=4;
 ??PowerSave_3:
         MOVS     R0,#+4
         STR      R0,[R4, #+32]
-// 2099       shell_ptr->ARGV[0]="write";
-        LDR.N    R0,??DataTable18_53
+// 2095       shell_ptr->ARGV[0]="write";
+        LDR.N    R0,??DataTable18_50
         STR      R0,[R4, #+0]
-// 2100       shell_ptr->ARGV[1]=file_name;
-        LDR.N    R0,??DataTable18_58
+// 2096       shell_ptr->ARGV[1]=file_name;
+        LDR.N    R0,??DataTable18_55
         STR      R0,[R4, #+4]
-// 2101       shell_ptr->ARGV[2]="current";
-        LDR.N    R0,??DataTable18_54
+// 2097       shell_ptr->ARGV[2]="current";
+        LDR.N    R0,??DataTable18_51
         STR      R0,[R4, #+8]
-// 2102       shell_ptr->ARGV[3]="0";
-        ADR.N    R0,??DataTable18_8  ;; "0"
+// 2098       shell_ptr->ARGV[3]="0";
+        ADR.N    R0,??DataTable18_10  ;; "0"
         STR      R0,[R4, #+12]
-// 2103       Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,7,&date_sf);
+// 2099       Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,7,&date_sf);
         ADD      R3,SP,#+0
         MOVS     R2,#+7
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_write_binary
         BL       Shell_write_binary
-// 2104            
-// 2105 //      shell_ptr->ARGC=4;
-// 2106 //      shell_ptr->ARGV[0]="write";
-// 2107 //      shell_ptr->ARGV[1]=file_name;
-// 2108 //      shell_ptr->ARGV[2]="current";
-// 2109 //      shell_ptr->ARGV[3]="0";
-// 2110       /* wk @130412 --> test power save */
-// 2111 //      uchar test[200]={0,1,2,3,4,5,6,7,8,9,10};
-// 2112 //      for(int i=0;i<200;i++)
-// 2113 //        test[i]=i+5;
-// 2114 //      for(uchar i=0;i<10;i++)
-// 2115 //      Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,200,test);
-// 2116       /* wk @130412 --> write power data */
-// 2117         Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,Pow_SIZE,PowRxchar);
-        LDR.N    R3,??DataTable18_59
+// 2100            
+// 2101 //      shell_ptr->ARGC=4;
+// 2102 //      shell_ptr->ARGV[0]="write";
+// 2103 //      shell_ptr->ARGV[1]=file_name;
+// 2104 //      shell_ptr->ARGV[2]="current";
+// 2105 //      shell_ptr->ARGV[3]="0";
+// 2106       /* wk @130412 --> test power save */
+// 2107 //      uchar test[200]={0,1,2,3,4,5,6,7,8,9,10};
+// 2108 //      for(int i=0;i<200;i++)
+// 2109 //        test[i]=i+5;
+// 2110 //      for(uchar i=0;i<10;i++)
+// 2111 //      Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,200,test);
+// 2112       /* wk @130412 --> write power data */
+// 2113         Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,Pow_SIZE,PowRxchar);
+        LDR.N    R3,??DataTable18_56
         MOVW     R2,#+2532
         MOVS     R1,R4
         LDR      R0,[R4, #+32]
           CFI FunCall Shell_write_binary
         BL       Shell_write_binary
-// 2118 
-// 2119      _mem_free(shell_ptr);  // wk @130403 --> important
+// 2114 
+// 2115      _mem_free(shell_ptr);  // wk @130403 --> important
         MOVS     R0,R4
           CFI FunCall _lwmem_free
         BL       _lwmem_free
         B.N      ??PowerSave_4
-// 2120   }
-// 2121   else if(USB_Flg==0)
+// 2116   }
+// 2117   else if(USB_Flg==0)
 ??PowerSave_0:
-        LDR.N    R0,??DataTable18_9
+        LDR.N    R0,??DataTable18_4
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
         BNE.N    ??PowerSave_5
-// 2122   {
-// 2123     printf("\nATTENTION:USB is DETACHED!\n");
-        LDR.N    R0,??DataTable18_26
+// 2118   {
+// 2119     printf("\nATTENTION:USB is DETACHED!\n");
+        LDR.N    R0,??DataTable18_22
           CFI FunCall _io_printf
         BL       _io_printf
         B.N      ??PowerSave_4
-// 2124   }
-// 2125   else if(SysFlashData[6]==0)
+// 2120   }
+// 2121   else if(SysFlashData[6]==0)
 ??PowerSave_5:
-        LDR.N    R0,??DataTable18_45
+        LDR.N    R0,??DataTable18_42
         LDRB     R0,[R0, #+6]
         CMP      R0,#+0
         BNE.N    ??PowerSave_4
-// 2126   {
-// 2127     printf("\nATTENTION:USB Switch is CLOSED!\n");
-        LDR.N    R0,??DataTable18_27
+// 2122   {
+// 2123     printf("\nATTENTION:USB Switch is CLOSED!\n");
+        LDR.N    R0,??DataTable18_23
           CFI FunCall _io_printf
         BL       _io_printf
-// 2128   }
-// 2129      
-// 2130 }
+// 2124   }
+// 2125      
+// 2126 }
 ??PowerSave_4:
         ADD      SP,SP,#+32
           CFI CFA R13+8
@@ -9800,360 +9916,342 @@ PowerSave:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable18:
-        DC32     `?<Constant "WAITING...">`
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable18_1:
         DC32     InitAck
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_2:
+??DataTable18_1:
         DC32     EventNum
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_3:
-        DC32     `?<Constant {30, 40, 35, 63, 30, 70, 35, 93, 30`
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable18_4:
-        DC32     `?<Constant {"U_ERR", "F_ERR", "U_WAV", "U_UNB"`
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable18_5:
-        DC32     `?<Constant {"START", "STOP "}>`
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable18_6:
+??DataTable18_2:
         DC32     `?<Constant "2013">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_7:
+??DataTable18_3:
         DC32     `?<Constant "wk12345.csv">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_8:
-        DC8      "0",0x0,0x0
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable18_9:
+??DataTable18_4:
         DC32     USB_Flg
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_10:
+??DataTable18_5:
         DC32     EvntPgUpFlg
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_11:
+??DataTable18_6:
         DC32     EVEnum
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_12:
+??DataTable18_7:
         DC32     EVEpage
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_13:
+??DataTable18_8:
         DC32     `?<Constant "u:\\\\event">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_14:
+??DataTable18_9:
         DC32     evntyear_old
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_15:
-        DC8      0x63, 0x64, 0x00, 0x00
+??DataTable18_10:
+        DC8      "0",0x0,0x0
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_16:
+??DataTable18_11:
         DC32     EventAddr
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_17:
-        DC8      0x25, 0x64, 0x00, 0x00
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable18_18:
+??DataTable18_12:
         DC32     `?<Constant "%d.csv">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_19:
+??DataTable18_13:
         DC32     `?<Constant "read">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_20:
+??DataTable18_14:
+        DC8      0x63, 0x64, 0x00, 0x00
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable18_15:
         DC32     `?<Constant "begin">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_21:
+??DataTable18_16:
+        DC8      0x25, 0x64, 0x00, 0x00
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable18_17:
         DC32     `?<Constant "%d %d-%d-%d %d:%d:%d ...">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_22:
+??DataTable18_18:
         DC32     EVEfunflg
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_23:
+??DataTable18_19:
         DC32     EventOldIndex
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_24:
+??DataTable18_20:
         DC32     EVEline
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_25:
+??DataTable18_21:
         DC32     EveRdNum
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_26:
+??DataTable18_22:
         DC32     `?<Constant "\\nATTENTION:USB is DET...">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_27:
+??DataTable18_23:
         DC32     `?<Constant "\\nATTENTION:USB Switch...">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_28:
+??DataTable18_24:
         DC32     `?<Constant {14, 68, 200, 404, 273, 429}>`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_29:
+??DataTable18_25:
         DC32     `?<Constant {36, 54, 40, 50, 44, 54, 40, 50, 40`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_30:
+??DataTable18_26:
         DC32     `?<Constant "1234567.csv">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_31:
+??DataTable18_27:
         DC32     `?<Constant "2013">_1`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_32:
+??DataTable18_28:
         DC32     `?<Constant "%d.CSV">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_33:
+??DataTable18_29:
         DC32     `?<Constant "6144">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_34:
+??DataTable18_30:
         DC32     EvntWave
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_35:
+??DataTable18_31:
         DC32     EVEUI
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_36:
+??DataTable18_32:
         DC32     EVEUI+0x100
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_37:
+??DataTable18_33:
         DC32     EVEUI+0x200
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_38:
+??DataTable18_34:
         DC32     EVEUI+0x300
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_39:
+??DataTable18_35:
         DC32     EVEUI+0x400
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_40:
+??DataTable18_36:
         DC32     EVEUI+0x500
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_41:
+??DataTable18_37:
         DC32     COLOR
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_42:
+??DataTable18_38:
         DC32     `?<Constant "48.123.72.200">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_43:
+??DataTable18_39:
         DC32     0x317b48c8
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_44:
+??DataTable18_40:
         DC32     `?<Constant "%d.%d.%d.%d">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_45:
+??DataTable18_41:
+        DC32     `?<Constant "df_d">`
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable18_42:
         DC32     SysFlashData
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_46:
+??DataTable18_43:
         DC32     time
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_47:
+??DataTable18_44:
         DC32     ??evntdir_name
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_48:
+??DataTable18_45:
         DC32     `?<Constant "mkdir">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_49:
+??DataTable18_46:
         DC32     ??month_old
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_50:
+??DataTable18_47:
         DC32     ??monthDir_name
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_51:
+??DataTable18_48:
         DC32     ??file_name
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_52:
+??DataTable18_49:
         DC32     EvntRxchar
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_53:
+??DataTable18_50:
         DC32     `?<Constant "write">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_54:
+??DataTable18_51:
         DC32     `?<Constant "current">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_55:
+??DataTable18_52:
         DC32     `?<Constant "u:\\\\power">`
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_56:
+??DataTable18_53:
         DC32     ??year_old
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_57:
+??DataTable18_54:
         DC32     ??dir_name
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_58:
+??DataTable18_55:
         DC32     ??file_name_1
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable18_59:
+??DataTable18_56:
         DC32     PowRxchar
 
         SECTION `.data`:DATA:REORDER:NOROOT(2)
@@ -10184,16 +10282,16 @@ PowerSave:
         SECTION_TYPE SHT_PROGBITS, 0
 
         END
-// 2131 
+// 2127 
 // 
 //  8 200 bytes in section .bss
 //    253 bytes in section .data
-//  6 974 bytes in section .rodata
-// 14 096 bytes in section .text
+//  6 858 bytes in section .rodata
+// 14 314 bytes in section .text
 // 
-// 14 096 bytes of CODE  memory
-//  6 974 bytes of CONST memory
+// 14 314 bytes of CODE  memory
+//  6 858 bytes of CONST memory
 //  8 453 bytes of DATA  memory
 //
 //Errors: none
-//Warnings: 11
+//Warnings: 6
