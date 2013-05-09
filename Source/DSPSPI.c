@@ -206,8 +206,7 @@ void DMA_RecData_OK
       {
         // wk @130420 --> 发送数据 4+2+1+14+2+2532+12+4 = 2571,DMA的数据长度=2571-7=2564，但是数据接收时有两个丢失，故减2
         
-        DataSize = (((U16)HeadFlg[4])<<8) + HeadFlg[5]-2;
-        
+        DataSize = (((U16)HeadFlg[4])<<8) + HeadFlg[5]-2;   
         count=7;
       }
      
@@ -217,7 +216,7 @@ void DMA_RecData_OK
          count=8; // 用一个数据改变 DMA 接收数据的长度，此数据将会被舍弃
          /* wk @130420--> 暂时不考虑发送 */ 
          if(SysSet.EventSendFlg==1)
-          SPI_Send=1; // wk @130406 --> K60是否给DSP发送数据的标志
+         SPI_Send=1; // wk @130406 --> K60是否给DSP发送数据的标志
     }
     else
     {
@@ -246,8 +245,11 @@ void DMA_RecData_OK
        
        if(SysSet.EventSendFlg) //wk @130412 -->判断DSP是否成功接收数据
        {
-         if(EvntRxchar[0]&0xB0==0xB0)
-           SysSet.EventSendFlg=2;    //wk @130412 --> 发送成功   
+         if(EvntRxchar[0]&0xC0==0xC0)
+         { 
+           SysSet.EventSendFlg=2;    //wk @130412 --> 发送成功       
+           SPI_Send=0;  
+         }
        }
        
 #if T_SPI  
@@ -255,7 +257,6 @@ void DMA_RecData_OK
 #endif  // END --> T_SPI 
         count=0; 
         DataSize=1;
-        SPI_Send=0;
         fclose(spifd_2);
         asm("NOP");  
         spi2_dma_int(); // 刷新 DMA 寄存器

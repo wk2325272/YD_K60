@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    09/May/2013  09:41:44 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    09/May/2013  16:43:55 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -99,6 +99,7 @@
         EXTERN Shell_cd
         EXTERN Shell_mkdir
         EXTERN Shell_search_file_r1
+        EXTERN SysDataSend
         EXTERN SysFlashData
         EXTERN SysSetKeyFlg
         EXTERN USB_Flg
@@ -623,7 +624,7 @@ YaDa:
 //  181             GPIO_LIST_END
 //  182         };
         ADD      R0,SP,#+12
-        LDR.N    R1,??DataTable4_9
+        LDR.W    R1,??DataTable4_9
         LDM      R1!,{R2,R3}
         STM      R0!,{R2,R3}
         SUBS     R1,R1,#+8
@@ -632,11 +633,11 @@ YaDa:
 //  184          /* 这是按键1 上升沿中断*/
 //  185    port_file4 = fopen("gpio:read", (char_ptr) &pins_int );
         ADD      R1,SP,#+12
-        LDR.N    R0,??DataTable4_10
+        LDR.W    R0,??DataTable4_10
           CFI FunCall _io_fopen
         BL       _io_fopen
 //  186    ioctl(port_file4, GPIO_IOCTL_SET_IRQ_FUNCTION, (pointer)int_callback);        
-        LDR.N    R2,??DataTable4_11
+        LDR.W    R2,??DataTable4_11
         MOVW     R1,#+774
           CFI FunCall _io_ioctl
         BL       _io_ioctl
@@ -646,11 +647,11 @@ YaDa:
 //  190    _lpt_install (0,3 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO, 11, timer_isr, TRUE);//2 * 1000000  --> 2秒  
         MOVS     R0,#+1
         STR      R0,[SP, #+4]
-        LDR.N    R0,??DataTable4_12
+        LDR.W    R0,??DataTable4_12
         STR      R0,[SP, #+0]
         MOVS     R3,#+11
         MOVS     R2,#+2
-        LDR.N    R1,??DataTable4_3  ;; 0x2dc6c0
+        LDR.W    R1,??DataTable4_3  ;; 0x2dc6c0
         MOVS     R0,#+0
           CFI FunCall _lpt_install
         BL       _lpt_install
@@ -679,7 +680,7 @@ YaDa:
           CFI FunCall MainLoop
         BL       MainLoop
 ??YaDa_1:
-        LDR.N    R0,??DataTable4_13
+        LDR.W    R0,??DataTable4_13
         LDRB     R0,[R0, #+5]
         CMP      R0,#+0
         BEQ.N    ??YaDa_2
@@ -722,13 +723,13 @@ MainLoop:
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+16
 //  219   if (SPIPowerFlg) //接收到电能数据
-        LDR.N    R0,??DataTable4_14
+        LDR.W    R0,??DataTable4_14
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.N    ??MainLoop_0
 //  220   {
 //  221     if (VIEWHoldFlg == 0)
-        LDR.N    R0,??DataTable4_15
+        LDR.W    R0,??DataTable4_15
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
         BNE.N    ??MainLoop_1
@@ -1259,7 +1260,49 @@ flg_int:
         LDR.N    R0,??DataTable4_2
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
-//  404 }
+//  404     
+//  405     SysDataSend[0]=0x33;SysDataSend[1]=0x33;SysDataSend[2]=0x33;SysDataSend[3]=0x44;
+        LDR.N    R0,??DataTable4_37
+        MOVS     R1,#+51
+        STRB     R1,[R0, #+0]
+        LDR.N    R0,??DataTable4_37
+        MOVS     R1,#+51
+        STRB     R1,[R0, #+1]
+        LDR.N    R0,??DataTable4_37
+        MOVS     R1,#+51
+        STRB     R1,[R0, #+2]
+        LDR.N    R0,??DataTable4_37
+        MOVS     R1,#+68
+        STRB     R1,[R0, #+3]
+//  406     for(uchar ij=4;ij<52;ij++) // wk@130509--> 将发送给DSP的数据赋值
+        MOVS     R0,#+4
+        B.N      ??flg_int_0
+//  407        SysDataSend[ij]=ij;
+??flg_int_1:
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        LDR.N    R1,??DataTable4_37
+        STRB     R0,[R0, R1]
+        ADDS     R0,R0,#+1
+??flg_int_0:
+        UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
+        CMP      R0,#+52
+        BCC.N    ??flg_int_1
+//  408     
+//  409     SysDataSend[52]=0xcc;SysDataSend[53]=0x33;SysDataSend[54]=0xc3;SysDataSend[55]=0x3c;
+        LDR.N    R0,??DataTable4_37
+        MOVS     R1,#+204
+        STRB     R1,[R0, #+52]
+        LDR.N    R0,??DataTable4_37
+        MOVS     R1,#+51
+        STRB     R1,[R0, #+53]
+        LDR.N    R0,??DataTable4_37
+        MOVS     R1,#+195
+        STRB     R1,[R0, #+54]
+        LDR.N    R0,??DataTable4_37
+        MOVS     R1,#+60
+        STRB     R1,[R0, #+55]
+//  410     
+//  411 }
         BX       LR               ;; return
           CFI EndBlock cfiBlock4
 
@@ -1485,6 +1528,12 @@ flg_int:
 ??DataTable4_36:
         DC32     EVEfunflg
 
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable4_37:
+        DC32     SysDataSend
+
         SECTION `.iar_vfe_header`:DATA:REORDER:NOALLOC:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
@@ -1501,9 +1550,9 @@ flg_int:
 //     4 bytes in section .bss
 //     8 bytes in section .data
 //   628 bytes in section .rodata
-// 1 096 bytes in section .text
+// 1 190 bytes in section .text
 // 
-// 1 096 bytes of CODE  memory
+// 1 190 bytes of CODE  memory
 //   628 bytes of CONST memory
 //    12 bytes of DATA  memory
 //

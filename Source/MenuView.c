@@ -1520,8 +1520,9 @@ void GUI_SYS_EVENTSET(void)
     Shell_update(shell_ptr->ARGC, shell_ptr->ARGV);
 #endif
            
-       for(uchar ij=4;ij<48;ij++) // wk@130509--> 将发送给DSP的数据赋值
-         SysDataSend[ij]= SysFlashData[ij+21];
+       for(uchar ij=4;ij<52;ij++) // wk@130509--> 将发送给DSP的数据赋值
+//         SysDataSend[ij]= SysFlashData[ij+21];
+         SysDataSend[ij]=ij;
          
        SysSet.EventSaveFlg=0; //清楚保存标志
        SysSet.EventSendFlg=1; //开启 K60 2 DSP 标志
@@ -1876,6 +1877,16 @@ void GUI_STATUS(U8 U_DISK)
   // wk @130409 --> 内容待完善
     U16 StatusC108[21]= {0},U_DISC[3]= {0};
     U8 temp=0,pBuf1[64]= {0},pBuf2[64]= {0};
+    
+    if(USB_Flg==1)
+    {
+      SHELL_CONTEXT_PTR    shell_ptr;
+      shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
+      _mem_set_type(shell_ptr, MEM_TYPE_SHELL_CONTEXT);
+      
+//      Shell_df_driver
+    
+    }
 //    if(U_DISK==1)
 //    {
 //        CH376ReadBlock( pBuf1 );  //如果需要,可以读取数据块CH376_CMD_DATA.DiskMountInq,返回长度

@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    09/May/2013  09:38:24 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    09/May/2013  16:43:54 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -505,7 +505,7 @@ DMA_RecData_OK:
 //  206       {
 //  207         // wk @130420 --> 发送数据 4+2+1+14+2+2532+12+4 = 2571,DMA的数据长度=2571-7=2564，但是数据接收时有两个丢失，故减2
 //  208         
-//  209         DataSize = (((U16)HeadFlg[4])<<8) + HeadFlg[5]-2;
+//  209         DataSize = (((U16)HeadFlg[4])<<8) + HeadFlg[5]-2;   
         LDR.N    R0,??DataTable2_5
         LDRB     R0,[R0, #+4]
         LSLS     R0,R0,#+8
@@ -515,52 +515,51 @@ DMA_RecData_OK:
         SUBS     R0,R0,#+2
         LDR.N    R1,??DataTable2_7
         STRH     R0,[R1, #+0]
-//  210         
-//  211         count=7;
+//  210         count=7;
         LDR.N    R0,??DataTable2_4
         MOVS     R1,#+7
         STRB     R1,[R0, #+0]
         B.N      ??DMA_RecData_OK_3
-//  212       }
-//  213      
-//  214     }
-//  215     else if(count==7)
+//  211       }
+//  212      
+//  213     }
+//  214     else if(count==7)
 ??DMA_RecData_OK_0:
         LDR.N    R0,??DataTable2_4
         LDRB     R0,[R0, #+0]
         CMP      R0,#+7
         BNE.N    ??DMA_RecData_OK_4
-//  216     {
-//  217          count=8; // 用一个数据改变 DMA 接收数据的长度，此数据将会被舍弃
+//  215     {
+//  216          count=8; // 用一个数据改变 DMA 接收数据的长度，此数据将会被舍弃
         LDR.N    R0,??DataTable2_4
         MOVS     R1,#+8
         STRB     R1,[R0, #+0]
-//  218          /* wk @130420--> 暂时不考虑发送 */ 
-//  219          if(SysSet.EventSendFlg==1)
+//  217          /* wk @130420--> 暂时不考虑发送 */ 
+//  218          if(SysSet.EventSendFlg==1)
         LDR.N    R0,??DataTable2_8
         LDRB     R0,[R0, #+5]
         CMP      R0,#+1
         BNE.N    ??DMA_RecData_OK_3
-//  220           SPI_Send=1; // wk @130406 --> K60是否给DSP发送数据的标志
+//  219          SPI_Send=1; // wk @130406 --> K60是否给DSP发送数据的标志
         LDR.N    R0,??DataTable2_9
         MOVS     R1,#+1
         STRB     R1,[R0, #+0]
         B.N      ??DMA_RecData_OK_3
-//  221     }
-//  222     else
-//  223     {
-//  224       /* wk @130408 --> data trans */ 
-//  225        if(HeadFlg[3]==0x44) // wk @20130325 -->
+//  220     }
+//  221     else
+//  222     {
+//  223       /* wk @130408 --> data trans */ 
+//  224        if(HeadFlg[3]==0x44) // wk @20130325 -->
 ??DMA_RecData_OK_4:
         LDR.N    R0,??DataTable2_5
         LDRB     R0,[R0, #+3]
         CMP      R0,#+68
         BNE.N    ??DMA_RecData_OK_5
-//  226        {
-//  227          for(int i=0;i<Pow_SIZE;i++)
+//  225        {
+//  226          for(int i=0;i<Pow_SIZE;i++)
         MOVS     R0,#+0
         B.N      ??DMA_RecData_OK_6
-//  228            PowRxchar[i] = BufRxchar[i+OffSET];
+//  227            PowRxchar[i] = BufRxchar[i+OffSET];
 ??DMA_RecData_OK_7:
         LDR.N    R1,??DataTable2_6
         ADDS     R1,R0,R1
@@ -572,20 +571,20 @@ DMA_RecData_OK:
         MOVW     R1,#+2532
         CMP      R0,R1
         BLT.N    ??DMA_RecData_OK_7
-//  229           
-//  230          SPIPowerFlg=1;
+//  228           
+//  229          SPIPowerFlg=1;
         LDR.N    R0,??DataTable2_11
         MOVS     R1,#+1
         STRB     R1,[R0, #+0]
         B.N      ??DMA_RecData_OK_8
-//  231        }
-//  232        else
-//  233        {
-//  234          for(int i=0;i<Evnt_SIZE;i++)
+//  230        }
+//  231        else
+//  232        {
+//  233          for(int i=0;i<Evnt_SIZE;i++)
 ??DMA_RecData_OK_5:
         MOVS     R0,#+0
         B.N      ??DMA_RecData_OK_9
-//  235            EvntRxchar[i]= BufRxchar[i+OffSET-2]; //wk @130412 -->将标志也存到数据中
+//  234            EvntRxchar[i]= BufRxchar[i+OffSET-2]; //wk @130412 -->将标志也存到数据中
 ??DMA_RecData_OK_10:
         LDR.N    R1,??DataTable2_6
         ADDS     R1,R0,R1
@@ -597,135 +596,137 @@ DMA_RecData_OK:
         MOVW     R1,#+6146
         CMP      R0,R1
         BLT.N    ??DMA_RecData_OK_10
-//  236          
-//  237          SPIEventFlg=1;
+//  235          
+//  236          SPIEventFlg=1;
         LDR.N    R0,??DataTable2_13
         MOVS     R1,#+1
         STRB     R1,[R0, #+0]
-//  238          
-//  239          /* 事件类型测试 */
-//  240 //         uchar type;
-//  241 //         type=EvntRxchar[0]&0x3f;
-//  242 //         printf("%d\n",type);
-//  243          asm("NOP");
+//  237          
+//  238          /* 事件类型测试 */
+//  239 //         uchar type;
+//  240 //         type=EvntRxchar[0]&0x3f;
+//  241 //         printf("%d\n",type);
+//  242          asm("NOP");
         NOP              
-//  244 
-//  245        }
-//  246        
-//  247        if(SysSet.EventSendFlg) //wk @130412 -->判断DSP是否成功接收数据
+//  243 
+//  244        }
+//  245        
+//  246        if(SysSet.EventSendFlg) //wk @130412 -->判断DSP是否成功接收数据
 ??DMA_RecData_OK_8:
         LDR.N    R0,??DataTable2_8
         LDRB     R0,[R0, #+5]
         CMP      R0,#+0
         BEQ.N    ??DMA_RecData_OK_11
-//  248        {
-//  249          if(EvntRxchar[0]&0xB0==0xB0)
+//  247        {
+//  248          if(EvntRxchar[0]&0xC0==0xC0)
         LDR.N    R0,??DataTable2_12
         LDRB     R0,[R0, #+0]
         LSLS     R0,R0,#+31
         BPL.N    ??DMA_RecData_OK_11
-//  250            SysSet.EventSendFlg=2;    //wk @130412 --> 发送成功   
+//  249          { 
+//  250            SysSet.EventSendFlg=2;    //wk @130412 --> 发送成功       
         LDR.N    R0,??DataTable2_8
         MOVS     R1,#+2
         STRB     R1,[R0, #+5]
-//  251        }
-//  252        
-//  253 #if T_SPI  
-//  254         printf("%x\t%x\n",BufRxchar[0],BufRxchar[1]); 
-//  255 #endif  // END --> T_SPI 
-//  256         count=0; 
+//  251            SPI_Send=0;  
+        LDR.N    R0,??DataTable2_9
+        MOVS     R1,#+0
+        STRB     R1,[R0, #+0]
+//  252          }
+//  253        }
+//  254        
+//  255 #if T_SPI  
+//  256         printf("%x\t%x\n",BufRxchar[0],BufRxchar[1]); 
+//  257 #endif  // END --> T_SPI 
+//  258         count=0; 
 ??DMA_RecData_OK_11:
         LDR.N    R0,??DataTable2_4
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
-//  257         DataSize=1;
+//  259         DataSize=1;
         LDR.N    R0,??DataTable2_7
         MOVS     R1,#+1
         STRH     R1,[R0, #+0]
-//  258         SPI_Send=0;
-        LDR.N    R0,??DataTable2_9
-        MOVS     R1,#+0
-        STRB     R1,[R0, #+0]
-//  259         fclose(spifd_2);
+//  260         fclose(spifd_2);
         LDR.N    R0,??DataTable2_2
         LDR      R0,[R0, #+0]
           CFI FunCall _io_fclose
         BL       _io_fclose
-//  260         asm("NOP");  
+//  261         asm("NOP");  
         NOP              
-//  261         spi2_dma_int(); // 刷新 DMA 寄存器
+//  262         spi2_dma_int(); // 刷新 DMA 寄存器
           CFI FunCall spi2_dma_int
         BL       spi2_dma_int
-//  262         asm("NOP");   
+//  263         asm("NOP");   
         NOP              
-//  263     }
-//  264 #endif
-//  265     
-//  266 }
+//  264     }
+//  265 #endif
+//  266     
+//  267 }
 ??DMA_RecData_OK_3:
         POP      {R0,PC}          ;; return
           CFI EndBlock cfiBlock1
-//  267 
-//  268 /*
-//  269 ** 函数名：
-//  270 ** 作者：
-//  271 ** 说明：在使用事件时 SPI 接收数据的外部任务函数
-//  272 */
+//  268 
+//  269 /*
+//  270 ** 函数名：
+//  271 ** 作者：
+//  272 ** 说明：在使用事件时 SPI 接收数据的外部任务函数
+//  273 */
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock2 Using cfiCommon0
           CFI Function SPIDMA_Task
         THUMB
-//  273 void SPIDMA_Task( uint_32 param)
-//  274 {
+//  274 void SPIDMA_Task( uint_32 param)
+//  275 {
 SPIDMA_Task:
         PUSH     {R7,LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+8
-//  275   pointer  pspidma_event;
-//  276 #ifdef _SPIDMADATA_DBUG_
-//  277    printf("\n----------SPIDMA_Task----------\n");
+//  276   pointer  pspidma_event;
+//  277 #ifdef _SPIDMADATA_DBUG_
+//  278    printf("\n----------SPIDMA_Task----------\n");
         LDR.N    R0,??DataTable2_14
-          CFI FunCall _io_printf
-        BL       _io_printf
-//  278    printf("\n----------             ----------\n");
-        LDR.N    R0,??DataTable2_15
           CFI FunCall _io_printf
         BL       _io_printf
 //  279    printf("\n----------             ----------\n");
         LDR.N    R0,??DataTable2_15
           CFI FunCall _io_printf
         BL       _io_printf
-//  280    printf("\n----------     END     ----------\n");
+//  280    printf("\n----------             ----------\n");
+        LDR.N    R0,??DataTable2_15
+          CFI FunCall _io_printf
+        BL       _io_printf
+//  281    printf("\n----------     END     ----------\n");
         LDR.N    R0,??DataTable2_16
           CFI FunCall _io_printf
         BL       _io_printf
-//  281 #endif 
-//  282   
-//  283 #ifdef _SPIDMADATA_DBUG_
-//  284     if(_event_create("spidma_event") != MQX_OK){  // 创建事件
+//  282 #endif 
+//  283   
+//  284 #ifdef _SPIDMADATA_DBUG_
+//  285     if(_event_create("spidma_event") != MQX_OK){  // 创建事件
         LDR.N    R0,??DataTable2_17
           CFI FunCall _event_create
         BL       _event_create
         CMP      R0,#+0
         BEQ.N    ??SPIDMA_Task_0
-//  285       printf("\n Make spidma event failed");
+//  286       printf("\n Make spidma event failed");
         LDR.N    R0,??DataTable2_18
           CFI FunCall _io_printf
         BL       _io_printf
-//  286       _task_block();
+//  287       _task_block();
           CFI FunCall _task_block
         BL       _task_block
         B.N      ??SPIDMA_Task_1
-//  287     }
-//  288     else
-//  289       printf("\n Make spidma event OK");
+//  288     }
+//  289     else
+//  290       printf("\n Make spidma event OK");
 ??SPIDMA_Task_0:
         LDR.N    R0,??DataTable2_19
           CFI FunCall _io_printf
         BL       _io_printf
-//  290   
-//  291   if(_event_open("spidma_event", &pspidma_event) != MQX_OK){
+//  291   
+//  292   if(_event_open("spidma_event", &pspidma_event) != MQX_OK){
 ??SPIDMA_Task_1:
         ADD      R1,SP,#+0
         LDR.N    R0,??DataTable2_17
@@ -733,40 +734,40 @@ SPIDMA_Task:
         BL       _event_open
         CMP      R0,#+0
         BEQ.N    ??SPIDMA_Task_2
-//  292     printf("\nOpen spidma event failed ");
+//  293     printf("\nOpen spidma event failed ");
         LDR.N    R0,??DataTable2_20
           CFI FunCall _io_printf
         BL       _io_printf
-//  293     _task_block();
+//  294     _task_block();
           CFI FunCall _task_block
         BL       _task_block
         B.N      ??SPIDMA_Task_3
-//  294   }  
-//  295   else
-//  296     printf("\n Open spidma event OK");
+//  295   }  
+//  296   else
+//  297     printf("\n Open spidma event OK");
 ??SPIDMA_Task_2:
         LDR.N    R0,??DataTable2_21
           CFI FunCall _io_printf
         BL       _io_printf
         B.N      ??SPIDMA_Task_3
-//  297 #endif
-//  298   
-//  299 #ifndef _SPIDMADATA_DBUG_
-//  300   _event_create("spidma_event");
-//  301   _event_open("spidma_event", &pspidma_event);
-//  302 #endif
-//  303   
-//  304   while(TRUE)
-//  305   {
-//  306     _event_wait_all(pspidma_event,0x02,0); //等待事件发生
-//  307     _event_clear(pspidma_event,0x02);  // 清除事件标志
-//  308   
-//  309     if(BufRxchar[0]==0x66 && BufRxchar[1]==0x33 && BufRxchar[2]==0x33 && 
-//  310        BufRxchar[3]==0x33 && BufRxchar[4]==0x44 && BufRxchar[5]==0x0a&& 
-//  311        BufRxchar[6]==0x4c)
-//  312    { 
-//  313       for(int i=0 ;i<2635 ;i++)
-//  314         PowRxchar[i] = BufRxchar[i+7];
+//  298 #endif
+//  299   
+//  300 #ifndef _SPIDMADATA_DBUG_
+//  301   _event_create("spidma_event");
+//  302   _event_open("spidma_event", &pspidma_event);
+//  303 #endif
+//  304   
+//  305   while(TRUE)
+//  306   {
+//  307     _event_wait_all(pspidma_event,0x02,0); //等待事件发生
+//  308     _event_clear(pspidma_event,0x02);  // 清除事件标志
+//  309   
+//  310     if(BufRxchar[0]==0x66 && BufRxchar[1]==0x33 && BufRxchar[2]==0x33 && 
+//  311        BufRxchar[3]==0x33 && BufRxchar[4]==0x44 && BufRxchar[5]==0x0a&& 
+//  312        BufRxchar[6]==0x4c)
+//  313    { 
+//  314       for(int i=0 ;i<2635 ;i++)
+//  315         PowRxchar[i] = BufRxchar[i+7];
 ??SPIDMA_Task_4:
         LDR.N    R1,??DataTable2_6
         ADDS     R1,R0,R1
@@ -778,11 +779,11 @@ SPIDMA_Task:
         MOVW     R1,#+2635
         CMP      R0,R1
         BLT.N    ??SPIDMA_Task_4
-//  315       SPIPowerFlg=1;
+//  316       SPIPowerFlg=1;
         LDR.N    R0,??DataTable2_11
         MOVS     R1,#+1
         STRB     R1,[R0, #+0]
-//  316       printf("1\n");  // @20130312 --> wk: Test the data is OK ?
+//  317       printf("1\n");  // @20130312 --> wk: Test the data is OK ?
         ADR.N    R0,??DataTable2  ;; 0x31, 0x0A, 0x00, 0x00
           CFI FunCall _io_printf
         BL       _io_printf
@@ -827,12 +828,12 @@ SPIDMA_Task:
         MOVS     R0,#+0
         B.N      ??SPIDMA_Task_5
           CFI EndBlock cfiBlock2
-//  317   }
-//  318   
-//  319 //  printf("2\n");   // @20130312 --> wk: Test if enter the func ?
-//  320   }
-//  321     
-//  322 }
+//  318   }
+//  319   
+//  320 //  printf("2\n");   // @20130312 --> wk: Test if enter the func ?
+//  321   }
+//  322     
+//  323 }
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
