@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    08/May/2013  22:28:12 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    09/May/2013  09:38:24 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -535,10 +535,17 @@ DMA_RecData_OK:
         LDR.N    R0,??DataTable2_4
         MOVS     R1,#+8
         STRB     R1,[R0, #+0]
-        B.N      ??DMA_RecData_OK_3
 //  218          /* wk @130420--> 暂时不考虑发送 */ 
-//  219 //         if(SysSet.EventSendFlg)
-//  220 //          SPI_Send=1; // wk @130406 --> K60是否给DSP发送数据的标志
+//  219          if(SysSet.EventSendFlg==1)
+        LDR.N    R0,??DataTable2_8
+        LDRB     R0,[R0, #+5]
+        CMP      R0,#+1
+        BNE.N    ??DMA_RecData_OK_3
+//  220           SPI_Send=1; // wk @130406 --> K60是否给DSP发送数据的标志
+        LDR.N    R0,??DataTable2_9
+        MOVS     R1,#+1
+        STRB     R1,[R0, #+0]
+        B.N      ??DMA_RecData_OK_3
 //  221     }
 //  222     else
 //  223     {
@@ -558,7 +565,7 @@ DMA_RecData_OK:
         LDR.N    R1,??DataTable2_6
         ADDS     R1,R0,R1
         LDRB     R1,[R1, #+16]
-        LDR.N    R2,??DataTable2_8
+        LDR.N    R2,??DataTable2_10
         STRB     R1,[R0, R2]
         ADDS     R0,R0,#+1
 ??DMA_RecData_OK_6:
@@ -567,7 +574,7 @@ DMA_RecData_OK:
         BLT.N    ??DMA_RecData_OK_7
 //  229           
 //  230          SPIPowerFlg=1;
-        LDR.N    R0,??DataTable2_9
+        LDR.N    R0,??DataTable2_11
         MOVS     R1,#+1
         STRB     R1,[R0, #+0]
         B.N      ??DMA_RecData_OK_8
@@ -583,7 +590,7 @@ DMA_RecData_OK:
         LDR.N    R1,??DataTable2_6
         ADDS     R1,R0,R1
         LDRB     R1,[R1, #+14]
-        LDR.N    R2,??DataTable2_10
+        LDR.N    R2,??DataTable2_12
         STRB     R1,[R0, R2]
         ADDS     R0,R0,#+1
 ??DMA_RecData_OK_9:
@@ -592,7 +599,7 @@ DMA_RecData_OK:
         BLT.N    ??DMA_RecData_OK_10
 //  236          
 //  237          SPIEventFlg=1;
-        LDR.N    R0,??DataTable2_11
+        LDR.N    R0,??DataTable2_13
         MOVS     R1,#+1
         STRB     R1,[R0, #+0]
 //  238          
@@ -607,19 +614,19 @@ DMA_RecData_OK:
 //  246        
 //  247        if(SysSet.EventSendFlg) //wk @130412 -->判断DSP是否成功接收数据
 ??DMA_RecData_OK_8:
-        LDR.N    R0,??DataTable2_12
+        LDR.N    R0,??DataTable2_8
         LDRB     R0,[R0, #+5]
         CMP      R0,#+0
         BEQ.N    ??DMA_RecData_OK_11
 //  248        {
 //  249          if(EvntRxchar[0]&0xB0==0xB0)
-        LDR.N    R0,??DataTable2_10
+        LDR.N    R0,??DataTable2_12
         LDRB     R0,[R0, #+0]
         LSLS     R0,R0,#+31
         BPL.N    ??DMA_RecData_OK_11
-//  250            SysSet.EventSendFlg=0;    //wk @130412 --> 发送成功   
-        LDR.N    R0,??DataTable2_12
-        MOVS     R1,#+0
+//  250            SysSet.EventSendFlg=2;    //wk @130412 --> 发送成功   
+        LDR.N    R0,??DataTable2_8
+        MOVS     R1,#+2
         STRB     R1,[R0, #+5]
 //  251        }
 //  252        
@@ -636,7 +643,7 @@ DMA_RecData_OK:
         MOVS     R1,#+1
         STRH     R1,[R0, #+0]
 //  258         SPI_Send=0;
-        LDR.N    R0,??DataTable2_13
+        LDR.N    R0,??DataTable2_9
         MOVS     R1,#+0
         STRB     R1,[R0, #+0]
 //  259         fclose(spifd_2);
@@ -764,7 +771,7 @@ SPIDMA_Task:
         LDR.N    R1,??DataTable2_6
         ADDS     R1,R0,R1
         LDRB     R1,[R1, #+7]
-        LDR.N    R2,??DataTable2_8
+        LDR.N    R2,??DataTable2_10
         STRB     R1,[R0, R2]
         ADDS     R0,R0,#+1
 ??SPIDMA_Task_5:
@@ -772,7 +779,7 @@ SPIDMA_Task:
         CMP      R0,R1
         BLT.N    ??SPIDMA_Task_4
 //  315       SPIPowerFlg=1;
-        LDR.N    R0,??DataTable2_9
+        LDR.N    R0,??DataTable2_11
         MOVS     R1,#+1
         STRB     R1,[R0, #+0]
 //  316       printf("1\n");  // @20130312 --> wk: Test the data is OK ?
@@ -879,37 +886,37 @@ SPIDMA_Task:
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
 ??DataTable2_8:
-        DC32     PowRxchar
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable2_9:
-        DC32     SPIPowerFlg
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable2_10:
-        DC32     EvntRxchar
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable2_11:
-        DC32     SPIEventFlg
-
-        SECTION `.text`:CODE:NOROOT(2)
-        SECTION_TYPE SHT_PROGBITS, 0
-        DATA
-??DataTable2_12:
         DC32     SysSet
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
         DATA
-??DataTable2_13:
+??DataTable2_9:
         DC32     SPI_Send
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable2_10:
+        DC32     PowRxchar
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable2_11:
+        DC32     SPIPowerFlg
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable2_12:
+        DC32     EvntRxchar
+
+        SECTION `.text`:CODE:NOROOT(2)
+        SECTION_TYPE SHT_PROGBITS, 0
+        DATA
+??DataTable2_13:
+        DC32     SPIEventFlg
 
         SECTION `.text`:CODE:NOROOT(2)
         SECTION_TYPE SHT_PROGBITS, 0
@@ -1038,9 +1045,9 @@ SPIDMA_Task:
 // 14 875 bytes in section .bss
 //      2 bytes in section .data
 //    268 bytes in section .rodata
-//    692 bytes in section .text
+//    706 bytes in section .text
 // 
-//    692 bytes of CODE  memory
+//    706 bytes of CODE  memory
 //    268 bytes of CONST memory
 // 14 877 bytes of DATA  memory
 //

@@ -22,14 +22,15 @@ const U16 COLOR[] = {0xffe0,0x07E0,0xf800,0x0000};
 U8 HarmoInfo[][8]= {"A","B","C","幅 值","含有率"};
 //U8 text[][3]= {"Ua","Ub","Uc","Ia","Ib","Ic"};//ColorF[9]= {0};
 U8 SysParaOldIndex=0,SysEventOldIndex=0,EventOldIndex=0,EVEnum_old;
-U8 SysFlashDataT[84];   //系统设置的数据的临时参数
-U8 SysFlashData[84];   //wk @130326 -->写入Flash的系统设置参数
+U8 SysFlashDataT[84]={0,0,0,0,0,1,1,0};   //系统设置的数据的临时参数
+U8 SysFlashData[84]={0,0,0,0,0,1,1,0};   //wk @130326 -->写入Flash的系统设置参数
+U8 SysDataSend[56]; // K60写给DSP的数据
 U16 EventNum[9];  // wk @130405 --> 9次事件发生次数保存，每个事件占2字节，能记录65535次
 U32 EventAddr[100]; // wk@130405 -->记录事件发生的时间：月、日、时、分、秒，每个占4字节
 U8 USB_Flg=0;  // wk @130407 --> USB 是否插入标志
 U16 evntyear_old=0;
 U8 time[7];
-U8 SysDataSend[56]; // K60写给DSP的数据
+
 /* wk@130508 --> 用于波形显示，后期需要优化 */
 U8 EvntWave[6144]={0}; // wk @130504 --> 定义局部变量时，程序跑飞，暂时定义成全局变量
 U16 EVEUI[768];
@@ -1518,21 +1519,9 @@ void GUI_SYS_EVENTSET(void)
 //    Shell_update(shell_ptr->ARGC, shell_ptr->ARGV,44,&(SysFlashSave[25]));
     Shell_update(shell_ptr->ARGC, shell_ptr->ARGV);
 #endif
-        /*WK --> 保存成功标志，使字体变黄显示 */
-    for(k=0; k<11; k++)
-        {
-            temp=7*k;
-            ParaSetC108[temp + 0] = 0x3204;         //P  显示数据的模式
-            ParaSetC108[temp + 1] = SysEventXY[2*k];            //显示相位的X坐标
-            ParaSetC108[temp + 2] = SysEventXY[2*k + 1];     //Y坐标
-            ParaSetC108[temp + 3] = 0xffc1;         //白色，下为黑色
-            ParaSetC108[temp + 4] = 0x0000;
-            ParaSetC108[temp + 5] =(U16) (SysFlashDataT[3+4*k+EVESET_INDEX]<<8)+(U16)(SysFlashDataT[2+4*k+EVESET_INDEX]);
-            ParaSetC108[temp + 6] =(U16) (SysFlashDataT[1+4*k+EVESET_INDEX]<<8)+(U16)(SysFlashDataT[4*k+EVESET_INDEX]);
-        }
-         YADA_C0(EventSetAddr, ParaSetC108, 11*7);
-         YADA_C108(EventSetAddr,11);   //写入有效值，每次10个
-       /* wk --> 保存成功标志 END */
+           
+       for(uchar ij=4;ij<48;ij++) // wk@130509--> 将发送给DSP的数据赋值
+         SysDataSend[ij]= SysFlashData[ij+21];
          
        SysSet.EventSaveFlg=0; //清楚保存标志
        SysSet.EventSendFlg=1; //开启 K60 2 DSP 标志
@@ -1541,15 +1530,36 @@ void GUI_SYS_EVENTSET(void)
     else
       _mem_free(shell_ptr); 
     
-    if(SysSet.EventSendFlg)
+    if(SysSet.EventSendFlg==1)
     {
         YADA_71(MenuSysEvent,521,425,630,439,521,425);
-        YADA_98(521, 425, 0x22, 0x81, 0x02, 0xffe0, 0x0000, "SENDING...", 10);
+        YADA_98(521, 425, 0x22, 0x81, 0x02, 0xffe0, 0x0000, "SENDING...", 11);
+    }
+    else if(SysSet.EventSendFlg==2)
+    {
+        YADA_71(MenuSysEvent,521,425,630,439,521,425);
+        YADA_98(521, 425, 0x22, 0x81, 0x02, 0xffe0, 0x0000, "SUCCESS...", 11); // 可以考虑换成擦除上面的文字
+        
+         /*WK --> 保存成功并发送成功标志，使字体变黄显示 */
+        for(k=0; k<11; k++)
+            {
+                temp=7*k;
+                ParaSetC108[temp + 0] = 0x3204;         //P  显示数据的模式
+                ParaSetC108[temp + 1] = SysEventXY[2*k];            //显示相位的X坐标
+                ParaSetC108[temp + 2] = SysEventXY[2*k + 1];     //Y坐标
+                ParaSetC108[temp + 3] = 0xffc1;         //白色，下为黑色
+                ParaSetC108[temp + 4] = 0x0000;
+                ParaSetC108[temp + 5] =(U16) (SysFlashDataT[3+4*k+EVESET_INDEX]<<8)+(U16)(SysFlashDataT[2+4*k+EVESET_INDEX]);
+                ParaSetC108[temp + 6] =(U16) (SysFlashDataT[1+4*k+EVESET_INDEX]<<8)+(U16)(SysFlashDataT[4*k+EVESET_INDEX]);
+            }
+         YADA_C0(EventSetAddr, ParaSetC108, 11*7);
+         YADA_C108(EventSetAddr,11);   //写入有效值，每次10个
+       /* wk --> 保存成功并发送成功标志 END */
     }
     else
     {
-        YADA_71(MenuSysEvent,521,425,630,439,521,425);
-        YADA_98(521, 425, 0x22, 0x81, 0x02, 0xffe0, 0x0000, "WAITING...", 10); // 可以考虑换成擦除上面的文字
+       YADA_71(MenuSysEvent,521,425,630,439,521,425);
+       YADA_98(521, 425, 0x22, 0x81, 0x02, 0xffe0, 0x0000, "WAITING...", 11);
     }
     
 }
@@ -1668,7 +1678,7 @@ void GUI_EventList(void)
 //    {
 //      YADA_5A(&EVELSTXY[EventOldIndex*4],4); //2013-4-9-15-18,未按上移下移按键的标注。
 //    } 
-    if(USB_Flg==1&& SysFlashDataT[6]==1)
+    if(USB_Flg==1&& SysFlashData[6]==1)
     {
       SHELL_CONTEXT_PTR    shell_ptr;
       shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
@@ -1747,7 +1757,7 @@ void GUI_EventList(void)
     {
       printf("\nATTENTION:USB is DETACHED!\n");
     }
-    else if(SysFlashDataT[6]==0)
+    else if(SysFlashData[6]==0)
     {
       printf("\nATTENTION:USB Switch is CLOSED!\n");
     }
@@ -1770,7 +1780,7 @@ void GUI_EventWave(U8 U_DISK)
     uint_32 file_num;
     U8 month;
     
-    if(USB_Flg==1&& SysFlashDataT[6]==1)
+    if(USB_Flg==1&& SysFlashData[6]==1)
     {
       if((EVEnum>0)&&(EveRdNum<=(EVEnum)))  //2013-4-9-12-30故障发生才显示。
       {
@@ -1850,7 +1860,7 @@ void GUI_EventWave(U8 U_DISK)
     {
       printf("\nATTENTION:USB is DETACHED!\n");
     }
-    else if(SysFlashDataT[6]==0)
+    else if(SysFlashData[6]==0)
     {
       printf("\nATTENTION:USB Switch is CLOSED!\n");
     }
@@ -1864,8 +1874,8 @@ void GUI_EventWave(U8 U_DISK)
 void GUI_STATUS(U8 U_DISK)
 {
   // wk @130409 --> 内容待完善
-//    U16 StatusC108[21]= {0},U_DISC[3]= {0};
-//    U8 temp=0,pBuf1[64]= {0},pBuf2[64]= {0};
+    U16 StatusC108[21]= {0},U_DISC[3]= {0};
+    U8 temp=0,pBuf1[64]= {0},pBuf2[64]= {0};
 //    if(U_DISK==1)
 //    {
 //        CH376ReadBlock( pBuf1 );  //如果需要,可以读取数据块CH376_CMD_DATA.DiskMountInq,返回长度
@@ -1888,6 +1898,12 @@ void GUI_STATUS(U8 U_DISK)
 //    }
 //    YADA_C0(StatusAddr,StatusC108,21);
 //    YADA_C108(StatusAddr,3);
+    
+    char file_name[15]="48.123.72.200";
+    uint_32 ipaddr= 200 + ((uint_32)72<<8) + ((uint_32)123<<16) + ((uint_32)49<<24);
+    sprintf(file_name,"%d.%d.%d.%d",(ipaddr>>24)&0xff,(ipaddr>>16)&0xff,(ipaddr>>8)&0xff,(ipaddr)&0xff);
+    YADA_98(150, 168, 0x22, 0x81, 0x02, C108FC_W, 0x0000, file_name, 15);  
+    
 }
 /*******************************************************************************
 * 函  数  名      : EventSave
@@ -1897,7 +1913,7 @@ void GUI_STATUS(U8 U_DISK)
 *******************************************************************************/
 void EventSave(U8 U_DISK)
 {
-    if(USB_Flg==1&& SysFlashDataT[6]==1) // ==1 时插入
+    if(USB_Flg==1&& SysFlashData[6]==1) // ==1 时插入
     {
           SHELL_CONTEXT_PTR    shell_ptr;
           shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
@@ -1997,7 +2013,7 @@ void EventSave(U8 U_DISK)
   {
     printf("\nATTENTION:USB is DETACHED!\n");
   }
-  else if(SysFlashDataT[6]==0)
+  else if(SysFlashData[6]==0)
   {
     printf("\nATTENTION:USB Switch is CLOSED!\n");
   }
@@ -2010,7 +2026,7 @@ void EventSave(U8 U_DISK)
 *******************************************************************************/
 void PowerSave(void)
 {
-  if(USB_Flg==1&& SysFlashDataT[6]==1)
+  if(USB_Flg==1&& SysFlashData[6]==1)
   {
       SHELL_CONTEXT_PTR    shell_ptr;
       shell_ptr = _mem_alloc_zero( sizeof( SHELL_CONTEXT ));
@@ -2095,7 +2111,7 @@ void PowerSave(void)
   {
     printf("\nATTENTION:USB is DETACHED!\n");
   }
-  else if(SysFlashDataT[6]==0)
+  else if(SysFlashData[6]==0)
   {
     printf("\nATTENTION:USB Switch is CLOSED!\n");
   }

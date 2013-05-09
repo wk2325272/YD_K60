@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    08/May/2013  22:28:12 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    09/May/2013  10:18:11 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -339,7 +339,7 @@ usb_host_mass_device_event:
 //  120          /* Drop through into attach, same processing */
 //  121       case USB_ATTACH_EVENT:
 //  122          if (device.STATE == USB_DEVICE_IDLE ||
-//  123             device.STATE == USB_DEVICE_DETACHED)
+//  123              device.STATE == USB_DEVICE_DETACHED)
 ??usb_host_mass_device_event_0:
         LDR.N    R2,??DataTable1_3
         LDR      R2,[R2, #+0]

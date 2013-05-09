@@ -39,7 +39,7 @@ typedef struct SS //系统参数设置及事件设置页面中使用的变量
     U8 DataFlg;//数值键盘按下标志
     U8 ParaSaveFlg;//保存标志
     U8 EventSaveFlg;
-volatile U8 EventSendFlg; 
+volatile U8 EventSendFlg; //wk@130508--> 0表示没有操作，1表示待发送，2表示发送完成
     U8 ParaIndex;//0-11系统参数设置页下
     U8 EvntIndex;//0-11.事件设置页下
     U8 DataCnt;//控制输入数值位数

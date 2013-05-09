@@ -9,7 +9,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=1164626417
+Checksum=1526287110
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -108,8 +108,8 @@ Bp46=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Freescale MQX 3.8\shell\source\mfs\sh
 Bp47=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Freescale MQX 3.8\shell\source\mfs\sh_search_file.c}.114.19" 0 0 1 "" 0 "" 0
 Bp48=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Freescale MQX 3.8\shell\source\mfs\sh_search_file.c}.128.21" 0 0 1 "" 0 "" 0
 Bp49=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Freescale MQX 3.8\shell\source\mfs\sh_dir.c}.102.19" 0 0 1 "" 0 "" 0
-Bp50=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\Source\yada_prj.c}.249.5" 0 0 1 "" 0 "" 0
-Bp51=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\Source\yada_prj.c}.249.5" 0 0 1 "" 0 "" 0
+Bp50=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\Source\yada_prj.c}.245.5" 0 0 1 "" 0 "" 0
+Bp51=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\Source\yada_prj.c}.245.5" 0 0 1 "" 0 "" 0
 Count=52
 [Aliases]
 A0=_ "D:\Freescale\Freescale MQX 3.8\mqx\source\bsp\twrk60n512\init_hw.c" "E:\Freescale\Freescale MQX 3.8\mqx\source\bsp\twrk60n512\init_hw.c"

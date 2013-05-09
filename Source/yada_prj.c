@@ -191,14 +191,10 @@ void YaDa
    /* wk --> 刷新时钟 注意：现在除了timer 0 能用之外，其他的都不能用，待研究中……*/
 //    _lpt_install (1,1 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO, 11, timer_isr_1, TRUE);//2 * 1000000  --> 2秒  
   /* wk @130330 -->timer end */
-   
-   for(int i=0;i<84;i++)
-   {
-     SysFlashData[i]=10;
-   }
+
   while(1)
   {   
-      if(SysFlashDataT[5])                           //背光标志，1为开背光，0为关。
+      if(SysFlashData[5])                           //背光标志，1为开背光，0为关。
         {
             YADA_5F(0x3f);                            //背光全开
         }

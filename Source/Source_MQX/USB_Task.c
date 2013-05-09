@@ -120,7 +120,7 @@ void usb_host_mass_device_event
          /* Drop through into attach, same processing */
       case USB_ATTACH_EVENT:
          if (device.STATE == USB_DEVICE_IDLE ||
-            device.STATE == USB_DEVICE_DETACHED)
+             device.STATE == USB_DEVICE_DETACHED)
          {
             device.DEV_HANDLE = dev_handle;
             device.INTF_HANDLE = intf_handle;

@@ -216,8 +216,8 @@ void DMA_RecData_OK
     {
          count=8; // 用一个数据改变 DMA 接收数据的长度，此数据将会被舍弃
          /* wk @130420--> 暂时不考虑发送 */ 
-//         if(SysSet.EventSendFlg)
-//          SPI_Send=1; // wk @130406 --> K60是否给DSP发送数据的标志
+         if(SysSet.EventSendFlg==1)
+          SPI_Send=1; // wk @130406 --> K60是否给DSP发送数据的标志
     }
     else
     {
@@ -247,7 +247,7 @@ void DMA_RecData_OK
        if(SysSet.EventSendFlg) //wk @130412 -->判断DSP是否成功接收数据
        {
          if(EvntRxchar[0]&0xB0==0xB0)
-           SysSet.EventSendFlg=0;    //wk @130412 --> 发送成功   
+           SysSet.EventSendFlg=2;    //wk @130412 --> 发送成功   
        }
        
 #if T_SPI  
