@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM     11/May/2013  11:35:19 #
+# IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM     11/May/2013  12:45:34 #
 # Copyright 1999-2011 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
@@ -437,7 +437,7 @@ Warning[Pe223]: function "_lpt_init" declared implicitly
     171            /* end */
     172            /* wk @130330 -->timer of lpt */
     173             /* wk @130504 --> 调试事件，先关闭 */
-    174             _lpt_install (0,3 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO, 11, timer_isr, TRUE);//2 * 1000000  --> 2秒   
+    174             _lpt_install (0,3 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO, 11, timer_isr, TRUE);//3 * 1000000  --> 3秒   
                     ^
 Warning[Pe223]: function "_lpt_install" declared implicitly
    \   000000BA   0x2001             MOVS     R0,#+1

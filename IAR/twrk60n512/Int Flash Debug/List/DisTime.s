@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    11/May/2013  11:35:21 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    11/May/2013  12:45:36 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -130,7 +130,7 @@ MinuteOld:
 //   15 ** Reverse	：
 //   16 *******************************************************************************/
 
-        SECTION `.text`:CODE:NOROOT(1)
+        SECTION `.text`:CODE:NOROOT(2)
           CFI Block cfiBlock0 Using cfiCommon0
           CFI Function TimeSet
         THUMB
@@ -236,33 +236,35 @@ TimeSet:
         MOVS     R0,#+1
           CFI FunCall _rtc_init
         BL       _rtc_init
-//   48     _rtc_init ( RTC_INIT_FLAG_ENABLE); 
+//   48     asm("NOP");
+        NOP              
+//   49     _rtc_init ( RTC_INIT_FLAG_ENABLE); 
         MOVS     R0,#+4
           CFI FunCall _rtc_init
         BL       _rtc_init
-//   49 }
+//   50 }
         ADD      SP,SP,#+28
           CFI CFA R13+4
         POP      {PC}             ;; return
           CFI EndBlock cfiBlock0
-//   50 
-//   51 /*******************************************************************************
-//   52 ** Function Name	：TimeDis
-//   53 ** Input		：
-//   54 ** Return		：
-//   55 ** Author		： wk
-//   56 ** Version	：
-//   57 ** Date		：
-//   58 ** Dessription	：在液晶屏上显示时间
-//   59 ** Reverse	：
-//   60 *******************************************************************************/
+//   51 
+//   52 /*******************************************************************************
+//   53 ** Function Name	：TimeDis
+//   54 ** Input		：
+//   55 ** Return		：
+//   56 ** Author		： wk
+//   57 ** Version	：
+//   58 ** Date		：
+//   59 ** Dessription	：在液晶屏上显示时间
+//   60 ** Reverse	：
+//   61 *******************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock1 Using cfiCommon0
           CFI Function TimeDis
         THUMB
-//   61 void TimeDis(U8 DisType)
-//   62 {
+//   62 void TimeDis(U8 DisType)
+//   63 {
 TimeDis:
         PUSH     {R4,LR}
           CFI R14 Frame(CFA, -4)
@@ -271,85 +273,85 @@ TimeDis:
         SUB      SP,SP,#+144
           CFI CFA R13+152
         MOVS     R4,R0
-//   63   if (Dis_PicID != MenuTop)
+//   64   if (Dis_PicID != MenuTop)
         LDR.N    R0,??DataTable4_5
         LDRB     R0,[R0, #+0]
         CMP      R0,#+0
         BEQ.W    ??TimeDis_0
-//   64   {
-//   65         TIME_STRUCT             time_sf;
-//   66         DATE_STRUCT             date_sf;
-//   67         _time_get(&time_sf);
+//   65   {
+//   66         TIME_STRUCT             time_sf;
+//   67         DATE_STRUCT             date_sf;
+//   68         _time_get(&time_sf);
         ADD      R0,SP,#+36
           CFI FunCall _time_get
         BL       _time_get
-//   68         _time_to_date(&time_sf,&date_sf);
+//   69         _time_to_date(&time_sf,&date_sf);
         ADD      R1,SP,#+20
         ADD      R0,SP,#+36
           CFI FunCall _time_to_date
         BL       _time_to_date
-//   69         
-//   70         if(DisType)
+//   70         
+//   71         if(DisType)
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         CMP      R4,#+0
         BEQ.W    ??TimeDis_1
-//   71         { 
-//   72           U8 CurrentTime[7]= {0x00,0x00,0x00,0x00,0x00,0x00,0x00}; //秒，分，时，周，日，月，年
+//   72         { 
+//   73           U8 CurrentTime[7]= {0x00,0x00,0x00,0x00,0x00,0x00,0x00}; //秒，分，时，周，日，月，年
         ADD      R0,SP,#+0
         MOVS     R1,#+0
         MOVS     R2,#+0
         STM      R0!,{R1,R2}
         SUBS     R0,R0,#+8
-//   73           U16 TimeX[6]= {214,178,142,106,70,10};
+//   74           U16 TimeX[6]= {214,178,142,106,70,10};
         ADD      R0,SP,#+8
         LDR.N    R1,??DataTable4_6
         LDM      R1!,{R2-R4}
         STM      R0!,{R2-R4}
         SUBS     R1,R1,#+12
         SUBS     R0,R0,#+12
-//   74           U16 TimeC108[42];
-//   75           
-//   76           CurrentTime[6]=date_sf.YEAR>>8;
+//   75           U16 TimeC108[42];
+//   76           
+//   77           CurrentTime[6]=date_sf.YEAR>>8;
         LDRH     R0,[SP, #+20]
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         LSRS     R0,R0,#+8
         STRB     R0,[SP, #+6]
-//   77           CurrentTime[5]=(U8)date_sf.YEAR&0x00ff;
+//   78           CurrentTime[5]=(U8)date_sf.YEAR&0x00ff;
         LDRH     R0,[SP, #+20]
         STRB     R0,[SP, #+5]
-//   78           CurrentTime[4]=date_sf.MONTH;
+//   79           CurrentTime[4]=date_sf.MONTH;
         LDRH     R0,[SP, #+22]
         STRB     R0,[SP, #+4]
-//   79           CurrentTime[3]=date_sf.DAY;
+//   80           CurrentTime[3]=date_sf.DAY;
         LDRH     R0,[SP, #+24]
         STRB     R0,[SP, #+3]
-//   80           CurrentTime[2]=date_sf.HOUR;
+//   81           CurrentTime[2]=date_sf.HOUR;
         LDRH     R0,[SP, #+26]
         STRB     R0,[SP, #+2]
-//   81           CurrentTime[1]=date_sf.MINUTE;
+//   82           CurrentTime[1]=date_sf.MINUTE;
         LDRH     R0,[SP, #+28]
         STRB     R0,[SP, #+1]
-//   82           CurrentTime[0]=date_sf.SECOND;
+//   83           CurrentTime[0]=date_sf.SECOND;
         LDRH     R0,[SP, #+30]
         STRB     R0,[SP, #+0]
-//   83 
-//   84           for(U8 i=0; i<6; i++)
+//   84 
+//   85           for(U8 i=0; i<6; i++)
         MOVS     R0,#+0
         B.N      ??TimeDis_2
-//   85           {            
-//   86               TimeC108[7*i]=0x2084;//显示控制，2位整数，无效0显示，字体大小12*24
-//   87               TimeC108[7*i+1]=TimeX[i];
-//   88               TimeC108[7*i+2]=5;
-//   89               TimeC108[7*i+3]=0xffff;
-//   90               TimeC108[7*i+4]=0x0000;
-//   91               TimeC108[7*i+5]=0x0000;
-//   92               if(i==5)
-//   93               {
-//   94                 TimeC108[7*i+6]=((U16)CurrentTime[i+1]<<8)+CurrentTime[i]; 
-//   95               }
-//   96               else
-//   97               {
-//   98                 TimeC108[7*i+6]=CurrentTime[i];
+//   86           {            
+//   87               TimeC108[7*i]=0x2084;//显示控制，2位整数，无效0显示，字体大小12*24
+//   88               TimeC108[7*i+1]=TimeX[i];
+//   89               TimeC108[7*i+2]=5;
+//   90               TimeC108[7*i+3]=0xffff;
+//   91               TimeC108[7*i+4]=0x0000;
+//   92               TimeC108[7*i+5]=0x0000;
+//   93               if(i==5)
+//   94               {
+//   95                 TimeC108[7*i+6]=((U16)CurrentTime[i+1]<<8)+CurrentTime[i]; 
+//   96               }
+//   97               else
+//   98               {
+//   99                 TimeC108[7*i+6]=CurrentTime[i];
 ??TimeDis_3:
         UXTB     R0,R0            ;; ZeroExt  R0,R0,#+24,#+24
         MOVS     R1,#+7
@@ -360,7 +362,7 @@ TimeDis:
         ADD      R2,SP,#+0
         LDRB     R2,[R0, R2]
         STRH     R2,[R1, #+12]
-//   99               }
+//  100               }
 ??TimeDis_4:
         ADDS     R0,R0,#+1
 ??TimeDis_2:
@@ -429,25 +431,25 @@ TimeDis:
         UXTAB    R2,R2,R3
         STRH     R2,[R1, #+12]
         B.N      ??TimeDis_4
-//  100                 
-//  101           }
-//  102           TimeC108[35]=0x4084;//年的显示控制
+//  101                 
+//  102           }
+//  103           TimeC108[35]=0x4084;//年的显示控制
 ??TimeDis_5:
         MOVW     R0,#+16516
         STRH     R0,[SP, #+130]
-//  103           YADA_C0(RX8025C108Addr,TimeC108,42);
+//  104           YADA_C0(RX8025C108Addr,TimeC108,42);
         MOVS     R2,#+42
         ADD      R1,SP,#+60
         MOV      R0,#+36608
           CFI FunCall YADA_C0
         BL       YADA_C0
-//  104           YADA_C108(RX8025C108Addr,6);
+//  105           YADA_C108(RX8025C108Addr,6);
         MOVS     R1,#+6
         MOV      R0,#+36608
           CFI FunCall YADA_C108
         BL       YADA_C108
-//  105           
-//  106           YADA_98 (70,5,0x20,0x82,0x02,0xffff,0x0000,"-",2);
+//  106           
+//  107           YADA_98 (70,5,0x20,0x82,0x02,0xffff,0x0000,"-",2);
         MOVS     R0,#+2
         STR      R0,[SP, #+16]
         ADR.N    R0,??DataTable4  ;; "-"
@@ -464,7 +466,7 @@ TimeDis:
         MOVS     R0,#+70
           CFI FunCall YADA_98
         BL       YADA_98
-//  107           YADA_98 (106,5,0x20,0x82,0x02,0xffff,0x0000,"-",2);
+//  108           YADA_98 (106,5,0x20,0x82,0x02,0xffff,0x0000,"-",2);
         MOVS     R0,#+2
         STR      R0,[SP, #+16]
         ADR.N    R0,??DataTable4  ;; "-"
@@ -481,7 +483,7 @@ TimeDis:
         MOVS     R0,#+106
           CFI FunCall YADA_98
         BL       YADA_98
-//  108           YADA_98 (178,5,0x20,0x82,0x02,0xffff,0x0000,":",2);
+//  109           YADA_98 (178,5,0x20,0x82,0x02,0xffff,0x0000,":",2);
         MOVS     R0,#+2
         STR      R0,[SP, #+16]
         ADR.N    R0,??DataTable4_1  ;; ":"
@@ -498,7 +500,7 @@ TimeDis:
         MOVS     R0,#+178
           CFI FunCall YADA_98
         BL       YADA_98
-//  109           YADA_98 (214,5,0x20,0x82,0x02,0xffff,0x0000,":",2);  
+//  110           YADA_98 (214,5,0x20,0x82,0x02,0xffff,0x0000,":",2);  
         MOVS     R0,#+2
         STR      R0,[SP, #+16]
         ADR.N    R0,??DataTable4_1  ;; ":"
@@ -516,14 +518,14 @@ TimeDis:
           CFI FunCall YADA_98
         BL       YADA_98
         B.N      ??TimeDis_0
-//  110         }
-//  111         else
-//  112         { 
-//  113           U8 CurrentTime;
-//  114           CurrentTime=date_sf.SECOND;
+//  111         }
+//  112         else
+//  113         { 
+//  114           U8 CurrentTime;
+//  115           CurrentTime=date_sf.SECOND;
 ??TimeDis_1:
         LDRH     R4,[SP, #+30]
-//  115           U16 sC108[]= {0x2084,214,5,0xffff,0x0000,0x0000,CurrentTime};
+//  116           U16 sC108[]= {0x2084,214,5,0xffff,0x0000,0x0000,CurrentTime};
         ADD      R0,SP,#+44
         LDR.N    R1,??DataTable4_7
         MOVS     R2,#+16
@@ -531,19 +533,19 @@ TimeDis:
         BL       __aeabi_memcpy4
         UXTB     R4,R4            ;; ZeroExt  R4,R4,#+24,#+24
         STRH     R4,[SP, #+56]
-//  116           
-//  117           YADA_C0(RX8025C108Addr+35,sC108,7);
+//  117           
+//  118           YADA_C0(RX8025C108Addr+35,sC108,7);
         MOVS     R2,#+7
         ADD      R1,SP,#+44
         MOVW     R0,#+36643
           CFI FunCall YADA_C0
         BL       YADA_C0
-//  118           YADA_C108(RX8025C108Addr+35,1);
+//  119           YADA_C108(RX8025C108Addr+35,1);
         MOVS     R1,#+1
         MOVW     R0,#+36643
           CFI FunCall YADA_C108
         BL       YADA_C108
-//  119           YADA_98 (214,5,0x20,0x82,0x02,0xffff,0x0000,":",1);
+//  120           YADA_98 (214,5,0x20,0x82,0x02,0xffff,0x0000,":",1);
         MOVS     R0,#+1
         STR      R0,[SP, #+16]
         ADR.N    R0,??DataTable4_1  ;; ":"
@@ -560,98 +562,105 @@ TimeDis:
         MOVS     R0,#+214
           CFI FunCall YADA_98
         BL       YADA_98
-//  120         }
-//  121   }
-//  122 }
+//  121         }
+//  122   }
+//  123 }
 ??TimeDis_0:
         ADD      SP,SP,#+144
           CFI CFA R13+8
         POP      {R4,PC}          ;; return
           CFI EndBlock cfiBlock1
-//  123 /*******************************************************************************
-//  124 ** Function Name	：DisTimeFlg
-//  125 ** Input		：
-//  126 ** Return		：
-//  127 ** Author		：WK
-//  128 ** Version	：
-//  129 ** Date		：
-//  130 ** Dessription	：时间显示的标志位设置，根据“分”是否变化，判断是否全部显示时间还是只显示秒
-//  131 ** Reverse	：
-//  132 *******************************************************************************/
+//  124 /*******************************************************************************
+//  125 ** Function Name	：DisTimeFlg
+//  126 ** Input		：
+//  127 ** Return		：
+//  128 ** Author		：WK
+//  129 ** Version	：
+//  130 ** Date		：
+//  131 ** Dessription	：时间显示的标志位设置，根据“分”是否变化，判断是否全部显示时间还是只显示秒
+//  132 ** Reverse	：
+//  133 *******************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock2 Using cfiCommon0
           CFI Function DisTimeFlg
         THUMB
-//  133 void DisTimeFlg()
-//  134 {
+//  134 void DisTimeFlg()
+//  135 {
 DisTimeFlg:
         PUSH     {LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+4
         SUB      SP,SP,#+28
           CFI CFA R13+32
-//  135     TIME_STRUCT             time_sf;
-//  136     DATE_STRUCT             date_sf;
-//  137     _time_get(&time_sf);
+//  136     TIME_STRUCT             time_sf;
+//  137     DATE_STRUCT             date_sf;
+//  138     _time_get(&time_sf);
         ADD      R0,SP,#+0
           CFI FunCall _time_get
         BL       _time_get
-//  138     _time_to_date(&time_sf,&date_sf);
+//  139     _time_to_date(&time_sf,&date_sf);
         ADD      R1,SP,#+8
         ADD      R0,SP,#+0
           CFI FunCall _time_to_date
         BL       _time_to_date
-//  139     
-//  140     if(MinuteOld!=date_sf.MINUTE)
+//  140     
+//  141     if(MinuteOld!=date_sf.MINUTE)
         LDR.N    R0,??DataTable4_8
         LDRB     R0,[R0, #+0]
         LDRH     R1,[SP, #+16]
         UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
         CMP      R0,R1
         BEQ.N    ??DisTimeFlg_0
-//  141     {
-//  142        MinuteOld=date_sf.MINUTE;
+//  142     {
+//  143        MinuteOld=date_sf.MINUTE;
         LDRH     R0,[SP, #+16]
         LDR.N    R1,??DataTable4_8
         STRB     R0,[R1, #+0]
-//  143        TimeFlg=1;
+//  144        TimeFlg=1;
         LDR.N    R0,??DataTable4_4
         MOVS     R1,#+1
         STRB     R1,[R0, #+0]
         B.N      ??DisTimeFlg_1
-//  144     }
-//  145     else
-//  146        TimeFlg=2;
+//  145     }
+//  146     else
+//  147        TimeFlg=2;
 ??DisTimeFlg_0:
         LDR.N    R0,??DataTable4_4
         MOVS     R1,#+2
         STRB     R1,[R0, #+0]
-//  147 }
+//  148 }
 ??DisTimeFlg_1:
         ADD      SP,SP,#+28
           CFI CFA R13+4
         POP      {PC}             ;; return
           CFI EndBlock cfiBlock2
-//  148 
+//  149 
+//  150 /*FUNCTION**********************************************************************
+//  151  *
+//  152  * Function Name    : print_mqx_time
+//  153  * Returned Value   :
+//  154  * Comments         :
+//  155  *
+//  156  *END**************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock3 Using cfiCommon0
           CFI Function print_mqx_time
         THUMB
-//  149 static void print_mqx_time
-//  150 (
-//  151         DATE_STRUCT_PTR     time_rtc,
-//  152         TIME_STRUCT_PTR     time_mqx
-//  153 )
-//  154 {
+//  157 static void print_mqx_time
+//  158 (
+//  159         DATE_STRUCT_PTR     time_rtc,
+//  160         TIME_STRUCT_PTR     time_mqx
+//  161 )
+//  162 {
 print_mqx_time:
         PUSH     {LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+4
         SUB      SP,SP,#+20
           CFI CFA R13+24
-//  155     printf ("MQX : %d s, %d ms (%02d.%02d.%4d %02d:%02d:%02d )\n", time_mqx->SECONDS, time_mqx->MILLISECONDS,time_rtc->DAY, time_rtc->MONTH, time_rtc->YEAR, time_rtc->HOUR, time_rtc->MINUTE, time_rtc->SECOND);
+//  163     printf ("MQX : %d s, %d ms (%02d.%02d.%4d %02d:%02d:%02d )\n", time_mqx->SECONDS, time_mqx->MILLISECONDS,time_rtc->DAY, time_rtc->MONTH, time_rtc->YEAR, time_rtc->HOUR, time_rtc->MINUTE, time_rtc->SECOND);
         LDRH     R2,[R0, #+10]
         STR      R2,[SP, #+16]
         LDRH     R2,[R0, #+8]
@@ -668,82 +677,81 @@ print_mqx_time:
         LDR.N    R0,??DataTable4_9
           CFI FunCall _io_printf
         BL       _io_printf
-//  156 }
+//  164 }
         ADD      SP,SP,#+20
           CFI CFA R13+4
         POP      {PC}             ;; return
           CFI EndBlock cfiBlock3
-//  157 
-//  158 
-//  159 /*FUNCTION**********************************************************************
-//  160  *
-//  161  * Function Name    : print_current_time
-//  162  * Returned Value   :
-//  163  * Comments         :
-//  164  *
-//  165  *END**************************************************************************/
+//  165 
+//  166 /*FUNCTION**********************************************************************
+//  167  *
+//  168  * Function Name    : print_current_time
+//  169  * Returned Value   :
+//  170  * Comments         :
+//  171  *
+//  172  *END**************************************************************************/
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock4 Using cfiCommon0
           CFI Function print_current_time
         THUMB
-//  166 static void print_current_time(void)
-//  167 {
+//  173 static void print_current_time(void)
+//  174 {
 print_current_time:
         PUSH     {LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+4
         SUB      SP,SP,#+28
           CFI CFA R13+32
-//  168     DATE_STRUCT     time_rtc;
-//  169     TIME_STRUCT     time_mqx;
-//  170 
-//  171     _rtc_get_time_mqxd (&time_rtc);
+//  175     DATE_STRUCT     time_rtc;
+//  176     TIME_STRUCT     time_mqx;
+//  177 
+//  178     _rtc_get_time_mqxd (&time_rtc);
         ADD      R0,SP,#+8
           CFI FunCall _rtc_get_time_mqxd
         BL       _rtc_get_time_mqxd
-//  172     _time_from_date (&time_rtc, &time_mqx);
+//  179     _time_from_date (&time_rtc, &time_mqx);
         ADD      R1,SP,#+0
         ADD      R0,SP,#+8
           CFI FunCall _time_from_date
         BL       _time_from_date
-//  173     print_rtc_time(&time_rtc, &time_mqx);
+//  180     print_rtc_time(&time_rtc, &time_mqx);
         ADD      R1,SP,#+0
         ADD      R0,SP,#+8
           CFI FunCall print_rtc_time
         BL       print_rtc_time
-//  174 }
+//  181 }
         ADD      SP,SP,#+28
           CFI CFA R13+4
         POP      {PC}             ;; return
           CFI EndBlock cfiBlock4
-//  175 
-//  176 /*FUNCTION**********************************************************************
-//  177  *
-//  178  * Function Name    : print_rtc_time
-//  179  * Returned Value   :
-//  180  * Comments         : Print rtc time to terminal
-//  181  *
-//  182  *END**************************************************************************/
-//  183 
+//  182 
+//  183 /*FUNCTION**********************************************************************
+//  184  *
+//  185  * Function Name    : print_rtc_time
+//  186  * Returned Value   :
+//  187  * Comments         : Print rtc time to terminal
+//  188  *
+//  189  *END**************************************************************************/
+//  190 
 
         SECTION `.text`:CODE:NOROOT(1)
           CFI Block cfiBlock5 Using cfiCommon0
           CFI Function print_rtc_time
         THUMB
-//  184 static void print_rtc_time
-//  185 (
-//  186         DATE_STRUCT_PTR     time_rtc,
-//  187         TIME_STRUCT_PTR     time_mqx
-//  188 )
-//  189 {
+//  191 static void print_rtc_time
+//  192 (
+//  193         DATE_STRUCT_PTR     time_rtc,
+//  194         TIME_STRUCT_PTR     time_mqx
+//  195 )
+//  196 {
 print_rtc_time:
         PUSH     {LR}
           CFI R14 Frame(CFA, -4)
           CFI CFA R13+4
         SUB      SP,SP,#+20
           CFI CFA R13+24
-//  190     printf ("RTC : %02d.%02d.%4d %02d:%02d:%02d (%02d s, %03d ms)\n", time_rtc->DAY, time_rtc->MONTH, time_rtc->YEAR, time_rtc->HOUR, time_rtc->MINUTE, time_rtc->SECOND, time_mqx->SECONDS, time_mqx->MILLISECONDS);
+//  197     printf ("RTC : %02d.%02d.%4d %02d:%02d:%02d (%02d s, %03d ms)\n", time_rtc->DAY, time_rtc->MONTH, time_rtc->YEAR, time_rtc->HOUR, time_rtc->MINUTE, time_rtc->SECOND, time_mqx->SECONDS, time_mqx->MILLISECONDS);
         LDR      R2,[R1, #+4]
         STR      R2,[SP, #+16]
         LDR      R1,[R1, #+0]
@@ -760,8 +768,8 @@ print_rtc_time:
         LDR.N    R0,??DataTable4_10
           CFI FunCall _io_printf
         BL       _io_printf
-//  191 
-//  192 }
+//  198 
+//  199 }
         ADD      SP,SP,#+20
           CFI CFA R13+4
         POP      {PC}             ;; return
@@ -902,9 +910,9 @@ print_rtc_time:
 //   1 byte  in section .bss
 //   1 byte  in section .data
 // 176 bytes in section .rodata
-// 928 bytes in section .text
+// 930 bytes in section .text
 // 
-// 928 bytes of CODE  memory
+// 930 bytes of CODE  memory
 // 176 bytes of CONST memory
 //   2 bytes of DATA  memory
 //

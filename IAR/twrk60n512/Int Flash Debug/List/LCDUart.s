@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    11/May/2013  11:35:22 /
+// IAR ANSI C/C++ Compiler V6.30.1.53127/W32 for ARM    11/May/2013  12:45:38 /
 // Copyright 1999-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Cpu mode     =  thumb                                                   /
@@ -150,7 +150,7 @@ MenuSwFlg:
         DS8 1
 
         SECTION `.bss`:DATA:REORDER:NOROOT(0)
-//   20 volatile U8 Dis_PicID;
+//   20 volatile U8 Dis_PicID=0;
 Dis_PicID:
         DS8 1
 

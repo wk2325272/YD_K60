@@ -45,6 +45,7 @@ void TimeSet()
     
     TimeFlg=1; // 设置完成全部显示时间
     _rtc_init (RTC_INIT_FLAG_CLEAR);
+    asm("NOP");
     _rtc_init ( RTC_INIT_FLAG_ENABLE); 
 }
 

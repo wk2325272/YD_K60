@@ -1669,6 +1669,8 @@ void GUI_INIT_SET(void)
         shell_ptr->ARGV[1]="flush";
         Shell_update(shell_ptr->ARGC, shell_ptr->ARGV);
         
+        TimeSet();
+          
         YADA_98(200, 211, 0x22, 0x81, 0x02, 0xffe0, 0x0000, PBUF, 0);
         InitAck=0;
     }
@@ -2189,7 +2191,7 @@ void PowerSave(void)
 
 void flg_int(void)   // wk --> 一些标志的初始化 
 {
-    Dis_PicID=0;
+//    Dis_PicID=0;
 //    HarmoGraphShift=0;//
     HarmoGraphPhase=1;// 默认值1
     HarmoGraphRange=1;// 用于选择显示谐波范围，默认值为1,对应1~26次，2对应25~50
@@ -2235,16 +2237,16 @@ void flg_int(void)   // wk --> 一些标志的初始化
     SysFlashData[26]=SysFlashDataT[26]=400>>8;   // 周波数 
     SysFlashData[29]=SysFlashDataT[29]=(U8)(25600&0x00ff);   
     SysFlashData[30]=SysFlashDataT[30]=25600>>8;   //波点数
-    SysFlashData[33]=SysFlashDataT[33]=(U8)(700&0x00ff);   
-    SysFlashData[34]=SysFlashDataT[34]=700>>8;   //电压偏差
-    SysFlashData[37]=SysFlashDataT[37]=20;   //频率偏差
-    SysFlashData[41]=SysFlashDataT[41]=200;   //电压波动
-    SysFlashData[45]=SysFlashDataT[45]=200;   //负序不平衡
-    SysFlashData[49]=SysFlashDataT[49]=100;   //长时闪变
-    SysFlashData[53]=SysFlashDataT[53]=(U8)(500&0x00ff);
-    SysFlashData[54]=SysFlashDataT[54]=500>>8;   //电压总畸变率
+    SysFlashData[33]=SysFlashDataT[33]=(U8)(UDeviation&0x00ff);   
+    SysFlashData[34]=SysFlashDataT[34]=UDeviation>>8;   //电压偏差
+    SysFlashData[37]=SysFlashDataT[37]=FDeviation;   //频率偏差
+    SysFlashData[41]=SysFlashDataT[41]=USurge;   //电压波动
+    SysFlashData[45]=SysFlashDataT[45]=NUnblance;   //负序不平衡
+    SysFlashData[49]=SysFlashDataT[49]=LngFlick;   //长时闪变
+    SysFlashData[53]=SysFlashDataT[53]=(U8)(TotalHarmonic&0x00ff);
+    SysFlashData[54]=SysFlashDataT[54]=TotalHarmonic>>8;   //电压总畸变率
     SysFlashData[61]=SysFlashDataT[61]=(U8)(400&0x00ff);  
-    SysFlashData[62]=SysFlashDataT[62]=400>>8;   //偶谐波
-    SysFlashData[65]=SysFlashDataT[65]=200;   //奇谐波
+    SysFlashData[62]=SysFlashDataT[62]=UHarmonic>>8;   //偶谐波
+    SysFlashData[65]=SysFlashDataT[65]=IHarmonic;   //奇谐波
     
 }

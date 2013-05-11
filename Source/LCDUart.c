@@ -17,7 +17,7 @@ extern uchar read_buffer[8];
 extern U8 EVEnum_old;  // --> MenuView.c
 /* wk @130409 --> 变量定义 */
 volatile U8 MenuSwFlg;//页面切换标志，默认值为0
-volatile U8 Dis_PicID;
+volatile U8 Dis_PicID=0;
 volatile U8 ViewKeyFlg;
 volatile U8 SysSetKeyFlg;
 volatile U8 EventKeyFlg;

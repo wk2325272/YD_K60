@@ -9,7 +9,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=2117900620
+Checksum=-1512686495
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -91,7 +91,7 @@ Bp47=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Freescale MQX 3.8\shell\source\mfs\sh
 Bp48=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Freescale MQX 3.8\shell\source\mfs\sh_search_file.c}.128.21" 0 0 1 "" 0 "" 0
 Bp49=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Freescale MQX 3.8\shell\source\mfs\sh_dir.c}.102.19" 0 0 1 "" 0 "" 0
 Bp50=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Source\DSPSPI.c}.250.12" 0 0 1 "" 0 "" 0
-Bp51=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Source\MenuView.c}.1672.9" 0 0 1 "" 0 "" 0
+Bp51=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Source\MenuView.c}.1674.9" 0 0 1 "" 0 "" 0
 Bp52=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Source\MenuView.c}.1171.11" 0 0 1 "" 0 "" 0
 Count=53
 [Log file]
