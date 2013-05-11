@@ -30,6 +30,7 @@ U32 EventAddr[100]; // wk@130405 -->记录事件发生的时间：月、日、时、分、秒，每个
 U8 USB_Flg=0;  // wk @130407 --> USB 是否插入标志
 U16 evntyear_old=0;
 U8 time[7];
+U8 SavePowerFlg; // WK @130401 --> 电能质量数据存储标志 1时存储
 
 /* wk@130508 --> 用于波形显示，后期需要优化 */
 U8 EvntWave[6144]={0}; // wk @130504 --> 定义局部变量时，程序跑飞，暂时定义成全局变量
@@ -910,21 +911,39 @@ void GUI_SYS_PARASET(void)
               if(OneC108[6]>5000)  
               {
                 OneC108[3]=0xf800;
-                flg_sys[3]=1; // 年超限标志
+                flg_sys[3]=1; // 年上超限标志
               }
+              else if(OneC108[6]<1970)
+              {
+                OneC108[3]=0xf800;
+                flg_sys[3]=2; // 年下超限标志
+              }
+              else
+                flg_sys[3]=3; // 年没有超限
+                
                break;
             case 4:
               if(OneC108[6]>12)  
               {
                 OneC108[3]=0xf800;
-                flg_sys[4]=1;// 月超限标志
+                flg_sys[4]=1;// 月上超限标志
+              }
+              else if(OneC108[6]==0)
+              {
+                OneC108[3]=0xf800;
+                flg_sys[4]=2;// 月下超限标志
               }
                break;
             case 5:
               if(OneC108[6]>30) 
               {
                 OneC108[3]=0xf800;
-                flg_sys[5] =1; // 日超限标志
+                flg_sys[5] =1; // 日上超限标志
+              }
+              else if(OneC108[6]==0)
+              {
+                OneC108[3]=0xf800;
+                flg_sys[5]=2;// 日下超限标志
               }
                break;
             case 6:
@@ -977,7 +996,7 @@ void GUI_SYS_PARASET(void)
 //     Shell_pwd(shell_ptr->ARGC, shell_ptr->ARGV);
       for(int i=0;i<9;i++) // wk @130326 --> 对超出阈值的进行处理
       {
-        if(flg_sys[i]==1)
+        if((flg_sys[i]==1) || (flg_sys[i]==2))
           switch(i)
           {
           case 0:
@@ -987,32 +1006,54 @@ void GUI_SYS_PARASET(void)
             SysFlashDataT[2*i+8]=0;
             flg_sys[i]=0;
            break;
-          case 3:
-            SysFlashDataT[2*i+7]=0x88;
-            SysFlashDataT[2*i+8]=0x13;
+          case 3: // 年
+            if(flg_sys[i]==1)
+            {
+              SysFlashDataT[2*i+7]=0x88;  
+              SysFlashDataT[2*i+8]=0x13;
+            }
+            else  if(flg_sys[i]==3)
+            {
+              ;
+            }
+            else if(flg_sys[i]==2)
+            {
+              SysFlashDataT[2*i+7]=0xb2;  
+              SysFlashDataT[2*i+8]=0x07;
+            }
             flg_sys[i]=0;
            break;
-          case 4:
-            SysFlashDataT[2*i+7]=12;
+          case 4: //月
+            if(flg_sys[i]==1)
+            {
+              SysFlashDataT[2*i+7]=12;
+            }
+            else
+            {
+              SysFlashDataT[2*i+7]=1;  
+            } 
             SysFlashDataT[2*i+8]=0;
             flg_sys[i]=0;
             break;
-          case 5:
-            SysFlashDataT[2*i+7]=60;
+          case 5: // 日
+            if(flg_sys[i]==1)
+              SysFlashDataT[2*i+7]=60;
+            else
+              SysFlashDataT[2*i+7]=1;
             SysFlashDataT[2*i+8]=0;
             flg_sys[i]=0;
             break;
-          case 6:
+          case 6: // 时
             SysFlashDataT[2*i+7]=24;
             SysFlashDataT[2*i+8]=0;
             flg_sys[i]=0;
             break;
-          case 7:
+          case 7: // 分
             SysFlashDataT[2*i+7]=60;
             SysFlashDataT[2*i+8]=0;
             flg_sys[i]=0;
             break;
-          case 8:
+          case 8: // 秒
             SysFlashDataT[2*i+7]=60;
             SysFlashDataT[2*i+8]=0;
             flg_sys[i]=0;
@@ -1108,6 +1149,7 @@ void GUI_SYS_PARASET(void)
         delay_us(10);  
         
         SysSet.ParaSaveFlg=0;  // WK --> 清楚标志
+        TimeSet(); // wk@130510 --> 重新设置时间
         _mem_free(shell_ptr); 
     }
     else
@@ -1523,6 +1565,22 @@ void GUI_SYS_EVENTSET(void)
        for(uchar ij=4;ij<52;ij++) // wk@130509--> 将发送给DSP的数据赋值
 //         SysDataSend[ij]= SysFlashData[ij+21];
          SysDataSend[ij]=ij;
+       
+       /*WK --> 显示修改的参数设置 */
+        for(k=0; k<11; k++)
+            {
+                temp=7*k;
+                ParaSetC108[temp + 0] = 0x3204;         //P  显示数据的模式
+                ParaSetC108[temp + 1] = SysEventXY[2*k];            //显示相位的X坐标
+                ParaSetC108[temp + 2] = SysEventXY[2*k + 1];     //Y坐标
+                ParaSetC108[temp + 3] = 0xffff;         //白色，下为黑色
+                ParaSetC108[temp + 4] = 0x0000;
+                ParaSetC108[temp + 5] =(U16) (SysFlashDataT[3+4*k+EVESET_INDEX]<<8)+(U16)(SysFlashDataT[2+4*k+EVESET_INDEX]);
+                ParaSetC108[temp + 6] =(U16) (SysFlashDataT[1+4*k+EVESET_INDEX]<<8)+(U16)(SysFlashDataT[4*k+EVESET_INDEX]);
+            }
+         YADA_C0(EventSetAddr, ParaSetC108, 11*7);
+         YADA_C108(EventSetAddr,11);   //写入有效值，每次10个
+       /* wk --> 保存成功并发送成功标志 END */
          
        SysSet.EventSaveFlg=0; //清楚保存标志
        SysSet.EventSendFlg=1; //开启 K60 2 DSP 标志
@@ -1582,8 +1640,9 @@ void GUI_INIT_SET(void)
     if(InitAck)
     {
 //        memset(SysFlashDataT,0,84);//SysFlashData[0~85]赋初值0
-        for(uchar i=0;i<84;i++)
-          SysFlashDataT[i]=0;
+//        for(uchar i=0;i<84;i++)
+//          SysFlashDataT[i]=0;
+        flg_int();
 
         shell_ptr->ARGC=2;
         shell_ptr->ARGV[0]="cd";
@@ -1600,7 +1659,10 @@ void GUI_INIT_SET(void)
         shell_ptr->ARGV[1]="sysset.txt";
         shell_ptr->ARGV[2]="begin";
         shell_ptr->ARGV[3]="0";
-        Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,84,SysFlashDataT);
+        Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,25,SysFlashDataT);
+        
+        shell_ptr->ARGV[1]="sysevent.txt";
+        Shell_write_binary(shell_ptr->ARGC, shell_ptr->ARGV,44,&SysFlashDataT[25]);
         
         shell_ptr->ARGC=2;
         shell_ptr->ARGV[0]="update"; // wk --> update
@@ -2125,3 +2187,64 @@ void PowerSave(void)
      
 }
 
+void flg_int(void)   // wk --> 一些标志的初始化 
+{
+    Dis_PicID=0;
+//    HarmoGraphShift=0;//
+    HarmoGraphPhase=1;// 默认值1
+    HarmoGraphRange=1;// 用于选择显示谐波范围，默认值为1,对应1~26次，2对应25~50
+    HarmoGraphUorder=1;// 用于控制谐波电压具体次数的数值显示
+    HarmoGraphIorder=1;// 用于控制谐波电流具体次数的数值显示
+    HarmoListShift=0;// 谐波列表显示中的功能右移键
+    HarmoListPhase=1;
+    HarmoListUorI=1;
+    HarmoListRange=1;
+    HarmoListAmporRatio=1;
+    VIEWHoldFlg=0; //保 持键默认为0，键按下时值变为1，再次按下时值变为0；
+    ViewKeyFlg=0;
+    SysSetKeyFlg=0;
+    EventKeyFlg=0;
+    MenuSwFlg=0;
+    EVEpage=0;
+    EVEline=0;
+    EVEfunflg=0;
+    
+    SavePowerFlg =0;
+    /* wk@130509-->初始化K602DSP数组的数据头和数据尾*/
+    SysDataSend[0]=0x33;SysDataSend[1]=0x33;SysDataSend[2]=0x33;SysDataSend[3]=0x44;
+    SysDataSend[52]=0xcc;SysDataSend[53]=0x33;SysDataSend[54]=0xc3;SysDataSend[55]=0x3c;
+    
+    for(uchar i=0;i<84;i++)
+     SysFlashData[i]=SysFlashDataT[i]=0;
+    
+    SysFlashData[5]=SysFlashDataT[5]=1;
+    SysFlashData[6]=SysFlashDataT[6]=1; // 存储时间间隔
+    
+    SysFlashData[9]=SysFlashDataT[9]=3;
+    SysFlashData[10]=SysFlashDataT[10]=0; // 存储时间间隔
+    
+    SysFlashData[13]=SysFlashDataT[13]=0xb2;
+    SysFlashData[14]=SysFlashDataT[14]=0x07; // year
+    SysFlashData[15]=SysFlashDataT[15]=1;   // month
+    SysFlashData[17]=SysFlashDataT[17]=1;   // date
+    SysFlashData[19]=SysFlashDataT[19]=1;   //hour
+    SysFlashData[21]=SysFlashDataT[21]=1;   // minite 
+    
+    /* 事件阈值初始化 */
+    SysFlashData[25]=SysFlashDataT[25]=(U8)(400&0x00ff);   
+    SysFlashData[26]=SysFlashDataT[26]=400>>8;   // 周波数 
+    SysFlashData[29]=SysFlashDataT[29]=(U8)(25600&0x00ff);   
+    SysFlashData[30]=SysFlashDataT[30]=25600>>8;   //波点数
+    SysFlashData[33]=SysFlashDataT[33]=(U8)(700&0x00ff);   
+    SysFlashData[34]=SysFlashDataT[34]=700>>8;   //电压偏差
+    SysFlashData[37]=SysFlashDataT[37]=20;   //频率偏差
+    SysFlashData[41]=SysFlashDataT[41]=200;   //电压波动
+    SysFlashData[45]=SysFlashDataT[45]=200;   //负序不平衡
+    SysFlashData[49]=SysFlashDataT[49]=100;   //长时闪变
+    SysFlashData[53]=SysFlashDataT[53]=(U8)(500&0x00ff);
+    SysFlashData[54]=SysFlashDataT[54]=500>>8;   //电压总畸变率
+    SysFlashData[61]=SysFlashDataT[61]=(U8)(400&0x00ff);  
+    SysFlashData[62]=SysFlashDataT[62]=400>>8;   //偶谐波
+    SysFlashData[65]=SysFlashDataT[65]=200;   //奇谐波
+    
+}

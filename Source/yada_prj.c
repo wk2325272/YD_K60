@@ -19,7 +19,6 @@
 volatile U8 RefreshFlg; // 页面刷新标志
 U8 U_FLAG = 0,Time_Ref = 0;
 uchar read_buffer[8]={0x12,0x23};  // wk @130403 --> uncomment
-U8 SavePowerFlg; // WK @130401 --> 电能质量数据存储标志 1时存储
 
 extern void YaDa(uint_32);
 extern void MainLoop();
@@ -81,21 +80,6 @@ static void timer_isr
 ** Dessription	：LPT 定时器1中断函数入口
 ** Reverse	：
 *******************************************************************************/
-static void timer_isr_1
-    (
-        pointer parameter
-    )
-{
-    uint_32 timer = (uint_32)parameter;
-    
-    /* Stop the timer */
-    _lpt_run (timer, FALSE);
-    _lpt_clear_int (timer);
-    
-    Time_Ref = 1;
-    printf("1s\n");
-    _lpt_init(1,1 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO,TRUE);
-}
 
 /*
 ** 作者：
@@ -187,11 +171,13 @@ void YaDa
   /* end */
   /* wk @130330 -->timer of lpt */
    /* wk @130504 --> 调试事件，先关闭 */
-   _lpt_install (0,3 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO, 11, timer_isr, TRUE);//2 * 1000000  --> 2秒  
-   /* wk --> 刷新时钟 注意：现在除了timer 0 能用之外，其他的都不能用，待研究中……*/
-//    _lpt_install (1,1 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO, 11, timer_isr_1, TRUE);//2 * 1000000  --> 2秒  
+   _lpt_install (0,3 * 1000000 , LPT_FLAG_CLOCK_SOURCE_LPO, 11, timer_isr, TRUE);//3 * 1000000  --> 3秒   
   /* wk @130330 -->timer end */
-
+   
+//   delay_ms(4000); 
+   _rtc_init ( RTC_INIT_FLAG_CLEAR); // wk @130510 --> 在应用程序中再初始化并打开
+   _rtc_init ( RTC_INIT_FLAG_ENABLE); /* wk@130511-->程序有时可能因为此处影响触摸屏的应用 */
+//   TimeSet();
   while(1)
   {   
       if(SysFlashData[5])                           //背光标志，1为开背光，0为关。
@@ -267,13 +253,19 @@ void MainLoop()
   
   if (Dis_PicID != MenuTop)//时间显示需放在界面切换之后，放数据刷新之后的话延时更长才显示
     {
-//        /*
-//        if( DisTimeOnce==1 )
-//        {
-//          DisTimeOnce=0;
-//          DISTIME(1);   //显示完整时间。
-//        }
-//          DISTIME(0);//只刷新秒  */
+
+       if(TimeFlg==1)
+       {
+         TimeDis(1);
+         TimeFlg=0;
+//         _rtc_init ( RTC_INIT_FLAG_ENABLE);
+       }
+       else if(TimeFlg==2)
+       {
+         TimeDis(0);
+         TimeFlg=0;
+       }
+      
         if(Time_Ref==1)//设置8025固定中断，一分钟才刷新，但秒比较闪
         {
 //            //U8 Config =0x20;
@@ -378,31 +370,3 @@ void MainLoop()
   }
 }
  
-void flg_int()   // wk --> 一些标志的初始化 
-{
-    Dis_PicID=0;
-//    HarmoGraphShift=0;//
-    HarmoGraphPhase=1;// 默认值1
-    HarmoGraphRange=1;// 用于选择显示谐波范围，默认值为1,对应1~26次，2对应25~50
-    HarmoGraphUorder=1;// 用于控制谐波电压具体次数的数值显示
-    HarmoGraphIorder=1;// 用于控制谐波电流具体次数的数值显示
-    HarmoListShift=0;// 谐波列表显示中的功能右移键
-    HarmoListPhase=1;
-    HarmoListUorI=1;
-    HarmoListRange=1;
-    HarmoListAmporRatio=1;
-    VIEWHoldFlg=0; //保 持键默认为0，键按下时值变为1，再次按下时值变为0；
-    ViewKeyFlg=0;
-    SysSetKeyFlg=0;
-    EventKeyFlg=0;
-    MenuSwFlg=0;
-    EVEpage=0;
-    EVEline=0;
-    EVEfunflg=0;
-    
-    SavePowerFlg =0;
-    /* wk@130509-->初始化K602DSP数组的数据头和数据尾*/
-    SysDataSend[0]=0x33;SysDataSend[1]=0x33;SysDataSend[2]=0x33;SysDataSend[3]=0x44;
-    SysDataSend[52]=0xcc;SysDataSend[53]=0x33;SysDataSend[54]=0xc3;SysDataSend[55]=0x3c;
-    
-}

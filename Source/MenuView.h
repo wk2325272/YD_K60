@@ -64,14 +64,14 @@
 #define EventMonLAddr 0x0B51    //事件监测左边列地址10个数据，140字节
 #define EventMonRAddr 0x0BDD    //事件监测右地址4（BB3）
 #define ListUnblanceAdr 0x8000 //三相不平衡，一共38个数据，占532个字节地址 
-#define RX8025C108Addr 0x9000//每页的时间显示，6个数据，占用84个字节
+#define RX8025C108Addr 0x8F00//每页的时间显示，6个数据，占用84个字节
 //#define EventMonLAddr 0x0B51    //事件监测左地址10
 //#define EventMonRAddr 0x0B97    //事件监测右地址4（BB3）
 #define Evetime 0x0B9d
 /*WK @130326 --> 事件限值宏定义 */
 /* wk @130326 --> 扩大了100倍 ：显示时的模式会将数据除100显示*/
 #define UDeviation 100*7  
-#define FDeviation 2
+#define FDeviation 20 // 0.2*100
 #define USurge 100*2
 #define NUnblance 100*2
 #define LngFlick 100
@@ -101,6 +101,7 @@ extern U16 EventNum[9]; // wk @130405 --> 9次事件发生次数保存，每个事件占2字节，
 extern U32 EventAddr[100];// wk@130405 -->记录事件发生的时间：月、日、时、分、秒，每个占4字节
 extern U8 USB_Flg; // wk @130407 --> USB 是否插入标志
 extern U8 EVEnum;
+extern U8 SavePowerFlg;
 
 void GUI_VIEW_UI(void);
 void GUI_VIEW_U(void);
@@ -122,6 +123,7 @@ void EventSave(U8 U_DISK);
 void PowerSave(void);
 void GUI_INIT_SET(void);
 void GUI_STATUS(U8 U_DISK);
+void flg_int(void);
 #endif
 
 

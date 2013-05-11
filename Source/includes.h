@@ -28,6 +28,7 @@
 #include "LCDUart.h"
 #include "DSPSPI.h" 
 #include "DataConvert.h"
+#include "DisTime.h"
 
 #include <stdlib.h>
 #include <string.h>

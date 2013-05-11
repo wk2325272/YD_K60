@@ -3712,6 +3712,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$\..\lib\twrk60n512.iar\bsp\bsp_twrk60n512_130418_SPI_TX_56Data_Buf6175.a</name>
+      <excluded>
+        <configuration>Int Flash Debug</configuration>
+      </excluded>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\lib\twrk60n512.iar\bsp\bsp_twrk60n512_130418_SPI_TX_56Data_Buf6175_RTC.a</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\lib\twrk60n512.iar\bsp\bsp_twrk60n512_130418_SPI_TX_84Data_Buf6175.a</name>
@@ -3925,6 +3931,9 @@
     </group>
     <file>
       <name>$PROJ_DIR$\..\Source\DataConvert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\Source\DisTime.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\Source\DSPSPI.c</name>

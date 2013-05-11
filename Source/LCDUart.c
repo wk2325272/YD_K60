@@ -16,7 +16,6 @@
 extern uchar read_buffer[8];
 extern U8 EVEnum_old;  // --> MenuView.c
 /* wk @130409 --> 变量定义 */
-volatile U8 DisTimeOnce;
 volatile U8 MenuSwFlg;//页面切换标志，默认值为0
 volatile U8 Dis_PicID;
 volatile U8 ViewKeyFlg;
@@ -280,7 +279,7 @@ void LCDUartView(U8 Touch_key)   // wk --> 数据显示 按键跳转函数。
     if(Touch_key<10|| Touch_key==255)  //  wk --> 内部页面切换或者是返回首页
     {
         MenuSwFlg=1; //  wk -->页面切换标志 
-        DisTimeOnce=1; //页面切换后完全显示时间
+        TimeFlg=1; //页面切换后完全显示时间
         VIEWHoldFlg=0; //防止页面切换后，保持功能仍存在但不显示保持标志
     }
     switch(Touch_key)//可调整为Dis_PicID=Touch_key+X
@@ -447,7 +446,7 @@ void LCDUartSET(U8 Touch_key)   // wk --> 系统设置 键号跳转函数
     if(Touch_key<3||Touch_key==255)
     {
         MenuSwFlg=1;//切换页面
-        DisTimeOnce=1;//页面切换后完全显示时间
+        TimeFlg=1;//页面切换后完全显示时间
          //系统设置按键均使发送完成标志清零
     }         
     switch(Touch_key)
@@ -482,7 +481,7 @@ void LCDUartSET(U8 Touch_key)   // wk --> 系统设置 键号跳转函数
     case 0x32:                  /*事件设置清除键*/
         //InitNoAck=1;
         MenuSwFlg=1; //  wk -->页面切换标志
-        DisTimeOnce=1; //页面切换后完全显示时间
+        TimeFlg=1; //页面切换后完全显示时间
         Dis_PicID=MenuParaSET;
         break;
         /**********************************************************************
@@ -627,7 +626,7 @@ void LCDUartEVENT(U8 Touch_key)   //事件显示按键跳转函数。
     if(Touch_key<3||Touch_key==255)
     {
         MenuSwFlg=1;//切换页面
-        DisTimeOnce=1;//页面切换后完全显示时间
+        TimeFlg=1;//页面切换后完全显示时间
     }
     switch(Touch_key)
     {
