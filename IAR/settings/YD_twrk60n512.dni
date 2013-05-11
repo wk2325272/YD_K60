@@ -9,7 +9,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=-1512686495
+Checksum=-1591991598
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -37,6 +37,24 @@ ActionState=1
 TraceBufferSize=0x00010000
 TraceStallIfFIFOFull=0x00000000
 TracePortSize=0x00000004
+[Log file]
+LoggingEnabled=_ 0
+LogFile=_ ""
+Category=_ 0
+[TermIOLog]
+LoggingEnabled=_ 0
+LogFile=_ ""
+[Trace1]
+Enabled=0
+ShowSource=1
+[CallStackLog]
+Enabled=0
+[DriverProfiling]
+Enabled=0
+Mode=1
+Graph=0
+Symbiont=0
+Exclusions=
 [Disassemble mode]
 mode=0
 [Breakpoints2]
@@ -91,16 +109,9 @@ Bp47=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Freescale MQX 3.8\shell\source\mfs\sh
 Bp48=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Freescale MQX 3.8\shell\source\mfs\sh_search_file.c}.128.21" 0 0 1 "" 0 "" 0
 Bp49=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\Freescale MQX 3.8\shell\source\mfs\sh_dir.c}.102.19" 0 0 1 "" 0 "" 0
 Bp50=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Source\DSPSPI.c}.250.12" 0 0 1 "" 0 "" 0
-Bp51=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Source\MenuView.c}.1674.9" 0 0 1 "" 0 "" 0
-Bp52=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Source\MenuView.c}.1171.11" 0 0 1 "" 0 "" 0
+Bp51=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Source\MenuView.c}.1676.9" 0 0 1 "" 0 "" 0
+Bp52=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Source\MenuView.c}.1173.11" 0 0 1 "" 0 "" 0
 Count=53
-[Log file]
-LoggingEnabled=_ 0
-LogFile=_ ""
-Category=_ 0
-[TermIOLog]
-LoggingEnabled=_ 0
-LogFile=_ ""
 [Aliases]
 A0=_ "D:\Freescale\Freescale MQX 3.8\mqx\source\bsp\twrk60n512\init_hw.c" "E:\Freescale\Freescale MQX 3.8\mqx\source\bsp\twrk60n512\init_hw.c"
 A1=_ "D:\Freescale\Freescale MQX 3.8\mqx\source\fio\io_ioctl.c" "E:\Freescale\Freescale MQX 3.8\mqx\source\fio\io_ioctl.c"
@@ -120,14 +131,3 @@ A14=_ "c:\Program Files\Freescale\Freescale MQX 3.8\mfs\source\generic\mfs_clust
 A15=_ "c:\Program Files\Freescale\Freescale MQX 3.8\mfs\source\generic\mfs_misc.c" "E:\Freescale\Freescale MQX 3.8\mfs\source\generic\mfs_misc.c"
 Count=16
 SuppressDialog=1
-[Trace1]
-Enabled=0
-ShowSource=1
-[CallStackLog]
-Enabled=0
-[DriverProfiling]
-Enabled=0
-Mode=1
-Graph=0
-Symbiont=0
-Exclusions=

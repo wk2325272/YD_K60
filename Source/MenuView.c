@@ -908,7 +908,7 @@ void GUI_SYS_PARASET(void)
               }
                break;
             case 3:  // year
-              if(OneC108[6]>5000)  
+              if(OneC108[6]>2099)  
               {
                 OneC108[3]=0xf800;
                 flg_sys[3]=1; // 年上超限标志
@@ -1009,8 +1009,8 @@ void GUI_SYS_PARASET(void)
           case 3: // 年
             if(flg_sys[i]==1)
             {
-              SysFlashDataT[2*i+7]=0x88;  
-              SysFlashDataT[2*i+8]=0x13;
+              SysFlashDataT[2*i+7]=0x33;  
+              SysFlashDataT[2*i+8]=0x08;
             }
             else  if(flg_sys[i]==3)
             {
@@ -1149,7 +1149,9 @@ void GUI_SYS_PARASET(void)
         delay_us(10);  
         
         SysSet.ParaSaveFlg=0;  // WK --> 清楚标志
+        
         TimeSet(); // wk@130510 --> 重新设置时间
+        
         _mem_free(shell_ptr); 
     }
     else
