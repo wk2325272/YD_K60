@@ -3693,6 +3693,9 @@
   <group>
     <name>MQX Libraries</name>
     <file>
+      <name>$PROJ_DIR$\..\lib\twrk60n512.iar\bsp\3.8.0bsp_twrk60n512_130512.a</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\lib\twrk60n512.iar\bsp\bsp_twrk60n512_130330_no_event_lpt.a</name>
       <excluded>
         <configuration>Int Flash Debug</configuration>
@@ -3718,6 +3721,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$\..\lib\twrk60n512.iar\bsp\bsp_twrk60n512_130418_SPI_TX_56Data_Buf6175_RTC.a</name>
+      <excluded>
+        <configuration>Int Flash Debug</configuration>
+      </excluded>
     </file>
     <file>
       <name>$PROJ_DIR$\..\lib\twrk60n512.iar\bsp\bsp_twrk60n512_130418_SPI_TX_84Data_Buf6175.a</name>
@@ -3822,6 +3828,9 @@
   <group>
     <name>Shell_Libs</name>
     <file>
+      <name>$PROJ_DIR$\..\lib\twrk60n512.iar\shell\3.8.0shell_twrk60n512_130512.a</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\lib\twrk60n512.iar\shell\shell_twrk60n512_d.a</name>
       <excluded>
         <configuration>Int Flash Debug</configuration>
@@ -3877,6 +3886,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$\..\lib\twrk60n512.iar\shell\shell_twrk60n512_d_20130509.a</name>
+      <excluded>
+        <configuration>Int Flash Debug</configuration>
+      </excluded>
     </file>
   </group>
   <group>
