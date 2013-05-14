@@ -3829,6 +3829,12 @@
     <name>Shell_Libs</name>
     <file>
       <name>$PROJ_DIR$\..\lib\twrk60n512.iar\shell\3.8.0shell_twrk60n512_130512.a</name>
+      <excluded>
+        <configuration>Int Flash Debug</configuration>
+      </excluded>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\lib\twrk60n512.iar\shell\3.8.0shell_twrk60n512_130513.a</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\lib\twrk60n512.iar\shell\shell_twrk60n512_d.a</name>
